@@ -15,6 +15,8 @@ public class MapGenerator : MonoBehaviour {
 	
 	public Material terrainMaterial;
 	
+	public FillMapArea fillMapArea;
+	
 	[Range(0,6)]
 	public int editorPreviewLOD;
 	public bool autoUpdate;
@@ -59,7 +61,17 @@ public class MapGenerator : MonoBehaviour {
 		if (drawMode == DrawMode.NoiseMap) {
 			display.DrawTexture (TextureGenerator.TextureFromHeightMap (mapData.heightMap));
 		} else if (drawMode == DrawMode.Mesh) {
-			display.DrawMesh (MeshGenerator.GenerateTerrainMesh (mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, editorPreviewLOD, terrainData.useFlatShading));
+			
+			// Generate mesh data
+			MeshData meshData = MeshGenerator.GenerateTerrainMesh (mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, editorPreviewLOD, terrainData.useFlatShading);
+			
+			// Display mesh data
+			display.DrawMesh (meshData);
+			
+			// Place area on map
+			fillMapArea.PlaceAreaOnMap(meshData, terrainData.uniformScale);
+			
+			
 		} else if (drawMode == DrawMode.FalloffMap) {
 			display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize)));
 		}
@@ -87,6 +99,7 @@ public class MapGenerator : MonoBehaviour {
 		return new MapData (noiseMap);
 	}
 
+	// Update subscription
 	void OnValidate() {
 
 		if (terrainData != null)

@@ -15,14 +15,14 @@ public class MapDisplay : MonoBehaviour
 
     public void DrawMesh(MeshData meshData)
     {
-        Debug.Log("DrawMesh called");
+        // Debug.Log("DrawMesh called");
         
         meshFilter.sharedMesh = meshData.CreateMesh();
         
         meshFilter.transform.localScale = Vector3.one * FindObjectOfType<MapGenerator>().terrainData.uniformScale;
         
         // Get 57 121 vertices (239 * 239) for LOD 0
-        Debug.Log(meshFilter.sharedMesh.vertices.Length);  
+        // Debug.Log(meshFilter.sharedMesh.vertices.Length);  
         
     }
 }
