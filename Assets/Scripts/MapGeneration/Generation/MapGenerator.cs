@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using MapGeneration.Generation;
 
 public class MapGenerator : MonoBehaviour {
 
@@ -69,11 +70,11 @@ public class MapGenerator : MonoBehaviour {
 			display.DrawMesh (meshData);
 			
 			// Place area on map
-			fillMapArea.PlaceAreaOnMap(meshData, terrainData.uniformScale);
+			// fillMapArea.PlaceAreaOnMap(meshData, terrainData.uniformScale);
 			
 			
 		} else if (drawMode == DrawMode.FalloffMap) {
-			display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize)));
+			display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize, terrainData.falloffStart, terrainData.falloffEnd)));
 		}
 	}
 
@@ -83,10 +84,10 @@ public class MapGenerator : MonoBehaviour {
 
 		if (terrainData.useFalloff)
 		{
-			if (falloffMap == null)
-			{
-				falloffMap = FalloffGenerator.GenerateFalloffMap (mapChunkSize+2);
-			}
+			// if (falloffMap == null)
+			// {
+			falloffMap = FalloffGenerator.GenerateFalloffMap (mapChunkSize+2, terrainData.falloffStart, terrainData.falloffEnd);
+			// }
 			for (int y = 0; y < mapChunkSize+2; y++) {
 				for (int x = 0; x < mapChunkSize+2; x++) {
 					if (terrainData.useFalloff) {

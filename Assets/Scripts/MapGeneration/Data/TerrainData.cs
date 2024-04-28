@@ -10,6 +10,11 @@ public class TerrainData : UpdatableData
     public bool useFlatShading;
     public bool useFalloff;
     
+    [Range(0,1)]
+    public float falloffStart;
+    [Range(0,1)]
+    public float falloffEnd;
+    
     public float meshHeightMultiplier;
     public AnimationCurve meshHeightCurve;
     
