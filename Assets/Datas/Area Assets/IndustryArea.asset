@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9bc563cf68c0e43bae6a3ce89000f7, type: 3}
-  m_Name: Default Noise
+  m_Script: {fileID: 11500000, guid: 32721079afa1708468ca1dde5065dcb9, type: 3}
+  m_Name: IndustryArea
   m_EditorClassIdentifier: 
-  autoUpdate: 1
-  normalizeMode: 0
-  noiseScale: 50
-  octaves: 4
-  persistance: 0.605
-  lacunarity: 2
-  seed: 0
-  offset: {x: 0, y: 0}
+  autoUpdate: 0
+  type: 1
+  size: 20
+  prefabs: {fileID: 21014757047335908, guid: 783957d5c2a6e454cbace2d6b6913a6a, type: 3}

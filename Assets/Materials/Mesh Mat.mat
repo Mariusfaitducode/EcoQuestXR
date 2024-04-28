@@ -21,7 +21,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mesh Mat
-  m_Shader: {fileID: -6465566751694194690, guid: 418621f9c4f3ebd44bba0bb4804d58fc, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 418621f9c4f3ebd44bba0bb4804d58fc,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -194,11 +195,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Vector1_4C3F5EE4: 11.13
-    - Vector1_5857EFB5: 37.4
-    - Vector1_65D18AD4: 76
-    - Vector1_6F228B9F: 23.83
-    - Vector1_A956083A: 107.6
+    - Vector1_4C3F5EE4: 0
+    - Vector1_5857EFB5: 15
+    - Vector1_65D18AD4: 20
+    - Vector1_6F228B9F: 10
+    - Vector1_A956083A: 71.4
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _BaseBlends: 0
@@ -221,6 +222,7 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _HeightTransition: 0
+    - _Map_Scale: 0.57
     - _MaxHeight: 4.33
     - _Metallic: 0
     - _Metallic0: 0

@@ -5,23 +5,12 @@ using UnityEngine;
 
 public class FillMapArea : MonoBehaviour
 {
-    public enum AreaType { City, Industry, Energy, Agriculture };
+    
+
+    public GameObject cubePrefab;
 
     [System.Serializable]
-    public struct Area
-    {
-        public AreaType type;
-        internal Vector3 position;
-        public int size;
-        public GameObject sphere;
-        // public Material material;
-        public bool valid;
-        
-        public void SetPosition(Vector3 position)
-        {
-            this.position = position;
-        }
-    }
+    
 
     public struct Sphere
     {
@@ -43,19 +32,36 @@ public class FillMapArea : MonoBehaviour
     public bool autoUpdate;
     
     
+    internal bool validPosition = false;
+    
+    
     public void SetAreaInEditor()
     {
         mapGenerator.DrawMapInEditor();
-        PlaceAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+        if (mapGenerator.meshData != null)
+        {
+            PlaceAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+        }
+    }
+    
+    public void FillAreaInEditor()
+    {
+        mapGenerator.DrawMapInEditor();
+
+        if (validPosition)
+        {
+            FillAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+        }
+        
     }
     
     public void PlaceAreaOnMap(MeshData meshData, float uniformScale)
     {
         // int maxTries = this.maxTries;
-        bool valid = SetAreaPosition.findPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, this.maxTries, maxMapIteration);
+        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, this.maxTries, maxMapIteration);
         Debug.Log(this.maxTries + " tries");
 
-        if (valid)
+        if (validPosition)
         {
             Debug.Log("All areas placed successfully");
         }
@@ -65,7 +71,29 @@ public class FillMapArea : MonoBehaviour
         }
         for (int i = 0; i < areas.Count; i++)
         {
-            areas[i].sphere.SetActive(valid);
+            areas[i].sphere.SetActive(validPosition);
         }
+    }
+    
+    public void FillAreaOnMap(MeshData meshData, float uniformScale)
+    {
+        foreach (Area area in areas)
+        {
+                
+            // On récupère les vertices à l'intérieur du cercle
+            for (int j = 0; j < meshData.vertices.Length; j++)
+            {
+                if (FillMapUtils.IsVertexInsideCircle(meshData.vertices[j], area.sphere.transform.position / uniformScale, area.data.size))
+                {
+                    area.vertices.Add(meshData.vertices[j]);
+                }
+            }
+            foreach (Transform child in area.sphere.transform)
+            {
+                DestroyImmediate(child.gameObject);
+            }
+            FillArea.GenerateAreaContent(area, uniformScale);
+        }
+        
     }
 }

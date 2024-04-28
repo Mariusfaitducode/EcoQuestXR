@@ -15,8 +15,12 @@ public class FillMapEditor : Editor {
             }
         }
 
-        if (GUILayout.Button ("Generate")) {
+        if (GUILayout.Button ("Set Position")) {
             fillMap.SetAreaInEditor ();
+        }
+        
+        if (GUILayout.Button ("Fill Area")) {
+            fillMap.FillAreaInEditor();
         }
     }
 }
