@@ -17,11 +17,8 @@ public class PlaceObjectOnTable : MonoBehaviour
             {
                 _haveTable = true;
                 Vector3 tablePosition = _table.transform.position;
-                Debug.Log(tablePosition);
-                transform.rotation = Quaternion.identity;
                 transform.position = new Vector3(tablePosition.x, tablePosition.y, tablePosition.z);
                 Debug.Log("Table found");
-                Debug.Log((transform.position));
             }
             else
             {
