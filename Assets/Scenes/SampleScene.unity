@@ -508,7 +508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3afb48aa1ec9a4bbc9901c8426e1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  rotationSpeed: 5
+  scalingSpeed: 0.01
+  movingSpeed: 1
 --- !u!1 &305129939
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +962,8 @@ MonoBehaviour:
     size: 16
     sphere: {fileID: 801777337}
     valid: 0
+  mapGenerator: {fileID: 0}
+  autoUpdate: 0
 --- !u!114 &481246523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,7 +996,6 @@ MonoBehaviour:
   noiseData: {fileID: 11400000, guid: cd33aa95807cbf24391032179d496d34, type: 2}
   textureData: {fileID: 11400000, guid: 23ed5699c3e99a24cb7be2536d037607, type: 2}
   terrainMaterial: {fileID: 2100000, guid: 1b9833aa394c0cc419a2cdc7d23377de, type: 2}
-  fillMapArea: {fileID: 481246522}
   editorPreviewLOD: 6
   autoUpdate: 1
 --- !u!4 &481246525
@@ -1892,7 +1895,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3afb48aa1ec9a4bbc9901c8426e1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  rotationSpeed: 5
+  scalingSpeed: 0.1
+  movingSpeed: 0.05
 --- !u!1001 &2079095395
 PrefabInstance:
   m_ObjectHideFlags: 0
