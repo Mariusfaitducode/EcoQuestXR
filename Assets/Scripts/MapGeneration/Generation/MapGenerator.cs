@@ -16,12 +16,14 @@ public class MapGenerator : MonoBehaviour {
 	
 	public Material terrainMaterial;
 	
-	public FillMapArea fillMapArea;
+	// public FillMapArea fillMapArea;
 	
 	[Range(0,6)]
 	public int editorPreviewLOD;
 	public bool autoUpdate;
 	float[,] falloffMap;
+
+	public MeshData meshData;
 
 	void Awake() {
 		textureData.ApplyToMaterial(terrainMaterial);
@@ -64,15 +66,14 @@ public class MapGenerator : MonoBehaviour {
 		} else if (drawMode == DrawMode.Mesh) {
 			
 			// Generate mesh data
-			MeshData meshData = MeshGenerator.GenerateTerrainMesh (mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, editorPreviewLOD, terrainData.useFlatShading);
+			this.meshData = MeshGenerator.GenerateTerrainMesh (mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, editorPreviewLOD, terrainData.useFlatShading);
 			
 			// Display mesh data
 			display.DrawMesh (meshData);
 			
 			// Place area on map
 			// fillMapArea.PlaceAreaOnMap(meshData, terrainData.uniformScale);
-			
-			
+
 		} else if (drawMode == DrawMode.FalloffMap) {
 			display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize, terrainData.falloffStart, terrainData.falloffEnd)));
 		}
