@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/MapController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/MapController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Terrain Assets/Default Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Terrain Assets/Default Terrain.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,7 @@
       <workItem from="1714310971484" duration="1261000" />
       <workItem from="1714316553546" duration="1363000" />
       <workItem from="1714338157775" duration="2318000" />
-      <workItem from="1714375671308" duration="1712000" />
+      <workItem from="1714375671308" duration="2016000" />
     </task>
     <servers />
   </component>
