@@ -15,10 +15,10 @@ MonoBehaviour:
   autoUpdate: 1
   uniformScale: 1
   useFlatShading: 0
-  useFalloff: 0
-  falloffStart: 0.705
+  useFalloff: 1
+  falloffStart: 0.711
   falloffEnd: 1
-  meshHeightMultiplier: 35.86
+  meshHeightMultiplier: 24.31
   meshHeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -32,26 +32,44 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.3761524
-      value: 0.22737172
-      inSlope: 0.1872071
-      outSlope: 0.1872071
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.8745623
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6795717
-      value: 0.2750698
-      inSlope: 0.13301747
-      outSlope: 0.13301747
+      time: 0.12502001
+      value: 0.13982667
+      inSlope: 0.8372425
+      outSlope: 0.8372425
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9147656
-      value: 0.47406054
+      time: 0.22394958
+      value: 0.20451215
+      inSlope: -0.0034809865
+      outSlope: -0.0034809865
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.39832795
+      value: 0.21455231
+      inSlope: 0.013263353
+      outSlope: 0.013263353
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.8745623
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.6370428
+      value: 0.2664598
+      inSlope: 0.098749086
+      outSlope: 0.098749086
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.6214654
+      outWeight: 0.44332194
+    - serializedVersion: 3
+      time: 0.8462231
+      value: 0.5570226
       inSlope: 1.1752234
       outSlope: 1.1752234
       tangentMode: 0
@@ -59,8 +77,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.5749752
     - serializedVersion: 3
-      time: 1.0225518
-      value: 0.6646708
+      time: 0.9761847
+      value: 0.83268464
       inSlope: 0.4252846
       outSlope: 0.4252846
       tangentMode: 0

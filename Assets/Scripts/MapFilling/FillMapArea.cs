@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class FillMapArea : MonoBehaviour
@@ -18,6 +19,8 @@ public class FillMapArea : MonoBehaviour
         public int size;
         public AreaType type;
     }
+    
+    public MeshCollider meshCollider;
     
     public float minHeight = 0.1f;
     public float flatnessThreshold = 0.1f;
@@ -79,20 +82,42 @@ public class FillMapArea : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-                
-            // On récupère les vertices à l'intérieur du cercle
-            for (int j = 0; j < meshData.vertices.Length; j++)
+            //Destroy all children
+            while (area.sphere.transform.childCount > 0)
             {
-                if (FillMapUtils.IsVertexInsideCircle(meshData.vertices[j], area.sphere.transform.position / uniformScale, area.data.size))
-                {
-                    area.vertices.Add(meshData.vertices[j]);
-                }
-            }
-            foreach (Transform child in area.sphere.transform)
-            {
+                Transform child = area.sphere.transform.GetChild(0);
                 DestroyImmediate(child.gameObject);
+            }   
+            
+            // On récupère les vertices à l'intérieur du cercle
+            // for (int j = 0; j < meshData.vertices.Length; j++)
+            // {
+            //     if (FillMapUtils.IsVertexInsideCircle(meshData.vertices[j], area.sphere.transform.position / uniformScale, area.data.size))
+            //     {
+            //         area.vertices.Add(meshData.vertices[j]);
+            //     }
+            // }
+            
+            List<Vector3> areaGrid = FillMapUtils.CreateGrid(area.sphere.transform.position, area.data.size * uniformScale, area.data.gridCellSize);
+            
+            int count = 0;
+            for (int i = 0; i < areaGrid.Count; i++)
+            {
+                
+                    count++;
+                    Vector3 newPosition = areaGrid[i];
+                    newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
+                    
+                    Debug.Log(newPosition.y);
+                
+                    GameObject cube = Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+                    cube.transform.parent = area.sphere.transform;
+                
             }
-            FillArea.GenerateAreaContent(area, uniformScale);
+            Debug.Log(count + " prefabs instantiated");
+
+            
+            // FillArea.GenerateAreaContent(area, uniformScale);
         }
         
     }

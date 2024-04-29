@@ -83,7 +83,7 @@ public static class SetAreaPosition
 
             if (!validPosition)
             {
-                return FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, triesLeft, maxMapIteration);
+                return FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, triesLeft - 1, maxMapIteration);
             }
             
             // Debug.Log("Attempts done : "+ area.type + " : "+ attempts);

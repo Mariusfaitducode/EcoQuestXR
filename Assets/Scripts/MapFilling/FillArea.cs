@@ -14,10 +14,12 @@ public static class FillArea
         
         for (int i = 0; i < area.vertices.Count; i++)
         {
-            if (Random.Range(0, 100) < 20)
+            if (Random.Range(0, 100) < 5)
             {
                 count++;
                 Vector3 newPosition = area.vertices[i] * scale;
+
+                newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
                 
                 GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
                 cube.transform.parent = area.sphere.transform;

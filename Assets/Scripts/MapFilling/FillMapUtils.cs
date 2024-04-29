@@ -48,4 +48,40 @@ public class FillMapUtils : MonoBehaviour
     }
     
     
+    public static List<Vector3> CreateGrid(Vector3 center, float radius, float gridSize) {
+        List<Vector3> gridPoints = new List<Vector3>();
+        
+        for (float x = center.x - radius; x <= center.x + radius; x += gridSize) {
+            for (float z = center.z - radius; z <= center.z + radius; z += gridSize) {
+                Vector3 pos = new Vector3(x, center.y, z);
+                if (Vector3.Distance(pos, center) <= radius) {
+                    gridPoints.Add(pos);
+                }
+            }
+        }
+        return gridPoints;
+    }
+    
+    
+    public static float GetHeightFromRaycast(Vector3 worldPosition, float maxRaycastDistance = 500f)
+    {
+        Vector3 rayStart = new Vector3(worldPosition.x, worldPosition.y + maxRaycastDistance, worldPosition.z);
+        Vector3 rayDirection = Vector3.down;
+
+        RaycastHit[] hits = Physics.RaycastAll(rayStart, rayDirection, maxRaycastDistance * 2);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("Terrain"))
+            {
+                return hit.point.y;
+            }
+        }
+        Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        return worldPosition.y; // Retourner une valeur par défaut ou générer une erreur selon votre gestion d'erreurs
+        
+    }
+    
+    
+    
 }

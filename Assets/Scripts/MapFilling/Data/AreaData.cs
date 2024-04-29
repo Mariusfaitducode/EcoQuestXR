@@ -9,9 +9,10 @@ public class AreaData : UpdatableData
     public AreaType type;
     // internal Vector3 position;
     public int size;
-    // public GameObject sphere;
-    // public Material material;
-    // public bool valid;
+    
+    public int startSize;
+
+    public float gridCellSize;
 
         
     public GameObject prefabs;
