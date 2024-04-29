@@ -47,16 +47,35 @@ public class FillMapUtils : MonoBehaviour
         return variance <= flatnessThreshold; // Compare la variance au seuil de planéité
     }
     
-    
-    public static List<Vector3> CreateGrid(Vector3 center, float radius, float gridSize) {
-        List<Vector3> gridPoints = new List<Vector3>();
+    // Go To Area script ?
+    public static AreaCell[,] CreateGrid(Vector3 center, float radius, float cellSize) {
         
-        for (float x = center.x - radius; x <= center.x + radius; x += gridSize) {
-            for (float z = center.z - radius; z <= center.z + radius; z += gridSize) {
+        int tabSize = (int)(radius * 2 / cellSize);
+        AreaCell[,] gridPoints = new AreaCell[tabSize, tabSize];
+
+        // int i = 0;
+        
+        for (int i = 0; i < tabSize; i++) {
+            
+            float x = center.x - radius + i * cellSize;
+            
+            
+            for (int j = 0; j < tabSize; j++) {
+                
+                float z = center.z - radius + j * cellSize;
+                
+                AreaCell cell = new AreaCell();
+                
                 Vector3 pos = new Vector3(x, center.y, z);
+                pos.y = GetHeightFromRaycast(pos);
+                
+                cell.position = pos;
+                
                 if (Vector3.Distance(pos, center) <= radius) {
-                    gridPoints.Add(pos);
+                   cell.inArea = true;
                 }
+                
+                gridPoints[i, j] = cell;
             }
         }
         return gridPoints;

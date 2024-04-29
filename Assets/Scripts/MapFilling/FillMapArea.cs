@@ -87,37 +87,37 @@ public class FillMapArea : MonoBehaviour
             {
                 Transform child = area.sphere.transform.GetChild(0);
                 DestroyImmediate(child.gameObject);
-            }   
-            
-            // On récupère les vertices à l'intérieur du cercle
-            // for (int j = 0; j < meshData.vertices.Length; j++)
-            // {
-            //     if (FillMapUtils.IsVertexInsideCircle(meshData.vertices[j], area.sphere.transform.position / uniformScale, area.data.size))
-            //     {
-            //         area.vertices.Add(meshData.vertices[j]);
-            //     }
-            // }
-            
-            List<Vector3> areaGrid = FillMapUtils.CreateGrid(area.sphere.transform.position, area.data.size * uniformScale, area.data.gridCellSize);
-            
-            int count = 0;
-            for (int i = 0; i < areaGrid.Count; i++)
-            {
-                
-                    count++;
-                    Vector3 newPosition = areaGrid[i];
-                    newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
-                    
-                    Debug.Log(newPosition.y);
-                
-                    GameObject cube = Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                    cube.transform.parent = area.sphere.transform;
-                
             }
-            Debug.Log(count + " prefabs instantiated");
+
+            area.uniformSize = area.data.size * uniformScale;
+            area.uniformStartSize = area.data.startSize * uniformScale;
+            
+            area.areaGrid = FillMapUtils.CreateGrid(area.sphere.transform.position, area.uniformSize, area.data.gridCellSize);
+            
+            // int count = 0;
+            // for (int i = 0; i < area.areaGrid.Count; i++)
+            // {
+            //     
+            //         count++;
+            //         Vector3 newPosition = area.areaGrid[i];
+            //         newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
+            //         
+            //         Debug.Log(newPosition.y);
+            //     
+            //         GameObject cube = Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+            //         cube.transform.parent = area.sphere.transform;
+            //     
+            // }
+            // Debug.Log(count + " prefabs instantiated");
+
+
+            int[,] roads = RoadGenerator.GenerateRoadContent(area);
+
 
             
-            // FillArea.GenerateAreaContent(area, uniformScale);
+                FillArea.GenerateAreaContent(area, roads);
+            
+            
         }
         
     }

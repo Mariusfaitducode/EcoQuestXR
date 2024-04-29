@@ -20,7 +20,12 @@ public class Area
         
     // public GameObject prefabs;
 
-    internal List<Vector3> vertices;
+    internal float uniformSize;
+    internal float uniformStartSize;
+
+    // internal List<Vector3> vertices;
+    
+    internal AreaCell[,] areaGrid;
         
     public void SetPosition(Vector3 position)
     {
