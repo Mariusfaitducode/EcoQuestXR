@@ -64,13 +64,13 @@ public class MapController : MonoBehaviour
             else
             {
                 // Cube
-                /*float newS = transform.localScale.x + leftAxisTemp.y * scalingSpeed * Time.deltaTime;
-                transform.localScale = new Vector3(newS, newS/10, newS);
-                Debug.Log("Scaling : " + transform.localScale);*/
+                float newS = transform.localScale.x + leftAxisTemp.y * scalingSpeed * Time.deltaTime;
+                transform.localScale = new Vector3(newS, newS, newS);
+                Debug.Log("Scaling : " + transform.localScale);
                 // Map
-                float newS = mapGenerator.transform.localScale.x + leftAxisTemp.y * scalingSpeed * Time.deltaTime;
+                /*float newS = mapGenerator.transform.localScale.x + leftAxisTemp.y * scalingSpeed * Time.deltaTime;
                 mapGenerator.transform.localScale = new Vector3(newS, newS/10, newS);
-                Debug.Log("Scaling : " + mapGenerator.transform.localScale);
+                Debug.Log("Scaling : " + mapGenerator.transform.localScale);*/
             }
         }
     }
