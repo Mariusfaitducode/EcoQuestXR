@@ -5,7 +5,7 @@ using UnityEngine;
 public static class SetAreaPosition
 {
     
-    public static bool findPosition(List<FillMapArea.Area> areas, MeshData meshData, float uniformScale, float minHeight, float flatnessThreshold, int triesLeft, int maxMapIteration)
+    public static bool FindAreaPosition(List<Area> areas, MeshData meshData, float uniformScale, float minHeight, float flatnessThreshold, int triesLeft, int maxMapIteration)
     {
         if (triesLeft <= 0)
         {
@@ -18,7 +18,7 @@ public static class SetAreaPosition
         
         for(int i = 0; i < areas.Count; i++)
         {
-            FillMapArea.Area area = areas[i];
+            Area area = areas[i];
             
             bool validPosition = false;
             int attempts = 0;
@@ -43,7 +43,7 @@ public static class SetAreaPosition
                 bool collision = false;
                 foreach (FillMapArea.Sphere otherSphere in placedSpheres)
                 {
-                    if (AreSpheresColliding(newPosition, area.size, otherSphere.position, otherSphere.size))
+                    if (FillMapUtils.AreSpheresColliding(newPosition, area.data.size, otherSphere.position, otherSphere.size))
                     {
                         collision = true;
                         break;
@@ -62,19 +62,19 @@ public static class SetAreaPosition
                 // On récupère les vertices à l'intérieur du cercle
                 for (int j = 0; j < vertices.Length; j++)
                 {
-                    if (IsVertexInsideCircle(vertices[j], newPosition, area.size))
+                    if (FillMapUtils.IsVertexInsideCircle(vertices[j], newPosition, area.data.size))
                     {
                         verticesInsideCircle.Add(vertices[j]);
                     }
                 }
                 
                 // Si la surface est plane, on place l'area
-                if (IsSurfaceFlat(verticesInsideCircle, flatnessThreshold))
+                if (FillMapUtils.IsSurfaceFlat(verticesInsideCircle, flatnessThreshold))
                 {
                     area.SetPosition(newPosition);
                     PlaceSphere(area, uniformScale);
                     
-                    placedSpheres.Add(new FillMapArea.Sphere { position = area.position, size = area.size, type = area.type});
+                    placedSpheres.Add(new FillMapArea.Sphere { position = area.position, size = area.data.size, type = area.data.type});
                     
                     validPosition = true;
                 }
@@ -83,7 +83,7 @@ public static class SetAreaPosition
 
             if (!validPosition)
             {
-                return findPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, triesLeft, maxMapIteration);
+                return FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, triesLeft, maxMapIteration);
             }
             
             // Debug.Log("Attempts done : "+ area.type + " : "+ attempts);
@@ -91,55 +91,12 @@ public static class SetAreaPosition
         return true;
     }
     
-    static bool AreSpheresColliding(Vector3 position1, int size1, Vector3 position2, int size2)
-    {
-        float distance = Vector3.Distance(position1, position2);
-        return distance < size1 + size2;
-    }
-    
-    static bool IsVertexInsideCircle(Vector3 vertex, Vector3 circleCenter, float radius) {
-        
-        float distanceXZ = Mathf.Sqrt((vertex.x - circleCenter.x) * (vertex.x - circleCenter.x) + 
-                                      (vertex.z - circleCenter.z) * (vertex.z - circleCenter.z));
-    
-        return distanceXZ <= radius;
-    }
-    
-    // Verif flat area
-    static float CalculateMean(List<Vector3> vertices) {
-        float sum = 0.0f;
-        foreach (Vector3 vertex in vertices) {
-            sum += vertex.y; // Ajoute la coordonnée y de chaque vertex à la somme
-        }
-        return sum / vertices.Count; // Retourne la moyenne
-    }
-    
-    static float CalculateVariance(List<Vector3> vertices, float mean) {
-        float sumOfSquares = 0.0f;
-        foreach (Vector3 vertex in vertices) {
-            sumOfSquares += (vertex.y - mean) * (vertex.y - mean); // Somme des carrés des écarts à la moyenne
-        }
-        return sumOfSquares / vertices.Count; // Retourne la variance
-    }
-    
-    static bool IsSurfaceFlat(List<Vector3> vertices, float flatnessThreshold) {
-        float mean = CalculateMean(vertices); // Calcul de la moyenne
-        float variance = CalculateVariance(vertices, mean); // Calcul de la variance
-
-        if (variance <= flatnessThreshold)
-        {
-            // Debug.Log("mean : " + mean);
-            // Debug.Log("variance : " + variance);
-        }
-        return variance <= flatnessThreshold; // Compare la variance au seuil de planéité
-    }
-    
-    static void PlaceSphere(FillMapArea.Area area, float scale) {
+    static void PlaceSphere(Area area, float scale) {
         
         Vector3 newPosition = area.position * scale;
 
         GameObject sphere = area.sphere;
-        float radius = area.size;
+        float radius = area.data.size;
         
         sphere.transform.position = newPosition;
         
