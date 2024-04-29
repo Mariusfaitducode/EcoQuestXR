@@ -222,7 +222,7 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _HeightTransition: 0
-    - _Map_Scale: 19.24
+    - _Map_Scale: 16.32
     - _MaxHeight: 4.33
     - _Metallic: 0
     - _Metallic0: 0
