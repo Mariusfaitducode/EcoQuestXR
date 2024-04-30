@@ -47,39 +47,7 @@ public class FillMapUtils : MonoBehaviour
         return variance <= flatnessThreshold; // Compare la variance au seuil de planéité
     }
     
-    // Go To Area script ?
-    public static AreaCell[,] CreateGrid(Vector3 center, float radius, float cellSize) {
-        
-        int tabSize = (int)(radius * 2 / cellSize);
-        AreaCell[,] gridPoints = new AreaCell[tabSize, tabSize];
-
-        // int i = 0;
-        
-        for (int i = 0; i < tabSize; i++) {
-            
-            float x = center.x - radius + i * cellSize;
-            
-            
-            for (int j = 0; j < tabSize; j++) {
-                
-                float z = center.z - radius + j * cellSize;
-                
-                AreaCell cell = new AreaCell();
-                
-                Vector3 pos = new Vector3(x, center.y, z);
-                pos.y = GetHeightFromRaycast(pos);
-                
-                cell.position = pos;
-                
-                if (Vector3.Distance(pos, center) <= radius) {
-                   cell.inArea = true;
-                }
-                
-                gridPoints[i, j] = cell;
-            }
-        }
-        return gridPoints;
-    }
+    
     
     
     public static float GetHeightFromRaycast(Vector3 worldPosition, float maxRaycastDistance = 500f)
@@ -99,6 +67,21 @@ public class FillMapUtils : MonoBehaviour
         Debug.LogWarning("Raycast did not hit the terrain mesh.");
         return worldPosition.y; // Retourner une valeur par défaut ou générer une erreur selon votre gestion d'erreurs
         
+    }
+
+
+    public static void SetChildHeight(GameObject parent)
+    {
+        if (parent.transform.childCount > 0)
+        {
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                GameObject child = parent.transform.GetChild(i).gameObject;
+                var position = child.transform.position;
+                position = new Vector3(position.x, GetHeightFromRaycast(position), position.z);
+                child.transform.position = position;
+            }
+        }
     }
     
     

@@ -7,12 +7,6 @@ using UnityEngine;
 public class FillMapArea : MonoBehaviour
 {
     
-
-    public GameObject cubePrefab;
-
-    [System.Serializable]
-    
-
     public struct Sphere
     {
         public Vector3 position;
@@ -20,10 +14,8 @@ public class FillMapArea : MonoBehaviour
         public AreaType type;
     }
     
-    public MeshCollider meshCollider;
-    
     public float minHeight = 0.1f;
-    public float flatnessThreshold = 0.1f;
+    
     
     public int maxTries = 5;
     public int maxMapIteration = 200;
@@ -61,12 +53,19 @@ public class FillMapArea : MonoBehaviour
     public void PlaceAreaOnMap(MeshData meshData, float uniformScale)
     {
         // int maxTries = this.maxTries;
-        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, this.maxTries, maxMapIteration);
-        Debug.Log(this.maxTries + " tries");
+        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData, uniformScale,  minHeight,  this.maxTries, maxMapIteration);
+        // Debug.Log(this.maxTries + " tries");
 
         if (validPosition)
         {
             Debug.Log("All areas placed successfully");
+            
+            foreach (Area area in areas)
+            {
+                area.position = area.sphere.transform.position;
+                FillMapUtils.SetChildHeight(area.sphere);
+            }
+            
         }
         else
         {
@@ -89,33 +88,15 @@ public class FillMapArea : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
 
-            area.uniformSize = area.data.size * uniformScale;
+            area.uniformSize = area.data.radius * uniformScale;
             area.uniformStartSize = area.data.startSize * uniformScale;
             
-            area.areaGrid = FillMapUtils.CreateGrid(area.sphere.transform.position, area.uniformSize, area.data.gridCellSize);
+            area.CreateGrid();
             
-            // int count = 0;
-            // for (int i = 0; i < area.areaGrid.Count; i++)
-            // {
-            //     
-            //         count++;
-            //         Vector3 newPosition = area.areaGrid[i];
-            //         newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
-            //         
-            //         Debug.Log(newPosition.y);
-            //     
-            //         GameObject cube = Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-            //         cube.transform.parent = area.sphere.transform;
-            //     
-            // }
-            // Debug.Log(count + " prefabs instantiated");
-
 
             int[,] roads = RoadGenerator.GenerateRoadContent(area);
-
-
             
-                FillArea.GenerateAreaContent(area, roads);
+            FillArea.GenerateAreaContent(area, roads);
             
             
         }

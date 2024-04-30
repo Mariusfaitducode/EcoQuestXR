@@ -10,7 +10,7 @@ public static class RoadGenerator
     
     // private Random random = new Random();
     
-    public static int GenerateGaussian(double mean = 5, double stdDev = 0.1)
+    public static int GenerateGaussian(double mean = 5, double stdDev = 1)
     {
         // Random random = new Random();
 
@@ -21,6 +21,15 @@ public static class RoadGenerator
         double gaussianValue = mean + stdDev * randStdNormal; // random normal(mean,stdDev^2)
         
         return (int)Mathf.Round((float)gaussianValue);
+    }
+    
+    public static void TestGaussian()
+    {
+        for (int i = 0; i < 1000; i++)
+        {
+            double gaussianValue = GenerateGaussian(5.0, 1.0); // Moyenne = 5, Écart-type = 1
+            Debug.Log(gaussianValue);
+        }
     }
     
     public static int[,] GenerateRoadContent(Area area)
@@ -34,6 +43,7 @@ public static class RoadGenerator
         Array.Copy(grid, newGrid, grid.Length);
 
 
+        // Initialise avec des routes horizontales
         for (int i = 0; i < width; i += area.data.pavilionWidth + 1)
         {
             for (int j = 0; j < height; j++)
@@ -43,12 +53,15 @@ public static class RoadGenerator
             }
         }
         
+        // Génère des intersections verticales aléatoires
         for (int j = 1; j < height; j += area.data.pavilionWidth + 1)
         {
 
             int nextRoadCount = 0;
 
-            int randomPavilionLength = GenerateGaussian((double)area.data.pavilionWidth);
+            int randomPavilionLength = GenerateGaussian((double)area.data.pavilionHeightMean);
+            
+            Debug.Log("Gaussian value : " + randomPavilionLength);
 
             nextRoadCount += randomPavilionLength;
 
@@ -56,13 +69,13 @@ public static class RoadGenerator
             {
                 for (int roadCount = 0; roadCount < area.data.pavilionWidth; roadCount++)
                 {
-                    if (j + roadCount < height)
+                    if (j + roadCount < height && nextRoadCount < width)
                     {
                         grid[ j + roadCount, nextRoadCount] = 1;
                         
                     }
                 }
-                nextRoadCount += GenerateGaussian((double)area.data.pavilionWidth);
+                nextRoadCount += GenerateGaussian((double)area.data.pavilionHeightMean);
                 
             }
 

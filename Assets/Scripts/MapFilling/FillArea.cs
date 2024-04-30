@@ -19,23 +19,17 @@ public static class FillArea
             {
                 Vector3 newPosition = area.areaGrid[i, j].position;
 
-                
-
-                // Debug.Log("ROAD");
-                // GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                // cube.transform.parent = area.sphere.transform;
-                // count++;
 
                 if (roads[i, j] == 1)
                 {
-                    // if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                    //         area.uniformStartSize))
-                    // {
-                        GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                            area.uniformStartSize))
+                    {
+                        GameObject cube = GameObject.Instantiate(area.testCube, newPosition, Quaternion.identity);
                         cube.transform.parent = area.sphere.transform;
                 
                         count++;
-                    // }
+                    }
                 }
                 else
                 {

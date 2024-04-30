@@ -8,16 +8,17 @@ public class AreaData : UpdatableData
 {
     public AreaType type;
     // internal Vector3 position;
-    public int size;
+    public int radius;
     
     public int startSize;
 
     // To change for gridSize
-    public float gridCellSize;
+    public int areaGridSize;
+    // public float gridCellSize;
 
     //City generation
     public int pavilionWidth = 2;
-    public int pavillonHeightMean = 5;
+    public int pavilionHeightMean = 5;
     
     
         
