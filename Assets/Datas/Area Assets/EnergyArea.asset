@@ -17,4 +17,5 @@ MonoBehaviour:
   size: 25
   startSize: 12
   gridCellSize: 5
+  pavilionWidth: 5
   prefabs: {fileID: 21014757047335908, guid: 783957d5c2a6e454cbace2d6b6913a6a, type: 3}

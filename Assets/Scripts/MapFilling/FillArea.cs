@@ -19,31 +19,28 @@ public static class FillArea
             {
                 Vector3 newPosition = area.areaGrid[i, j].position;
 
-                // if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                //         area.uniformStartSize))
-                // {
-                //     GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                //     cube.transform.parent = area.sphere.transform;
-                //
-                //     count++;
-                // }
+                
 
-                Debug.Log("ROAD");
-                GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                cube.transform.parent = area.sphere.transform;
-                count++;
+                // Debug.Log("ROAD");
+                // GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+                // cube.transform.parent = area.sphere.transform;
+                // count++;
 
-                //if (roads[i, j] == 1)
-                //{
-                //    Debug.Log("ROAD");
-                //    GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                //    cube.transform.parent = area.sphere.transform;
-                //    count++;
-                //}
-                //else
-                //{
-                //    Debug.Log("NO ROAD");
-                //}
+                if (roads[i, j] == 1)
+                {
+                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                            area.uniformStartSize))
+                    {
+                        GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+                        cube.transform.parent = area.sphere.transform;
+                
+                        count++;
+                    }
+                }
+                else
+                {
+                    Debug.Log("NO ROAD");
+                }
 
 
             }

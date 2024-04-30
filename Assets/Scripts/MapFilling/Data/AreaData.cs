@@ -12,8 +12,14 @@ public class AreaData : UpdatableData
     
     public int startSize;
 
+    // To change for gridSize
     public float gridCellSize;
 
+    //City generation
+    public int pavilionWidth = 2;
+    public int pavillonHeightMean = 5;
+    
+    
         
     public GameObject prefabs;
 
