@@ -4,8 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 public static class RoadGenerator
 {
+    
+    // private Random random = new Random();
+    
+    public static int GenerateGaussian(double mean = 5, double stdDev = 0.1)
+    {
+        // Random random = new Random();
+
+        double u1 = 1.0 - Random.value; // uniform(0,1] random doubles
+        double u2 = 1.0 - Random.value;
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
+                               Math.Sin(2.0 * Math.PI * u2); // random normal(0,1)
+        double gaussianValue = mean + stdDev * randStdNormal; // random normal(mean,stdDev^2)
+        
+        return (int)Mathf.Round((float)gaussianValue);
+    }
     
     public static int[,] GenerateRoadContent(Area area)
     {
@@ -27,6 +43,32 @@ public static class RoadGenerator
             }
         }
         
+        for (int j = 1; j < height; j += area.data.pavilionWidth + 1)
+        {
+
+            int nextRoadCount = 0;
+
+            int randomPavilionLength = GenerateGaussian((double)area.data.pavilionWidth);
+
+            nextRoadCount += randomPavilionLength;
+
+            while (nextRoadCount < width)
+            {
+                for (int roadCount = 0; roadCount < area.data.pavilionWidth; roadCount++)
+                {
+                    if (j + roadCount < height)
+                    {
+                        grid[ j + roadCount, nextRoadCount] = 1;
+                        
+                    }
+                }
+                nextRoadCount += GenerateGaussian((double)area.data.pavilionWidth);
+                
+            }
+
+
+
+        }
         
         // Initialise avec une route centrale
         //for (int i = 0; i < width; i++) {

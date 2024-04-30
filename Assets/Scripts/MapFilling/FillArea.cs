@@ -28,14 +28,14 @@ public static class FillArea
 
                 if (roads[i, j] == 1)
                 {
-                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                            area.uniformStartSize))
-                    {
+                    // if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                    //         area.uniformStartSize))
+                    // {
                         GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
                         cube.transform.parent = area.sphere.transform;
                 
                         count++;
-                    }
+                    // }
                 }
                 else
                 {
