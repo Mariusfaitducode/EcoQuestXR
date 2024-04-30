@@ -27,19 +27,23 @@ public static class FillArea
                 //
                 //     count++;
                 // }
-                
-                
-                if (roads[i, j] == 1)
-                {
-                    Debug.Log("ROAD");
-                    GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                    cube.transform.parent = area.sphere.transform;
-                    count++;
-                }
-                else
-                {
-                    Debug.Log("NO ROAD");
-                }
+
+                Debug.Log("ROAD");
+                GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+                cube.transform.parent = area.sphere.transform;
+                count++;
+
+                //if (roads[i, j] == 1)
+                //{
+                //    Debug.Log("ROAD");
+                //    GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+                //    cube.transform.parent = area.sphere.transform;
+                //    count++;
+                //}
+                //else
+                //{
+                //    Debug.Log("NO ROAD");
+                //}
 
 
             }

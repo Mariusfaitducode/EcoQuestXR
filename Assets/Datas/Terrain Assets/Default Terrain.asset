@@ -16,7 +16,7 @@ MonoBehaviour:
   uniformScale: 1
   useFlatShading: 0
   useFalloff: 1
-  falloffStart: 0.711
+  falloffStart: 0.721
   falloffEnd: 1
   meshHeightMultiplier: 24.31
   meshHeightCurve:

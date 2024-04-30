@@ -198,7 +198,7 @@ Material:
     - Vector1_4C3F5EE4: 0
     - Vector1_5857EFB5: 0.4
     - Vector1_65D18AD4: 0.8
-    - Vector1_6F228B9F: 0.15
+    - Vector1_6F228B9F: 0.19
     - Vector1_A956083A: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -222,7 +222,8 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _HeightTransition: 0
-    - _Map_Scale: 16.32
+    - _Limit_Terrain: 93.58
+    - _Map_Scale: 14.8
     - _MaxHeight: 4.33
     - _Metallic: 0
     - _Metallic0: 0
@@ -262,6 +263,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _HeightRange: {r: 0, g: 1, b: 0, a: 0}
+    - _Map_Center: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
