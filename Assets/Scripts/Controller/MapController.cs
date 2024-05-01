@@ -6,43 +6,82 @@ using Quaternion = System.Numerics.Quaternion;
 
 public class MapController : MonoBehaviour
 {
-    // Rotation
-    private float _rotationAxis = 0.0f;
+    // Speed
     public float rotationSpeed = 5f;
-    
-    // Scale
-    private float _scalingAxis = 0.0f;
-    public GameObject mapGenerator;
     public float scalingSpeed = 0.001f;
-    
+    public float movingSpeed = 0.05f;
+
     // Move
+    private GameObject _table;
     private Vector3 _initialPosition;
     private Vector2 _tempPosition;
-    private bool _initialPositionFound = false;
-    private Vector2 _movingAxis = Vector2.zero;
-    public float movingSpeed = 0.05f;
+
+    private bool playerHasMoved = false;
+    private bool tableFound = false;
+    
     public GameObject player;
+
+    
+    //Shader
+    private Material _material;
+    
+    void Start()
+    {
+        _material = GetComponent<Renderer>().material;
+    }
+        
+        
 
     // Update is called once per frame
     void Update()
     {
-        GetInitialPosition();
-
-        ScaleRotate();
+        if (!tableFound)
+        {
+            findTable();
+            
+        }
+        else if (!playerHasMoved)
+        {
+            GetTableLocation();
+            SetMapPosition();
+        }
+        else
+        {
+            GetTableLocation();
+            ScaleRotate();
+            Move();
+        }
         
-        Move();
     }
 
-    void GetInitialPosition()
+    void findTable()
     {
-        if (!_initialPositionFound)
+        _table = GameObject.FindGameObjectWithTag("Table");
+        if (_table != null)
         {
-            _initialPosition = transform.position;
-            if (_initialPosition != Vector3.zero)
-            {
-                _initialPositionFound = true;
-                Debug.Log("Initial position found : " + _initialPosition);
-            }
+            tableFound = true;
+            Debug.Log("Table found");
+        }
+    }
+    
+    // Get the location of table (useful because on the headset, it's not very precise)
+    void GetTableLocation()
+    {
+        if (transform.position != _table.transform.position)
+        {
+            _initialPosition = _table.transform.position;
+        }
+    }
+
+    // While the player has not interacted with map, we continue checking for the table position.
+    void SetMapPosition()
+    {
+        transform.position = _initialPosition;
+        _material.SetVector("_Map_Center", new Vector2(_initialPosition.x, _initialPosition.z));
+        
+        if (OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) != Vector2.zero | OVRInput.Get(OVRInput.RawAxis2D.LThumbstick) != Vector2.zero)
+        {
+            playerHasMoved = true;
         }
     }
 
@@ -59,18 +98,13 @@ public class MapController : MonoBehaviour
             {
                 float newY = leftAxisTemp.x * rotationSpeed * Time.deltaTime;
                 transform.Rotate(0.0f, newY, 0.0f, Space.World);
-                Debug.Log("Rotating : " + transform.rotation);
+                //Debug.Log("Rotating : " + transform.rotation);
             }
             else
             {
-                // Cube
                 float newS = transform.localScale.x + leftAxisTemp.y * scalingSpeed * Time.deltaTime;
                 transform.localScale = new Vector3(newS, newS, newS);
-                Debug.Log("Scaling : " + transform.localScale);
-                // Map
-                /*float newS = mapGenerator.transform.localScale.x + leftAxisTemp.y * scalingSpeed * Time.deltaTime;
-                mapGenerator.transform.localScale = new Vector3(newS, newS/10, newS);
-                Debug.Log("Scaling : " + mapGenerator.transform.localScale);*/
+                //Debug.Log("Scaling : " + transform.localScale);
             }
         }
     }
@@ -81,31 +115,47 @@ public class MapController : MonoBehaviour
         Vector2 rightAxisTemp = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
         // Get right controller thumbstick axis
         bool rightButtonThumbstickTemp = OVRInput.Get(OVRInput.RawButton.RThumbstick);
-
         
-        Vector3 playerPos = player.transform.position;
-        Vector3 mapPos = _initialPosition;
-        
-        //Vector3 vectorMap = new Vector3(1, 0, 0);
-        Vector3 vectorPlayer = mapPos - playerPos;
+        Vector3 vectorPlayer = _initialPosition - player.transform.position;
         vectorPlayer.y = 0;
-        Debug.Log(vectorPlayer);
-
+        
+        float circleRadius = _material.GetFloat("_Limit_Terrain");
+        
         if (Math.Abs(rightAxisTemp.x) > 0.5)
         {
-            this.transform.Translate(new Vector3(vectorPlayer.z, vectorPlayer.y, -vectorPlayer.x).normalized * Time.deltaTime * movingSpeed * rightAxisTemp.x);
+            Vector3 newHorizontalCoordinates = transform.position + new Vector3(vectorPlayer.z, vectorPlayer.y, -vectorPlayer.x).normalized * Time.deltaTime * movingSpeed * rightAxisTemp.x;
+            if (!Utils.Collide(this.gameObject, _initialPosition, circleRadius, newHorizontalCoordinates))
+            {
+                transform.position = newHorizontalCoordinates;
+            }
+            else
+            {
+                Debug.Log("Out Of Bound : Left - Right");
+            }
+            
+
         }
         
         if (Math.Abs(rightAxisTemp.y) > 0.5)
         {
-            this.transform.Translate(vectorPlayer.normalized * Time.deltaTime * movingSpeed * rightAxisTemp.y);
+            Vector3 newVerticalCoordinates = transform.position + vectorPlayer.normalized * Time.deltaTime * movingSpeed * rightAxisTemp.y;
+            if (!Utils.Collide(this.gameObject, _initialPosition, circleRadius, newVerticalCoordinates))
+            {
+                transform.position = newVerticalCoordinates;
+            }
+            else
+            {
+                Debug.Log("Out Of Bound : Up - Down");
+            }
         }
 
         // reset position
         if (_initialPosition != transform.position & rightButtonThumbstickTemp)
         {
             transform.position = _initialPosition;
-            Debug.Log("Reset position");
+            //Debug.Log("Reset position");
         }
     }
+
+    
 }
