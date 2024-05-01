@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoUpdate: 0
   type: 0
-  size: 30
-  startSize: 20
-  gridCellSize: 3
+  radius: 30
+  startSize: 25
+  areaGridSize: 19
   pavilionWidth: 2
+  pavilionHeightMean: 5
   prefabs: {fileID: 21014757047335908, guid: 783957d5c2a6e454cbace2d6b6913a6a, type: 3}

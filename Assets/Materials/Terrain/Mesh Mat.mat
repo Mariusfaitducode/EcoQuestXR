@@ -195,10 +195,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Vector1_4C3F5EE4: 0
+    - Vector1_4C3F5EE4: 0.015
     - Vector1_5857EFB5: 0.4
     - Vector1_65D18AD4: 0.8
-    - Vector1_6F228B9F: 0.19
+    - Vector1_6F228B9F: 0.087
     - Vector1_A956083A: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -221,16 +221,21 @@ Material:
     - _Glossiness: 0.5
     - _GlossinessSource: 0
     - _GlossyReflections: 1
+    - _Grass_Blend: 0.685
+    - _Grass_Tile: 0.123
+    - _Grass_Tint_Strength: 0.065
     - _HeightTransition: 0
-    - _Limit_Terrain: 93.58
-    - _Map_Scale: 14.8
+    - _Limit_Terrain: 139.4
+    - _Map_Scale: 12.82
     - _MaxHeight: 4.33
+    - _Max_Height: 20.631664
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
     - _MinHeight: 0.8
+    - _Min_Height: 0
     - _Mode: 0
     - _NumLayersCount: 1
     - _OcclusionStrength: 1
@@ -239,6 +244,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Rocks_Blend: 0.623
+    - _Rocks_Tile: 0.181
+    - _Rocks_Tint_Strength: 0.471
+    - _Sand_Blend: 0.069
+    - _Sand_Tile: 0.058
+    - _Sand_Tint_Strength: 0.236
     - _Shininess: 0
     - _Smoothness: 0.5
     - _Smoothness0: 0.5
@@ -247,6 +258,9 @@ Material:
     - _Smoothness3: 0.5
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
+    - _Snow_Blend: 0
+    - _Snow_Tile: 0.065
+    - _Snow_Tint_Strength: 0.302
     - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -254,6 +268,9 @@ Material:
     - _Surface: 0
     - _TestScale: 0
     - _UVSec: 0
+    - _Water_Blend: 0.239
+    - _Water_Tile: 0.018
+    - _Water_Tint_Strength: 0.109
     - _ZWrite: 1
     - testScale: 31.4
     m_Colors:
@@ -262,8 +279,13 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _Grass_Tint: {r: 0.17900236, g: 0.8679245, b: 0, a: 0}
     - _HeightRange: {r: 0, g: 1, b: 0, a: 0}
     - _Map_Center: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Rocks_Tint: {r: 0.745283, g: 0.42572758, b: 0.13710396, a: 0}
+    - _Sand_Tint: {r: 0.9622642, g: 0.9396012, b: 0.5855287, a: 0}
+    - _Snow_Tint: {r: 0.9528302, g: 0.9180008, b: 0.6966447, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Water_Tint: {r: 0.07058823, g: 0.43558702, b: 1, a: 0}
   m_BuildTextureStacks: []

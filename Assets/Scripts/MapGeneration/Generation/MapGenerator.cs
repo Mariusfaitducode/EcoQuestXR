@@ -12,9 +12,11 @@ public class MapGenerator : MonoBehaviour {
 
 	public TerrainData terrainData;
 	public NoiseData noiseData;
-	public TextureData textureData;
+	// public TextureData textureData;
 	
-	public Material terrainMaterial;
+	public UpdateTerrainRenderer updateTerrainRenderer;
+	
+	// public Material terrainMaterial;
 	
 	// public FillMapArea fillMapArea;
 	
@@ -26,8 +28,10 @@ public class MapGenerator : MonoBehaviour {
 	public MeshData meshData;
 
 	void Awake() {
-		textureData.ApplyToMaterial(terrainMaterial);
-		textureData.UpdateMeshHeights (terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+		// textureData.ApplyToMaterial(terrainMaterial);
+		// textureData.UpdateMeshHeights (terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+		
+		updateTerrainRenderer.UpdateMeshHeights(terrainData.minHeight, terrainData.maxHeight);
 	}
 	
 	void OnValuesUpdated() {
@@ -36,9 +40,9 @@ public class MapGenerator : MonoBehaviour {
 		}
 	}
 	
-	void OnTextureValuesUpdated() {
-		textureData.ApplyToMaterial (terrainMaterial);
-	}
+	// void OnTextureValuesUpdated() {
+	// 	textureData.ApplyToMaterial (terrainMaterial);
+	// }
 
 	public int mapChunkSize {
 		get {
@@ -54,7 +58,9 @@ public class MapGenerator : MonoBehaviour {
 	public void DrawMapInEditor() {
 		
 		// Texture update
-		textureData.UpdateMeshHeights (terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+		// textureData.UpdateMeshHeights (terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+		updateTerrainRenderer.UpdateMeshHeights(terrainData.minHeight, terrainData.maxHeight);
+		
 		
 		// Generate map data : PerlinNoise map and colour map with all parameters
 		MapData mapData = GenerateMapData (Vector2.zero);
@@ -114,11 +120,11 @@ public class MapGenerator : MonoBehaviour {
 			noiseData.OnValuesUpdated -= OnValuesUpdated;
 			noiseData.OnValuesUpdated += OnValuesUpdated;
 		}
-		if (textureData != null)
-		{
-			textureData.OnValuesUpdated -= OnTextureValuesUpdated;
-			textureData.OnValuesUpdated += OnTextureValuesUpdated;
-		}
+		// if (textureData != null)
+		// {
+		// 	textureData.OnValuesUpdated -= OnTextureValuesUpdated;
+		// 	textureData.OnValuesUpdated += OnTextureValuesUpdated;
+		// }
 	}
 }
 
