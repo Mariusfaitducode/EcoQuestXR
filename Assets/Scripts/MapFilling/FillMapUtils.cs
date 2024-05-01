@@ -48,4 +48,42 @@ public class FillMapUtils : MonoBehaviour
     }
     
     
+    
+    
+    public static float GetHeightFromRaycast(Vector3 worldPosition, float maxRaycastDistance = 500f)
+    {
+        Vector3 rayStart = new Vector3(worldPosition.x, worldPosition.y + maxRaycastDistance, worldPosition.z);
+        Vector3 rayDirection = Vector3.down;
+
+        RaycastHit[] hits = Physics.RaycastAll(rayStart, rayDirection, maxRaycastDistance * 2);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("Terrain"))
+            {
+                return hit.point.y;
+            }
+        }
+        Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        return worldPosition.y; // Retourner une valeur par défaut ou générer une erreur selon votre gestion d'erreurs
+        
+    }
+
+
+    public static void SetChildHeight(GameObject parent)
+    {
+        if (parent.transform.childCount > 0)
+        {
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                GameObject child = parent.transform.GetChild(i).gameObject;
+                var position = child.transform.position;
+                position = new Vector3(position.x, GetHeightFromRaycast(position), position.z);
+                child.transform.position = position;
+            }
+        }
+    }
+    
+    
+    
 }
