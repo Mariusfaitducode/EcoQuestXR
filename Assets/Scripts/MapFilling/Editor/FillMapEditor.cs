@@ -22,5 +22,9 @@ public class FillMapEditor : Editor {
         if (GUILayout.Button ("Fill Area")) {
             fillMap.FillAreaInEditor();
         }
+        
+        if (GUILayout.Button ("Generate Roads")) {
+            fillMap.GenerateRoadOnMapInEditor();
+        }
     }
 }

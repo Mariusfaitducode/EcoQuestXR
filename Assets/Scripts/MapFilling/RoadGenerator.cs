@@ -32,7 +32,7 @@ public static class RoadGenerator
         }
     }
     
-    public static int[,] GenerateRoadContent(Area area)
+    public static int[,] GenerateRoadArea(Area area)
     {
         int width = area.areaGrid.GetLength(0);
         int height = area.areaGrid.GetLength(1);
@@ -49,7 +49,6 @@ public static class RoadGenerator
             for (int j = 0; j < height; j++)
             {
                 grid[i, j] = 1;
-                
             }
         }
         
@@ -78,59 +77,111 @@ public static class RoadGenerator
                 nextRoadCount += GenerateGaussian((double)area.data.pavilionHeightMean);
                 
             }
-
-
-
         }
-        
-        // Initialise avec une route centrale
-        //for (int i = 0; i < width; i++) {
-        //    area.areaGrid[i, height / 2].type = CellType.Road;
-        //    grid[i, height / 2] = 1;
-        //}
-        //for (int i = 0; i < height; i++) {
-        //    area.areaGrid[width / 2, i].type = CellType.Road;
-        //    grid[width / 2, i] = 1;
-        //}
-
-        //for (int i = 0; i < 1; i++)
-        //{
-        //    for (int x = 1; x < width - 1; x++) {
-        //        for (int y = 1; y < height - 1; y++) {
-        //            int neighbors = CountRoadNeighbors(grid, x, y);
-                
-        //            Debug.Log("Neighbors : " + neighbors);
-
-        //            newGrid[x, y] = 0;
-                    
-        //            // Règle d'expansion et de branchement
-        //            // Règle d'expansion avec probabilité ajustée
-        //            // Ajout de probabilité et condition supplémentaire pour devenir route
-        //            if (grid[x, y] == 0 && neighbors >= 3 && Random.value < 0.3) {
-        //                newGrid[x, y] = 1;
-        //            } else if (grid[x, y] == 1 && (neighbors < 2 || neighbors > 4)) {
-        //                newGrid[x, y] = 0; // Routes trop isolées ou trop encombrées disparaissent
-        //            }
-        //        }
-        //    }
-        //    grid = newGrid;
-        //}
         
         return  grid;
+    }
 
+
+
+    public static List<Vector3> FindNeighbours(Vector3 position, float angle, float radius, float scale)
+    {
+        List<Vector3> neighbours = new List<Vector3>();
+
+        float angleRad = 0;
+        
+        while (angleRad < 2 * Mathf.PI)
+        {
+            float x = position.x + radius * Mathf.Cos(angleRad);
+            float z = position.z + radius * Mathf.Sin(angleRad);
+            
+            float y = FillMapUtils.GetHeightFromRaycast(new Vector3(x, position.y, z));
+            
+            neighbours.Add(new Vector3(x, y, z) * scale);
+            
+            angleRad += Mathf.Deg2Rad * angle;
+        }
         
         
+        return neighbours;
+    }
+
+    public struct  PathPoint
+    {
+        public Vector3 position;
+        // float weight;
+        public int count;
+        
+        public PathPoint(Vector3 position,  int count)
+        {
+            this.position = position;
+            // this.weight = weight;
+            this.count = count;
+        }
+        
+        public float GetWeight(Vector3 end)
+        {
+            return Vector3.Distance(position, end) + count;
+        }
+    }
+
+    public static void FindPathWithAStar(Vector3 start, Vector3 end, float angle, float radius, GameObject testCube, float scale, GameObject roadParent)
+    {
+        int count = 0;
+        
+        List<PathPoint> exploredVertices = new List<PathPoint>();
+
+        // Vector3 newPosition = start;
+        
+        PathPoint newPoint = new PathPoint(start, 0);
+        exploredVertices.Add(newPoint);
+        
+        int i = 0;
+        
+        while (!Arrive(newPoint.position, end, 20) && i < 200)
+        {
+            List<Vector3> neighbours = FindNeighbours(newPoint.position, angle, radius, scale);
+            
+            PathPoint nextPoint = ChooseNextPosition(neighbours, end, newPoint);
+            
+            exploredVertices.Add(nextPoint);
+            newPoint = nextPoint;
+            
+            GameObject cube = GameObject.Instantiate(testCube, newPoint.position * scale, Quaternion.identity);
+            cube.transform.parent = roadParent.transform;
+            i++;
+        }
     }
     
-    static int CountRoadNeighbors(int[,] grid, int x, int y) {
-        int count = 0;
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                if ((dx != 0 || dy != 0) && grid[x + dx, y + dy] == 1) {
-                    count++;
-                }
+    public static PathPoint ChooseNextPosition(List<Vector3> neighbours, Vector3 end, PathPoint lastPoint)
+    {
+        PathPoint nextPoint = new PathPoint();
+        
+        Vector3 nextPosition = Vector3.zero;
+        
+        float minWeight = float.MaxValue;
+        
+        foreach (Vector3 neighbour in neighbours)
+        {
+            PathPoint point = new PathPoint(neighbour, lastPoint.count + 1);
+            
+            float weight = point.GetWeight(end);
+            
+            if (weight < minWeight)
+            {
+                minWeight = weight;
+                nextPoint = point;
+                nextPosition = neighbour;
             }
         }
-        return count;
+        neighbours.Remove(nextPosition);
+        
+        return nextPoint;
     }
+    
+    public static bool Arrive(Vector3 position, Vector3 end, float radius)
+    {
+        return Vector3.Distance(position, end) < radius;
+    }
+    
 }

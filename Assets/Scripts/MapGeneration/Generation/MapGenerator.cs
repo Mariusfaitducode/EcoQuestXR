@@ -16,7 +16,7 @@ public class MapGenerator : MonoBehaviour {
 	
 	public UpdateTerrainRenderer updateTerrainRenderer;
 	
-	public Material terrainMaterial;
+	// public Material terrainMaterial;
 	
 	// public FillMapArea fillMapArea;
 	
