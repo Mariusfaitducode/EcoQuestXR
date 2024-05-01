@@ -6,7 +6,7 @@ public static class FillArea
 {
 
 
-    public static void GenerateAreaContent(Area area, int[,] roads)
+    public static void GenerateAreaContent(Area area, int[,] roads, float scale)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
 
@@ -23,11 +23,13 @@ public static class FillArea
                 if (roads[i, j] == 1)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                            area.uniformStartSize))
+                            area.uniformStartRadius))
                     {
                         GameObject cube = GameObject.Instantiate(area.testCube, newPosition, Quaternion.identity);
+                        
                         cube.transform.parent = area.sphere.transform;
-                
+                        cube.transform.localScale= new Vector3(scale, scale, scale) * 0.05f;
+                        
                         count++;
                     }
                 }

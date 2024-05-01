@@ -26,8 +26,10 @@ public class Area
     
     public GameObject testCube;
 
-    internal float uniformSize;
-    internal float uniformStartSize;
+    internal float uniformRadius;
+    internal float uniformStartRadius;
+    
+    internal float gridCellSize;
     
     internal AreaCell[,] areaGrid;
         
@@ -41,7 +43,7 @@ public class Area
     {
 
         int tabSize = data.areaGridSize;
-        float gridCellSize = (data.radius * 2 / tabSize);
+        gridCellSize = (uniformRadius * 2 / tabSize);
         AreaCell[,] gridPoints = new AreaCell[tabSize, tabSize];
 
         // int i = 0;
@@ -50,12 +52,12 @@ public class Area
         
         for (int i = 0; i < tabSize; i++) {
             
-            float x = center.x - data.radius + i * gridCellSize;
+            float x = center.x - uniformRadius + i * gridCellSize;
             
             
             for (int j = 0; j < tabSize; j++) {
                 
-                float z = center.z - data.radius + j * gridCellSize;
+                float z = center.z - uniformRadius + j * gridCellSize;
                 
                 AreaCell cell = new AreaCell();
                 
@@ -64,7 +66,7 @@ public class Area
                 
                 cell.position = pos;
                 
-                if (Vector3.Distance(pos, center) <= data.radius) {
+                if (Vector3.Distance(pos, center) <= uniformRadius) {
                     cell.inArea = true;
                 }
                 

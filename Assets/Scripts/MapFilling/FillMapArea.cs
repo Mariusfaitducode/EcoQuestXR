@@ -88,15 +88,15 @@ public class FillMapArea : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
 
-            area.uniformSize = area.data.radius * uniformScale;
-            area.uniformStartSize = area.data.startSize * uniformScale;
+            area.uniformRadius = area.data.radius * uniformScale;
+            area.uniformStartRadius = area.data.startSize * uniformScale;
             
             area.CreateGrid();
             
 
             int[,] roads = RoadGenerator.GenerateRoadContent(area);
             
-            FillArea.GenerateAreaContent(area, roads);
+            FillArea.GenerateAreaContent(area, roads, uniformScale);
             
             
         }

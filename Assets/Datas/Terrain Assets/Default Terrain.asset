@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default Terrain
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  uniformScale: 1
+  uniformScale: 0.8
   useFlatShading: 0
   useFalloff: 1
   falloffStart: 0.721
@@ -32,17 +32,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.12502001
-      value: 0.13982667
-      inSlope: 0.8372425
-      outSlope: 0.8372425
+      time: 0.05446326
+      value: 0.09069236
+      inSlope: 0.35081688
+      outSlope: 0.35081688
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.43075815
     - serializedVersion: 3
-      time: 0.22394958
-      value: 0.20451215
+      time: 0.24612866
+      value: 0.14682247
       inSlope: -0.0034809865
       outSlope: -0.0034809865
       tangentMode: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
       inWeight: 1
       outWeight: 0
     - serializedVersion: 3
-      time: 0.39832795
-      value: 0.21455231
+      time: 0.4950992
+      value: 0.23377839
       inSlope: 0.013263353
       outSlope: 0.013263353
       tangentMode: 0
