@@ -5,21 +5,30 @@ using UnityEngine;
 
 public static class Utils
 {
-    public static bool Collide(GameObject map, Vector3 circleLocation, float circleRadius, Vector3 newLocation)
+    public static bool Collide(float mapSize, float mapRotation, Vector3 circleLocation, float circleRadius, Vector3 newLocation)
     {
-        Renderer renderer = map.GetComponent<Renderer>();
-        float size = renderer.bounds.size.x;
-        float delta = size / 2 - circleRadius;
         
-        float leftBound = newLocation.x - delta;
-        float rightBound = newLocation.x + delta;
-        float downBound = newLocation.z - delta;
-        float upBound = newLocation.z + delta;
+        Debug.Log("Map Size : " + mapSize);
+        
+        float delta = mapSize / 2 - circleRadius;
+        
+        // Debug.Log("delta : " + delta);
 
-        if (circleLocation.x < leftBound |
-            circleLocation.x > rightBound |
-            circleLocation.z < downBound |
-            circleLocation.z > upBound)
+        Vector3 circlePosition = circleLocation - newLocation;
+        
+        // float theta = 0.785398f; 
+        
+        float x = circlePosition.x * Mathf.Cos(mapRotation) - circlePosition.z * Mathf.Sin(mapRotation);
+        float z = circlePosition.x * Mathf.Sin(mapRotation) + circlePosition.z * Mathf.Cos(mapRotation);
+
+        Vector3 rotatedPosition =  new Vector3(x, circlePosition.y, z);
+
+        // Debug.Log("Map Rotation : " + mapRotation);
+        // Debug.Log("Circle Position : " + circlePosition);
+        Debug.Log("Rotated Position : " + rotatedPosition);
+
+        
+        if (Mathf.Abs(x) > delta || Mathf.Abs(z) > delta)
         {
             return true;
         }
