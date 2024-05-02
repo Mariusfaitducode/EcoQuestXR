@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class FillMapArea : MonoBehaviour
 {
     
-
-    public GameObject cubePrefab;
-
-    [System.Serializable]
-    
-
     public struct Sphere
     {
         public Vector3 position;
@@ -20,7 +15,7 @@ public class FillMapArea : MonoBehaviour
     }
     
     public float minHeight = 0.1f;
-    public float flatnessThreshold = 0.1f;
+    
     
     public int maxTries = 5;
     public int maxMapIteration = 200;
@@ -58,12 +53,19 @@ public class FillMapArea : MonoBehaviour
     public void PlaceAreaOnMap(MeshData meshData, float uniformScale)
     {
         // int maxTries = this.maxTries;
-        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, this.maxTries, maxMapIteration);
-        Debug.Log(this.maxTries + " tries");
+        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData, uniformScale,  minHeight,  this.maxTries, maxMapIteration);
+        // Debug.Log(this.maxTries + " tries");
 
         if (validPosition)
         {
             Debug.Log("All areas placed successfully");
+            
+            foreach (Area area in areas)
+            {
+                area.position = area.sphere.transform.position;
+                FillMapUtils.SetChildHeight(area.sphere);
+            }
+            
         }
         else
         {
@@ -79,20 +81,24 @@ public class FillMapArea : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-                
-            // On récupère les vertices à l'intérieur du cercle
-            for (int j = 0; j < meshData.vertices.Length; j++)
+            //Destroy all children
+            while (area.sphere.transform.childCount > 0)
             {
-                if (FillMapUtils.IsVertexInsideCircle(meshData.vertices[j], area.sphere.transform.position / uniformScale, area.data.size))
-                {
-                    area.vertices.Add(meshData.vertices[j]);
-                }
-            }
-            foreach (Transform child in area.sphere.transform)
-            {
+                Transform child = area.sphere.transform.GetChild(0);
                 DestroyImmediate(child.gameObject);
             }
-            FillArea.GenerateAreaContent(area, uniformScale);
+
+            area.uniformRadius = area.data.radius * uniformScale;
+            area.uniformStartRadius = area.data.startSize * uniformScale;
+            
+            area.CreateGrid();
+            
+
+            int[,] roads = RoadGenerator.GenerateRoadContent(area);
+            
+            FillArea.GenerateAreaContent(area, roads, uniformScale);
+            
+            
         }
         
     }

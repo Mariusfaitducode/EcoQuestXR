@@ -5,7 +5,7 @@ using UnityEngine;
 public static class SetAreaPosition
 {
     
-    public static bool FindAreaPosition(List<Area> areas, MeshData meshData, float uniformScale, float minHeight, float flatnessThreshold, int triesLeft, int maxMapIteration)
+    public static bool FindAreaPosition(List<Area> areas, MeshData meshData, float uniformScale, float minHeight, int triesLeft, int maxMapIteration)
     {
         if (triesLeft <= 0)
         {
@@ -43,7 +43,7 @@ public static class SetAreaPosition
                 bool collision = false;
                 foreach (FillMapArea.Sphere otherSphere in placedSpheres)
                 {
-                    if (FillMapUtils.AreSpheresColliding(newPosition, area.data.size, otherSphere.position, otherSphere.size))
+                    if (FillMapUtils.AreSpheresColliding(newPosition, area.data.radius, otherSphere.position, otherSphere.size))
                     {
                         collision = true;
                         break;
@@ -62,19 +62,19 @@ public static class SetAreaPosition
                 // On récupère les vertices à l'intérieur du cercle
                 for (int j = 0; j < vertices.Length; j++)
                 {
-                    if (FillMapUtils.IsVertexInsideCircle(vertices[j], newPosition, area.data.size))
+                    if (FillMapUtils.IsVertexInsideCircle(vertices[j], newPosition, area.data.radius))
                     {
                         verticesInsideCircle.Add(vertices[j]);
                     }
                 }
                 
                 // Si la surface est plane, on place l'area
-                if (FillMapUtils.IsSurfaceFlat(verticesInsideCircle, flatnessThreshold))
+                if (FillMapUtils.IsSurfaceFlat(verticesInsideCircle, area.flatnessThreshold))
                 {
                     area.SetPosition(newPosition);
                     PlaceSphere(area, uniformScale);
                     
-                    placedSpheres.Add(new FillMapArea.Sphere { position = area.position, size = area.data.size, type = area.data.type});
+                    placedSpheres.Add(new FillMapArea.Sphere { position = area.position, size = area.data.radius, type = area.data.type});
                     
                     validPosition = true;
                 }
@@ -83,7 +83,7 @@ public static class SetAreaPosition
 
             if (!validPosition)
             {
-                return FindAreaPosition(areas, meshData, uniformScale,  minHeight, flatnessThreshold, triesLeft, maxMapIteration);
+                return FindAreaPosition(areas, meshData, uniformScale,  minHeight, triesLeft - 1, maxMapIteration);
             }
             
             // Debug.Log("Attempts done : "+ area.type + " : "+ attempts);
@@ -96,7 +96,7 @@ public static class SetAreaPosition
         Vector3 newPosition = area.position * scale;
 
         GameObject sphere = area.sphere;
-        float radius = area.data.size;
+        float radius = area.data.radius;
         
         sphere.transform.position = newPosition;
         

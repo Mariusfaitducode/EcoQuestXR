@@ -6,23 +6,57 @@ public static class FillArea
 {
 
 
-    public static void GenerateAreaContent(Area area, float scale)
+    public static void GenerateAreaContent(Area area, int[,] roads, float scale)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
-        
+
         int count = 0;
-        
-        for (int i = 0; i < area.vertices.Count; i++)
+
+
+        for (int i = 0; i < area.areaGrid.GetLength(0); i++)
         {
-            if (Random.Range(0, 100) < 20)
+            for (int j = 0; j < area.areaGrid.GetLength(0); j++)
             {
-                count++;
-                Vector3 newPosition = area.vertices[i] * scale;
-                
-                GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-                cube.transform.parent = area.sphere.transform;
+                Vector3 newPosition = area.areaGrid[i, j].position;
+
+
+                if (roads[i, j] == 1)
+                {
+                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                            area.uniformStartRadius))
+                    {
+                        GameObject cube = GameObject.Instantiate(area.testCube, newPosition, Quaternion.identity);
+                        
+                        cube.transform.parent = area.sphere.transform;
+                        cube.transform.localScale= new Vector3(scale, scale, scale) * 0.05f;
+                        
+                        count++;
+                    }
+                }
+                else
+                {
+                    Debug.Log("NO ROAD");
+                }
+
+
             }
         }
-        Debug.Log(count + " prefabs instantiated");
+
+
+
+        // for (int i = 0; i < startVertices.Count; i++)
+        // {
+        //         
+        //     count++;
+        //     Vector3 newPosition = startVertices[i];
+        //     newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
+        //             
+        //     Debug.Log(newPosition.y);
+        //         
+        //     GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
+        //     cube.transform.parent = area.sphere.transform;
+        //         
+        // }
+        // Debug.Log(count + " prefabs instantiated");
     }
 }
