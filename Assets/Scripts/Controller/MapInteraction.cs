@@ -6,6 +6,15 @@ using UnityEngine.EventSystems;
 
 public static class MapInteraction 
 {
+
+
+
+    public static void Controller()
+    {
+        
+    }
+    
+    
     
     public static void Scale(Transform transform, Vector2 leftAxis, float scalingSpeed)
     {
@@ -72,14 +81,14 @@ public static class MapInteraction
         // mapTransform.position = newCoordinates;
 
         
-        if (!Utils.Collide(mapSize, mapRotation,tableTransform.position, limitTerrain, newCoordinates))
-        {
-            mapTransform.position = newCoordinates;
-        }
-        else
-        {
-            Debug.Log("Out Of Bound : Left - Right");
-        }
+        // if (!Utils.Collide(mapSize, mapRotation,tableTransform.position, limitTerrain, newCoordinates))
+        // {
+        //     mapTransform.position = newCoordinates;
+        // }
+        // else
+        // {
+        //     Debug.Log("Out Of Bound : Left - Right");
+        // }
     }
 
     // public static void Move()

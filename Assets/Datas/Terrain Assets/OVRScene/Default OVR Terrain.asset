@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default OVR Terrain
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  uniformScale: 0.0035
+  uniformScale: 0.007
   useFlatShading: 0
   useFalloff: 1
   falloffStart: 0.615
