@@ -25,10 +25,9 @@ public static class FillArea
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                             area.uniformStartRadius))
                     {
-                        GameObject cube = GameObject.Instantiate(area.testCube, newPosition, Quaternion.identity);
+                        FillMapUtils.InstantiateObjectWithScale(area.testCube, area.sphere.transform, newPosition,
+                            Vector3.one * area.areaGrid[i, j].size);
                         
-                        cube.transform.parent = area.sphere.transform;
-                        cube.transform.localScale= new Vector3(scale, scale, scale) * 0.05f;
                         
                         count++;
                     }

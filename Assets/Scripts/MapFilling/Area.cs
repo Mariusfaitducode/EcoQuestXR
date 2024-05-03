@@ -65,6 +65,7 @@ public class Area
                 pos.y = FillMapUtils.GetHeightFromRaycast(pos);
                 
                 cell.position = pos;
+                cell.size = gridCellSize;
                 
                 if (Vector3.Distance(pos, center) <= uniformRadius) {
                     cell.inArea = true;

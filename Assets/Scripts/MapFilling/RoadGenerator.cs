@@ -97,7 +97,7 @@ public static class RoadGenerator
             
             float y = FillMapUtils.GetHeightFromRaycast(new Vector3(x, position.y, z));
             
-            neighbours.Add(new Vector3(x, y, z) * scale);
+            neighbours.Add(new Vector3(x, y, z));
             
             angleRad += Mathf.Deg2Rad * angle;
         }
@@ -125,7 +125,7 @@ public static class RoadGenerator
         }
     }
 
-    public static void FindPathWithAStar(Vector3 start, Vector3 end, float angle, float radius, GameObject testCube, float scale, GameObject roadParent)
+    public static void FindPathWithAStar(Vector3 start, Vector3 end, float angle, float radius, GameObject testCube,  GameObject roadParent, float scale, float roadScale)
     {
         int count = 0;
         
@@ -138,7 +138,7 @@ public static class RoadGenerator
         
         int i = 0;
         
-        while (!Arrive(newPoint.position, end, 20) && i < 200)
+        while (!Arrive(newPoint.position, end, 20 * scale) && i < 200 )
         {
             List<Vector3> neighbours = FindNeighbours(newPoint.position, angle, radius, scale);
             
@@ -147,8 +147,10 @@ public static class RoadGenerator
             exploredVertices.Add(nextPoint);
             newPoint = nextPoint;
             
-            GameObject cube = GameObject.Instantiate(testCube, newPoint.position * scale, Quaternion.identity);
-            cube.transform.parent = roadParent.transform;
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, newPoint.position, Vector3.one * scale * roadScale);
+            
+            // GameObject cube = GameObject.Instantiate(testCube, newPoint.position * scale, Quaternion.identity);
+            // cube.transform.parent = roadParent.transform;
             i++;
         }
     }
