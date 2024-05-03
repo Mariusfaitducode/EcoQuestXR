@@ -51,25 +51,6 @@ public class MapController : MonoBehaviour
     
     void Update()
     {
-        // if (!tableFound)
-        // {
-        //     FindTable();
-        //     return;
-        // }
-        // if (!playerHasMoved)
-        // {
-        //     // GetTableLocation();
-        //     SetMapPosition();
-        //     return;
-        // }
-        // Left axis
-        
-        
-        // LEFT AXIS
-        
-        // Vector2 leftAxis = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick);
-
-
 
         if (useKeyboard)
         {
@@ -77,65 +58,23 @@ public class MapController : MonoBehaviour
         }
         else
         {
+            
+            if (!tableFound)
+            {
+                FindTable();
+                return;
+            }
+            if (!playerHasMoved)
+            {
+                // GetTableLocation();
+                SetMapPosition();
+            }
+            else
+            {
+                OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize);
+            }
             // Use OVR controller
         }
-        
-        
-
-
-        // Vector2 leftAxis = ;
-        
-        // Rotate or Scale
-        // if (Math.Abs(leftAxis.x) > 0.5 | Math.Abs(leftAxis.y) > 0.5)
-        // {
-        //     // Check if rotating rather than scaling
-        //     if (Math.Abs(leftAxis.x) > Math.Abs(leftAxis.y))
-        //     {
-        //         MapInteraction.Rotate(this.transform, _table.transform.position, leftAxis, rotationSpeed);
-        //     }
-        //     else
-        //     {
-        //         MapInteraction.Scale(this.transform, leftAxis, scalingSpeed);
-        //         
-        //         Debug.Log("Original Scale : " + originalScale.ToString("F8"));
-        //         Debug.Log("Local scale" + transform.localScale.ToString("F8"));
-        //         Debug.Log("Lossy scale" + transform.lossyScale.ToString("F8"));
-        //         originalSize = originalSize * transform.localScale.x / originalScale + epsilon;
-        //     }
-        // }
-        
-        // Debug.Log("Local scale" + transform.localScale);
-        // Debug.Log("Original Size : " + originalSize);
-        // Debug.Log("Mesh bounds" + _renderer.bounds.size);
-
-        // RIGHT AXIS
-        
-        Vector2 rightAxis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
-
-        // Vector3 vectorPlayer = _table.transform.position - player.transform.position;
-        
-        if (Math.Abs(rightAxis.x) > 0.5 | Math.Abs(rightAxis.y) > 0.5)
-        {
-            // Move horizontal
-            // MapInteraction.Translate(this.transform, table.transform, _renderer, rightAxis, movingSpeed, originalSize);
-        }
-
-        // if (Math.Abs(rightAxis.y) > 0.5)
-        // {
-        //     // Move vertical
-        //     MapInteraction.Translate(this.transform, _table.transform, _material.GetFloat("_Limit_Terrain"), rightAxis, movingSpeed);
-        //
-        // }
-        
-        bool rightButtonThumbstickTemp = OVRInput.Get(OVRInput.RawButton.RThumbstick);
-
-        
-        
-        // Click left axis
-        
-        
-        
-        
         
     }
     

@@ -162,18 +162,10 @@ public class FillMapArea : MonoBehaviour
             }
         }
         
-        // TODO : Rely vertex1 to vertex2 with A* pathfinding
-        
-        // List<Vector3> neighbours = RoadGenerator.FindNeighbours(randVertex, 45, 10);
-        //
-        // foreach (Vector3 neighbour in neighbours)
-        // {
-        //     GameObject cube = GameObject.Instantiate(testCube, neighbour * uniformScale, Quaternion.identity);
-        //     cube.transform.parent = roadParent.transform;
-        // }
         
         
-        RoadGenerator.FindPathWithAStar(randVertex * uniformScale, randVertex2 * uniformScale, 45, 15 * uniformScale, testCube, roadParent, uniformScale, roadScale);
+        
+        FindPath.FindPathWithAStar(areas,randVertex * uniformScale, randVertex2 * uniformScale, 45, 15 * uniformScale, testCube, roadParent, uniformScale, roadScale);
         
         
         

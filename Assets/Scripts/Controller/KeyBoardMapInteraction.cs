@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class KeyBoardMapInteraction
@@ -22,14 +23,27 @@ public static class KeyBoardMapInteraction
         }
         else
         {
-            // Translation
-            // x
-            if (Input.GetKey(KeyCode.UpArrow)) { MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, Vector2.up, settings.movingSpeed, mapSize); }
-            else if (Input.GetKey(KeyCode.DownArrow)){ MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, Vector2.down, settings.movingSpeed, mapSize); }
+            int leftKey = Input.GetKey(KeyCode.LeftArrow) ? 1 : 0;
+            int rightKey = Input.GetKey(KeyCode.RightArrow) ? 1 : 0;
+            int upKey = Input.GetKey(KeyCode.UpArrow) ? 1 : 0;
+            int downKey = Input.GetKey(KeyCode.DownArrow) ? 1 : 0;
             
-            // z
-            if (Input.GetKey(KeyCode.RightArrow)) { MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, Vector2.right, settings.movingSpeed, mapSize); }
-            else if (Input.GetKey(KeyCode.LeftArrow)) { MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, Vector2.left, settings.movingSpeed, mapSize); }
+            Vector2 vectorPlayer = new Vector2(rightKey - leftKey, upKey - downKey);
+
+            if (vectorPlayer != Vector2.zero)
+            {
+                float mapRotation = objectRenderer.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+                //
+                vectorPlayer = MapMouvement.RotateReference(vectorPlayer, mapRotation);
+                
+                Vector2 xVectorPlayer = MapMouvement.RotateReference(new Vector2(vectorPlayer.x, 0), -mapRotation); 
+                Vector2 yVectorPlayer = MapMouvement.RotateReference(new Vector2(0, vectorPlayer.y), -mapRotation); 
+
+            
+                MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, xVectorPlayer, settings.movingSpeed, mapSize);
+                MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, yVectorPlayer, settings.movingSpeed, mapSize);
+
+            }  
         }
     }
     

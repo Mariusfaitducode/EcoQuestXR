@@ -222,10 +222,10 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _Grass_Blend: 0.685
-    - _Grass_Tile: 0.123
-    - _Grass_Tint_Strength: 0.065
+    - _Grass_Tile: 0.523
+    - _Grass_Tint_Strength: 0.28
     - _HeightTransition: 0
-    - _Limit_Terrain: 0.3
+    - _Limit_Terrain: 0.4
     - _Map_Scale: 11.62
     - _MaxHeight: 4.33
     - _Max_Height: 0.16103376
@@ -245,7 +245,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Rocks_Blend: 0.623
-    - _Rocks_Tile: 0.071
+    - _Rocks_Tile: 0.206
     - _Rocks_Tint_Strength: 0.471
     - _Sand_Blend: 0.069
     - _Sand_Tile: 0.058
@@ -260,7 +260,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Snow_Blend: 0
     - _Snow_Tile: 0.065
-    - _Snow_Tint_Strength: 0.302
+    - _Snow_Tint_Strength: 0.248
     - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -279,7 +279,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _Grass_Tint: {r: 0.17900236, g: 0.8679245, b: 0, a: 0}
+    - _Grass_Tint: {r: 0.347603, g: 0.8666667, b: 0, a: 0}
     - _HeightRange: {r: 0, g: 1, b: 0, a: 0}
     - _Map_Center: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

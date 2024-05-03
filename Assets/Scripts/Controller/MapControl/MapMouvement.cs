@@ -12,23 +12,26 @@ public static class MapMouvement
         if (newScale < scalingMin)
         {
             newScale = scalingMin;
+            
         }
-
-        float newRatio = newScale / mapTransform.localScale.x;
         
-        Debug.Log(newScale);
-        Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
-        
-        
-        // Mettre à jour la scale
         mapTransform.localScale = new Vector3(newScale, newScale, newScale);
 
-        // Calculer la nouvelle position relative du pivot
-        Vector3 pivotToPosition = mapTransform.position - pivot;
-        Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
-
-        // Mise à jour de la position pour compenser le scaling autour du pivot
-        mapTransform.position = pivot + newPivotToPosition;
+        // float newRatio = newScale / mapTransform.localScale.x;
+        //
+        // Debug.Log(newScale);
+        // Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
+        //
+        //
+        // // Mettre à jour la scale
+        // mapTransform.localScale = new Vector3(newScale, newScale, newScale);
+        //
+        // // Calculer la nouvelle position relative du pivot
+        // Vector3 pivotToPosition = mapTransform.position - pivot;
+        // Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
+        //
+        // // Mise à jour de la position pour compenser le scaling autour du pivot
+        // mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
 
     }
     
@@ -63,6 +66,14 @@ public static class MapMouvement
         }
     }
     
+    
+    public static Vector2 RotateReference(Vector2 vector, float angle)
+    {
+        float x = vector.x * Mathf.Cos(angle) - vector.y * Mathf.Sin(angle);
+        float y = vector.x * Mathf.Sin(angle) + vector.y * Mathf.Cos(angle);
+        
+        return new Vector2(x, y);
+    }
     
     public static bool Collide(float mapSize, float mapRotation, Vector3 circlePosition, float circleRadius, Vector3 newPosition, Vector2 direction)
     {
