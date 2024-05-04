@@ -14,17 +14,31 @@ public class FillMapArea : MonoBehaviour
         public AreaType type;
     }
     
+    
+    public GameObject testCube;
+    
+    public MapGenerator mapGenerator;
+
+    public GameObject meshTerrain;
+    
+    public GameObject roadParent;
+    
+    public bool autoUpdate;
+    
     public float minHeight = 0.1f;
     
     
     public int maxTries = 5;
     public int maxMapIteration = 200;
     
+    
+    
     public List<Area> areas;
     
-    public MapGenerator mapGenerator;
+    // public RoadData roadData;
     
-    public bool autoUpdate;
+    
+
     
     
     internal bool validPosition = false;
@@ -42,11 +56,18 @@ public class FillMapArea : MonoBehaviour
     public void FillAreaInEditor()
     {
         mapGenerator.DrawMapInEditor();
-
         if (validPosition)
         {
             FillAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         }
+        
+    }
+    
+    public void GenerateRoadOnMapInEditor()
+    {
+        mapGenerator.DrawMapInEditor();
+        
+        GenerateRoadOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         
     }
     
@@ -94,12 +115,60 @@ public class FillMapArea : MonoBehaviour
             area.CreateGrid();
             
 
-            int[,] roads = RoadGenerator.GenerateRoadContent(area);
-            
+            int[,] roads = RoadGenerator.GenerateRoadArea(area);
+
             FillArea.GenerateAreaContent(area, roads, uniformScale);
-            
-            
         }
+        
+        
+        
+        
+    }
+
+    public void GenerateRoadOnMap(MeshData meshData, float uniformScale)
+    {
+
+        float roadScale = 3f;
+        
+        while (roadParent.transform.childCount > 0)
+        {
+            Transform child = roadParent.transform.GetChild(0);
+            DestroyImmediate(child.gameObject);
+        }
+        
+        bool valid = false;
+
+        Vector3 randVertex = meshData.borderVertices[Random.Range(0, mapGenerator.meshData.borderVertices.Length)]; 
+
+        Vector3 randVertex2 = Vector3.zero;
+        
+        while (!valid)
+        {
+            randVertex2 = mapGenerator.meshData.borderVertices[Random.Range(0, mapGenerator.meshData.borderVertices.Length)];
+            
+            float distance = Vector3.Distance(randVertex, randVertex2);
+            
+            
+            Renderer renderer = meshTerrain.GetComponent<Renderer>();
+            
+            Vector3 size = renderer.bounds.size;
+
+            if (distance > size.x)
+            {
+                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex * uniformScale, Vector3.one * uniformScale * roadScale);
+                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2 * uniformScale, Vector3.one * uniformScale * roadScale);
+
+                valid = true;
+            }
+        }
+        
+        
+        
+        
+        FindPath.FindPathWithAStar(areas,randVertex * uniformScale, randVertex2 * uniformScale, 45, 15 * uniformScale, testCube, roadParent, uniformScale, roadScale);
+        
+        
+        
         
     }
 }

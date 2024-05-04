@@ -7,6 +7,8 @@ public enum CellType { Empty, Road, Object, Area };
 public class AreaCell
 {
     public Vector3 position;
+
+    public float size;
     
     public CellType type;
     

@@ -222,10 +222,10 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _Grass_Blend: 0.685
-    - _Grass_Tile: 1
+    - _Grass_Tile: 0.123
     - _Grass_Tint_Strength: 0.065
     - _HeightTransition: 0
-    - _Limit_Terrain: 190.5
+    - _Limit_Terrain: 139.4
     - _Map_Scale: 12.82
     - _MaxHeight: 4.33
     - _Max_Height: 16.505331
@@ -248,7 +248,7 @@ Material:
     - _Rocks_Tile: 0.181
     - _Rocks_Tint_Strength: 0.471
     - _Sand_Blend: 0.069
-    - _Sand_Tile: 0.17
+    - _Sand_Tile: 0.058
     - _Sand_Tint_Strength: 0.236
     - _Shininess: 0
     - _Smoothness: 0.5
@@ -269,8 +269,8 @@ Material:
     - _TestScale: 0
     - _UVSec: 0
     - _Water_Blend: 0.239
-    - _Water_Tile: 0
-    - _Water_Tint_Strength: 0
+    - _Water_Tile: 0.018
+    - _Water_Tint_Strength: 0.109
     - _ZWrite: 1
     - testScale: 31.4
     m_Colors:
@@ -287,5 +287,5 @@ Material:
     - _Sand_Tint: {r: 0.9622642, g: 0.9396012, b: 0.5855287, a: 0}
     - _Snow_Tint: {r: 0.9528302, g: 0.9180008, b: 0.6966447, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Water_Tint: {r: 0.07058823, g: 1, b: 0.89926696, a: 0}
+    - _Water_Tint: {r: 0.07058823, g: 0.43558702, b: 1, a: 0}
   m_BuildTextureStacks: []

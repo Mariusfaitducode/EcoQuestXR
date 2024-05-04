@@ -73,7 +73,7 @@ public class MeshData {
 	Vector2[] uvs;
 	Vector3[] bakedNormals;
 
-	Vector3[] borderVertices;
+	public Vector3[] borderVertices;
 	int[] borderTriangles;
 
 	int triangleIndex;
