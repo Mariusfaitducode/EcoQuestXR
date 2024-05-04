@@ -62,7 +62,7 @@ public class FillMapUtils : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        // Debug.LogWarning("Raycast did not hit the terrain mesh.");
         return false;
     }
     
@@ -81,7 +81,7 @@ public class FillMapUtils : MonoBehaviour
                 return hit.point.y;
             }
         }
-        Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        // Debug.LogWarning("Raycast did not hit the terrain mesh.");
         return worldPosition.y; // Retourner une valeur par défaut ou générer une erreur selon votre gestion d'erreurs
         
     }

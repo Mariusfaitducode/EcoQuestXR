@@ -42,10 +42,14 @@ public static class RoadGenerator
             randVertex2 = mapGenerator.meshData.borderVertices[Random.Range(0, mapGenerator.meshData.borderVertices.Length)];
             
             float distance = Vector3.Distance(randVertex, randVertex2);
+
+            // Renderer meshRenderer = meshTerrain.GetComponent<MeshFilter>();
             
-            Renderer meshRenderer = meshTerrain.GetComponent<Renderer>();
+            Vector3 size = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size * uniformScale;
             
-            Vector3 size = meshRenderer.bounds.size * 1.4f;
+            Debug.Log(size);
+            
+            
 
             if (distance > size.x)
             {

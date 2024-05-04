@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoUpdate: 0
   type: 1
+  areaId: 4
   radius: 22
   startSize: 18
   areaGridSize: 12

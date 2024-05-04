@@ -18,6 +18,8 @@ public class FillMapArea : MonoBehaviour
     public GameObject testCube;
     
     public MapGenerator mapGenerator;
+    
+    public MapDisplay mapDisplay;
 
     public GameObject meshTerrain;
     
@@ -61,6 +63,15 @@ public class FillMapArea : MonoBehaviour
             FillAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         }
         
+    }
+    
+    public void SetAreaShaderInEditor()
+    {
+        mapGenerator.DrawMapInEditor();
+        if (validPosition)
+        {
+            SetAreaShader(mapGenerator.meshData);
+        }
     }
     
     public void GenerateRoadOnMapInEditor()
@@ -118,10 +129,21 @@ public class FillMapArea : MonoBehaviour
 
             FillArea.GenerateAreaContent(area, roads, uniformScale);
         }
-        
-        
-        
-        
+    }
+
+
+    public void SetAreaShader(MeshData meshData)
+    {
+        foreach (Area area in areas)
+        {
+            FillArea.SetAreaVerticesInformation(area, meshData);
+            
+        }
+        Debug.Log(meshData);
+
+        mapDisplay.DrawMesh(meshData);
+
+
     }
 
     public void GenerateRoadOnMap(MeshData meshData, float uniformScale)

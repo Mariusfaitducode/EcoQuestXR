@@ -9,21 +9,10 @@ public class Area
 {
     
     public AreaData data;
-    
-    
     public float flatnessThreshold = 0.1f;
-    
-    
     internal Vector3 position;
     
-    
-    
-    // public bool valid;
-
-        
-    
     public GameObject sphere;
-    
     public GameObject testCube;
 
     internal float uniformRadius;

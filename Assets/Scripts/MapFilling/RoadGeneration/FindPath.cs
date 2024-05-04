@@ -139,7 +139,6 @@ public class FindPath
         {
             if (FillMapUtils.IsVertexInsideCircle(new Vector3(newPosition.x, newPosition.y, newPosition.z), area.sphere.transform.position, area.uniformRadius))
             {
-                Debug.Log("Iniside circle");
                 notValid = true;
             }
         }
@@ -148,7 +147,6 @@ public class FindPath
 
         if ((parent.position.y > roadData.roadMinHeight && newPosition.y > roadData.roadMinHeight) && Mathf.Abs(newPosition.y - parent.position.y) > roadData.mountainGap)
         {
-            Debug.Log("FindMountain");
             notValid = true;
         }
             

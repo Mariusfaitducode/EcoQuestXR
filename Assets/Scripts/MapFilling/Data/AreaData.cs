@@ -7,6 +7,8 @@ using UnityEngine;
 public class AreaData : UpdatableData
 {
     public AreaType type;
+    public int areaId;
+    
     // internal Vector3 position;
     public int radius;
     
