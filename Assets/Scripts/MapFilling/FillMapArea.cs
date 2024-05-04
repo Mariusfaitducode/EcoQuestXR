@@ -81,6 +81,13 @@ public class FillMapArea : MonoBehaviour
         GenerateRoadOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         
     }
+
+    public void GenerateRiverInEditor()
+    {
+        mapGenerator.DrawMapInEditor();
+        SetRiverShader(mapGenerator.meshData);
+
+    }
     
     public void PlaceAreaOnMap(MeshData meshData, float uniformScale)
     {
@@ -144,6 +151,20 @@ public class FillMapArea : MonoBehaviour
         mapDisplay.DrawMesh(meshData);
 
 
+    }
+
+    public void SetRiverShader(MeshData meshData)
+    {
+        // Trouver le GameObject parent
+        GameObject roadParent = GameObject.Find("RoadParent");
+        
+        // Récupérer tous les enfants du GameObject parent
+        Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
+        
+        RiverGeneration.Generate(transforms, roadParent.transform, meshData, 5);
+        
+        
+        mapDisplay.DrawMesh(meshData);
     }
 
     public void GenerateRoadOnMap(MeshData meshData, float uniformScale)

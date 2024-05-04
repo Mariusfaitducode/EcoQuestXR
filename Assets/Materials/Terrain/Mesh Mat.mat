@@ -38,7 +38,8 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _TransparentDegree: 0
     m_Colors:
     - _Grass_Tint: {r: 0.17900236, g: 0.8679245, b: 0, a: 0}
     - _Rocks_Tint: {r: 0.745283, g: 0.42572758, b: 0.13710396, a: 0}
