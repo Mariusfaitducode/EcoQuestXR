@@ -127,6 +127,8 @@ public class FillMapArea : MonoBehaviour
 
     public void GenerateRoadOnMap(MeshData meshData, float uniformScale)
     {
+
+        float roadScale = 3f;
         
         while (roadParent.transform.childCount > 0)
         {
@@ -153,28 +155,17 @@ public class FillMapArea : MonoBehaviour
 
             if (distance > size.x)
             {
-                GameObject cube = GameObject.Instantiate(testCube, randVertex * uniformScale, Quaternion.identity);
-                GameObject cube2 = GameObject.Instantiate(testCube, randVertex2 * uniformScale, Quaternion.identity);
+                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex * uniformScale, Vector3.one * uniformScale * roadScale);
+                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2 * uniformScale, Vector3.one * uniformScale * roadScale);
 
-                cube.transform.parent = roadParent.transform;
-                cube2.transform.parent = roadParent.transform;
-                
                 valid = true;
             }
         }
         
-        // TODO : Rely vertex1 to vertex2 with A* pathfinding
-        
-        // List<Vector3> neighbours = RoadGenerator.FindNeighbours(randVertex, 45, 10);
-        //
-        // foreach (Vector3 neighbour in neighbours)
-        // {
-        //     GameObject cube = GameObject.Instantiate(testCube, neighbour * uniformScale, Quaternion.identity);
-        //     cube.transform.parent = roadParent.transform;
-        // }
         
         
-        RoadGenerator.FindPathWithAStar(randVertex, randVertex2, 45, 10, testCube, uniformScale, roadParent);
+        
+        FindPath.FindPathWithAStar(areas,randVertex * uniformScale, randVertex2 * uniformScale, 45, 15 * uniformScale, testCube, roadParent, uniformScale, roadScale);
         
         
         

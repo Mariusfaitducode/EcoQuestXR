@@ -18,7 +18,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
         UpdateCenter();
     }
 
-    void UpdateCenter()
+    public void UpdateCenter()
     {
         
         _material.SetVector("_Map_Center", new Vector2(this.transform.position.x, this.transform.position.z));
@@ -38,6 +38,6 @@ public class UpdateTerrainRenderer : MonoBehaviour
     void Update()
     {
         // Update center continuously if needed, or call UpdateCenter() only when necessary
-        UpdateCenter();
+        // UpdateCenter();
     }
 }
