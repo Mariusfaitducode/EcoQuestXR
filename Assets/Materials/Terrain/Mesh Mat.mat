@@ -39,9 +39,17 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _River_AreaId: 7
+    - _River_Flow_Speed: 0.005
+    - _River_Foam_Density: 241.61
+    - _River_Foam_Speed: 0.5
+    - _River_Foam_Thickness: 4.87
     - _TransparentDegree: 0
     m_Colors:
     - _Grass_Tint: {r: 0.17900236, g: 0.8679245, b: 0, a: 0}
+    - _River_Color: {r: 0.19508718, g: 0.31674567, b: 0.754717, a: 1}
+    - _River_Flow_Direction: {r: 0.5, g: 0.6, b: 0, a: 0}
+    - _River_Foam_Color: {r: 0.1830188, g: 0.96193695, b: 1, a: 1}
     - _Rocks_Tint: {r: 0.745283, g: 0.42572758, b: 0.13710396, a: 0}
     - _Sand_Tint: {r: 0.9622642, g: 0.9396012, b: 0.5855287, a: 0}
     - _Snow_Tint: {r: 0.9528302, g: 0.9180008, b: 0.6966447, a: 0}

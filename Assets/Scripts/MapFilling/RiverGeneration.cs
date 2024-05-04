@@ -51,10 +51,13 @@ public static class RiverGeneration
         
         // Get vertices
         Vector3[] vertices = meshData.vertices;
+        bool[] isRiver = new bool[vertices.Length];
         
         // Check if vertices are close enough to the centerline of the river
         for (int i = 0; i < vertices.Length; i++)
         {
+            // meshData.uvs[i] = new Vector2(0, 0);
+            // Debug.Log(meshData.uvs[i]);
             foreach (RiverPiece riverPiece in riverPieces)
             {
                 Vector2 vertice2D = new Vector2(vertices[i].x, vertices[i].z);
@@ -67,16 +70,29 @@ public static class RiverGeneration
                     float distPoint1ToPoint2 = Vector2.Distance(riverPiece.Point1, riverPiece.Point2);
                     float maxDistToPoints = (float)Math.Sqrt(distPoint1ToPoint2 * distPoint1ToPoint2 +
                                                              (riverWidth / 2) * (riverWidth / 2));
-                    if (distToPoint1 < maxDistToPoints || distToPoint2 < maxDistToPoints)
+                    Debug.DrawLine(
+                        new Vector3(vertice2D.x, 10, vertice2D.y),
+                        new Vector3(vertice2D.x, 25, vertice2D.y),
+                        Color.red,
+                        100);
+                    if (distToPoint1 < maxDistToPoints && distToPoint2 < maxDistToPoints)
                     {
-                        meshData.uvs[i] = new Vector2(7, 0);
-                        Debug.DrawLine(
-                            new Vector3(vertice2D.x, 10, vertice2D.y),
-                            new Vector3(vertice2D.x, 25, vertice2D.y),
-                            Color.red,
-                            100);
+                        isRiver[i] = true;
+                        // Debug.DrawLine(
+                        //     new Vector3(vertice2D.x, 10, vertice2D.y),
+                        //     new Vector3(vertice2D.x, 25, vertice2D.y),
+                        //     Color.red,
+                        //     100);
                     }
                 }
+            }
+        }
+        // Change all other vertices
+        for (int j = 0; j < vertices.Length; j++)
+        {
+            if (isRiver[j] == false)
+            {
+                meshData.uvs[j] = new Vector2(7, 0);
             }
         }
     }
