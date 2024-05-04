@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FindPath
 {
-    public struct  PathPoint
+    public class  PathPoint
     {
         public Vector3 position;
         // float weight;
         public int count;
+
+        public PathPoint parent;
         
-        public PathPoint(Vector3 position,  int count)
+        public GameObject cube;
+        
+        public PathPoint(Vector3 position, int count, PathPoint parent)
         {
             this.position = position;
             // this.weight = weight;
             this.count = count;
+            
+            this.parent = parent;
         }
+        
         
         public float GetWeight(Vector3 end)
         {
@@ -24,97 +32,166 @@ public class FindPath
     }
     
     
-    public static List<Vector3> FindNeighbours(Vector3 position, float angle, float radius, List<Area> areas)
+    
+    
+    
+    public static void FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, float scale)
     {
-        List<Vector3> neighbours = new List<Vector3>();
+        float angle = roadData.angle;
+        float radius = roadData.edgeLength * scale;
+        float roadScale = roadData.roadScale;
+        
+        int count = 0;
+        
+        List<PathPoint> exploredPoints = new List<PathPoint>();
+        // List<Vector3> exploredVertices = new List<Vector3>();
+
+        PathPoint newPoint = new PathPoint(start, 0, null);
+        
+        exploredPoints.Add(newPoint);
+        // exploredVertices.Add(newPoint.position);
+
+        List<PathPoint> neighbours = new List<PathPoint>(0);
+        
+        int i = 0;
+        
+        // A star search algorithm
+        while (!Arrive(newPoint.position, end, roadData.targetDistance * scale) && i < 500 )
+        {
+            FindNeighbours(neighbours, newPoint, areas, roadData, exploredPoints);
+            
+            PathPoint nextPoint = ChooseNextPosition(neighbours, end, roadData, exploredPoints);
+            
+            exploredPoints.Add(nextPoint);
+            
+            if (nextPoint == null)
+            {
+                Debug.Log("No path found");
+                Debug.Log(neighbours.Count);
+                return;
+            }
+            // exploredVertices.Add(nextPoint.position);
+            newPoint = nextPoint;
+            
+            nextPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, nextPoint.position, Vector3.one * scale * roadScale);
+            nextPoint.cube.GetComponent<Renderer>().material = roadData.testMaterial;
+            
+            i++;
+        }
+
+        // Go back
+        
+        PathPoint lastPoint = newPoint;
+        
+        count = lastPoint.count;
+        
+        while (lastPoint.parent != null)
+        {
+            if (count == lastPoint.count)
+            {
+                lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+            }
+
+            count = lastPoint.count - 1;
+            lastPoint = lastPoint.parent;
+        }
+    }
+    
+    
+    public static void FindNeighbours(List<PathPoint> neighbours, PathPoint parent, List<Area> areas, RoadGenerator.RoadData roadData, List<PathPoint> exploredPoints)
+    {
+        // List<PathPoint> neighbours = new List<PathPoint>();
 
         float angleRad = 0;
         
         while (angleRad < 2 * Mathf.PI)
         {
-            float x = position.x + radius * Mathf.Cos(angleRad);
-            float z = position.z + radius * Mathf.Sin(angleRad);
+            float x = parent.position.x + roadData.edgeLength * Mathf.Cos(angleRad);
+            float z = parent.position.z + roadData.edgeLength * Mathf.Sin(angleRad);
             
-            float y = FillMapUtils.GetHeightFromRaycast(new Vector3(x, position.y, z));
             
-            //Verify point validity
+            bool hit = FillMapUtils.IsHitFromRayCast(new Vector3(x, parent.position.y, z));
 
-            bool insideCircle = false;
-
-            foreach (Area area in areas)
+            if (hit)
             {
-                if (FillMapUtils.IsVertexInsideCircle(new Vector3(x, y, z), area.sphere.transform.position, area.uniformRadius))
+                float y = FillMapUtils.GetHeightFromRaycast(new Vector3(x, parent.position.y, z));
+            
+                bool notValid = ValidPointPosition(new Vector3(x, y, z), areas, roadData, parent, exploredPoints);
+
+                if (!notValid)
                 {
-                    insideCircle = true;
+                    neighbours.Add(new PathPoint(new Vector3(x, y, z), parent.count + 1, parent));
                 }
             }
-
-            if (!insideCircle)
-            {
-                neighbours.Add(new Vector3(x, y, z));
-            }
-            
-            
-            angleRad += Mathf.Deg2Rad * angle;
+            angleRad += Mathf.Deg2Rad * roadData.angle;
         }
-        
-        
-        return neighbours;
     }
-    
-    
-    public static void FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, float angle, float radius, GameObject testCube,  GameObject roadParent, float scale, float roadScale)
-    {
-        int count = 0;
-        
-        List<PathPoint> exploredVertices = new List<PathPoint>();
 
-        // Vector3 newPosition = start;
-        
-        PathPoint newPoint = new PathPoint(start, 0);
-        exploredVertices.Add(newPoint);
-        
-        int i = 0;
-        
-        while (!Arrive(newPoint.position, end, 20 * scale) && i < 200 )
+
+    public static bool ValidPointPosition(Vector3 newPosition, List<Area> areas, RoadGenerator.RoadData roadData, PathPoint parent, List<PathPoint> exploredPoints)
+    {
+        //Verify point validity
+
+        bool notValid = false;
+
+        // No area collision
+        foreach (Area area in areas)
         {
-            List<Vector3> neighbours = FindNeighbours(newPoint.position, angle, radius, areas);
-            
-            PathPoint nextPoint = ChooseNextPosition(neighbours, end, newPoint);
-            
-            exploredVertices.Add(nextPoint);
-            newPoint = nextPoint;
-            
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, newPoint.position, Vector3.one * scale * roadScale);
-            
-            // GameObject cube = GameObject.Instantiate(testCube, newPoint.position * scale, Quaternion.identity);
-            // cube.transform.parent = roadParent.transform;
-            i++;
+            if (FillMapUtils.IsVertexInsideCircle(new Vector3(newPosition.x, newPosition.y, newPosition.z), area.sphere.transform.position, area.uniformRadius))
+            {
+                Debug.Log("Iniside circle");
+                notValid = true;
+            }
         }
+            
+        // No mountain collision
+
+        if ((parent.position.y > roadData.roadMinHeight && newPosition.y > roadData.roadMinHeight) && Mathf.Abs(newPosition.y - parent.position.y) > roadData.mountainGap)
+        {
+            Debug.Log("FindMountain");
+            notValid = true;
+        }
+            
+        // Not placed 
+        foreach( PathPoint point in exploredPoints)
+        {
+            if (Vector3.Distance(point.position, new Vector3(newPosition.x, newPosition.y, newPosition.z)) < roadData.edgeLength * 0.8f)
+            {
+                notValid = true;
+            }
+        }
+        
+        return notValid;
     }
     
-    public static PathPoint ChooseNextPosition(List<Vector3> neighbours, Vector3 end, PathPoint lastPoint)
+    
+    public static PathPoint ChooseNextPosition(List<PathPoint> neighbours, Vector3 end, RoadGenerator.RoadData roadData, List<PathPoint> exploredPoints)
     {
-        PathPoint nextPoint = new PathPoint();
-        
-        Vector3 nextPosition = Vector3.zero;
+        PathPoint nextPoint = null;
         
         float minWeight = float.MaxValue;
         
-        foreach (Vector3 neighbour in neighbours)
+        foreach (PathPoint neighbour in neighbours)
         {
-            PathPoint point = new PathPoint(neighbour, lastPoint.count + 1);
+            float weight = neighbour.GetWeight(end);
+
+            bool notValid = false;
             
-            float weight = point.GetWeight(end);
+            foreach( PathPoint point in exploredPoints)
+            {
+                if (Vector3.Distance(point.position, neighbour.position) < roadData.edgeLength * 0.8f)
+                {
+                    notValid = true;
+                }
+            }
             
-            if (weight < minWeight)
+            if (weight < minWeight && !notValid)
             {
                 minWeight = weight;
-                nextPoint = point;
-                nextPosition = neighbour;
+                nextPoint = neighbour;
             }
         }
-        neighbours.Remove(nextPosition);
+        neighbours.Remove(nextPoint);
         
         return nextPoint;
     }

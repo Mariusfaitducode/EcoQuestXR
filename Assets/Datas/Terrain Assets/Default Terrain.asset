@@ -18,7 +18,7 @@ MonoBehaviour:
   useFalloff: 1
   falloffStart: 0.681
   falloffEnd: 1
-  meshHeightMultiplier: 24.31
+  meshHeightMultiplier: 35.32
   meshHeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -41,8 +41,8 @@ MonoBehaviour:
       inWeight: 1
       outWeight: 0
     - serializedVersion: 3
-      time: 0.1856499
-      value: 0.16818814
+      time: 0.16952136
+      value: 0.12119107
       inSlope: 0.3181186
       outSlope: 0.3181186
       tangentMode: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
       inWeight: 1
       outWeight: 0.64857835
     - serializedVersion: 3
-      time: 0.37413016
-      value: 0.2145486
+      time: 0.3640441
+      value: 0.16968776
       inSlope: 0.12820539
       outSlope: 0.12820539
       tangentMode: 0
@@ -59,8 +59,8 @@ MonoBehaviour:
       inWeight: 0.8745623
       outWeight: 0.4518926
     - serializedVersion: 3
-      time: 0.61688673
-      value: 0.2621843
+      time: 0.5402876
+      value: 0.19382492
       inSlope: 0.511946
       outSlope: 0.511946
       tangentMode: 0

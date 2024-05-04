@@ -35,7 +35,7 @@ public class FillMapArea : MonoBehaviour
     
     public List<Area> areas;
     
-    // public RoadData roadData;
+    public RoadGenerator.RoadData roadData;
     
     
 
@@ -86,7 +86,6 @@ public class FillMapArea : MonoBehaviour
                 area.position = area.sphere.transform.position;
                 FillMapUtils.SetChildHeight(area.sphere);
             }
-            
         }
         else
         {
@@ -128,7 +127,7 @@ public class FillMapArea : MonoBehaviour
     public void GenerateRoadOnMap(MeshData meshData, float uniformScale)
     {
 
-        float roadScale = 3f;
+        // float roadScale = 3f;
         
         while (roadParent.transform.childCount > 0)
         {
@@ -136,36 +135,17 @@ public class FillMapArea : MonoBehaviour
             DestroyImmediate(child.gameObject);
         }
         
-        bool valid = false;
+        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, uniformScale, roadData);
 
-        Vector3 randVertex = meshData.borderVertices[Random.Range(0, mapGenerator.meshData.borderVertices.Length)]; 
 
-        Vector3 randVertex2 = Vector3.zero;
-        
-        while (!valid)
+        if (extremityPoints.Length == 2)
         {
-            randVertex2 = mapGenerator.meshData.borderVertices[Random.Range(0, mapGenerator.meshData.borderVertices.Length)];
+            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData);
             
-            float distance = Vector3.Distance(randVertex, randVertex2);
-            
-            
-            Renderer renderer = meshTerrain.GetComponent<Renderer>();
-            
-            Vector3 size = renderer.bounds.size;
+            FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
 
-            if (distance > size.x)
-            {
-                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex * uniformScale, Vector3.one * uniformScale * roadScale);
-                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2 * uniformScale, Vector3.one * uniformScale * roadScale);
-
-                valid = true;
-            }
         }
         
-        
-        
-        
-        FindPath.FindPathWithAStar(areas,randVertex * uniformScale, randVertex2 * uniformScale, 45, 15 * uniformScale, testCube, roadParent, uniformScale, roadScale);
         
         
         
