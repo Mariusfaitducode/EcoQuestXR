@@ -225,7 +225,7 @@ Material:
     - _Grass_Tile: 0.123
     - _Grass_Tint_Strength: 0.065
     - _HeightTransition: 0
-    - _Limit_Terrain: 139.4
+    - _Limit_Terrain: 61.79
     - _Map_Scale: 12.82
     - _MaxHeight: 4.33
     - _Max_Height: 29.975746
@@ -267,6 +267,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _TestScale: 0
+    - _TransparencyDegree: 0
     - _UVSec: 0
     - _Water_Blend: 0.239
     - _Water_Tile: 0.018
