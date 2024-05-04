@@ -23,6 +23,10 @@ public class FillMapEditor : Editor {
             fillMap.FillAreaInEditor();
         }
         
+        if (GUILayout.Button ("Set Area Shader")) {
+            fillMap.SetAreaShaderInEditor();
+        }
+        
         if (GUILayout.Button ("Generate Roads")) {
             fillMap.GenerateRoadOnMapInEditor();
         }

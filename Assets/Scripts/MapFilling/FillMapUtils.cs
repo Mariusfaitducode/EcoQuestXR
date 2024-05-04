@@ -46,8 +46,25 @@ public class FillMapUtils : MonoBehaviour
         }
         return variance <= flatnessThreshold; // Compare la variance au seuil de planéité
     }
-    
-    
+
+
+    public static bool IsHitFromRayCast(Vector3 worldPosition, float maxRaycastDistance = 500f)
+    {
+        Vector3 rayStart = new Vector3(worldPosition.x, worldPosition.y + maxRaycastDistance, worldPosition.z);
+        Vector3 rayDirection = Vector3.down;
+
+        RaycastHit[] hits = Physics.RaycastAll(rayStart, rayDirection, maxRaycastDistance * 2);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("Terrain"))
+            {
+                return true;
+            }
+        }
+        // Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        return false;
+    }
     
     
     public static float GetHeightFromRaycast(Vector3 worldPosition, float maxRaycastDistance = 500f)
@@ -64,7 +81,7 @@ public class FillMapUtils : MonoBehaviour
                 return hit.point.y;
             }
         }
-        Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        // Debug.LogWarning("Raycast did not hit the terrain mesh.");
         return worldPosition.y; // Retourner une valeur par défaut ou générer une erreur selon votre gestion d'erreurs
         
     }
@@ -85,11 +102,12 @@ public class FillMapUtils : MonoBehaviour
     }
 
 
-    public static void InstantiateObjectWithScale(GameObject prefab, Transform parent, Vector3 position, Vector3 scale)
+    public static GameObject InstantiateObjectWithScale(GameObject prefab, Transform parent, Vector3 position, Vector3 scale)
     {
         GameObject obj = GameObject.Instantiate(prefab, position, Quaternion.identity);
         obj.transform.localScale = scale;
         obj.transform.parent = parent;
+        return obj;
     }
     
     

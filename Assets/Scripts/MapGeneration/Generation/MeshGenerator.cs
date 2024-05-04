@@ -70,7 +70,7 @@ public static class MeshGenerator {
 public class MeshData {
 	public Vector3[] vertices;
 	int[] triangles;
-	Vector2[] uvs;
+	public Vector2[] uvs;
 	Vector3[] bakedNormals;
 
 	public Vector3[] borderVertices;
@@ -98,7 +98,10 @@ public class MeshData {
 		} else {
 			vertices [vertexIndex] = vertexPosition;
 			// "You can put whatever data you want into uv"
-			uvs [vertexIndex] = new Vector2(0, vertexPosition.y);
+			// uvs [vertexIndex] = new Vector2(0, vertexPosition.y);
+
+			uvs[vertexIndex] = uv;
+
 		}
 	}
 

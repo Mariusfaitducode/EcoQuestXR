@@ -28,7 +28,6 @@ public static class FillArea
                         FillMapUtils.InstantiateObjectWithScale(area.testCube, area.sphere.transform, newPosition,
                             Vector3.one * area.areaGrid[i, j].size);
                         
-                        
                         count++;
                     }
                 }
@@ -36,26 +35,45 @@ public static class FillArea
                 {
                     Debug.Log("NO ROAD");
                 }
+            }
+        }
+    }
 
 
+    public static void SetAreaVerticesInformation(Area area, MeshData meshData)
+    {
+        
+        Debug.Log(meshData);
+        Debug.Log(area);
+
+        List<int> listAreaIndex = new List<int>(0);
+        List<Vector3> listAreaVertices = new List<Vector3>(0);
+        List<Vector2> listAreaUV = new List<Vector2>(0);
+        
+        for (int i = 0; i < meshData.vertices.Length; i++)
+        {
+            Vector3 vertex = meshData.vertices[i];
+            if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.uniformRadius))
+            {
+                // Can modify uv information here
+                
+                listAreaIndex.Add(i);
+                listAreaVertices.Add(meshData.vertices[i]);
+                listAreaUV.Add(meshData.uvs[i]);
+                if (area.data.type == AreaType.City)
+                {
+                    meshData.vertices[i] = new Vector3(vertex.x, 20, vertex.z);
+                    meshData.uvs[i] = new Vector2(area.data.areaId, 0);
+                }
             }
         }
 
+        float mean = FillMapUtils.CalculateMean(listAreaVertices);
+        
+        foreach(int index in listAreaIndex)
+        {
+            meshData.vertices[index] = new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z);
+        }
 
-
-        // for (int i = 0; i < startVertices.Count; i++)
-        // {
-        //         
-        //     count++;
-        //     Vector3 newPosition = startVertices[i];
-        //     newPosition.y = FillMapUtils.GetHeightFromRaycast(newPosition);
-        //             
-        //     Debug.Log(newPosition.y);
-        //         
-        //     GameObject cube = GameObject.Instantiate(area.data.prefabs, newPosition, Quaternion.identity);
-        //     cube.transform.parent = area.sphere.transform;
-        //         
-        // }
-        // Debug.Log(count + " prefabs instantiated");
     }
 }
