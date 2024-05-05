@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Terrain/Mesh Mat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Terrain/Mesh Mat.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/RiverGeneration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/RiverGeneration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Terrain/UvComparaison.shadersubgraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Terrain/UvComparaison.shadersubgraph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Terrain/Water.shadersubgraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Terrain/Water.shadersubgraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/FillMapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/FillMapManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGeneration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGeneration.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGenerator.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Terrain/ShaderMap.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Terrain/ShaderMap.shadergraph" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +127,7 @@
       <workItem from="1714829787610" duration="1456000" />
       <workItem from="1714840637339" duration="13361000" />
       <workItem from="1714858826196" duration="4436000" />
+      <workItem from="1714903647743" duration="686000" />
     </task>
     <servers />
   </component>
