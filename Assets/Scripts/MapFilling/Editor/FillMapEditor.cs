@@ -30,5 +30,9 @@ public class FillMapEditor : Editor {
         if (GUILayout.Button ("Generate Roads")) {
             fillMap.GenerateRoadOnMapInEditor();
         }
+        
+        if (GUILayout.Button ("Generate river")) {
+            fillMap.GenerateRiverInEditor();
+        }
     }
 }
