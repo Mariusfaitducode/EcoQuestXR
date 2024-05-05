@@ -14,7 +14,7 @@ public static class SetAreaPosition
         
         Debug.Log("Try number : " + triesLeft);
         
-        List<FillMapArea.Sphere> placedSpheres = new List<FillMapArea.Sphere>();
+        List<FillMapManager.Sphere> placedSpheres = new List<FillMapManager.Sphere>();
         
         for(int i = 0; i < areas.Count; i++)
         {
@@ -41,7 +41,7 @@ public static class SetAreaPosition
                 
                 // Si la position est déjà occupée, on recommence
                 bool collision = false;
-                foreach (FillMapArea.Sphere otherSphere in placedSpheres)
+                foreach (FillMapManager.Sphere otherSphere in placedSpheres)
                 {
                     if (FillMapUtils.AreSpheresColliding(newPosition, area.data.radius, otherSphere.position, otherSphere.size))
                     {
@@ -74,7 +74,7 @@ public static class SetAreaPosition
                     area.SetPosition(newPosition);
                     PlaceSphere(area, uniformScale);
                     
-                    placedSpheres.Add(new FillMapArea.Sphere { position = area.position, size = area.data.radius, type = area.data.type});
+                    placedSpheres.Add(new FillMapManager.Sphere { position = area.position, size = area.data.radius, type = area.data.type});
                     
                     validPosition = true;
                 }

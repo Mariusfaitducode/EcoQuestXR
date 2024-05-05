@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor (typeof (FillMapArea))]
+[CustomEditor (typeof (FillMapManager))]
 public class FillMapEditor : Editor {
 
     public override void OnInspectorGUI() {
-        FillMapArea fillMap = (FillMapArea)target;
+        FillMapManager fillMap = (FillMapManager)target;
 
         if (DrawDefaultInspector ()) {
             if (fillMap.autoUpdate) {

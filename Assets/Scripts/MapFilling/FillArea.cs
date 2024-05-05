@@ -48,8 +48,8 @@ public static class FillArea
                             GameObject prefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)].prefabLow;
                             
                             
-                            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(prefab, area.sphere.transform, newPosition,
-                                Vector3.one * area.areaGrid[i, j].size);
+                            // GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(prefab, area.sphere.transform, newPosition,
+                            //     Vector3.one * area.areaGrid[i, j].size);
 
 
                             // placedPrefab.transform.localScale = area.areaGrid[i, j].size * Vector3.one;
