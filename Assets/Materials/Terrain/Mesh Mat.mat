@@ -225,7 +225,7 @@ Material:
     - _Grass_Tile: 0.123
     - _Grass_Tint_Strength: 0.065
     - _HeightTransition: 0
-    - _Limit_Terrain: 61.79
+    - _Limit_Terrain: 120.07
     - _Map_Scale: 12.82
     - _MaxHeight: 4.33
     - _Max_Height: 29.975746
@@ -247,7 +247,7 @@ Material:
     - _Rocks_Blend: 0.623
     - _Rocks_Tile: 0.181
     - _Rocks_Tint_Strength: 0.471
-    - _Sand_Blend: 0.069
+    - _Sand_Blend: 0
     - _Sand_Tile: 0.058
     - _Sand_Tint_Strength: 0.236
     - _Shininess: 0
@@ -260,7 +260,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Snow_Blend: 0
     - _Snow_Tile: 0.065
-    - _Snow_Tint_Strength: 0.302
+    - _Snow_Tint_Strength: 0.248
     - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

@@ -112,6 +112,10 @@ public class FillMapArea : MonoBehaviour
     {
         foreach (Area area in areas)
         {
+            if (area.data.type != AreaType.City)
+            {
+                break;
+            }
             //Destroy all children
             while (area.sphere.transform.childCount > 0)
             {
@@ -123,11 +127,12 @@ public class FillMapArea : MonoBehaviour
             area.uniformStartRadius = area.data.startSize * uniformScale;
             
             area.CreateGrid();
-            
 
             int[,] roads = RoadGenerator.GenerateRoadArea(area);
+            
+            float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
 
-            FillArea.GenerateAreaContent(area, roads, uniformScale);
+            FillArea.GenerateAreaContent(area, roads, mapSize, uniformScale);
         }
     }
 

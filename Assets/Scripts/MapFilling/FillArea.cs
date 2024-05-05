@@ -6,13 +6,13 @@ public static class FillArea
 {
 
 
-    public static void GenerateAreaContent(Area area, int[,] roads, float scale)
+    public static void GenerateAreaContent(Area area, int[,] roads, float mapSize,float scale)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
 
-        int count = 0;
+        // int count = 0;
 
-
+        // Generate roads area
         for (int i = 0; i < area.areaGrid.GetLength(0); i++)
         {
             for (int j = 0; j < area.areaGrid.GetLength(0); j++)
@@ -25,18 +25,48 @@ public static class FillArea
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                             area.uniformStartRadius))
                     {
+                        area.areaGrid[i, j].type = CellType.Road;
+                        
                         FillMapUtils.InstantiateObjectWithScale(area.testCube, area.sphere.transform, newPosition,
                             Vector3.one * area.areaGrid[i, j].size);
                         
-                        count++;
                     }
                 }
                 else
                 {
                     Debug.Log("NO ROAD");
+                    
+                    
+                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                        area.uniformStartRadius))
+                    {
+
+                        if (Random.Range(0, 100) < 50)
+                        {
+                            area.areaGrid[i, j].type = CellType.Object;
+                            
+                            GameObject prefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)].prefabLow;
+                            
+                            
+                            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(prefab, area.sphere.transform, newPosition,
+                                Vector3.one * area.areaGrid[i, j].size);
+
+
+                            // placedPrefab.transform.localScale = area.areaGrid[i, j].size * Vector3.one;
+
+                            // count++;
+                        }
+                    }
+                    
                 }
             }
         }
+    }
+    
+    
+    public static void PlacePrefabOnArea(Area area)
+    {
+        
     }
 
 

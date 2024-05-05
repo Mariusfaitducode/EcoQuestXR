@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CellType { Empty, Road, Object, Area };
+public enum CellType { Empty, Road, Object };
 
 public class AreaCell
 {

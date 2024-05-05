@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,8 +25,18 @@ public class AreaData : UpdatableData
     
     
         
-    public GameObject prefabs;
+    public List<AreaPrefab> prefabs;
 
     // internal List<Vector3> vertices;
-    
+}
+
+[Serializable]
+public struct AreaPrefab
+{
+    public GameObject prefabLow;
+    public GameObject prefabHigh;
+
+    // public Vector3 position;
+    // public Vector3 scale;
+    // public Quaternion rotation;
 }
