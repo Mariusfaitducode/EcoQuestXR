@@ -64,11 +64,12 @@ Material:
     - _Map_Scale: 12.82
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _RiverDisplay: 0
     - _River_AreaId: 7
-    - _River_Flow_Speed: 0.08
-    - _River_Foam_Density: 200
-    - _River_Foam_Speed: 0.5
-    - _River_Foam_Thickness: 1.98
+    - _River_Flow_Speed: 0.005
+    - _River_Foam_Density: 183.78
+    - _River_Foam_Speed: 1.25
+    - _River_Foam_Thickness: 4.4
     - _Rocks_Tile: 0.181
     - _Rocks_Tint_Strength: 0.471
     - _Sand_Tile: 0.058

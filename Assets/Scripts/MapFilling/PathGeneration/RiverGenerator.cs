@@ -3,14 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class RiverGeneration
+public static class RiverGenerator
 {
-    public struct RiverEdge
+    private struct RiverEdge
     {
         public Vector2 Point1;
         public Vector2 Point2;
         public Vector3 Line;
     }
+
+    [Serializable]
+    public class RiverSettings
+    {
+        public float riverWidth = 5;
+    }
+    
     public static void Generate(Transform[] riverPoints, Transform roadParentTransform, MeshData meshData, float riverWidth)
     { 
         // Only get positions

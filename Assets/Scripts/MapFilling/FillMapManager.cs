@@ -38,6 +38,7 @@ public class FillMapManager : MonoBehaviour
     public List<Area> areas;
     
     public RoadGenerator.RoadData roadData;
+    public RiverGenerator.RiverSettings riverSettings;
     
     
 
@@ -166,7 +167,7 @@ public class FillMapManager : MonoBehaviour
         // Récupérer tous les enfants du GameObject parent
         Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
         
-        RiverGeneration.Generate(transforms, roadParent.transform, meshData, 5);
+        RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
         
         
         mapDisplay.DrawMesh(meshData);
