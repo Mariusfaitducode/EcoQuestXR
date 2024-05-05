@@ -22,6 +22,7 @@ public class FillMapManager : MonoBehaviour
     public MapDisplay mapDisplay;
 
     public GameObject meshTerrain;
+    public MeshCollider meshCollider;
     
     public GameObject roadParent;
     
@@ -40,35 +41,52 @@ public class FillMapManager : MonoBehaviour
     public RoadGenerator.RoadData roadData;
     public RiverGenerator.RiverSettings riverSettings;
     
-    
 
-    
-    
     internal bool validPosition = false;
-    
-    
-    public void SetAreaInEditor()
+
+
+    public Vector3 SetMapScale()
     {
         mapGenerator.DrawMapInEditor();
+        
+        Vector3 meshScale = meshTerrain.transform.localScale;
+        meshTerrain.transform.localScale = new Vector3(1, 1, 1);
+
+        meshCollider.sharedMesh = null;
+        meshCollider.sharedMesh = meshTerrain.GetComponent<MeshFilter>().sharedMesh;
+
+        return meshScale;
+    }
+    
+
+    public void SetAreaInEditor()
+    {
+        Vector3 meshScale = SetMapScale();
+        
         if (mapGenerator.meshData != null)
         {
-            PlaceAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+            PlaceAreaOnMap(mapGenerator.meshData, 1);
         }
+        
+        meshTerrain.transform.localScale = meshScale;
     }
     
     public void FillAreaInEditor()
     {
-        mapGenerator.DrawMapInEditor();
+        Vector3 meshScale = SetMapScale();
+        
         if (validPosition)
         {
-            FillAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+            FillAreaOnMap(mapGenerator.meshData, 1);
         }
-        
+        meshTerrain.transform.localScale = meshScale;
+
     }
     
     public void SetAreaShaderInEditor()
     {
-        mapGenerator.DrawMapInEditor();
+        // Vector3 meshScale = SetMapScale();
+     
         if (validPosition)
         {
             SetAreaShader(mapGenerator.meshData);
@@ -77,17 +95,22 @@ public class FillMapManager : MonoBehaviour
     
     public void GenerateRoadOnMapInEditor()
     {
-        mapGenerator.DrawMapInEditor();
+        Vector3 meshScale = SetMapScale();
         
-        GenerateRoadOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+        GenerateRoadOnMap(mapGenerator.meshData, 1);
         
+        meshTerrain.transform.localScale = meshScale;
+
     }
 
     public void GenerateRiverInEditor()
     {
-        mapGenerator.DrawMapInEditor();
+        Vector3 meshScale = SetMapScale();
+        
         SetRiverShader(mapGenerator.meshData);
 
+        meshTerrain.transform.localScale = meshScale;
+ 
     }
     
     public void PlaceAreaOnMap(MeshData meshData, float uniformScale)
@@ -120,10 +143,7 @@ public class FillMapManager : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-            if (area.data.type != AreaType.City)
-            {
-                break;
-            }
+            
             //Destroy all children
             while (area.sphere.transform.childCount > 0)
             {
@@ -189,15 +209,12 @@ public class FillMapManager : MonoBehaviour
 
         if (extremityPoints.Length == 2)
         {
-            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData);
+            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
+                testCube, roadParent, uniformScale);
+            
+            Debug.Log(validExtremityPoints);
             
             FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
-
         }
-        
-        
-        
-        
-        
     }
 }

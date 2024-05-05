@@ -10,7 +10,6 @@ public static class RoadGenerator
     [Serializable]
     public class RoadData
     {
-
         public float edgeLength = 10;
         public float angle = 45;
         public float roadScale = 3f;
@@ -71,7 +70,7 @@ public static class RoadGenerator
     }
 
 
-    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData)
+    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject testCube, GameObject roadParent, float uniformScale)
     {
         List<FindPath.PathPoint> startList = new List<FindPath.PathPoint>();
         List<FindPath.PathPoint> endList = new List<FindPath.PathPoint>();
@@ -95,6 +94,7 @@ public static class RoadGenerator
                 FindPath.FindNeighbours(endList, point,  areas, roadData, copyEndList);
             }
         }
+        Debug.Log(startList.Count);
         
         foreach (FindPath.PathPoint point in startList)
         {
@@ -112,6 +112,11 @@ public static class RoadGenerator
                 break;
             }
         }
+        
+        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0] * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
+        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1] * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
+                
+        cube.GetComponent<Renderer>().material = roadData.testMaterial;
 
         return listPoints;
     }

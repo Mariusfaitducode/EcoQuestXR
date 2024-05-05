@@ -23,15 +23,11 @@ public class FindPath
             
             this.parent = parent;
         }
-        
-        
         public float GetWeight(Vector3 end)
         {
             return Vector3.Distance(position, end) + count;
         }
     }
-    
-    
     
     
     
@@ -68,7 +64,7 @@ public class FindPath
             {
                 Debug.Log("No path found");
                 Debug.Log(neighbours.Count);
-                return;
+                break;
             }
             // exploredVertices.Add(nextPoint.position);
             newPoint = nextPoint;
@@ -108,21 +104,27 @@ public class FindPath
         {
             float x = parent.position.x + roadData.edgeLength * Mathf.Cos(angleRad);
             float z = parent.position.z + roadData.edgeLength * Mathf.Sin(angleRad);
+            // float y = parent.position.y;
             
             
             bool hit = FillMapUtils.IsHitFromRayCast(new Vector3(x, parent.position.y, z));
+            
+            Debug.Log("hit : " + hit);
 
             if (hit)
             {
                 float y = FillMapUtils.GetHeightFromRaycast(new Vector3(x, parent.position.y, z));
             
                 bool notValid = ValidPointPosition(new Vector3(x, y, z), areas, roadData, parent, exploredPoints);
-
+            
                 if (!notValid)
                 {
                     neighbours.Add(new PathPoint(new Vector3(x, y, z), parent.count + 1, parent));
                 }
             }
+            
+            // neighbours.Add(new PathPoint(new Vector3(x, y, z), parent.count + 1, parent));
+
             angleRad += Mathf.Deg2Rad * roadData.angle;
         }
     }

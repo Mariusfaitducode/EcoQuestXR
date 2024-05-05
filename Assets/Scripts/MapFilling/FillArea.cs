@@ -31,33 +31,33 @@ public static class FillArea
                             Vector3.one * area.areaGrid[i, j].size);
                         
                     }
-                }
-                else
-                {
-                    Debug.Log("NO ROAD");
-                    
-                    
-                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                        area.uniformStartRadius))
-                    {
-
-                        if (Random.Range(0, 100) < 50)
-                        {
-                            area.areaGrid[i, j].type = CellType.Object;
-                            
-                            GameObject prefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)].prefabLow;
-                            
-                            
-                            // GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(prefab, area.sphere.transform, newPosition,
-                            //     Vector3.one * area.areaGrid[i, j].size);
-
-
-                            // placedPrefab.transform.localScale = area.areaGrid[i, j].size * Vector3.one;
-
-                            // count++;
-                        }
-                    }
-                    
+                // }
+                // else
+                // {
+                //     Debug.Log("NO ROAD");
+                //     
+                //     
+                //     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                //         area.uniformStartRadius))
+                //     {
+                //
+                //         if (Random.Range(0, 100) < 50)
+                //         {
+                //             area.areaGrid[i, j].type = CellType.Object;
+                //             
+                //             GameObject prefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)].prefabLow;
+                //             
+                //             
+                //             // GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(prefab, area.sphere.transform, newPosition,
+                //             //     Vector3.one * area.areaGrid[i, j].size);
+                //
+                //
+                //             // placedPrefab.transform.localScale = area.areaGrid[i, j].size * Vector3.one;
+                //
+                //             // count++;
+                //         }
+                //     }
+                //     
                 }
             }
         }
