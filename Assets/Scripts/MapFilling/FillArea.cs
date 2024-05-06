@@ -31,15 +31,16 @@ public static class FillArea
                             Vector3.one * area.areaGrid[i, j].size);
                         
                     }
+                    else
+                    {
+                        area.areaGrid[i, j].type = CellType.Empty;
+                    }
                 }
                 else if (area.data.type == AreaType.City)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.uniformStartRadius))
                     {
-
-                        
-
                         AreaPrefab areaPrefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)];
                         
                         bool rotate = Random.Range(0, 100) < 30;
@@ -81,6 +82,10 @@ public static class FillArea
         {
             for (int y = 0; y < size.y; y++)
             {
+                if (position.x + x >= areaGrid.GetLength(0) || position.y + y >= areaGrid.GetLength(1))
+                {
+                    return false;
+                }
                 if (areaGrid[position.x + x, position.y + y].type != CellType.Empty)
                 {
                     return false;

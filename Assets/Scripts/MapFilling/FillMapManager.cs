@@ -190,9 +190,18 @@ public class FillMapManager : MonoBehaviour
             DestroyImmediate(child.gameObject);
         }
         
+        foreach (Area area in areas)
+        {
+            while (area.roadParent.transform.childCount > 0)
+            {
+                Transform child = area.roadParent.transform.GetChild(0);
+                DestroyImmediate(child.gameObject);
+            }
+        }
+        
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, uniformScale, roadData);
 
-        List<FindPath.PathPoint> validPath = new List<FindPath.PathPoint>();
+        List<FindPath.PathPoint> bigRoadPath = new List<FindPath.PathPoint>();
 
         if (extremityPoints.Length == 2)
         {
@@ -201,13 +210,34 @@ public class FillMapManager : MonoBehaviour
             
             Debug.Log(validExtremityPoints);
             
-            validPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
+            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
+        }
+        
+        List<List<FindPath.PathPoint>> listAreaRoads = new List<List<FindPath.PathPoint>>();
+        List<FindPath.PathPoint> bigRoadCopy = new List<FindPath.PathPoint>(bigRoadPath);
+        
+        foreach (Area area in areas)
+        {
+            Vector3[] areaRoadExtremity = RoadGenerator.FindAreaClosestRoadCell(area, bigRoadCopy);
+            
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Vector3.one * uniformScale * roadData.roadScale);
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Vector3.one * uniformScale * roadData.roadScale);
+            
+            List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, uniformScale, false);
+            
+            listAreaRoads.Add(areaRoadPoints);
+            bigRoadCopy = bigRoadCopy.Concat(areaRoadPoints).ToList();
         }
         
         // Create Road Mesh
-        
-        RoadGenerator.GenerateRoadMesh(validPath, roadParent, 4f);
-        
+        RoadGenerator.GenerateRoadMesh(bigRoadPath, roadParent, roadData.roadWidth);
+
+        int i = 0;
+        foreach (List<FindPath.PathPoint> areaRoad in listAreaRoads)
+        {
+            RoadGenerator.GenerateRoadMesh(areaRoad, areas[i].roadParent, roadData.roadWidth);
+            i++;
+        }
     }
     
     

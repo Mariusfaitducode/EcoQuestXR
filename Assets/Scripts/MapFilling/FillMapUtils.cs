@@ -159,7 +159,11 @@ public class FillMapUtils : MonoBehaviour
         return (int)Mathf.Round((float)gaussianValue);
     }
     
-    
+    public static Vector3 GetPerpendicularDirection(Vector3 currentDirection, Vector3 nextDirection)
+    {
+        Vector3 averageDirection = (currentDirection + nextDirection).normalized;
+        return Vector3.Cross(averageDirection, Vector3.up);
+    }
     
     
 }

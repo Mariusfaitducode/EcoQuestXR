@@ -12,9 +12,12 @@ public class Area
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
     
+
     public GameObject sphere;
     public GameObject testCube;
 
+    public GameObject roadParent;
+    
     internal float uniformRadius;
     internal float uniformStartRadius;
     
