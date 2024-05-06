@@ -15,10 +15,10 @@ MonoBehaviour:
   autoUpdate: 1
   uniformScale: 1
   useFlatShading: 0
-  useFalloff: 1
+  useFalloff: 0
   falloffStart: 0.709
   falloffEnd: 1
-  meshHeightMultiplier: 35.32
+  meshHeightMultiplier: 35.4
   meshHeightCurve:
     serializedVersion: 2
     m_Curve:

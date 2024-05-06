@@ -156,11 +156,11 @@ public class FillMapManager : MonoBehaviour
             
             area.CreateGrid();
 
-            int[,] roads = RoadGenerator.GenerateRoadArea(area);
+            RoadGenerator.GenerateRoadArea(area);
             
             float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
 
-            FillArea.GenerateAreaContent(area, roads, mapSize, uniformScale);
+            FillArea.GenerateAreaContent(area, mapSize, uniformScale);
         }
     }
 

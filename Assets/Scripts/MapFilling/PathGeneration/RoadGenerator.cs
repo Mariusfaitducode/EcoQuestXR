@@ -122,15 +122,14 @@ public static class RoadGenerator
     }
     
     
-    public static int[,] GenerateRoadArea(Area area)
+    public static void GenerateRoadArea(Area area)
     {
         int width = area.areaGrid.GetLength(0);
         int height = area.areaGrid.GetLength(1);
         
         
-        int[,] newGrid = new int[width, height];
-        int[,] grid = new int[width, height];
-        Array.Copy(grid, newGrid, grid.Length);
+        // int[,] grid = new int[width, height];
+        // Array.Copy(grid, newGrid, grid.Length);
 
 
         // Initialise avec des routes horizontales
@@ -138,7 +137,7 @@ public static class RoadGenerator
         {
             for (int j = 0; j < height; j++)
             {
-                grid[i, j] = 1;
+                area.areaGrid[i, j].type = CellType.Road;
             }
         }
         
@@ -160,7 +159,7 @@ public static class RoadGenerator
                 {
                     if (j + roadCount < height && nextRoadCount < width)
                     {
-                        grid[ j + roadCount, nextRoadCount] = 1;
+                        area.areaGrid[ j + roadCount, nextRoadCount].type = CellType.Road;
                         
                     }
                 }
@@ -168,8 +167,6 @@ public static class RoadGenerator
                 
             }
         }
-        
-        return  grid;
     }
 
     

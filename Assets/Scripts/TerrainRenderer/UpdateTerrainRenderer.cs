@@ -28,7 +28,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
     {
         // Debug.Log("UpdateMeshHeights");
         
-        renderer = GetComponent<Renderer>();
+                renderer = GetComponent<Renderer>();
         material = renderer.sharedMaterial;
        
         savedMinHeight = minHeight;

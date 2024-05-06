@@ -35,6 +35,8 @@ public struct AreaPrefab
 {
     public GameObject prefabLow;
     public GameObject prefabHigh;
+    
+    public Vector2Int size;
 
     // public Vector3 position;
     // public Vector3 scale;
