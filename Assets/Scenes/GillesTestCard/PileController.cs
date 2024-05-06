@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class PileController : MonoBehaviour
 {
-    public List<CardClass> CardsPile = new List<CardClass>();
+    public List<Card> CardsPile = new List<Card>();
 
     public float nb_attribute_card = 2;
 
@@ -18,6 +18,8 @@ public class PileController : MonoBehaviour
     public GameObject displayPlace;
 
     public int nb_card_to_draw = 5; 
+    
+    //public List<> area_list = new List<GameObject>();
 
 
 
@@ -40,11 +42,11 @@ public class PileController : MonoBehaviour
 
 
     // Méthode pour instancier une carte avec les données fournies
-    public CardClass InstanciateCard(int id, float price)
+    public Card InstanciateCard(int id, float price)
     {
-        CardClass newCard = new CardClass();
+        Card newCard = new Card();
         newCard.id = id; // Définissez l'ID de la carte
-        newCard.price = price; // Définissez le prix de la carte
+        // newCard.price = price; // Définissez le prix de la carte
 
         // Vous pouvez ajouter d'autres initialisations ici selon les besoins de votre jeu
 
@@ -90,7 +92,7 @@ public class PileController : MonoBehaviour
             }
 
             // Créez un objet CarteData et ajoutez-le à la liste des données de carte
-            CardClass card = InstanciateCard(id, price);
+            Card card = InstanciateCard(id, price);
             CardsPile.Add(card);
         }
 
@@ -99,10 +101,10 @@ public class PileController : MonoBehaviour
 
     
     // fonction qui tire des cartes dans la liste
-    private List<CardClass> Draw(int quantity)
+    private List<Card> Draw(int quantity)
     {
 
-        List<CardClass> cartesTirees = new List<CardClass>();
+        List<Card> cartesTirees = new List<Card>();
 
         // Tire le nombre spécifié de cartes
         for (int i = 0; i < quantity; i++)

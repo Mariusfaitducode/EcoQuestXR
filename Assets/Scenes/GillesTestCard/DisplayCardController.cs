@@ -42,7 +42,7 @@ public class DisplayCardController : MonoBehaviour
     }
 
 
-    public void DisplayCards(List<CardClass> cards)
+    public void DisplayCards(List<Card> cards)
     {
         // Espace entre chaque carte
         float cardSpacing = 0.5f; // Espacement arbitraire entre les cartes
@@ -73,8 +73,8 @@ public class DisplayCardController : MonoBehaviour
 
             //newCard.GetComponentInChildren<TextMeshProUGUI>().text = "Prix : " + carteComponent.price.ToString();
 
-            carteComponent.cardClass = cards[i];
-            newCard.GetComponentInChildren<TextMeshProUGUI>().text = "Prix : " + carteComponent.cardClass.price.ToString();
+            carteComponent.Card = cards[i];
+            // newCard.GetComponentInChildren<TextMeshProUGUI>().text = "Prix : " + carteComponent.Card.price.ToString();
 
             newCard.transform.Find("Canvas").Find("choose_img").GetComponent<Image>().enabled = false;
             newCard.transform.Find("Canvas").Find("desactive_img").GetComponent<Image>().enabled = false;

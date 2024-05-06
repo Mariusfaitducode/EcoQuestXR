@@ -5,7 +5,7 @@ using UnityEngine;
 public class DiscardController : MonoBehaviour
 {
 
-    private List<CardClass> cards = new List<CardClass>();
+    private List<Card> cards = new List<Card>();
 
 
     public void AddCardToDiscard(List<GameObject> new_cards)
@@ -13,7 +13,7 @@ public class DiscardController : MonoBehaviour
 
         foreach (GameObject new_card in new_cards)
         {
-            cards.Add(new_card.GetComponent<CardController>().cardClass);
+            cards.Add(new_card.GetComponent<CardController>().Card);
         }
 
     }
