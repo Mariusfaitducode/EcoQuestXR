@@ -33,7 +33,8 @@ public class FillMapManager : MonoBehaviour
     
     public int maxTries = 5;
     public int maxMapIteration = 200;
-    
+
+    public float prefabScale = 0.1f;
     
     
     public List<Area> areas;
@@ -160,7 +161,7 @@ public class FillMapManager : MonoBehaviour
             
             float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
 
-            FillArea.GenerateAreaContent(area, mapSize, uniformScale);
+            FillArea.GenerateAreaContent(area, prefabScale);
         }
     }
 
@@ -175,9 +176,41 @@ public class FillMapManager : MonoBehaviour
         Debug.Log(meshData);
 
         mapDisplay.DrawMesh(meshData);
-
-
     }
+    
+    
+    public void GenerateRoadOnMap(MeshData meshData, float uniformScale)
+    {
+
+        // float roadScale = 3f;
+        
+        while (roadParent.transform.childCount > 0)
+        {
+            Transform child = roadParent.transform.GetChild(0);
+            DestroyImmediate(child.gameObject);
+        }
+        
+        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, uniformScale, roadData);
+
+        List<FindPath.PathPoint> validPath = new List<FindPath.PathPoint>();
+
+        if (extremityPoints.Length == 2)
+        {
+            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
+                testCube, roadParent, uniformScale);
+            
+            Debug.Log(validExtremityPoints);
+            
+            validPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
+        }
+        
+        // Create Road Mesh
+        
+        RoadGenerator.GenerateRoadMesh(validPath, roadParent, 4f);
+        
+    }
+    
+    
 
     public void SetRiverShader(MeshData meshData)
     {
@@ -193,28 +226,5 @@ public class FillMapManager : MonoBehaviour
         mapDisplay.DrawMesh(meshData);
     }
 
-    public void GenerateRoadOnMap(MeshData meshData, float uniformScale)
-    {
-
-        // float roadScale = 3f;
-        
-        while (roadParent.transform.childCount > 0)
-        {
-            Transform child = roadParent.transform.GetChild(0);
-            DestroyImmediate(child.gameObject);
-        }
-        
-        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, uniformScale, roadData);
-
-
-        if (extremityPoints.Length == 2)
-        {
-            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
-                testCube, roadParent, uniformScale);
-            
-            Debug.Log(validExtremityPoints);
-            
-            FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
-        }
-    }
+    
 }

@@ -20,13 +20,4 @@ MonoBehaviour:
   areaGridSize: 10
   pavilionWidth: 3
   pavilionHeightMean: 5
-  prefabs:
-  - prefabLow: {fileID: 0}
-    prefabHigh: {fileID: 0}
-    size: {x: 0, y: 0}
-  - prefabLow: {fileID: 0}
-    prefabHigh: {fileID: 0}
-    size: {x: 0, y: 0}
-  - prefabLow: {fileID: 0}
-    prefabHigh: {fileID: 0}
-    size: {x: 0, y: 0}
+  prefabs: []

@@ -147,7 +147,7 @@ public static class RoadGenerator
 
             int nextRoadCount = 0;
 
-            int randomPavilionLength = GenerateGaussian((double)area.data.pavilionHeightMean);
+            int randomPavilionLength = FillMapUtils.GenerateGaussian((double)area.data.pavilionHeightMean);
             
             Debug.Log("Gaussian value : " + randomPavilionLength);
 
@@ -163,37 +163,88 @@ public static class RoadGenerator
                         
                     }
                 }
-                nextRoadCount += GenerateGaussian((double)area.data.pavilionHeightMean);
+                nextRoadCount += FillMapUtils.GenerateGaussian((double)area.data.pavilionHeightMean);
                 
             }
         }
     }
 
-    
-    
-    
-    
-    
-    public static int GenerateGaussian(double mean = 5, double stdDev = 1)
-    {
-        // Random random = new Random();
 
-        double u1 = 1.0 - Random.value; // uniform(0,1] random doubles
-        double u2 = 1.0 - Random.value;
-        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
-                               Math.Sin(2.0 * Math.PI * u2); // random normal(0,1)
-        double gaussianValue = mean + stdDev * randStdNormal; // random normal(mean,stdDev^2)
-        
-        return (int)Mathf.Round((float)gaussianValue);
-    }
-    
-    public static void TestGaussian()
+
+    public static void GenerateRoadMesh(List<FindPath.PathPoint> pathPoints, GameObject roadObject, float roadWidth)
     {
-        for (int i = 0; i < 1000; i++)
+        if (roadObject.GetComponent<MeshFilter>() == null)
         {
-            double gaussianValue = GenerateGaussian(5.0, 1.0); // Moyenne = 5, Écart-type = 1
-            Debug.Log(gaussianValue);
+            roadObject.AddComponent<MeshFilter>();
         }
+
+        Mesh mesh = new Mesh();
+        roadObject.GetComponent<MeshFilter>().mesh = mesh;
+
+        List<Vector3> vertices = new List<Vector3>();
+        List<int> triangles = new List<int>();
+        
+        Vector3 A = pathPoints[0].position;
+        Vector3 B = pathPoints[1].position;
+        Vector3 direction = (B - A).normalized;
+        Vector3 perpendicular = Vector3.Cross(direction, Vector3.up) * roadWidth / 2;
+
+        Vector3 p1 = A + perpendicular;
+        Vector3 p2 = A - perpendicular;
+        
+        List<Vector3> endSegments = SetRoadSegment(pathPoints, vertices, triangles, 0, roadWidth, p1, p2);
+        
+        
+        for (int i = 1; i < pathPoints.Count - 1; i++)
+        {
+            endSegments = SetRoadSegment(pathPoints, vertices, triangles, i, roadWidth, endSegments[0], endSegments[1]);
+
+        }
+
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = triangles.ToArray();
+        mesh.RecalculateNormals();
+
+        roadObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+    }
+
+
+    public static List<Vector3> SetRoadSegment(List<FindPath.PathPoint> pathPoints, List<Vector3> vertices, List<int> triangles, int index, float roadWidth, Vector3 p1, Vector3 p2)
+    {
+        Vector3 A = pathPoints[index].position;
+        Vector3 B = pathPoints[index + 1].position;
+        Vector3 direction = (B - A).normalized;
+        Vector3 perpendicular = Vector3.Cross(direction, Vector3.up) * roadWidth / 2;
+
+        // Vector3 p1 = A + perpendicular;
+        // Vector3 p2 = A - perpendicular;
+        Vector3 p3 = B + perpendicular;
+        Vector3 p4 = B - perpendicular;
+
+        p1.y = FillMapUtils.GetHeightFromRaycast(p1) + 0.1f;
+        p2.y = FillMapUtils.GetHeightFromRaycast(p2) + 0.1f;
+        p3.y = FillMapUtils.GetHeightFromRaycast(p3) + 0.1f;
+        p4.y = FillMapUtils.GetHeightFromRaycast(p4) + 0.1f;
+
+
+        vertices.Add(p1);
+        vertices.Add(p2);
+        vertices.Add(p3);
+        vertices.Add(p4);
+
+        int start = index * 4;
+        triangles.Add(start);
+        triangles.Add(start + 2);
+        triangles.Add(start + 1);
+        triangles.Add(start + 2);
+        triangles.Add(start + 3);
+        triangles.Add(start + 1);
+
+        List<Vector3> endSegments = new List<Vector3>();
+        endSegments.Add(p3);
+        endSegments.Add(p4);
+
+        return endSegments;
     }
 
 

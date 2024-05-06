@@ -31,10 +31,8 @@ public class FindPath
     
     
     
-    public static void FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, float scale)
+    public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, float scale)
     {
-        float angle = roadData.angle;
-        float radius = roadData.edgeLength * scale;
         float roadScale = roadData.roadScale;
         
         int count = 0;
@@ -69,8 +67,8 @@ public class FindPath
             // exploredVertices.Add(nextPoint.position);
             newPoint = nextPoint;
             
-            nextPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, nextPoint.position, Vector3.one * scale * roadScale);
-            nextPoint.cube.GetComponent<Renderer>().material = roadData.testMaterial;
+            // nextPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, nextPoint.position, Vector3.one * scale * roadScale);
+            // nextPoint.cube.GetComponent<Renderer>().material = roadData.testMaterial;
             
             i++;
         }
@@ -78,19 +76,23 @@ public class FindPath
         // Go back
         
         PathPoint lastPoint = newPoint;
-        
         count = lastPoint.count;
+
+        List<PathPoint> validPath = new List<PathPoint>();
         
         while (lastPoint.parent != null)
         {
             if (count == lastPoint.count)
             {
-                lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+                // lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+                validPath.Add(lastPoint);
             }
 
             count = lastPoint.count - 1;
             lastPoint = lastPoint.parent;
         }
+
+        return validPath;
     }
     
     
@@ -108,8 +110,6 @@ public class FindPath
             
             
             bool hit = FillMapUtils.IsHitFromRayCast(new Vector3(x, parent.position.y, z));
-            
-            Debug.Log("hit : " + hit);
 
             if (hit)
             {

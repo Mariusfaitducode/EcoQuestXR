@@ -6,7 +6,7 @@ public static class FillArea
 {
 
 
-    public static void GenerateAreaContent(Area area, float mapSize,float scale)
+    public static void GenerateAreaContent(Area area, float prefabScale)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
 
@@ -32,11 +32,8 @@ public static class FillArea
                         
                     }
                 }
-                else
+                else if (area.data.type == AreaType.City)
                 {
-                    Debug.Log("NO ROAD");
-                    
-                    
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.uniformStartRadius))
                     {
@@ -62,7 +59,7 @@ public static class FillArea
                             // {
                             //     prefab = areaPrefab.prefabLow;
                             // }
-                            PlaceBuilding(areaPrefab, area, new Vector2Int(i, j), rotate);
+                            PlaceBuilding(areaPrefab, area, new Vector2Int(i, j), rotate, prefabScale);
                         }
 
                         if (rotate)
@@ -93,7 +90,7 @@ public static class FillArea
         return true;
     }
     
-    static void PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate)
+    static void PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize)
     {
         Vector3 position = Vector3.zero;
         
@@ -111,7 +108,7 @@ public static class FillArea
         position /= areaPrefab.size.x * areaPrefab.size.y;
         
         GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position,
-            Vector3.one * area.areaGrid[gridLocation.x, gridLocation.y].size * 0.1f);
+            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize));
 
         if (rotate)
         {

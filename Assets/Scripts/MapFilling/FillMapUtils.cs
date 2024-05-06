@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FillMapUtils : MonoBehaviour
 {
@@ -62,7 +64,7 @@ public class FillMapUtils : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        Debug.LogWarning("Raycast cannot hit the terrain mesh.");
         return false;
     }
     
@@ -144,6 +146,18 @@ public class FillMapUtils : MonoBehaviour
     }
     
     
+    public static int GenerateGaussian(double mean = 5, double stdDev = 1)
+    {
+        // Random random = new Random();
+
+        double u1 = 1.0 - Random.value; // uniform(0,1] random doubles
+        double u2 = 1.0 - Random.value;
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
+                               Math.Sin(2.0 * Math.PI * u2); // random normal(0,1)
+        double gaussianValue = mean + stdDev * randStdNormal; // random normal(mean,stdDev^2)
+        
+        return (int)Mathf.Round((float)gaussianValue);
+    }
     
     
     
