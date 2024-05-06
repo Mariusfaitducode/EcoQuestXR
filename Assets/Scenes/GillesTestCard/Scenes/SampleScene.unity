@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 242398500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2803214, y: 0.8023074, z: 2.3529358}
+  m_LocalPosition: {x: -2.23, y: 0.8023074, z: -2.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50cc3abdccab564ea5bafeebdaf3b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  discard: {fileID: 2053477147}
 --- !u!1 &300019514
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +570,7 @@ MonoBehaviour:
   nb_attribute_card: 2
   nomFichierCSV: cards.csv
   displayPlace: {fileID: 1829800168}
-  nb_card_to_draw: 8
+  nb_card_to_draw: 3
 --- !u!4 &555286741
 Transform:
   m_ObjectHideFlags: 0
@@ -1015,7 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nbCardByRow: 4
-  nbCardToChoose: 3
+  nbCardToChoose: 2
   cardPrefab: {fileID: 7052740782261593288, guid: ff3d4aa5a99e71b4994c0b596e886045,
     type: 3}
   handCard: {fileID: 242398500}

@@ -55,7 +55,7 @@ public class PileController : MonoBehaviour
     public void ReadDataCSV()
     {
 
-        string cheminFichierCSV = Path.Combine(Application.dataPath, nomFichierCSV);
+        string cheminFichierCSV = Path.Combine(Application.dataPath, "GillesTestCard" ,nomFichierCSV);
 
         // Vérifiez si le chemin du fichier CSV est valide
         if (!File.Exists(cheminFichierCSV))
