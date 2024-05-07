@@ -23,7 +23,7 @@ public class DisplayCardController : MonoBehaviour
     private List<GameObject> cardChoose = new List<GameObject>();
 
 
-    public GameObject cardPrefab; // Le préfabriqué de carte à instancier
+    public GameObject cardPrefab; // Le prï¿½fabriquï¿½ de carte ï¿½ instancier
 
 
     public GameObject handCard;
@@ -54,30 +54,32 @@ public class DisplayCardController : MonoBehaviour
         int numRows = (int)Mathf.Ceil((float)cards.Count / nbCardByRow);
         float totalHeight = numRows * (cardPrefabHeight + cardSpacing);
 
-        // Position de départ pour afficher les cartes
+        // Position de dï¿½part pour afficher les cartes
         Vector3 startPosition = transform.position - Vector3.right * (totalWidth / 2f) + Vector3.right * (cardPrefabWidth / 2f) + Vector3.up * (totalHeight / 2f) - Vector3.up * (cardPrefabHeight / 2f);
 
-        // Instancie les préfabriqués des cartes
+        // Instancie les prï¿½fabriquï¿½s des cartes
         for (int i = 0; i < cards.Count; i++)
         {
-            // Calcule la position de la carte en fonction de la position de départ et de l'espacement
+            // Calcule la position de la carte en fonction de la position de dï¿½part et de l'espacement
             Vector3 cardPosition = startPosition + Vector3.right * ((i % nbCardByRow) * (cardPrefabWidth + cardSpacing)) - Vector3.up * ((i / nbCardByRow) * (cardPrefabHeight + cardSpacing));
 
-            // Instancie le préfabriqué de la carte à la position calculée
+            // Instancie le prï¿½fabriquï¿½ de la carte ï¿½ la position calculï¿½e
             GameObject newCard = Instantiate(cardPrefab, cardPosition, Quaternion.identity, this.transform);
             newCard.transform.Rotate(0f, 90f, 0f); // Tourne la carte d'un quart de tour autour de son axe Y
 
-            CardController carteComponent = newCard.GetComponent<CardController>(); // Obtenez le composant de carte attaché à l'objet instancié
-            //carteComponent.id = cards[i].id; // Définissez l'ID de la carte
-            //carteComponent.price = cards[i].price; // Définissez le prix de la carte
+            CardController carteComponent = newCard.GetComponent<CardController>(); // Obtenez le composant de carte attachï¿½ ï¿½ l'objet instanciï¿½
+            //carteComponent.id = cards[i].id; // Dï¿½finissez l'ID de la carte
+            //carteComponent.price = cards[i].price; // Dï¿½finissez le prix de la carte
 
             //newCard.GetComponentInChildren<TextMeshProUGUI>().text = "Prix : " + carteComponent.price.ToString();
 
             carteComponent.Card = cards[i];
+            
+            newCard.GetComponent<CardController>().DisplayCard();
+            
             // newCard.GetComponentInChildren<TextMeshProUGUI>().text = "Prix : " + carteComponent.Card.price.ToString();
 
-            newCard.transform.Find("Canvas").Find("choose_img").GetComponent<Image>().enabled = false;
-            newCard.transform.Find("Canvas").Find("desactive_img").GetComponent<Image>().enabled = false;
+
 
             cardsDisplay.Add(newCard);
 
