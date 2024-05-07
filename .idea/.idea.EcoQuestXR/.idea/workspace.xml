@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/FillMapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/FillMapManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGeneration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGeneration.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapFilling/PathGeneration/RiverGenerator.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Terrain/ShaderMap.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Terrain/ShaderMap.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/UI.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/UI.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/VirtualKeyboard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/VirtualKeyboard.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/OculusRuntimeSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/OculusRuntimeSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OVRTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OVRTest.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +55,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -127,7 +127,10 @@
       <workItem from="1714829787610" duration="1456000" />
       <workItem from="1714840637339" duration="13361000" />
       <workItem from="1714858826196" duration="4436000" />
-      <workItem from="1714903647743" duration="686000" />
+      <workItem from="1714903647743" duration="2424000" />
+      <workItem from="1714920411073" duration="3919000" />
+      <workItem from="1715009628425" duration="2149000" />
+      <workItem from="1715011826133" duration="488000" />
     </task>
     <servers />
   </component>
