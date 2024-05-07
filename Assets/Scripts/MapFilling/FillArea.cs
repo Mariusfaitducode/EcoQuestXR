@@ -23,7 +23,7 @@ public static class FillArea
                 if (area.areaGrid[i, j].type == CellType.Road)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                            area.uniformStartRadius))
+                            area.data.startRadius))
                     {
                         area.areaGrid[i, j].type = CellType.Road;
                         
@@ -39,7 +39,7 @@ public static class FillArea
                 else if (area.data.type == AreaType.City)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                        area.uniformStartRadius))
+                        area.data.startRadius))
                     {
                         AreaPrefab areaPrefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)];
                         
@@ -123,32 +123,39 @@ public static class FillArea
     
 
 
-    public static void SetAreaVerticesInformation(Area area, MeshData meshData)
+    public static void SetAreaVerticesInformation(Area area, GameObject meshTerrain, float uniformScale)
     {
+        Material material = meshTerrain.GetComponent<Renderer>().material;
         
-        Debug.Log(meshData);
-        Debug.Log(area);
+        Vector2 position = new Vector2(area.sphere.transform.position.x, area.sphere.transform.position.z);
 
-        List<int> listAreaIndex = new List<int>(0);
-        List<Vector3> listAreaVertices = new List<Vector3>(0);
-        List<Vector2> listAreaUV = new List<Vector2>(0);
-        
-        for (int i = 0; i < meshData.vertices.Length; i++)
+        if (area.data.type == AreaType.City)
         {
-            Vector3 vertex = meshData.vertices[i];
-            if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.uniformRadius))
-            {
-                // Can modify uv information here
-                
-                listAreaIndex.Add(i);
-                listAreaVertices.Add(meshData.vertices[i]);
-                listAreaUV.Add(meshData.uvs[i]);
-                if (area.data.type == AreaType.City)
-                {
-                    meshData.uvs[i] = new Vector2(area.data.areaId, 0);
-                }
-            }
+            material.SetFloat("_City_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_City_Center", new Vector2(position.x, position.y));
         }
+        
+        // Debug.Log(meshData);
+        // Debug.Log(area);
+        //
+        // List<int> listAreaIndex = new List<int>(0);
+        // List<Vector3> listAreaVertices = new List<Vector3>(0);
+        // List<Vector2> listAreaUV = new List<Vector2>(0);
+        //
+        // for (int i = 0; i < meshData.vertices.Length; i++)
+        // {
+        //     Vector3 vertex = meshData.vertices[i];
+        //     if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.uniformRadius))
+        //     {
+        //         // Can modify uv information here
+        //         
+        //         // listAreaIndex.Add(i);
+        //         // listAreaVertices.Add(meshData.vertices[i]);
+        //         // listAreaUV.Add(meshData.uvs[i]);
+        //         //
+        //         // meshData.uvs[i] = new Vector2(area.data.areaId, 0);
+        //     }
+        // }
 
         // float mean = FillMapUtils.CalculateMean(listAreaVertices);
         //

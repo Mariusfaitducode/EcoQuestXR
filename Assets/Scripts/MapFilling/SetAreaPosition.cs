@@ -5,7 +5,7 @@ using UnityEngine;
 public static class SetAreaPosition
 {
     
-    public static bool FindAreaPosition(List<Area> areas, MeshData meshData, float uniformScale, float minHeight, int triesLeft, int maxMapIteration)
+    public static bool FindAreaPosition(List<Area> areas, MeshData meshData, float minHeight, int triesLeft, int maxMapIteration)
     {
         if (triesLeft <= 0)
         {
@@ -72,7 +72,7 @@ public static class SetAreaPosition
                 if (FillMapUtils.IsSurfaceFlat(verticesInsideCircle, area.flatnessThreshold))
                 {
                     area.SetPosition(newPosition);
-                    PlaceSphere(area, uniformScale);
+                    PlaceSphere(area);
                     
                     placedSpheres.Add(new FillMapManager.Sphere { position = area.position, size = area.data.radius, type = area.data.type});
                     
@@ -83,7 +83,7 @@ public static class SetAreaPosition
 
             if (!validPosition)
             {
-                return FindAreaPosition(areas, meshData, uniformScale,  minHeight, triesLeft - 1, maxMapIteration);
+                return FindAreaPosition(areas, meshData, minHeight, triesLeft - 1, maxMapIteration);
             }
             
             // Debug.Log("Attempts done : "+ area.type + " : "+ attempts);
@@ -91,9 +91,9 @@ public static class SetAreaPosition
         return true;
     }
     
-    static void PlaceSphere(Area area, float scale) {
+    static void PlaceSphere(Area area) {
         
-        Vector3 newPosition = area.position * scale;
+        Vector3 newPosition = area.position;
 
         GameObject sphere = area.sphere;
         float radius = area.data.radius;

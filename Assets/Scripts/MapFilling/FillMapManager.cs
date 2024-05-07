@@ -66,7 +66,7 @@ public class FillMapManager : MonoBehaviour
         
         if (mapGenerator.meshData != null)
         {
-            PlaceAreaOnMap(mapGenerator.meshData, 1);
+            PlaceAreaOnMap(mapGenerator.meshData);
         }
         
         meshTerrain.transform.localScale = meshScale;
@@ -78,7 +78,7 @@ public class FillMapManager : MonoBehaviour
         
         if (validPosition)
         {
-            FillAreaOnMap(mapGenerator.meshData, 1);
+            FillAreaOnMap(mapGenerator.terrainData.uniformScale);
         }
         meshTerrain.transform.localScale = meshScale;
 
@@ -90,7 +90,7 @@ public class FillMapManager : MonoBehaviour
      
         if (validPosition)
         {
-            SetAreaShader(mapGenerator.meshData);
+            SetAreaShader(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         }
     }
     
@@ -98,7 +98,7 @@ public class FillMapManager : MonoBehaviour
     {
         Vector3 meshScale = SetMapScale();
         
-        GenerateRoadOnMap(mapGenerator.meshData, 1);
+        GenerateRoadOnMap(mapGenerator.meshData);
         
         meshTerrain.transform.localScale = meshScale;
 
@@ -114,10 +114,10 @@ public class FillMapManager : MonoBehaviour
  
     }
     
-    public void PlaceAreaOnMap(MeshData meshData, float uniformScale)
+    public void PlaceAreaOnMap(MeshData meshData)
     {
         // int maxTries = this.maxTries;
-        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData, uniformScale,  minHeight,  this.maxTries, maxMapIteration);
+        this.validPosition = SetAreaPosition.FindAreaPosition(areas, meshData,  minHeight,  this.maxTries, maxMapIteration);
         // Debug.Log(this.maxTries + " tries");
 
         if (validPosition)
@@ -140,7 +140,7 @@ public class FillMapManager : MonoBehaviour
         }
     }
     
-    public void FillAreaOnMap(MeshData meshData, float uniformScale)
+    public void FillAreaOnMap(float uniformScale)
     {
         foreach (Area area in areas)
         {
@@ -152,8 +152,8 @@ public class FillMapManager : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
 
-            area.uniformRadius = area.data.radius * uniformScale;
-            area.uniformStartRadius = area.data.startSize * uniformScale;
+            // area.uniformRadius = area.data.radius * uniformScale;
+            // area.uniformStartRadius = area.data.startSize * uniformScale;
             
             area.CreateGrid();
 
@@ -166,11 +166,11 @@ public class FillMapManager : MonoBehaviour
     }
 
 
-    public void SetAreaShader(MeshData meshData)
+    public void SetAreaShader(MeshData meshData, float uniformScale)
     {
         foreach (Area area in areas)
         {
-            FillArea.SetAreaVerticesInformation(area, meshData);
+            FillArea.SetAreaVerticesInformation(area, meshTerrain, uniformScale);
             
         }
         Debug.Log(meshData);
@@ -179,7 +179,7 @@ public class FillMapManager : MonoBehaviour
     }
     
     
-    public void GenerateRoadOnMap(MeshData meshData, float uniformScale)
+    public void GenerateRoadOnMap(MeshData meshData)
     {
 
         // float roadScale = 3f;
@@ -199,18 +199,18 @@ public class FillMapManager : MonoBehaviour
             }
         }
         
-        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, uniformScale, roadData);
+        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
 
         List<FindPath.PathPoint> bigRoadPath = new List<FindPath.PathPoint>();
 
         if (extremityPoints.Length == 2)
         {
             Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
-                testCube, roadParent, uniformScale);
+                testCube, roadParent);
             
             Debug.Log(validExtremityPoints);
             
-            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent, uniformScale);
+            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent);
         }
         
         List<List<FindPath.PathPoint>> listAreaRoads = new List<List<FindPath.PathPoint>>();
@@ -220,10 +220,10 @@ public class FillMapManager : MonoBehaviour
         {
             Vector3[] areaRoadExtremity = RoadGenerator.FindAreaClosestRoadCell(area, bigRoadCopy);
             
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Vector3.one * uniformScale * roadData.roadScale);
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Vector3.one * uniformScale * roadData.roadScale);
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Vector3.one * roadData.roadScale);
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Vector3.one * roadData.roadScale);
             
-            List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, uniformScale, false);
+            List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, false);
             
             listAreaRoads.Add(areaRoadPoints);
             bigRoadCopy = bigRoadCopy.Concat(areaRoadPoints).ToList();
@@ -245,7 +245,7 @@ public class FillMapManager : MonoBehaviour
     public void SetRiverShader(MeshData meshData)
     {
         // Trouver le GameObject parent
-        GameObject roadParent = GameObject.Find("RoadParent");
+        GameObject roadParent = GameObject.Find("BigRoadParent");
         
         // Récupérer tous les enfants du GameObject parent
         Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();

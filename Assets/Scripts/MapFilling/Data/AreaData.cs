@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu()]
 [System.Serializable]
@@ -13,7 +14,7 @@ public class AreaData : UpdatableData
     // internal Vector3 position;
     public int radius;
     
-    public int startSize;
+    [FormerlySerializedAs("startSize")] public int startRadius;
 
     // To change for gridSize
     public int areaGridSize;

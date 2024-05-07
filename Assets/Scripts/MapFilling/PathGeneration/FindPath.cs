@@ -31,7 +31,7 @@ public class FindPath
     
     
     
-    public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, float scale, bool bigRoad = true)
+    public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, bool bigRoad = true)
     {
         float roadScale = roadData.roadScale;
         
@@ -50,7 +50,7 @@ public class FindPath
         int i = 0;
         
         // A star search algorithm
-        while (!Arrive(newPoint.position, end, roadData.targetDistance * scale) && i < 500 )
+        while (!Arrive(newPoint.position, end, roadData.targetDistance) && i < 500 )
         {
             FindNeighbours(neighbours, newPoint, areas, roadData, exploredPoints, bigRoad);
             
@@ -83,7 +83,7 @@ public class FindPath
         {
             if (count == lastPoint.count)
             {
-                lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Vector3.one * scale * roadScale);
+                lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Vector3.one * roadScale);
                 lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
                 validPath.Add(lastPoint);
             }
@@ -141,7 +141,7 @@ public class FindPath
         // No area collision
         foreach (Area area in areas)
         {
-            float areaRadius = bigRoad ? area.uniformRadius : area.uniformStartRadius;
+            float areaRadius = bigRoad ? area.data.radius : area.data.startRadius;
             if (FillMapUtils.IsVertexInsideCircle(new Vector3(newPosition.x, newPosition.y, newPosition.z), area.sphere.transform.position, areaRadius))
             {
                 notValid = true;

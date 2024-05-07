@@ -25,7 +25,7 @@ public static class RoadGenerator
     // private Random random = new Random();
 
     // Big road extremity
-    public static Vector3[] FindRoadExtremity(MeshData meshData, MapGenerator mapGenerator, GameObject meshTerrain, GameObject testCube, GameObject roadParent, float uniformScale, RoadData roadData)
+    public static Vector3[] FindRoadExtremity(MeshData meshData, MapGenerator mapGenerator, GameObject meshTerrain, GameObject testCube, GameObject roadParent, RoadData roadData)
     {
         bool valid = false;
 
@@ -33,7 +33,7 @@ public static class RoadGenerator
         Vector3 randVertex2 = Vector3.zero;
         
         Vector3[] listPoints = new Vector3[2];
-        listPoints[0] = randVertex * uniformScale;
+        listPoints[0] = randVertex;
 
         int i = 0;
 
@@ -45,7 +45,7 @@ public static class RoadGenerator
 
             // Renderer meshRenderer = meshTerrain.GetComponent<MeshFilter>();
             
-            Vector3 size = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size * uniformScale;
+            Vector3 size = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size;
             
             Debug.Log(size);
             
@@ -53,12 +53,12 @@ public static class RoadGenerator
 
             if (distance > size.x)
             {
-                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
-                GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2 * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
+                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex, Vector3.one * roadData.roadScale);
+                GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2, Vector3.one * roadData.roadScale);
                 
                 cube.GetComponent<Renderer>().material = roadData.testMaterial;
                 
-                listPoints[1] = randVertex2 * uniformScale;
+                listPoints[1] = randVertex2;
                 valid = true;
             }
             i++;
@@ -70,7 +70,7 @@ public static class RoadGenerator
         return listPoints;
     }
     
-    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject testCube, GameObject roadParent, float uniformScale)
+    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject testCube, GameObject roadParent)
     {
         List<FindPath.PathPoint> startList = new List<FindPath.PathPoint>();
         List<FindPath.PathPoint> endList = new List<FindPath.PathPoint>();
@@ -113,8 +113,8 @@ public static class RoadGenerator
             }
         }
         
-        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0] * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
-        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1] * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
+        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0], Vector3.one * roadData.roadScale);
+        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1], Vector3.one * roadData.roadScale);
                 
         cube.GetComponent<Renderer>().material = roadData.testMaterial;
 
