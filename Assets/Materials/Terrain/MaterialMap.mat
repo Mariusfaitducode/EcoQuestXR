@@ -58,13 +58,14 @@ Material:
     - Vector1_65D18AD4: 0.8
     - Vector1_6F228B9F: 0.087
     - Vector1_A956083A: 1
+    - _City_Radius: 10.2
     - _Grass_Tile: 0.123
     - _Grass_Tint_Strength: 0.065
-    - _Limit_Terrain: 157.95
+    - _Limit_Terrain: 158.66
     - _Map_Scale: 12.82
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RiverDisplay: 1
+    - _RiverDisplay: 0
     - _River_AreaId: 7
     - _River_Flow_Speed: 0.005
     - _River_Foam_Density: 183.78
@@ -78,6 +79,7 @@ Material:
     - _Snow_Tint_Strength: 0.302
     - _TransparentDegree: 0
     m_Colors:
+    - _City_Center: {r: 30.4, g: -43.99, b: 0, a: 0}
     - _Grass_Tint: {r: 0.18039216, g: 0.86666673, b: 0, a: 0}
     - _Map_Center: {r: 0, g: 0, b: 0, a: 0}
     - _River_Color: {r: 0.22761655, g: 0.57374185, b: 0.8773585, a: 1}

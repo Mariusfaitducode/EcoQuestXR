@@ -131,8 +131,30 @@ public static class FillArea
 
         if (area.data.type == AreaType.City)
         {
-            material.SetFloat("_City_Radius", area.data.startRadius * uniformScale);
+            material.SetFloat("_City_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_City_Start_Radius", area.data.startRadius * uniformScale);
             material.SetVector("_City_Center", new Vector2(position.x, position.y));
+        }
+        
+        if (area.data.type == AreaType.Industry)
+        {
+            material.SetFloat("_Industry_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_Industry_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_Industry_Center", new Vector2(position.x, position.y));
+        }
+        
+        if (area.data.type == AreaType.Energy)
+        {
+            material.SetFloat("_Energy_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_Energy_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_Energy_Center", new Vector2(position.x, position.y));
+        }
+        
+        if (area.data.type == AreaType.Agriculture)
+        {
+            material.SetFloat("_Agriculture_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_Agriculture_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_Agriculture_Center", new Vector2(position.x, position.y));
         }
         
         // Debug.Log(meshData);

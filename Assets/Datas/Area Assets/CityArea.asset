@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 0
   areaId: 2
   radius: 40
-  startSize: 35
+  startRadius: 35
   areaGridSize: 30
   pavilionWidth: 2
   pavilionHeightMean: 5
