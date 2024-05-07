@@ -31,10 +31,8 @@ public class FindPath
     
     
     
-    public static void FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, float scale)
+    public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, bool bigRoad = true)
     {
-        float angle = roadData.angle;
-        float radius = roadData.edgeLength * scale;
         float roadScale = roadData.roadScale;
         
         int count = 0;
@@ -52,9 +50,9 @@ public class FindPath
         int i = 0;
         
         // A star search algorithm
-        while (!Arrive(newPoint.position, end, roadData.targetDistance * scale) && i < 500 )
+        while (!Arrive(newPoint.position, end, roadData.targetDistance) && i < 500 )
         {
-            FindNeighbours(neighbours, newPoint, areas, roadData, exploredPoints);
+            FindNeighbours(neighbours, newPoint, areas, roadData, exploredPoints, bigRoad);
             
             PathPoint nextPoint = ChooseNextPosition(neighbours, end, roadData, exploredPoints);
             
@@ -69,8 +67,7 @@ public class FindPath
             // exploredVertices.Add(nextPoint.position);
             newPoint = nextPoint;
             
-            nextPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, nextPoint.position, Vector3.one * scale * roadScale);
-            nextPoint.cube.GetComponent<Renderer>().material = roadData.testMaterial;
+            
             
             i++;
         }
@@ -78,23 +75,28 @@ public class FindPath
         // Go back
         
         PathPoint lastPoint = newPoint;
-        
         count = lastPoint.count;
+
+        List<PathPoint> validPath = new List<PathPoint>();
         
         while (lastPoint.parent != null)
         {
             if (count == lastPoint.count)
             {
+                lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Vector3.one * roadScale);
                 lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+                validPath.Add(lastPoint);
             }
 
             count = lastPoint.count - 1;
             lastPoint = lastPoint.parent;
         }
+
+        return validPath;
     }
     
     
-    public static void FindNeighbours(List<PathPoint> neighbours, PathPoint parent, List<Area> areas, RoadGenerator.RoadData roadData, List<PathPoint> exploredPoints)
+    public static void FindNeighbours(List<PathPoint> neighbours, PathPoint parent, List<Area> areas, RoadGenerator.RoadData roadData, List<PathPoint> exploredPoints, bool bigRoad)
     {
         // List<PathPoint> neighbours = new List<PathPoint>();
 
@@ -108,14 +110,12 @@ public class FindPath
             
             
             bool hit = FillMapUtils.IsHitFromRayCast(new Vector3(x, parent.position.y, z));
-            
-            Debug.Log("hit : " + hit);
 
             if (hit)
             {
                 float y = FillMapUtils.GetHeightFromRaycast(new Vector3(x, parent.position.y, z));
             
-                bool notValid = ValidPointPosition(new Vector3(x, y, z), areas, roadData, parent, exploredPoints);
+                bool notValid = ValidPointPosition(new Vector3(x, y, z), areas, roadData, parent, exploredPoints, bigRoad);
             
                 if (!notValid)
                 {
@@ -130,16 +130,19 @@ public class FindPath
     }
 
 
-    public static bool ValidPointPosition(Vector3 newPosition, List<Area> areas, RoadGenerator.RoadData roadData, PathPoint parent, List<PathPoint> exploredPoints)
+    public static bool ValidPointPosition(Vector3 newPosition, List<Area> areas, RoadGenerator.RoadData roadData, PathPoint parent, List<PathPoint> exploredPoints, bool bigRoad)
     {
         //Verify point validity
 
         bool notValid = false;
+        
+        
 
         // No area collision
         foreach (Area area in areas)
         {
-            if (FillMapUtils.IsVertexInsideCircle(new Vector3(newPosition.x, newPosition.y, newPosition.z), area.sphere.transform.position, area.uniformRadius))
+            float areaRadius = bigRoad ? area.data.radius : area.data.startRadius;
+            if (FillMapUtils.IsVertexInsideCircle(new Vector3(newPosition.x, newPosition.y, newPosition.z), area.sphere.transform.position, areaRadius))
             {
                 notValid = true;
             }

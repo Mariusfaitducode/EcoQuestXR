@@ -24,6 +24,8 @@ public class UpdateTerrainRenderer : MonoBehaviour
         material.SetVector("_Map_Center", new Vector2(this.transform.position.x, this.transform.position.z));
     }
 
+    
+
     public void UpdateMeshHeights(float minHeight, float maxHeight)
     {
         // Debug.Log("UpdateMeshHeights");

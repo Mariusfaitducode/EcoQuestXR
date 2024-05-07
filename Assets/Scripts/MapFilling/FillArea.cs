@@ -6,7 +6,7 @@ public static class FillArea
 {
 
 
-    public static void GenerateAreaContent(Area area, float mapSize,float scale)
+    public static void GenerateAreaContent(Area area, float prefabScale)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
 
@@ -23,7 +23,7 @@ public static class FillArea
                 if (area.areaGrid[i, j].type == CellType.Road)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                            area.uniformStartRadius))
+                            area.data.startRadius))
                     {
                         area.areaGrid[i, j].type = CellType.Road;
                         
@@ -31,18 +31,16 @@ public static class FillArea
                             Vector3.one * area.areaGrid[i, j].size);
                         
                     }
-                }
-                else
-                {
-                    Debug.Log("NO ROAD");
-                    
-                    
-                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                        area.uniformStartRadius))
+                    else
                     {
-
-                        
-
+                        area.areaGrid[i, j].type = CellType.Empty;
+                    }
+                }
+                else if (area.data.type == AreaType.City)
+                {
+                    if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
+                        area.data.startRadius))
+                    {
                         AreaPrefab areaPrefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)];
                         
                         bool rotate = Random.Range(0, 100) < 30;
@@ -62,7 +60,7 @@ public static class FillArea
                             // {
                             //     prefab = areaPrefab.prefabLow;
                             // }
-                            PlaceBuilding(areaPrefab, area, new Vector2Int(i, j), rotate);
+                            PlaceBuilding(areaPrefab, area, new Vector2Int(i, j), rotate, prefabScale);
                         }
 
                         if (rotate)
@@ -84,6 +82,10 @@ public static class FillArea
         {
             for (int y = 0; y < size.y; y++)
             {
+                if (position.x + x >= areaGrid.GetLength(0) || position.y + y >= areaGrid.GetLength(1))
+                {
+                    return false;
+                }
                 if (areaGrid[position.x + x, position.y + y].type != CellType.Empty)
                 {
                     return false;
@@ -93,7 +95,7 @@ public static class FillArea
         return true;
     }
     
-    static void PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate)
+    static void PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize)
     {
         Vector3 position = Vector3.zero;
         
@@ -111,7 +113,7 @@ public static class FillArea
         position /= areaPrefab.size.x * areaPrefab.size.y;
         
         GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position,
-            Vector3.one * area.areaGrid[gridLocation.x, gridLocation.y].size * 0.1f);
+            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize));
 
         if (rotate)
         {
@@ -121,32 +123,61 @@ public static class FillArea
     
 
 
-    public static void SetAreaVerticesInformation(Area area, MeshData meshData)
+    public static void SetAreaVerticesInformation(Area area, GameObject meshTerrain, float uniformScale)
     {
+        Material material = meshTerrain.GetComponent<Renderer>().material;
         
-        Debug.Log(meshData);
-        Debug.Log(area);
+        Vector2 position = new Vector2(area.sphere.transform.position.x, area.sphere.transform.position.z);
 
-        List<int> listAreaIndex = new List<int>(0);
-        List<Vector3> listAreaVertices = new List<Vector3>(0);
-        List<Vector2> listAreaUV = new List<Vector2>(0);
-        
-        for (int i = 0; i < meshData.vertices.Length; i++)
+        if (area.data.type == AreaType.City)
         {
-            Vector3 vertex = meshData.vertices[i];
-            if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.uniformRadius))
-            {
-                // Can modify uv information here
-                
-                listAreaIndex.Add(i);
-                listAreaVertices.Add(meshData.vertices[i]);
-                listAreaUV.Add(meshData.uvs[i]);
-                if (area.data.type == AreaType.City)
-                {
-                    meshData.uvs[i] = new Vector2(area.data.areaId, 0);
-                }
-            }
+            material.SetFloat("_City_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_City_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_City_Center", new Vector2(position.x, position.y));
         }
+        
+        if (area.data.type == AreaType.Industry)
+        {
+            material.SetFloat("_Industry_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_Industry_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_Industry_Center", new Vector2(position.x, position.y));
+        }
+        
+        if (area.data.type == AreaType.Energy)
+        {
+            material.SetFloat("_Energy_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_Energy_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_Energy_Center", new Vector2(position.x, position.y));
+        }
+        
+        if (area.data.type == AreaType.Agriculture)
+        {
+            material.SetFloat("_Agriculture_Radius", area.data.radius * uniformScale);
+            material.SetFloat("_Agriculture_Start_Radius", area.data.startRadius * uniformScale);
+            material.SetVector("_Agriculture_Center", new Vector2(position.x, position.y));
+        }
+        
+        // Debug.Log(meshData);
+        // Debug.Log(area);
+        //
+        // List<int> listAreaIndex = new List<int>(0);
+        // List<Vector3> listAreaVertices = new List<Vector3>(0);
+        // List<Vector2> listAreaUV = new List<Vector2>(0);
+        //
+        // for (int i = 0; i < meshData.vertices.Length; i++)
+        // {
+        //     Vector3 vertex = meshData.vertices[i];
+        //     if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.uniformRadius))
+        //     {
+        //         // Can modify uv information here
+        //         
+        //         // listAreaIndex.Add(i);
+        //         // listAreaVertices.Add(meshData.vertices[i]);
+        //         // listAreaUV.Add(meshData.uvs[i]);
+        //         //
+        //         // meshData.uvs[i] = new Vector2(area.data.areaId, 0);
+        //     }
+        // }
 
         // float mean = FillMapUtils.CalculateMean(listAreaVertices);
         //

@@ -16,6 +16,7 @@ public static class RoadGenerator
         public float mountainGap = 0.2f;
         public float roadMinHeight = 0.1f;
         public float targetDistance = 20f;
+        public float roadWidth = 2f;
         
         public Material roadMaterial = null;
         public Material testMaterial = null;
@@ -23,8 +24,8 @@ public static class RoadGenerator
     
     // private Random random = new Random();
 
-
-    public static Vector3[] FindRoadExtremity(MeshData meshData, MapGenerator mapGenerator, GameObject meshTerrain, GameObject testCube, GameObject roadParent, float uniformScale, RoadData roadData)
+    // Big road extremity
+    public static Vector3[] FindRoadExtremity(MeshData meshData, MapGenerator mapGenerator, GameObject meshTerrain, GameObject testCube, GameObject roadParent, RoadData roadData)
     {
         bool valid = false;
 
@@ -32,7 +33,7 @@ public static class RoadGenerator
         Vector3 randVertex2 = Vector3.zero;
         
         Vector3[] listPoints = new Vector3[2];
-        listPoints[0] = randVertex * uniformScale;
+        listPoints[0] = randVertex;
 
         int i = 0;
 
@@ -44,7 +45,7 @@ public static class RoadGenerator
 
             // Renderer meshRenderer = meshTerrain.GetComponent<MeshFilter>();
             
-            Vector3 size = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size * uniformScale;
+            Vector3 size = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size;
             
             Debug.Log(size);
             
@@ -52,12 +53,12 @@ public static class RoadGenerator
 
             if (distance > size.x)
             {
-                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
-                GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2 * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
+                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex, Vector3.one * roadData.roadScale);
+                GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2, Vector3.one * roadData.roadScale);
                 
                 cube.GetComponent<Renderer>().material = roadData.testMaterial;
                 
-                listPoints[1] = randVertex2 * uniformScale;
+                listPoints[1] = randVertex2;
                 valid = true;
             }
             i++;
@@ -68,9 +69,8 @@ public static class RoadGenerator
         // Debug.Log(i);
         return listPoints;
     }
-
-
-    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject testCube, GameObject roadParent, float uniformScale)
+    
+    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject testCube, GameObject roadParent)
     {
         List<FindPath.PathPoint> startList = new List<FindPath.PathPoint>();
         List<FindPath.PathPoint> endList = new List<FindPath.PathPoint>();
@@ -83,7 +83,7 @@ public static class RoadGenerator
             List<FindPath.PathPoint> copyStartList = new List<FindPath.PathPoint>(startList);
             foreach (FindPath.PathPoint point in copyStartList)
             {
-                FindPath.FindNeighbours(startList, point,  areas, roadData, copyStartList);
+                FindPath.FindNeighbours(startList, point,  areas, roadData, copyStartList, true);
 
             }
 
@@ -91,7 +91,7 @@ public static class RoadGenerator
 
             foreach (FindPath.PathPoint point in copyEndList)
             {
-                FindPath.FindNeighbours(endList, point,  areas, roadData, copyEndList);
+                FindPath.FindNeighbours(endList, point,  areas, roadData, copyEndList, true);
             }
         }
         Debug.Log(startList.Count);
@@ -113,15 +113,15 @@ public static class RoadGenerator
             }
         }
         
-        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0] * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
-        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1] * uniformScale, Vector3.one * uniformScale * roadData.roadScale);
+        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0], Vector3.one * roadData.roadScale);
+        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1], Vector3.one * roadData.roadScale);
                 
         cube.GetComponent<Renderer>().material = roadData.testMaterial;
 
         return listPoints;
     }
-    
-    
+
+    // Road area
     public static void GenerateRoadArea(Area area)
     {
         int width = area.areaGrid.GetLength(0);
@@ -147,9 +147,7 @@ public static class RoadGenerator
 
             int nextRoadCount = 0;
 
-            int randomPavilionLength = GenerateGaussian((double)area.data.pavilionHeightMean);
-            
-            Debug.Log("Gaussian value : " + randomPavilionLength);
+            int randomPavilionLength = FillMapUtils.GenerateGaussian((double)area.data.pavilionHeightMean);
 
             nextRoadCount += randomPavilionLength;
 
@@ -163,40 +161,168 @@ public static class RoadGenerator
                         
                     }
                 }
-                nextRoadCount += GenerateGaussian((double)area.data.pavilionHeightMean);
+                nextRoadCount += FillMapUtils.GenerateGaussian((double)area.data.pavilionHeightMean);
                 
             }
         }
     }
 
-    
-    
-    
-    
-    
-    public static int GenerateGaussian(double mean = 5, double stdDev = 1)
-    {
-        // Random random = new Random();
 
-        double u1 = 1.0 - Random.value; // uniform(0,1] random doubles
-        double u2 = 1.0 - Random.value;
-        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
-                               Math.Sin(2.0 * Math.PI * u2); // random normal(0,1)
-        double gaussianValue = mean + stdDev * randStdNormal; // random normal(mean,stdDev^2)
+    public static Vector3[] FindAreaClosestRoadCell(Area area, List<FindPath.PathPoint> pathPoints)
+    {
+        int width = area.areaGrid.GetLength(0);
+        int height = area.areaGrid.GetLength(1);
         
-        return (int)Mathf.Round((float)gaussianValue);
+        float minDistance = float.MaxValue;
+        FindPath.PathPoint closestPoint = null;
+
+        // Search big road closest point
+        foreach (FindPath.PathPoint point in pathPoints)
+        {
+            float distance = Vector3.Distance(point.position, area.sphere.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestPoint = point;
+            }
+        }
+
+        // Search closest area road cell
+        FindPath.PathPoint areaPoint = null;
+
+        if (closestPoint != null)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (area.areaGrid[i, j].type == CellType.Road)
+                    {
+                        float distance = Vector3.Distance(area.areaGrid[i, j].position, closestPoint.position);
+                        if (distance < minDistance)
+                        {
+                            minDistance = distance;
+                            areaPoint = new FindPath.PathPoint(area.areaGrid[i, j].position, 0, null);
+                        }
+                    }
+                }
+            }
+        }
+        if (areaPoint != null)
+        {
+            Vector3[] areaPoints = new Vector3[2];
+            areaPoints[0] = closestPoint.position;
+            areaPoints[1] = areaPoint.position;
+            return areaPoints;
+        }
+
+        return null;
     }
     
-    public static void TestGaussian()
+
+    // Road mesh
+    public static void GenerateRoadMesh(List<FindPath.PathPoint> pathPoints, GameObject roadObject, float roadWidth)
     {
-        for (int i = 0; i < 1000; i++)
+        if (roadObject.GetComponent<MeshFilter>() == null)
         {
-            double gaussianValue = GenerateGaussian(5.0, 1.0); // Moyenne = 5, Écart-type = 1
-            Debug.Log(gaussianValue);
+            roadObject.AddComponent<MeshFilter>();
         }
+        if (roadObject.GetComponent<MeshRenderer>() == null)
+        {
+            roadObject.AddComponent<MeshRenderer>();
+        }
+        if (roadObject.GetComponent<MeshCollider>() == null)
+        {
+            roadObject.AddComponent<MeshCollider>();
+        }
+
+        Mesh mesh = new Mesh();
+        roadObject.GetComponent<MeshFilter>().mesh = null;
+        roadObject.GetComponent<MeshFilter>().mesh = mesh;
+
+        List<Vector3> vertices = new List<Vector3>();
+        List<int> triangles = new List<int>();
+        
+        if (pathPoints.Count < 2)
+        {
+            return;
+        }
+        
+        Vector3 A = pathPoints[0].position;
+        Vector3 B = pathPoints[1].position;
+        Vector3 direction = (B - A).normalized;
+        Vector3 perpendicular = Vector3.Cross(direction, Vector3.up) * roadWidth / 2;
+
+        Vector3 p1 = A + perpendicular;
+        Vector3 p2 = A - perpendicular;
+        
+        List<Vector3> endSegments = SetRoadSegment(pathPoints, vertices, triangles, 0, roadWidth, p1, p2);
+        
+        
+        for (int i = 1; i < pathPoints.Count - 1; i++)
+        {
+            endSegments = SetRoadSegment(pathPoints, vertices, triangles, i, roadWidth, endSegments[0], endSegments[1]);
+
+        }
+        
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = triangles.ToArray();
+        mesh.RecalculateNormals();
+
+        roadObject.GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
 
+    public static List<Vector3> SetRoadSegment(List<FindPath.PathPoint> pathPoints, List<Vector3> vertices, List<int> triangles, int index, float roadWidth, Vector3 p1, Vector3 p2)
+    {
+        Vector3 current = pathPoints[index].position;
+        Vector3 next = pathPoints[index + 1].position;
+        Vector3 segmentDirection = (next - current).normalized;
+        Vector3 perpendicular;
+
+        if (index < pathPoints.Count - 2)
+        {
+            Vector3 nextSegmentDirection = (pathPoints[index + 2].position - next).normalized;
+            perpendicular = FillMapUtils.GetPerpendicularDirection(segmentDirection, nextSegmentDirection) * roadWidth / 2;
+        }
+        else
+        {
+            perpendicular = Vector3.Cross(segmentDirection, Vector3.up) * roadWidth / 2;
+        }
+
+        // Vector3 p1 = A + perpendicular;
+        // Vector3 p2 = A - perpendicular;
+        Vector3 p3 = next + perpendicular;
+        Vector3 p4 = next - perpendicular;
+
+        p1.y = FillMapUtils.GetHeightFromRaycast(p1) + 0.1f;
+        p2.y = FillMapUtils.GetHeightFromRaycast(p2) + 0.1f;
+        p3.y = FillMapUtils.GetHeightFromRaycast(p3) + 0.1f;
+        p4.y = FillMapUtils.GetHeightFromRaycast(p4) + 0.1f;
+
+
+        vertices.Add(p1);
+        vertices.Add(p2);
+        vertices.Add(p3);
+        vertices.Add(p4);
+
+        int start = index * 4;
+        triangles.Add(start);
+        triangles.Add(start + 2);
+        triangles.Add(start + 1);
+        triangles.Add(start + 2);
+        triangles.Add(start + 3);
+        triangles.Add(start + 1);
+
+        List<Vector3> endSegments = new List<Vector3>();
+        endSegments.Add(p3);
+        endSegments.Add(p4);
+
+        return endSegments;
+    }
+
+
+    
     
 
     
