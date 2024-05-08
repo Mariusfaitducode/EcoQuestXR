@@ -48,6 +48,8 @@ public class FillMapManager : MonoBehaviour
     
 
     internal bool validPosition = false;
+    
+    internal List<Vector3> roadVertices = new List<Vector3>();
 
 
     public Vector3 SetMapScale()
@@ -64,6 +66,7 @@ public class FillMapManager : MonoBehaviour
     }
     
 
+    // Editor call
     public void SetAreaInEditor()
     {
         Vector3 meshScale = SetMapScale();
@@ -121,6 +124,9 @@ public class FillMapManager : MonoBehaviour
  
     }
     
+    
+    // Map Modification
+    
     public void PlaceAreaOnMap(MeshData meshData)
     {
         // int maxTries = this.maxTries;
@@ -172,8 +178,7 @@ public class FillMapManager : MonoBehaviour
         // mapDisplay.DrawMesh(meshData);
 
     }
-
-
+    
     public void SetAreaShader(MeshData meshData, float uniformScale)
     {
         foreach (Area area in areas)
@@ -181,12 +186,14 @@ public class FillMapManager : MonoBehaviour
             FillArea.SetAreaShader(area, meshTerrain, uniformScale);
             FillArea.SetAreaVerticesInformation(area, meshData, uniformScale);
             
+            Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            area.sphere.transform.rotation = rotation;
+            
         }
         Debug.Log(meshData);
 
         mapDisplay.DrawMesh(meshData);
     }
-    
     
     public void GenerateRoadOnMap(MeshData meshData)
     {
@@ -229,8 +236,8 @@ public class FillMapManager : MonoBehaviour
         {
             Vector3[] areaRoadExtremity = RoadGenerator.FindAreaClosestRoadCell(area, bigRoadCopy);
             
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Quaternion.identity, Vector3.one * roadData.roadScale);
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Quaternion.identity, Vector3.one * roadData.roadScale);
+            // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Quaternion.identity, Vector3.one * roadData.roadScale);
+            // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Quaternion.identity, Vector3.one * roadData.roadScale);
             
             List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, false);
             
@@ -253,8 +260,6 @@ public class FillMapManager : MonoBehaviour
         }
         
         // Set Path Height and vertices height
-        
-        // pathVertices = PathUtils.FilterTooLowVertices(pathVertices, minHeight);
 
         float testMean = FillMapUtils.CalculateMean(pathVertices.listVertices);
         float mean = PathUtils.MeanWithoutTooLowVertices(pathVertices.listVertices, minHeight);
@@ -276,7 +281,7 @@ public class FillMapManager : MonoBehaviour
             PathUtils.ResetPathHeight(areaRoad, mean);
         }
         
-        
+        this.roadVertices = pathVertices.listVertices;
         
         // Create Road Mesh
         RoadGenerator.GenerateRoadMesh(bigRoadPath, roadParent, roadData.roadWidth);
@@ -310,7 +315,7 @@ public class FillMapManager : MonoBehaviour
             }
         }
         
-        NatureGenerator.GenerateNature(areas, natureData, meshData, minHeight, prefabScale);
+        NatureGenerator.GenerateNature(areas, natureData, meshData, minHeight, prefabScale, roadVertices);
     }
     
     

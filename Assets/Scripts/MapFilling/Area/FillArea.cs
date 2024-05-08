@@ -27,9 +27,6 @@ public static class FillArea
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                             area.data.startRadius))
                     {
-                        
-                        // TODO : find the good road prefab
-                        
                         bool up = (y < size - 1) && area.areaGrid[x, y + 1].type == CellType.Road;
                         bool right = (x < size - 1) && area.areaGrid[x + 1, y].type == CellType.Road;
                         bool down = (y > 0) && area.areaGrid[x, y - 1].type == CellType.Road;
@@ -47,7 +44,7 @@ public static class FillArea
                         area.areaGrid[x, y].type = CellType.Empty;
                     }
                 }
-                else if (area.data.type == AreaType.City)
+                else if (area.data.prefabs.Count > 0 && area.areaGrid[x, y].type == CellType.Empty)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.data.startRadius))

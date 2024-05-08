@@ -42,7 +42,7 @@ public static class NatureGenerator
         public GameObject forestParent;
     }
     
-    public static void GenerateNature(List<Area> areas, NatureData natureData, MeshData meshData, float minHeight, float prefabSize)
+    public static void GenerateNature(List<Area> areas, NatureData natureData, MeshData meshData, float minHeight, float prefabSize, List<Vector3> roadVertices)
     {
         List<Vector3> meshVertices = new List<Vector3>(meshData.vertices);
         
@@ -53,18 +53,17 @@ public static class NatureGenerator
         while (placedTrees < natureData.treeQuantity)
         {
             PlaceTree(meshVertices, minHeight, areas, exploredPositions, natureData.minTreeDistance, 
-                natureData.naturePrefabs, natureData.natureParent, prefabSize, natureData.prefabSizeMultiplier, ref placedTrees);
+                natureData.naturePrefabs, natureData.natureParent, prefabSize, natureData.prefabSizeMultiplier, roadVertices, ref placedTrees);
         }
         
         // Generate forests
         // int placedForests = 0;
         foreach(ForestData forestData in natureData.forestDatas)
-        
         {
             int randomIndex = Random.Range(0, meshVertices.Count);
             Vector3 forestCenter = meshVertices[randomIndex];
             
-            int forestRadius = Random.Range(10, 20);
+            int forestRadius = Random.Range(forestData.radiusMin, forestData.radiusMax);
 
             bool validArea = IsValidForestPosition(forestCenter, forestRadius, areas);
 
@@ -110,7 +109,7 @@ public static class NatureGenerator
                     
                     if (((float)Random.Range(0, 100) / 100) < forestData.forestDensity * 10 / centerDistance)
                     {
-                        bool valid = IsValidNaturePosition(vertex, minHeight, areas, exploredPositions, forestData.minTreeDistance);
+                        bool valid = IsValidNaturePosition(vertex, minHeight, areas, exploredPositions, roadVertices, forestData.minTreeDistance);
                     
                         if (valid)
                         {
@@ -141,7 +140,7 @@ public static class NatureGenerator
 
 
     public static void PlaceTree(List<Vector3> vertices, float minHeight, List<Area> areas, List<Vector3> exploredPositions, 
-       float minTreeDistance, List<NaturePrefab> naturePrefabs, GameObject natureParent, float prefabSize, float prefabSizeMultiplier, ref int placedTrees)
+       float minTreeDistance, List<NaturePrefab> naturePrefabs, GameObject natureParent, float prefabSize, float prefabSizeMultiplier, List<Vector3> roadVertices, ref int placedTrees)
     {
         // Choisir un point aléatoire
         
@@ -150,7 +149,7 @@ public static class NatureGenerator
             
         // Vérifier si il est valide
             
-        bool valid = IsValidNaturePosition(newPosition, minHeight, areas, exploredPositions, minTreeDistance);
+        bool valid = IsValidNaturePosition(newPosition, minHeight, areas, exploredPositions, roadVertices, minTreeDistance);
         
         // Placer la nature
             
@@ -167,7 +166,7 @@ public static class NatureGenerator
         } 
     }
     
-    public static bool IsValidNaturePosition(Vector3 position, float minHeight, List<Area> areas, List<Vector3> exploredPositions, float minTreeDistance)
+    public static bool IsValidNaturePosition(Vector3 position, float minHeight, List<Area> areas, List<Vector3> exploredPositions, List<Vector3> roadVertices, float minTreeDistance)
     {
         // Not in water
         if (position.y < minHeight)
@@ -179,6 +178,15 @@ public static class NatureGenerator
         foreach (Area area in areas)
         {
             if (FillMapUtils.IsVertexInsideCircle(position, area.sphere.transform.position, area.data.radius))
+            {
+                return false;
+            }
+        }
+        
+        // Not in road
+        foreach (Vector3 roadVertex in roadVertices)
+        {
+            if (Vector3.Distance(position, roadVertex) < minTreeDistance)
             {
                 return false;
             }
