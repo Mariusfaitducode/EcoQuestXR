@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FillMapUtils : MonoBehaviour
 {
@@ -62,7 +64,7 @@ public class FillMapUtils : MonoBehaviour
                 return true;
             }
         }
-        // Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        Debug.LogWarning("Raycast cannot hit the terrain mesh.");
         return false;
     }
     
@@ -71,6 +73,7 @@ public class FillMapUtils : MonoBehaviour
     {
         Vector3 rayStart = new Vector3(worldPosition.x, worldPosition.y + maxRaycastDistance, worldPosition.z);
         Vector3 rayDirection = Vector3.down;
+        
 
         RaycastHit[] hits = Physics.RaycastAll(rayStart, rayDirection, maxRaycastDistance * 2);
 
@@ -81,7 +84,7 @@ public class FillMapUtils : MonoBehaviour
                 return hit.point.y;
             }
         }
-        // Debug.LogWarning("Raycast did not hit the terrain mesh.");
+        Debug.LogWarning("Raycast did not hit the terrain mesh.");
         return worldPosition.y; // Retourner une valeur par défaut ou générer une erreur selon votre gestion d'erreurs
         
     }
@@ -102,9 +105,9 @@ public class FillMapUtils : MonoBehaviour
     }
 
 
-    public static GameObject InstantiateObjectWithScale(GameObject prefab, Transform parent, Vector3 position, Vector3 scale)
+    public static GameObject InstantiateObjectWithScale(GameObject prefab,  Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
     {
-        GameObject obj = GameObject.Instantiate(prefab, position, Quaternion.identity);
+        GameObject obj = GameObject.Instantiate(prefab, position, rotation);
         
         Vector3 originalScale = obj.transform.localScale;
         
@@ -142,6 +145,25 @@ public class FillMapUtils : MonoBehaviour
         return distance;
     }
     
+    
+    public static int GenerateGaussian(double mean = 5, double stdDev = 1)
+    {
+        // Random random = new Random();
+
+        double u1 = 1.0 - Random.value; // uniform(0,1] random doubles
+        double u2 = 1.0 - Random.value;
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
+                               Math.Sin(2.0 * Math.PI * u2); // random normal(0,1)
+        double gaussianValue = mean + stdDev * randStdNormal; // random normal(mean,stdDev^2)
+        
+        return (int)Mathf.Round((float)gaussianValue);
+    }
+    
+    public static Vector3 GetPerpendicularDirection(Vector3 currentDirection, Vector3 nextDirection)
+    {
+        Vector3 averageDirection = (currentDirection + nextDirection).normalized;
+        return Vector3.Cross(averageDirection, Vector3.up);
+    }
     
     
 }

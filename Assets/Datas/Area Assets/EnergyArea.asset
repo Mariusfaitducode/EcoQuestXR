@@ -14,10 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoUpdate: 0
   type: 2
-  areaId: 3
-  radius: 16
-  startSize: 12
-  areaGridSize: 10
-  pavilionWidth: 3
-  pavilionHeightMean: 5
-  prefabs: {fileID: 21014757047335908, guid: 783957d5c2a6e454cbace2d6b6913a6a, type: 3}
+  areaId: 4
+  radius: 20
+  startRadius: 12
+  pavilionWidth: 4
+  pavilionHeightMean: 3
+  prefabs:
+  - prefabLow: {fileID: 919132149155446097, guid: 00beee0c204e58340ae4e7136a746f1d,
+      type: 3}
+    prefabHigh: {fileID: 919132149155446097, guid: 00beee0c204e58340ae4e7136a746f1d,
+      type: 3}
+    size: {x: 4, y: 4}
+  - prefabLow: {fileID: 919132149155446097, guid: 8da9623fa732dfe42b6b4412363624b3,
+      type: 3}
+    prefabHigh: {fileID: 919132149155446097, guid: 8da9623fa732dfe42b6b4412363624b3,
+      type: 3}
+    size: {x: 2, y: 2}

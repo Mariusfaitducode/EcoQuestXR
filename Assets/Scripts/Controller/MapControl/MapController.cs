@@ -25,7 +25,7 @@ public class MapController : MonoBehaviour
     private bool playerHasMoved = false;
     private bool tableFound = false;
     
-    private Renderer renderer;
+    private new Renderer renderer;
     
     public GameObject ovrPlayer;
     
@@ -37,7 +37,7 @@ public class MapController : MonoBehaviour
     private float originalSize;
     // private float originalScale;
     
-    private float epsilon = 0.0001f;
+    // private float epsilon = 0.0001f;
     
     
     

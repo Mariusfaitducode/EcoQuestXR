@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu()]
 [System.Serializable]
@@ -13,10 +14,10 @@ public class AreaData : UpdatableData
     // internal Vector3 position;
     public int radius;
     
-    public int startSize;
+    [FormerlySerializedAs("startSize")] public int startRadius;
 
-    // To change for gridSize
-    public int areaGridSize;
+    // To choose between gridSize or gridCellSize
+    // public int areaGridSize;
     // public float gridCellSize;
 
     //City generation
@@ -35,6 +36,8 @@ public struct AreaPrefab
 {
     public GameObject prefabLow;
     public GameObject prefabHigh;
+    
+    public Vector2Int size;
 
     // public Vector3 position;
     // public Vector3 scale;

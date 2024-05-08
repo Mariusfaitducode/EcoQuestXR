@@ -12,11 +12,14 @@ public class Area
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
     
+
     public GameObject sphere;
     public GameObject testCube;
 
-    internal float uniformRadius;
-    internal float uniformStartRadius;
+    public GameObject roadParent;
+    
+    // internal float uniformRadius;
+    // internal float uniformStartRadius;
     
     internal float gridCellSize;
     
@@ -28,11 +31,15 @@ public class Area
     }
     
     // Go To Area script ?
-    public void CreateGrid()
+    public void CreateGrid(float cellSize)
     {
 
-        int tabSize = data.areaGridSize;
-        gridCellSize = (uniformRadius * 2 / tabSize);
+        // int tabSize = data.areaGridSize;
+        int tabSize = (int)(data.radius * 2 / cellSize);
+        
+        // gridCellSize = ((float)data.radius * 2 / tabSize);
+        gridCellSize = cellSize;
+        
         AreaCell[,] gridPoints = new AreaCell[tabSize, tabSize];
 
         // int i = 0;
@@ -41,12 +48,12 @@ public class Area
         
         for (int i = 0; i < tabSize; i++) {
             
-            float x = center.x - uniformRadius + i * gridCellSize;
+            float x = center.x - data.radius + i * gridCellSize;
             
             
             for (int j = 0; j < tabSize; j++) {
                 
-                float z = center.z - uniformRadius + j * gridCellSize;
+                float z = center.z - data.radius + j * gridCellSize;
                 
                 AreaCell cell = new AreaCell();
                 
@@ -56,7 +63,7 @@ public class Area
                 cell.position = pos;
                 cell.size = gridCellSize;
                 
-                if (Vector3.Distance(pos, center) <= uniformRadius) {
+                if (Vector3.Distance(pos, center) <= data.radius) {
                     cell.inArea = true;
                 }
                 
