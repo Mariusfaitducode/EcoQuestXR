@@ -6,10 +6,51 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/UI.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/UI.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/VirtualKeyboard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes/VirtualKeyboard.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/OculusRuntimeSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/OculusRuntimeSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OVRTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OVRTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/_6b1c4a44-10a3-4c49-86d0-f211995c39d9.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/_6b1c4a44-10a3-4c49-86d0-f211995c39d9.jpeg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/background_leftArmDeck.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/background_leftArmDeck.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/black_circle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/black_circle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/city.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/city.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/coin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/coin.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/house_under_construction.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/house_under_construction.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/leaf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/leaf.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/lightning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/lightning.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/pollution.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/pollution.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/population.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/population.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/rectangle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/rectangle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/vertical_rectangle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/vertical_rectangle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/white_circle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/white_circle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/wrench.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/wrench.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Prefabs/OVRControllerPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Prefabs/OVRControllerPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GillesTestCard/PileController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GillesTestCard/PileController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/OVRInterface.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/OVRInterface.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Victor.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Victor.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/DeckControl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/DeckControl.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Card.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Card.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/CreationCard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/CreationCard.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Ville.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Ville.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +172,7 @@
       <workItem from="1714920411073" duration="3919000" />
       <workItem from="1715009628425" duration="2149000" />
       <workItem from="1715011826133" duration="488000" />
+      <workItem from="1715160931274" duration="37669000" />
     </task>
     <servers />
   </component>
@@ -144,6 +186,17 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
