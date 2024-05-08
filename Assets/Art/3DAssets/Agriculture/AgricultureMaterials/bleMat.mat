@@ -131,7 +131,7 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _WindDensity: 0.15
-    - _WindStrength: 0.04
+    - _WindStrength: 0.12
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
