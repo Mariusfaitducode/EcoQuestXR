@@ -16,8 +16,7 @@ MonoBehaviour:
   type: 1
   areaId: 5
   radius: 22
-  startSize: 18
-  areaGridSize: 12
+  startRadius: 18
   pavilionWidth: 2
   pavilionHeightMean: 7
   prefabs: []

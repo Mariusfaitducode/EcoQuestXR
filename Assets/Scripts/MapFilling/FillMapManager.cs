@@ -35,6 +35,7 @@ public class FillMapManager : MonoBehaviour
     public int maxMapIteration = 200;
 
     public float prefabScale = 0.1f;
+    public float cellSize = 1f;
     
     
     public List<Area> areas;
@@ -51,7 +52,7 @@ public class FillMapManager : MonoBehaviour
 
     public Vector3 SetMapScale()
     {
-        mapGenerator.DrawMapInEditor();
+        // mapGenerator.DrawMapInEditor();
         
         Vector3 meshScale = meshTerrain.transform.localScale;
         meshTerrain.transform.localScale = new Vector3(1, 1, 1);
@@ -77,6 +78,7 @@ public class FillMapManager : MonoBehaviour
     
     public void FillAreaInEditor()
     {
+        SetAreaShader(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         Vector3 meshScale = SetMapScale();
         
         if (validPosition)
@@ -85,7 +87,7 @@ public class FillMapManager : MonoBehaviour
             
         }
         meshTerrain.transform.localScale = meshScale;
-        SetAreaShader(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+        
     }
 
     public void GenerateRoadOnMapInEditor()
@@ -159,15 +161,13 @@ public class FillMapManager : MonoBehaviour
             // area.uniformRadius = area.data.radius * uniformScale;
             // area.uniformStartRadius = area.data.startSize * uniformScale;
             
-            area.CreateGrid();
-
+            area.CreateGrid(cellSize);
+            
             RoadGenerator.GenerateRoadArea(area);
             
             float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
-
-            FillArea.GenerateAreaContent(area, prefabScale);
             
-            // FillArea.SetAreaVerticesInformation(area, meshTerrain, uniformScale);
+            FillArea.GenerateAreaContent(area, prefabScale, roadData);
         }
         // mapDisplay.DrawMesh(meshData);
 
@@ -178,7 +178,8 @@ public class FillMapManager : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-            FillArea.SetAreaVerticesInformation(area, meshTerrain, uniformScale);
+            FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            FillArea.SetAreaVerticesInformation(area, meshData, uniformScale);
             
         }
         Debug.Log(meshData);
@@ -228,8 +229,8 @@ public class FillMapManager : MonoBehaviour
         {
             Vector3[] areaRoadExtremity = RoadGenerator.FindAreaClosestRoadCell(area, bigRoadCopy);
             
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Vector3.one * roadData.roadScale);
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Vector3.one * roadData.roadScale);
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Quaternion.identity, Vector3.one * roadData.roadScale);
+            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Quaternion.identity, Vector3.one * roadData.roadScale);
             
             List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, false);
             

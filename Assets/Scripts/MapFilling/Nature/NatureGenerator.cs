@@ -118,7 +118,7 @@ public static class NatureGenerator
                         
                             GameObject naturePrefab = natureData.naturePrefabs[Random.Range(0, natureData.naturePrefabs.Count)].gameObject;
                         
-                            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(naturePrefab, forestData.forestParent.transform, vertex,
+                            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(naturePrefab, forestData.forestParent.transform, vertex, Quaternion.identity, 
                                 naturePrefab.transform.localScale * prefabSize * natureData.prefabSizeMultiplier);
                         
                             // placedTreesInForest++;
@@ -160,7 +160,7 @@ public static class NatureGenerator
                 
             GameObject naturePrefab = naturePrefabs[Random.Range(0, naturePrefabs.Count)].gameObject;
                 
-            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(naturePrefab, natureParent.transform, newPosition,
+            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(naturePrefab, natureParent.transform, newPosition, Quaternion.identity, 
                 naturePrefab.transform.localScale * prefabSize * prefabSizeMultiplier);
                 
             placedTrees++;

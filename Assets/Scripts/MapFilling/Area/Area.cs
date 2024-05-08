@@ -31,11 +31,15 @@ public class Area
     }
     
     // Go To Area script ?
-    public void CreateGrid()
+    public void CreateGrid(float cellSize)
     {
 
-        int tabSize = data.areaGridSize;
-        gridCellSize = ((float)data.radius * 2 / tabSize);
+        // int tabSize = data.areaGridSize;
+        int tabSize = (int)(data.radius * 2 / cellSize);
+        
+        // gridCellSize = ((float)data.radius * 2 / tabSize);
+        gridCellSize = cellSize;
+        
         AreaCell[,] gridPoints = new AreaCell[tabSize, tabSize];
 
         // int i = 0;

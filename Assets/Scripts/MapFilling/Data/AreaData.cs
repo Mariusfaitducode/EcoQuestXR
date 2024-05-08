@@ -16,8 +16,8 @@ public class AreaData : UpdatableData
     
     [FormerlySerializedAs("startSize")] public int startRadius;
 
-    // To change for gridSize
-    public int areaGridSize;
+    // To choose between gridSize or gridCellSize
+    // public int areaGridSize;
     // public float gridCellSize;
 
     //City generation

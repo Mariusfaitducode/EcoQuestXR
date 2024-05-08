@@ -6,34 +6,45 @@ public static class FillArea
 {
 
 
-    public static void GenerateAreaContent(Area area, float prefabScale)
+    public static void GenerateAreaContent(Area area, float prefabScale, RoadGenerator.RoadData roadData)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
 
         // int count = 0;
+        
+        int size = area.areaGrid.GetLength(0);
 
         // Generate roads area
-        for (int i = 0; i < area.areaGrid.GetLength(0); i++)
+        for (int x = 0; x < size; x++)
         {
-            for (int j = 0; j < area.areaGrid.GetLength(0); j++)
+            for (int y = 0; y < size; y++)
             {
-                Vector3 newPosition = area.areaGrid[i, j].position;
+                Vector3 newPosition = area.areaGrid[x, y].position;
 
 
-                if (area.areaGrid[i, j].type == CellType.Road)
+                if (area.areaGrid[x, y].type == CellType.Road)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                             area.data.startRadius))
                     {
-                        area.areaGrid[i, j].type = CellType.Road;
                         
-                        FillMapUtils.InstantiateObjectWithScale(area.testCube, area.sphere.transform, newPosition,
-                            Vector3.one * area.areaGrid[i, j].size);
+                        // TODO : find the good road prefab
+                        
+                        bool up = (y < size - 1) && area.areaGrid[x, y + 1].type == CellType.Road;
+                        bool right = (x < size - 1) && area.areaGrid[x + 1, y].type == CellType.Road;
+                        bool down = (y > 0) && area.areaGrid[x, y - 1].type == CellType.Road;
+                        bool left = (x > 0) && area.areaGrid[x - 1, y].type == CellType.Road;
+                        
+                        RoadGenerator.RoadTile result = RoadGenerator.FindGoodRoadTile(up, right, down, left, roadData.roadTiles)!;
+                        
+                        
+                        FillMapUtils.InstantiateObjectWithScale(result.tile, area.sphere.transform, newPosition, result.rotation, 
+                            Vector3.one * (area.areaGrid[x, y].size * prefabScale));
                         
                     }
                     else
                     {
-                        area.areaGrid[i, j].type = CellType.Empty;
+                        area.areaGrid[x, y].type = CellType.Empty;
                     }
                 }
                 else if (area.data.type == AreaType.City)
@@ -52,15 +63,15 @@ public static class FillArea
                             // areaPrefab.prefabLow.transform.Rotate(Vector3.up, 90);
                         }
                         
-                        if (CanPlaceBuilding(new Vector2Int(i, j), areaPrefab.size, area.areaGrid))
+                        if (CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
                         {
-                            area.areaGrid[i, j].type = CellType.Object;
+                            area.areaGrid[x, y].type = CellType.Object;
                             GameObject prefab = areaPrefab.prefabLow;
                             // if (Random.Range(0, 100) < 50)
                             // {
                             //     prefab = areaPrefab.prefabLow;
                             // }
-                            PlaceBuilding(areaPrefab, area, new Vector2Int(i, j), rotate, prefabScale);
+                            PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), rotate, prefabScale);
                         }
 
                         if (rotate)
@@ -112,7 +123,7 @@ public static class FillArea
         
         position /= areaPrefab.size.x * areaPrefab.size.y;
         
-        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position,
+        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
             Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize));
 
         if (rotate)
@@ -120,10 +131,9 @@ public static class FillArea
             placedPrefab.transform.Rotate(Vector3.up, 90);
         }
     }
-    
 
 
-    public static void SetAreaVerticesInformation(Area area, GameObject meshTerrain, float uniformScale)
+    public static void SetAreaShader(Area area, GameObject meshTerrain, float uniformScale)
     {
         Material material = meshTerrain.GetComponent<Renderer>().material;
         
@@ -156,35 +166,36 @@ public static class FillArea
             material.SetFloat("_Agriculture_Start_Radius", area.data.startRadius * uniformScale);
             material.SetVector("_Agriculture_Center", new Vector2(position.x, position.y));
         }
-        
-        // Debug.Log(meshData);
-        // Debug.Log(area);
-        //
-        // List<int> listAreaIndex = new List<int>(0);
-        // List<Vector3> listAreaVertices = new List<Vector3>(0);
-        // List<Vector2> listAreaUV = new List<Vector2>(0);
-        //
-        // for (int i = 0; i < meshData.vertices.Length; i++)
-        // {
-        //     Vector3 vertex = meshData.vertices[i];
-        //     if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.uniformRadius))
-        //     {
-        //         // Can modify uv information here
-        //         
-        //         // listAreaIndex.Add(i);
-        //         // listAreaVertices.Add(meshData.vertices[i]);
-        //         // listAreaUV.Add(meshData.uvs[i]);
-        //         //
-        //         // meshData.uvs[i] = new Vector2(area.data.areaId, 0);
-        //     }
-        // }
+    }
 
-        // float mean = FillMapUtils.CalculateMean(listAreaVertices);
-        //
-        // foreach(int index in listAreaIndex)
-        // {
-        //     meshData.vertices[index] = new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z);
-        // }
+    public static void SetAreaVerticesInformation(Area area, MeshData meshData, float uniformScale)
+    {
+        
+        List<int> listAreaIndex = new List<int>(0);
+        List<Vector3> listAreaVertices = new List<Vector3>(0);
+        
+        // List<Vector2> listAreaUV = new List<Vector2>(0);
+        
+        for (int i = 0; i < meshData.vertices.Length; i++)
+        {
+            Vector3 vertex = meshData.vertices[i] * uniformScale;
+            if (FillMapUtils.IsVertexInsideCircle(vertex, area.sphere.transform.position, area.data.radius * uniformScale))
+            {
+                
+                listAreaIndex.Add(i);
+                listAreaVertices.Add(meshData.vertices[i]);
+            }
+        }
+
+        float mean = FillMapUtils.CalculateMean(listAreaVertices);
+        
+        foreach(int index in listAreaIndex)
+        {
+            // Debug.DrawLine(meshData.vertices[index] *uniformScale, new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z) * uniformScale, Color.blue, 60);
+            meshData.vertices[index] = new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z);
+        }
+        
+        
 
     }
 }
