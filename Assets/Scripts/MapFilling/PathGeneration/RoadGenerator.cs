@@ -20,8 +20,7 @@ public static class RoadGenerator
         
         public RoadTiles roadTiles;
         
-        public Material roadMaterial = null;
-        public Material testMaterial = null;
+        public Material roadMaterial;
     }
 
     [Serializable]
@@ -64,10 +63,10 @@ public static class RoadGenerator
 
             if (distance > size.x)
             {
-                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex, Quaternion.identity, Vector3.one * roadData.roadScale);
-                GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2, Quaternion.identity, Vector3.one * roadData.roadScale);
-                
-                cube.GetComponent<Renderer>().material = roadData.testMaterial;
+                // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex, Quaternion.identity, Vector3.one * roadData.roadScale);
+                // GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2, Quaternion.identity, Vector3.one * roadData.roadScale);
+                //
+                // cube.GetComponent<Renderer>().material = roadData.testMaterial;
                 
                 listPoints[1] = randVertex2;
                 valid = true;
@@ -124,10 +123,10 @@ public static class RoadGenerator
             }
         }
         
-        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0],  Quaternion.identity, Vector3.one * roadData.roadScale);
-        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1], Quaternion.identity,  Vector3.one * roadData.roadScale);
-                
-        cube.GetComponent<Renderer>().material = roadData.testMaterial;
+        // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0],  Quaternion.identity, Vector3.one * roadData.roadScale);
+        // GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1], Quaternion.identity,  Vector3.one * roadData.roadScale);
+        //         
+        // cube.GetComponent<Renderer>().material = roadData.testMaterial;
 
         return listPoints;
     }
@@ -305,10 +304,10 @@ public static class RoadGenerator
         Vector3 p3 = next + perpendicular;
         Vector3 p4 = next - perpendicular;
 
-        p1.y = FillMapUtils.GetHeightFromRaycast(p1) + 0.1f;
-        p2.y = FillMapUtils.GetHeightFromRaycast(p2) + 0.1f;
-        p3.y = FillMapUtils.GetHeightFromRaycast(p3) + 0.1f;
-        p4.y = FillMapUtils.GetHeightFromRaycast(p4) + 0.1f;
+        p1.y = FillMapUtils.GetHeightFromRaycast(p1) + 0.05f;
+        p2.y = FillMapUtils.GetHeightFromRaycast(p2) + 0.05f;
+        p3.y = FillMapUtils.GetHeightFromRaycast(p3) + 0.05f;
+        p4.y = FillMapUtils.GetHeightFromRaycast(p4) + 0.05f;
 
 
         vertices.Add(p1);

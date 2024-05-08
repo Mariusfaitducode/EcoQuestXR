@@ -83,8 +83,8 @@ public class FindPath
         {
             if (count == lastPoint.count)
             {
-                lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Quaternion.identity, Vector3.one * roadScale);
-                lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+                // lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Quaternion.identity, Vector3.one * roadScale);
+                // lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
                 validPath.Add(lastPoint);
             }
 
@@ -92,6 +92,8 @@ public class FindPath
             lastPoint = lastPoint.parent;
         }
 
+        validPath.Add(lastPoint);
+        
         return validPath;
     }
     

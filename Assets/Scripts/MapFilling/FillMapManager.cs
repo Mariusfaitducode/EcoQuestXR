@@ -190,9 +190,8 @@ public class FillMapManager : MonoBehaviour
     
     public void GenerateRoadOnMap(MeshData meshData)
     {
-
-        // float roadScale = 3f;
         
+        //Destroy Children
         while (roadParent.transform.childCount > 0)
         {
             Transform child = roadParent.transform.GetChild(0);
@@ -208,6 +207,7 @@ public class FillMapManager : MonoBehaviour
             }
         }
         
+        // Trace Roads
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
 
         List<FindPath.PathPoint> bigRoadPath = new List<FindPath.PathPoint>();
@@ -238,13 +238,55 @@ public class FillMapManager : MonoBehaviour
             bigRoadCopy = bigRoadCopy.Concat(areaRoadPoints).ToList();
         }
         
+        // Get Path Vertices
+        
+        PathUtils.PathVertices pathVertices = PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth + 6);
+        List<PathUtils.PathVertices> listAreaVertices = new List<PathUtils.PathVertices>();
+        
+        foreach (List<FindPath.PathPoint> areaRoad in listAreaRoads)
+        {
+            PathUtils.PathVertices areaPath = PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth + 6);
+            listAreaVertices.Add(areaPath);
+            
+            pathVertices.listVertices = pathVertices.listVertices.Concat(areaPath.listVertices).ToList();
+            pathVertices.listIndex = pathVertices.listIndex.Concat(areaPath.listIndex).ToList();
+        }
+        
+        // Set Path Height and vertices height
+        
+        // pathVertices = PathUtils.FilterTooLowVertices(pathVertices, minHeight);
+
+        float testMean = FillMapUtils.CalculateMean(pathVertices.listVertices);
+        float mean = PathUtils.MeanWithoutTooLowVertices(pathVertices.listVertices, minHeight);
+        
+        Debug.Log("Mean diff : " + testMean+ " vs " + mean);
+        
+        foreach(int index in pathVertices.listIndex)
+        {
+            // Debug.DrawLine(meshData.vertices[index] *uniformScale, new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z) * uniformScale, Color.blue, 60);
+            meshData.vertices[index] = new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z);
+        }
+
+        mapDisplay.DrawMesh(meshData);
+        
+        PathUtils.ResetPathHeight(bigRoadPath, mean);
+        
+        foreach( List<FindPath.PathPoint> areaRoad in listAreaRoads)
+        {
+            PathUtils.ResetPathHeight(areaRoad, mean);
+        }
+        
+        
+        
         // Create Road Mesh
         RoadGenerator.GenerateRoadMesh(bigRoadPath, roadParent, roadData.roadWidth);
+        // PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth);
 
         int i = 0;
         foreach (List<FindPath.PathPoint> areaRoad in listAreaRoads)
         {
             RoadGenerator.GenerateRoadMesh(areaRoad, areas[i].roadParent, roadData.roadWidth);
+            // PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth);
             i++;
         }
     }
