@@ -1,19 +1,14 @@
 fileFormatVersion: 2
-guid: 89da77def3728c7449184d45e103434c
+guid: 3f9d803ba8da562419f85de0b101765e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: bleMat
-    second: {fileID: 2100000, guid: d6f7d51d2c4c07042ba1a77bf61c0d52, type: 2}
-  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: ble
-    second: {fileID: 2800000, guid: 3f4004f7fdb372045970b0c8ff973a7e, type: 3}
+      name: Road_Texture_right
+    second: {fileID: 2800000, guid: 9597a9ae2a1a381408e3195988b60b49, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
