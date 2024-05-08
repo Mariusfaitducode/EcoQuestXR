@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 6318da45b86db5d46ac151792a264d79
+guid: a9af3260c815fee438b8000b2f501141
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Road_Texture
+    second: {fileID: 2800000, guid: 927eff1a6e355c6478cc48390f9c1d38, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -31,36 +36,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Eolian_Rotate
-      takeName: Eolian_Rotate
-      internalID: -5155783368550615901
-      firstFrame: 0
-      lastFrame: 98
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -81,7 +57,7 @@ ModelImporter:
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
-    bakeAxisConversion: 0
+    bakeAxisConversion: 1
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
@@ -128,7 +104,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
