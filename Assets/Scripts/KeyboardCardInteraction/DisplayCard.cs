@@ -129,20 +129,20 @@ public class DisplayCard : MonoBehaviour
     {
         if (_card != null)
         {
-            _title.text = _card.title;
-            _description.text = _card.description;
-            _price.text = _card.price;
-            _image.texture = GetTexture(folderActionImage, _card.action.ToString());
-        
-        
-            _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
-            _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
-            _logoAction.texture = GetTexture(folderActionLogo, _card.action.ToString());
-        
-            _energy.text = _card.energy;
-            _ecology.text = _card.ecology;
-            _population.text = _card.population;
-            _pollution.text = _card.pollution;
+            // _title.text = _card.title;
+            // _description.text = _card.description;
+            // _price.text = _card.price;
+            // _image.texture = GetTexture(folderActionImage, _card.action.ToString());
+            //
+            //
+            // _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
+            // _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
+            // _logoAction.texture = GetTexture(folderActionLogo, _card.action.ToString());
+            //
+            // _energy.text = _card.energy;
+            // _ecology.text = _card.ecology;
+            // _population.text = _card.population;
+            // _pollution.text = _card.pollution;
         }
     }
     public void SetCard(Card card)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,24 +22,31 @@ public class LoadDatas
 {
     public static DataCsv ReadDataCSV(string pathCSV)
     {
-        string cheminFichierCSV = Path.Combine(Application.dataPath, pathCSV);
+        TextAsset csvData = Resources.Load<TextAsset>(pathCSV);
 
-        if (!File.Exists(cheminFichierCSV))
+        if (csvData == null)
         {
-            Debug.LogError("Le fichier CSV n'existe pas à l'emplacement spécifié : " + cheminFichierCSV);
+            Debug.LogError("Le fichier CSV n'existe pas à l'emplacement spécifié : " + pathCSV);
             return new DataCsv(null, null);
         }
     
-        string[] rows = File.ReadAllLines(cheminFichierCSV);
+        string[] rows = csvData.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        
+        Array.Resize(ref rows, rows.Length - 1);
+        
+        
+        
+        
+        
 
         List<string[]> data = new List<string[]>();
         
-        string[] header = rows[0].Split(';');
+        string[] header = rows[0].Split(',');
 
         for (int i = 1; i < rows.Length; i++)
         {
             string row = rows[i];
-            string[] column = row.Split(';');
+            string[] column = row.Split(',');
             
             data.Add(column);
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     
-    public string cardsCSVPath = "cards.csv";
+    public string cardsCSVPath = "Csv/cards";
     internal List<Card> cards = new List<Card>();
     
     public Canvas deckCanvas;
@@ -18,6 +18,9 @@ public class CardManager : MonoBehaviour
     {
         
         // Cards Initialization
+        
+        cards = CardsInitialization.InitializeCards(cardsCSVPath);
+        Debug.Log(cards);
 
     }
     

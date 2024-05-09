@@ -1,0 +1,5 @@
+﻿id,name,prefabName,areaType,size,weight,price,ecology,population,energy,pollution
+0,modernHouse,house1,City,1,50,400000,-100,4,-200,300
+1,building,building1,City,1,10,2500000,-300,100,-500,600
+2,windTurbine,windTurbine1,Energy,1,20,1300000,-50,0,1000,100
+3,solarPanel,solarPanel1,Energy,1,10,100000,-100,0,400,150

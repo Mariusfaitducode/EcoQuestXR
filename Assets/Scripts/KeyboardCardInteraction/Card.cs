@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CardAction {
+public enum CardType {
     Construction,
     Destruction,
     Upgrade,
@@ -11,18 +11,29 @@ public enum CardAction {
 }
 
 public class Card
-{ 
-    public string title;
-    public string price;
-    public string description;
+{
+    public int id { get; set; }
+    public string title { get; set; }
+    public string description { get; set; }
     
-    public AreaType areaType;
-    public CardAction action;
+    public CardType cardType { get; set; }
     
-    public string energy;
-    public string ecology;
-    public string population;
-    public string pollution;
+    public string id_object1 { get; set; }
+    public string id_object2 { get; set; }
+    public string quantity_object1 { get; set; }
+    public string quantity_object2 { get; set; }
+    
+    
+    // public AreaType areaType;
+    // public CardAction action;
+    //
+    // public string energy;
+    // public string ecology;
+    // public string population;
+    // public string pollution;
+    
+    // public string price;
+
 
 
     // public Card(string title, string price, string description, AreaType areaType, CardAction action, string energy, string ecology, string population, string pollution)

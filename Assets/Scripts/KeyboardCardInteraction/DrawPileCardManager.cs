@@ -66,49 +66,49 @@ public class DrawPileCardManager : MonoBehaviour
     {
         _cardsPile = new List<Card>();
         
-        _cardsPile.Add(new Card(
-            "Création d'un quartier moderne", 
-            "1.4M", 
-            "Construction de 4 maisons modernes et isolées",
-            AreaType.City,
-            CardAction.Construction,
-            "-200/mois",
-            "-100",
-            "+16",
-            "+100"));
-        
-        _cardsPile.Add(new Card(
-            "Destruction d'un HLM", 
-            "250K", 
-            "Destruction de 1 HLM de 34 logements",
-            AreaType.City,
-            CardAction.Destruction,
-            "+500/mois",
-            "+200",
-            "-100",
-            "-300"));
-        
-        _cardsPile.Add(new Card(
-            "Contruction d'éoliennes", 
-            "2M", 
-            "Construction d'un parc de 5 éoliennes",
-            AreaType.Energy,
-            CardAction.Construction,
-            "+1000/mois",
-            "-50",
-            "+0",
-            "+50"));
-        
-        _cardsPile.Add(new Card(
-            "Destruction d'un centrale à charbon", 
-            "600K", 
-            "Destruction d'un centrale à charbon",
-            AreaType.Energy,
-            CardAction.Destruction,
-            "-3000/mois",
-            "+500",
-            "+0",
-            "-300"));
+        // _cardsPile.Add(new Card(
+        //     "Création d'un quartier moderne", 
+        //     "1.4M", 
+        //     "Construction de 4 maisons modernes et isolées",
+        //     AreaType.City,
+        //     CardType.Construction,
+        //     "-200/mois",
+        //     "-100",
+        //     "+16",
+        //     "+100"));
+        //
+        // _cardsPile.Add(new Card(
+        //     "Destruction d'un HLM", 
+        //     "250K", 
+        //     "Destruction de 1 HLM de 34 logements",
+        //     AreaType.City,
+        //     CardType.Destruction,
+        //     "+500/mois",
+        //     "+200",
+        //     "-100",
+        //     "-300"));
+        //
+        // _cardsPile.Add(new Card(
+        //     "Contruction d'éoliennes", 
+        //     "2M", 
+        //     "Construction d'un parc de 5 éoliennes",
+        //     AreaType.Energy,
+        //     CardType.Construction,
+        //     "+1000/mois",
+        //     "-50",
+        //     "+0",
+        //     "+50"));
+        //
+        // _cardsPile.Add(new Card(
+        //     "Destruction d'un centrale à charbon", 
+        //     "600K", 
+        //     "Destruction d'un centrale à charbon",
+        //     AreaType.Energy,
+        //     CardType.Destruction,
+        //     "-3000/mois",
+        //     "+500",
+        //     "+0",
+        //     "-300"));
     }
     
     private void DrawCards()
