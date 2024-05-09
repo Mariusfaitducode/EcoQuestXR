@@ -6,8 +6,7 @@ using System.IO;
 using System.Reflection;
 
 public class CardsInitialization
-{
-    
+{ 
     
     public static List<Card> InitializeCards(string pathCSV)
     {
@@ -25,10 +24,8 @@ public class CardsInitialization
     
     public static List<Card> AffectDatasToCards(DataCsv data)
     {
-        
         List<Card> cards = new List<Card>();
-
-
+        
         foreach (string[] row in data.rows)
         {
             Card newCard = new Card();
@@ -96,8 +93,5 @@ public class CardsInitialization
                 card.cardProperties.pollution -= card.objectProperties2.pollution * card.quantityObject2;
             }
         }
-        
     }
-    
-    
 }

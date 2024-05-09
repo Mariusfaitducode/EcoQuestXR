@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
@@ -22,12 +25,13 @@ public class CardManager : MonoBehaviour
     internal int nbrSelectedCards = 0;
     public int nbrMaxSelectedCards = 3;
     
+    public Button button;
     // public GameObject cardPrefab;
     
     // Start is called before the first frame update
+
     void Start()
     {
-        
         // Cards Initialization
         cards = CardsInitialization.InitializeCards(cardsCSVPath);
         
@@ -37,7 +41,7 @@ public class CardManager : MonoBehaviour
         
         CardsInitialization.MatchCardWithObjectProperties(cards, objectProperties);
         Debug.Log(cards);
-
+        
         
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
@@ -45,7 +49,7 @@ public class CardManager : MonoBehaviour
         
         // Test
         DrawPileEvent();
-
+    
     }
     
     // Tirage au sort de cartes dans la pile
@@ -59,7 +63,9 @@ public class CardManager : MonoBehaviour
         
         // Display Pile
         DisplayCanvas.DeleteCards(cardsLocationDraftPanels);
+        
         DisplayCanvas.DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, this, draftCanvas);
+        // DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, draftCanvas);
         
         // Enable Card Interaction
         // EnableCardInteraction();
@@ -69,6 +75,8 @@ public class CardManager : MonoBehaviour
 
     public void SelectUnselectEvent(DisplayCard displayCard)
     {
+        // Debug.L
+        
         if (displayCard.GetParentCanvas() == draftCanvas)
         {
             nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards);
@@ -94,7 +102,10 @@ public class CardManager : MonoBehaviour
     // Update Deck
     
    
+    
+   
 
+    
 
 
 }

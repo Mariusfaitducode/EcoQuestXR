@@ -17,65 +17,25 @@ public class DisplayCard : MonoBehaviour
     // private PileManager _pileManager;
     // private DisplayCanvas _displayCanvas;
 
-    private TextMeshProUGUI _title;
-    private TextMeshProUGUI _description;
-    private TextMeshProUGUI _price;
-    private RawImage _image;
+    public TextMeshProUGUI _title;
+    public TextMeshProUGUI _description;
+    public TextMeshProUGUI _price;
+    public RawImage _image;
 
-    private RectTransform _scale;
-    private Button _button;
-    private RawImage _shadow;
-    private RawImage _background;
-    private RawImage _logoArea;
-    private RawImage _logoAction;
+    public RectTransform _scale;
+    public Button _button;
+    public RawImage _shadow;
+    public RawImage _background;
+    public RawImage _logoArea;
+    public RawImage _logoAction;
 
-    private TextMeshProUGUI _energy;
-    private TextMeshProUGUI _ecology;
-    private TextMeshProUGUI _population;
-    private TextMeshProUGUI _pollution;
+    public TextMeshProUGUI _energy;
+    public TextMeshProUGUI _ecology;
+    public TextMeshProUGUI _population;
+    public TextMeshProUGUI _pollution;
     
     // Start is called before the first frame update
-    void Start()
-    {
-        GetChilds();
-        // SetButtonListener();
-        GetCardInformations();
-    }
-    // public void SelectUnselectFromDrawPileCardManager()
-    // {
-    //     if (_pileManager.CanSelectCard() || isSelected)
-    //     {
-    //         SelectUnselect();
-    //         if (isSelected)
-    //         {
-    //             _pileManager.AddSelectedCard();
-    //         }
-    //         else
-    //         {
-    //             _pileManager.RemoveSelectedCard();
-    //         }
-    //     }
-    // }
-    // public void SelectUnselectFromLeftArmDeckManager()
-    // {
-    //     _displayCanvas.UnSelectAll();
-    //     SelectUnselect();
-    // }
-    // private void SelectUnselect()
-    // {
-    //     isSelected =! isSelected;
-    //     if (isSelected)
-    //     {
-    //         _shadow.enabled = true;
-    //         _scale.localScale = new Vector3(1.12f, 1.12f, 1.12f);
-    //     }
-    //     else
-    //     {
-    //         _shadow.enabled = false;
-    //         _scale.localScale = new Vector3(1f, 1f, 1f);
-    //     }
-    //
-    // }
+    
     public void Select()
     {
         isSelected = true;
@@ -125,49 +85,31 @@ public class DisplayCard : MonoBehaviour
     {
         return _card;
     }
-    private void GetChilds()
-    {
-        _title = FindWithTag<TextMeshProUGUI>("TitleText");
-        _description = FindWithTag<TextMeshProUGUI>("DescriptionText");
-        _price = FindWithTag<TextMeshProUGUI>("PriceText");
-        _image = FindWithTag<RawImage>("ImageRawImage");
-        
-        
-        _shadow = GetComponent<RawImage>();
-        _button = FindWithTag<Button>("BackgroundRawImage");
-        _scale = FindWithTag<RectTransform>("BackgroundRawImage");
-        _background = FindWithTag<RawImage>("BackgroundRawImage");
-        _logoArea = FindWithTag<RawImage>("LogoAreaRawImage");
-        _logoAction = FindWithTag<RawImage>("LogoActionRawImage");
-        
-        _energy = FindWithTag<TextMeshProUGUI>("EnergyText");
-        _ecology = FindWithTag<TextMeshProUGUI>("EcologyText");
-        _population = FindWithTag<TextMeshProUGUI>("PopulationText");
-        _pollution = FindWithTag<TextMeshProUGUI>("PollutionText");
-    }
-    private void GetCardInformations()
+    
+    private void SetCardInformations()
     {
         if (_card != null)
         {
-            // _title.text = _card.title;
-            // _description.text = _card.description;
-            // _price.text = _card.price;
-            // _image.texture = GetTexture(folderActionImage, _card.action.ToString());
-            //
-            //
-            // _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
-            // _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
-            // _logoAction.texture = GetTexture(folderActionLogo, _card.action.ToString());
-            //
-            // _energy.text = _card.energy;
-            // _ecology.text = _card.ecology;
-            // _population.text = _card.population;
-            // _pollution.text = _card.pollution;
+            _title.text = _card.title;
+            _description.text = _card.description;
+            _price.text = _card.cardProperties.price.ToString();
+            _image.texture = GetTexture(folderActionImage, _card.cardType.ToString());
+            
+            
+            _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
+            _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
+            _logoAction.texture = GetTexture(folderActionLogo, _card.cardType.ToString());
+            
+            _energy.text = _card.cardProperties.energy.ToString();
+            _ecology.text = _card.cardProperties.ecology.ToString();
+            _population.text = _card.cardProperties.population.ToString();
+            _pollution.text = _card.cardProperties.pollution.ToString();
         }
     }
     public void SetCard(Card card)
     {
         _card = card;
+        SetCardInformations();
     }
     public bool IsSelected()
     {

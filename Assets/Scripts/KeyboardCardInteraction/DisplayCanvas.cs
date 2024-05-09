@@ -39,11 +39,16 @@ public class DisplayCanvas
         foreach (Card card in cardsDeck)
         {
             GameObject cardObject = GameObject.Instantiate(cardPrefab, cardLocationPanels[idx].transform);
+            
             card.SetCardObject(cardObject);
+            
             DisplayCard displayCard =  cardObject.GetComponent<DisplayCard>();
+            
             displayCard.SetCard(card);
             displayCard.SetCanvas(canvas);
-            displayCard.GetButton().onClick.AddListener(() => cardManager.SelectUnselectEvent(displayCard));
+            
+            displayCard._button.onClick.AddListener(delegate { cardManager.SelectUnselectEvent(displayCard); });
+            
             idx++;
         }
     }
