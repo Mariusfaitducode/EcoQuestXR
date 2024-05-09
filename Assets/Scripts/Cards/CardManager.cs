@@ -11,6 +11,7 @@ public class CardManager : MonoBehaviour
     
     internal List<Card> cards = new List<Card>();
     internal List<Card> pileCards = new List<Card>();
+    internal List<Card> deckCards = new List<Card>();
     
     public Canvas deckCanvas;
     public Canvas draftCanvas;
@@ -18,8 +19,8 @@ public class CardManager : MonoBehaviour
     internal List<GameObject> cardsLocationDeckPanels;
     internal List<GameObject> cardsLocationDraftPanels;
     
-    internal int numberSelectedCards = 3;
-    public int maxSelectedCards = 3;
+    internal int nbrSelectedCards = 0;
+    public int nbrMaxSelectedCards = 3;
     
     // public GameObject cardPrefab;
     
@@ -51,7 +52,7 @@ public class CardManager : MonoBehaviour
         
         // Display Pile
         DisplayCanvas.DeleteCards(cardsLocationDraftPanels);
-        DisplayCanvas.DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab);
+        DisplayCanvas.DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, this, draftCanvas);
         
         // Enable Card Interaction
         // EnableCardInteraction();
@@ -59,13 +60,21 @@ public class CardManager : MonoBehaviour
     
     
 
-    // public void SelectUnselectEvent()
-    // {
-    //     if (CardInteraction.CanSelect(nbrSelectedCards, maxSelectedCards))
-    //     {
-    //         
-    //     }
-    // }
+    public void SelectUnselectEvent(DisplayCard displayCard)
+    {
+        if (displayCard.GetParentCanvas() == draftCanvas)
+        {
+            nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards);
+        }
+        else if (displayCard.GetParentCanvas() == deckCanvas)
+        {
+            CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
+        }
+        else
+        {
+            Debug.LogError("Parent Canvas not found");
+        }
+    }
         
     // Regular Cards Choice Proposition Event
     

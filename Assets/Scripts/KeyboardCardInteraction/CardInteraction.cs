@@ -4,7 +4,42 @@ using UnityEngine;
 
 public static class CardInteraction
 {
-    
+    public static int SelectUnselectDraftCard(DisplayCard displayCard, int nbrSelectedCards, int nbrMaxSelectedCards)
+    {
+        if (displayCard.IsSelected())
+        {
+            displayCard.Unselect();
+            return nbrSelectedCards - 1;
+        }
+        
+        if (nbrSelectedCards < nbrMaxSelectedCards)
+        {
+            displayCard.Select();
+            return nbrSelectedCards + 1;
+        }
+
+        return nbrSelectedCards;
+    }
+
+    public static void SelectUnselectDeckCard(DisplayCard displayCard, List<Card> cards)
+    {
+        if (displayCard.IsSelected())
+        {
+            displayCard.Unselect();
+        }
+        else
+        {
+            foreach (Card card in cards)
+            {
+                DisplayCard displayCardInDeck = card.GetCardObject().GetComponent<DisplayCard>();
+                if (displayCardInDeck.IsSelected())
+                {
+                    displayCardInDeck.Unselect();
+                }
+            }
+            displayCard.Select();
+        }
+    }
     // public static void Validate()
     // {
     //     Debug.Log("Validate");
@@ -23,13 +58,19 @@ public static class CardInteraction
     //     // TODO : implement action on map
     //     
     // }
-    public static int Select(int nbrSelectedCards)
-    {
-        return nbrSelectedCards + 1;
-    }
+    // public static int GetNbrOfSelectedCard(List<Card> cards)
+    // {
+    //     int nbrSelectedCards = 0;
+    //     foreach (Card card in cards)
+    //     {
+    //         DisplayCard displayCard = card.GetCardObject().GetComponent<DisplayCard>();
+    //         if (displayCard.IsSelected())
+    //         {
+    //             nbrSelectedCards++;
+    //         }
+    //     }
+    //     return nbrSelectedCards;
+    // }
     
-    public static bool CanSelect(int nbrSelectedCards, int nbrMaxSelectedCards)
-    {
-        return nbrSelectedCards < nbrMaxSelectedCards;
-    }
+    
 }

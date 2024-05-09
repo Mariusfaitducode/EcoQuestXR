@@ -22,7 +22,8 @@ public class Card
     public string id_object2 { get; set; }
     public string quantity_object1 { get; set; }
     public string quantity_object2 { get; set; }
-    
+
+    public GameObject cardObject;
     
     public AreaType areaType;
     // public CardAction action;
@@ -34,6 +35,14 @@ public class Card
     
     // public string price;
     
+    public void SetCardObject(GameObject cardObject)
+    {
+        this.cardObject = cardObject;
+    }
+    public GameObject GetCardObject()
+    {
+        return cardObject;
+    }
 
     public class CardProperties
     {

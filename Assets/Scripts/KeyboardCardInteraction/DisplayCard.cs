@@ -13,8 +13,9 @@ public class DisplayCard : MonoBehaviour
     
     private Card _card;
     private bool isSelected = false;
+    private Canvas _parentCanvas;
     // private PileManager _pileManager;
-    private DisplayCanvas _displayCanvas;
+    // private DisplayCanvas _displayCanvas;
 
     private TextMeshProUGUI _title;
     private TextMeshProUGUI _description;
@@ -60,27 +61,42 @@ public class DisplayCard : MonoBehaviour
     //     _displayCanvas.UnSelectAll();
     //     SelectUnselect();
     // }
-    private void SelectUnselect()
-    {
-        isSelected =! isSelected;
-        if (isSelected)
-        {
-            _shadow.enabled = true;
-            _scale.localScale = new Vector3(1.12f, 1.12f, 1.12f);
-        }
-        else
-        {
-            _shadow.enabled = false;
-            _scale.localScale = new Vector3(1f, 1f, 1f);
-        }
-    
-    }
-    // public void Unselect()
+    // private void SelectUnselect()
     // {
-    //     isSelected = false;
-    //     _shadow.enabled = false;
-    //     _scale.localScale = new Vector3(1f, 1f, 1f);
+    //     isSelected =! isSelected;
+    //     if (isSelected)
+    //     {
+    //         _shadow.enabled = true;
+    //         _scale.localScale = new Vector3(1.12f, 1.12f, 1.12f);
+    //     }
+    //     else
+    //     {
+    //         _shadow.enabled = false;
+    //         _scale.localScale = new Vector3(1f, 1f, 1f);
+    //     }
+    //
     // }
+    public void Select()
+    {
+        isSelected = true;
+        _shadow.enabled = true;
+        _scale.localScale = new Vector3(1.12f, 1.12f, 1.12f);
+    }
+
+    public Canvas GetParentCanvas()
+    {
+        return _parentCanvas;
+    }
+    public void SetCanvas(Canvas canvas)
+    {
+        _parentCanvas = canvas;
+    }
+    public void Unselect()
+    {
+        isSelected = false;
+        _shadow.enabled = false;
+        _scale.localScale = new Vector3(1f, 1f, 1f);
+    }
     // public void SetDrawPileCardManager(PileManager pileManager)
     // {
     //     _pileManager = pileManager;
@@ -101,6 +117,10 @@ public class DisplayCard : MonoBehaviour
     //     _displayCanvas = displayCanvas;
     // }
 
+    public Button GetButton()
+    {
+        return _button;
+    }
     public Card GetCard()
     {
         return _card;
