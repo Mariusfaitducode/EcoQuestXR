@@ -37,6 +37,7 @@ public class CardsInitialization
             {
                 data.header[i] = data.header[i].Trim();
                 
+                // Match Card class to Csv header
                 PropertyInfo propertyInfo = typeof(Card).GetProperty(data.header[i], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
                 
                 if (propertyInfo != null && row.Length > i)
