@@ -42,28 +42,8 @@ public class CardsInitialization
                 
                 if (propertyInfo != null && row.Length > i)
                 {
-                    object value = null;
+                    object value = LoadDatas.MatchType(propertyInfo, row, data.header, i);
                     
-                    if (propertyInfo.PropertyType.IsEnum)
-                    {
-                        value = Enum.Parse(propertyInfo.PropertyType, row[i], true);
-                    }
-                    else if (propertyInfo.PropertyType == typeof(int))
-                    {
-                        if (int.TryParse(row[i], out int parsedValue))
-                        {
-                            value = parsedValue;
-                        }
-                        else
-                        {
-                            Debug.LogError($"Failed to parse '{row[i]}' as int for property '{data.header[i]}'");
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        value = Convert.ChangeType(row[i], propertyInfo.PropertyType);
-                    }
                     propertyInfo.SetValue(newCard, value, null);
                 }
             }
@@ -74,7 +54,50 @@ public class CardsInitialization
     }
 
 
-
+    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties)
+    {
+        
+        // Set objectProperties to cards
+        
+        foreach (Card card in cards)
+        {
+            foreach (ObjectProperties objectProperties in objectsProperties)
+            {
+                if (card.idObject1 == objectProperties.id)
+                {
+                    card.objectProperties1 = objectProperties;
+                }
+                if (card.idObject2 == objectProperties.id)
+                {
+                    card.objectProperties2 = objectProperties;
+                }
+            }
+        }
+        
+        // Calculate CardProperties
+        
+        // To change for a good calculation
+        foreach (Card card in cards)
+        {
+            if (card.objectProperties1 != null)
+            {
+                card.cardProperties.price = card.objectProperties1.price * card.quantityObject1;
+                card.cardProperties.ecology = card.objectProperties1.ecology * card.quantityObject1;
+                card.cardProperties.population = card.objectProperties1.population * card.quantityObject1;
+                card.cardProperties.energy = card.objectProperties1.energy * card.quantityObject1;
+                card.cardProperties.pollution = card.objectProperties1.pollution * card.quantityObject1;
+            }
+            else if (card.objectProperties2 != null)
+            {
+                card.cardProperties.price -= card.objectProperties2.price * card.quantityObject2;
+                card.cardProperties.ecology -= card.objectProperties2.ecology * card.quantityObject2;
+                card.cardProperties.population -= card.objectProperties2.population * card.quantityObject2;
+                card.cardProperties.energy -= card.objectProperties2.energy * card.quantityObject2;
+                card.cardProperties.pollution -= card.objectProperties2.pollution * card.quantityObject2;
+            }
+        }
+        
+    }
     
     
 }

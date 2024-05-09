@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using System.Reflection;
 
 
 public struct DataCsv
@@ -30,15 +30,10 @@ public class LoadDatas
             return new DataCsv(null, null);
         }
     
-        string[] rows = csvData.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        
+        // string[] rows = csvData.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] rows = csvData.text.Split('\n');
         Array.Resize(ref rows, rows.Length - 1);
         
-        
-        
-        
-        
-
         List<string[]> data = new List<string[]>();
         
         string[] header = rows[0].Split(',');
@@ -52,5 +47,35 @@ public class LoadDatas
         }
 
         return new DataCsv(header, data);
+    }
+
+    public static object MatchType(PropertyInfo propertyInfo, string[] row, string[] header, int index)
+    {
+        
+        object value = null;
+                
+        if (propertyInfo.PropertyType.IsEnum)
+        {
+            value = Enum.Parse(propertyInfo.PropertyType, row[index], true);
+        }
+        else if (propertyInfo.PropertyType == typeof(int))
+        {
+            if (int.TryParse(row[index], out int parsedValue))
+            {
+                value = parsedValue;
+            }
+            else
+            {
+                Debug.LogError($"Failed to parse '{row[index]}' as int for property '{header[index]}'");
+            }
+        }
+        else
+        {
+            value = Convert.ChangeType(row[index], propertyInfo.PropertyType);
+        }
+        // propertyInfo.SetValue(newCard, value, null);
+        return value;
+        
+
     }
 }

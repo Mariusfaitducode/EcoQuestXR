@@ -18,26 +18,27 @@ public class Card
     
     public CardType cardType { get; set; }
     
-    public string id_object1 { get; set; }
-    public string id_object2 { get; set; }
-    public string quantity_object1 { get; set; }
-    public string quantity_object2 { get; set; }
+    public int idObject1 { get; set; }
+    public int idObject2 { get; set; }
+    public int quantityObject1 { get; set; }
+    public int quantityObject2 { get; set; }
     
+    public ObjectProperties objectProperties1;
+    public ObjectProperties objectProperties2;
+    
+    public CardProperties cardProperties = new CardProperties();
     
     public AreaType areaType;
     // public CardAction action;
-    //
-    // public string energy;
-    // public string ecology;
-    // public string population;
-    // public string pollution;
-    
-    // public string price;
     
 
     public class CardProperties
     {
-        
+        public int price;
+        public int ecology;
+        public int population;
+        public int energy;
+        public int pollution;
     }
     
 

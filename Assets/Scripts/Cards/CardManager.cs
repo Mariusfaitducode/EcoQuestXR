@@ -29,7 +29,14 @@ public class CardManager : MonoBehaviour
         
         // Cards Initialization
         cards = CardsInitialization.InitializeCards(cardsCSVPath);
+        
+        // To get from GameManager
+        List<ObjectProperties> objectProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
+        Debug.Log(objectProperties);
+        
+        CardsInitialization.MatchCardWithObjectProperties(cards, objectProperties);
         Debug.Log(cards);
+
         
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
