@@ -15,8 +15,9 @@ public static class NatureGenerator
         public float minTreeDistance = 5f;
         
         public float prefabSizeMultiplier = 3f;
-        
-        public int forestQuantity = 3;
+
+        public Renderer noiseRenderer;
+        public NoiseData forestNoise;
         
         public List<ForestData> forestDatas;
         
@@ -42,100 +43,93 @@ public static class NatureGenerator
         public GameObject forestParent;
     }
     
-    public static void GenerateNature(List<Area> areas, NatureData natureData, MeshData meshData, float minHeight, float prefabSize, List<Vector3> roadVertices)
+    public static void GenerateNature(List<Area> areas, NatureData natureData, MapGenerator mapGenerator, MapDisplay mapDisplay, float minHeight, float prefabSize, List<Vector3> roadVertices)
     {
+        MeshData meshData = mapGenerator.meshData;
         List<Vector3> meshVertices = new List<Vector3>(meshData.vertices);
         
         int placedTrees = 0;
         
         List<Vector3> exploredPositions = new List<Vector3>();
 
+        // Generate global trees randomly on the map
         while (placedTrees < natureData.treeQuantity)
         {
             PlaceTree(meshVertices, minHeight, areas, exploredPositions, natureData.minTreeDistance, 
                 natureData.naturePrefabs, natureData.natureParent, prefabSize, natureData.prefabSizeMultiplier, roadVertices, ref placedTrees);
         }
+
+        float[,] mapNoise = mapGenerator.mapData.heightMap;
         
+        mapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(mapNoise), natureData.noiseRenderer);
+
+        // Generate forests
+
         // Generate forests
         // int placedForests = 0;
-        foreach(ForestData forestData in natureData.forestDatas)
-        {
-            int randomIndex = Random.Range(0, meshVertices.Count);
-            Vector3 forestCenter = meshVertices[randomIndex];
-            
-            int forestRadius = Random.Range(forestData.radiusMin, forestData.radiusMax);
-
-            bool validArea = IsValidForestPosition(forestCenter, forestRadius, areas);
-
-            int i = 0;
-            
-            while (!validArea && i < natureData.maxTries)
-            
-            {
-                randomIndex = Random.Range(0, meshVertices.Count);
-                forestCenter = meshVertices[randomIndex];
-                forestRadius = Random.Range(forestData.radiusMin, forestData.radiusMax);
-                
-                validArea = IsValidForestPosition(forestCenter, forestRadius, areas);
-                i++;
-            }
-            
-            if (validArea)
-            {
-                // float areaSurface = Mathf.PI * forestRadius * forestRadius;
-                // int treeQuantity = (int) (areaSurface * natureData.forestDensity);
-                
-                // Get area vertices
-
-                List<Vector3> forestVertices = new List<Vector3>();
-                
-                foreach (Vector3 vertex in meshVertices)
-                {
-                    if (FillMapUtils.IsVertexInsideCircle(vertex, forestCenter, forestRadius))
-                    {
-                        // Add vertex to list
-                        forestVertices.Add(vertex);
-                    }
-                }
-                
-                // Generate trees
-                
-                // int placedTreesInForest = 0;
-                
-                foreach (Vector3 vertex in forestVertices)
-                {
-                    
-                    float centerDistance = Vector3.Distance(vertex, forestCenter);
-                    
-                    if (((float)Random.Range(0, 100) / 100) < forestData.forestDensity * 10 / centerDistance)
-                    {
-                        bool valid = IsValidNaturePosition(vertex, minHeight, areas, exploredPositions, roadVertices, forestData.minTreeDistance);
-                    
-                        if (valid)
-                        {
-                            exploredPositions.Add(vertex);
-                        
-                            GameObject naturePrefab = natureData.naturePrefabs[Random.Range(0, natureData.naturePrefabs.Count)].gameObject;
-                        
-                            GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(naturePrefab, forestData.forestParent.transform, vertex, Quaternion.identity, 
-                                naturePrefab.transform.localScale * prefabSize * natureData.prefabSizeMultiplier);
-                        
-                            // placedTreesInForest++;
-                        }
-                    }
-                }
-                
-                // while (placedTreesInForest < forestVertices.Count * forestData.forestDensity / forestData.minTreeDistance)
-                // {
-                //     PlaceTree(forestVertices, minHeight, areas, exploredPositions, 
-                //         forestData.minTreeDistance, natureData.naturePrefabs, forestData.forestParent, prefabSize, natureData.prefabSizeMultiplier, ref placedTreesInForest);
-                // }
-            }
-            else
-            {
-                Debug.Log("Forest Area Not found");
-            }
-        }
+        // foreach(ForestData forestData in natureData.forestDatas)
+        // {
+        //     int randomIndex = Random.Range(0, meshVertices.Count);
+        //     Vector3 forestCenter = meshVertices[randomIndex];
+        //     
+        //     int forestRadius = Random.Range(forestData.radiusMin, forestData.radiusMax);
+        //
+        //     bool validArea = IsValidForestPosition(forestCenter, forestRadius, areas);
+        //
+        //     int i = 0;
+        //     
+        //     while (!validArea && i < natureData.maxTries)
+        //     
+        //     {
+        //         randomIndex = Random.Range(0, meshVertices.Count);
+        //         forestCenter = meshVertices[randomIndex];
+        //         forestRadius = Random.Range(forestData.radiusMin, forestData.radiusMax);
+        //         
+        //         validArea = IsValidForestPosition(forestCenter, forestRadius, areas);
+        //         i++;
+        //     }
+        //     
+        //     if (validArea)
+        //     {
+        //         List<Vector3> forestVertices = new List<Vector3>();
+        //         
+        //         foreach (Vector3 vertex in meshVertices)
+        //         {
+        //             if (FillMapUtils.IsVertexInsideCircle(vertex, forestCenter, forestRadius))
+        //             {
+        //                 // Add vertex to list
+        //                 forestVertices.Add(vertex);
+        //             }
+        //         }
+        //         
+        //         foreach (Vector3 vertex in forestVertices)
+        //         {
+        //             
+        //             float centerDistance = Vector3.Distance(vertex, forestCenter);
+        //             
+        //             if (((float)Random.Range(0, 100) / 100) < forestData.forestDensity * 10 / centerDistance)
+        //             {
+        //                 bool valid = IsValidNaturePosition(vertex, minHeight, areas, exploredPositions, roadVertices, forestData.minTreeDistance);
+        //             
+        //                 if (valid)
+        //                 {
+        //                     exploredPositions.Add(vertex);
+        //                 
+        //                     GameObject naturePrefab = natureData.naturePrefabs[Random.Range(0, natureData.naturePrefabs.Count)].gameObject;
+        //                 
+        //                     GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(naturePrefab, forestData.forestParent.transform, vertex, Quaternion.identity, 
+        //                         naturePrefab.transform.localScale * prefabSize * natureData.prefabSizeMultiplier);
+        //                 
+        //                     // placedTreesInForest++;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Forest Area Not found");
+        //     }
+        // }
     }
 
 

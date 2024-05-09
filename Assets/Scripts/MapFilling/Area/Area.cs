@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum AreaType { City, Industry, Energy, Agriculture };
 
@@ -16,7 +17,8 @@ public class Area
 
     public GameObject roadParent;
 
-    public NoiseData noiseData;
+    public NoiseData areaNoise;
+    
     public Renderer noiseRenderer;
     
     // internal float uniformRadius;

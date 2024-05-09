@@ -314,8 +314,7 @@ public class FillMapManager : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
         }
-        
-        NatureGenerator.GenerateNature(areas, natureData, meshData, minHeight, prefabScale, roadVertices);
+        NatureGenerator.GenerateNature(areas, natureData, mapGenerator, mapDisplay, minHeight, prefabScale, roadVertices);
     }
     
     
