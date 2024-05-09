@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
@@ -8,8 +9,12 @@ public class MapDisplay : MonoBehaviour
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
     public MeshCollider meshCollider;
-    public void DrawTexture(Texture2D texture){
+    public void DrawTexture(Texture2D texture, [CanBeNull] Renderer textureRender = null){
         
+        if (textureRender == null)
+        {
+            textureRender = this.textureRender;
+        }
         textureRender.sharedMaterial.mainTexture = texture;
         textureRender.transform.localScale = new Vector3 (texture.width, 1, texture.height);
     }

@@ -173,7 +173,7 @@ public class FillMapManager : MonoBehaviour
             
             float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
             
-            FillArea.GenerateAreaContent(area, prefabScale, roadData);
+            FillArea.GenerateAreaContent(area, prefabScale, roadData, mapDisplay);
         }
         // mapDisplay.DrawMesh(meshData);
 

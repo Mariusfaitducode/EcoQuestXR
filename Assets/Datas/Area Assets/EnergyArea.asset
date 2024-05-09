@@ -25,8 +25,10 @@ MonoBehaviour:
     prefabHigh: {fileID: 919132149155446097, guid: 00beee0c204e58340ae4e7136a746f1d,
       type: 3}
     size: {x: 4, y: 4}
+    weight: 20
   - prefabLow: {fileID: 919132149155446097, guid: 8da9623fa732dfe42b6b4412363624b3,
       type: 3}
     prefabHigh: {fileID: 919132149155446097, guid: 8da9623fa732dfe42b6b4412363624b3,
       type: 3}
     size: {x: 2, y: 2}
+    weight: 80

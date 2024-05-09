@@ -7,16 +7,17 @@ public enum AreaType { City, Industry, Energy, Agriculture };
 [System.Serializable]
 public class Area
 {
-    
     public AreaData data;
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
     
 
     public GameObject sphere;
-    public GameObject testCube;
 
     public GameObject roadParent;
+
+    public NoiseData noiseData;
+    public Renderer noiseRenderer;
     
     // internal float uniformRadius;
     // internal float uniformStartRadius;

@@ -25,28 +25,34 @@ MonoBehaviour:
     prefabHigh: {fileID: 919132149155446097, guid: 03dddae1921e73d4bb127f35e538e35d,
       type: 3}
     size: {x: 1, y: 1}
+    weight: 50
   - prefabLow: {fileID: 919132149155446097, guid: e607674ddad55094aba7affe0174e946,
       type: 3}
     prefabHigh: {fileID: 919132149155446097, guid: 4115c992e3351fd4dac2c3c725ffe0dd,
       type: 3}
     size: {x: 2, y: 2}
+    weight: 10
   - prefabLow: {fileID: 919132149155446097, guid: 6b27dfa24d0a6e0489214ecde1c20cc7,
       type: 3}
     prefabHigh: {fileID: 919132149155446097, guid: c288ad208b2701b49a578da529f56ac5,
       type: 3}
     size: {x: 2, y: 2}
+    weight: 10
   - prefabLow: {fileID: 919132149155446097, guid: 289e23bf23cf1b543a6fdb5d9d356565,
       type: 3}
     prefabHigh: {fileID: 919132149155446097, guid: 9a975fad1894d1344b7ecdcf55a5cb7b,
       type: 3}
     size: {x: 2, y: 2}
+    weight: 10
   - prefabLow: {fileID: 919132149155446097, guid: c797633c39b5fc3408c3430cb84f7d01,
       type: 3}
     prefabHigh: {fileID: 919132149155446097, guid: c797633c39b5fc3408c3430cb84f7d01,
       type: 3}
     size: {x: 2, y: 2}
+    weight: 20
   - prefabLow: {fileID: 919132149155446097, guid: 37b4ebf2548611a42a273c7cb0bf9b3f,
       type: 3}
     prefabHigh: {fileID: 919132149155446097, guid: 37b4ebf2548611a42a273c7cb0bf9b3f,
       type: 3}
     size: {x: 2, y: 1}
+    weight: 10

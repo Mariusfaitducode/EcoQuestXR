@@ -39,6 +39,8 @@ public struct AreaPrefab
     
     public Vector2Int size;
 
+    public float weight;
+
     // public Vector3 position;
     // public Vector3 scale;
     // public Quaternion rotation;

@@ -5,8 +5,7 @@ using UnityEngine;
 public static class FillArea
 {
 
-
-    public static void GenerateAreaContent(Area area, float prefabScale, RoadGenerator.RoadData roadData)
+    public static void GenerateAreaContent(Area area, float prefabScale, RoadGenerator.RoadData roadData, MapDisplay mapDisplay)
     {
         Debug.Log("Generate Area Content : " + area.data.type);
 
@@ -14,14 +13,18 @@ public static class FillArea
         
         int size = area.areaGrid.GetLength(0);
 
-        // Generate roads area
+        float[,] areaNoiseMap = Noise.GenerateNoiseMap(size, size, area.noiseData.seed, area.noiseData.noiseScale, 
+            area.noiseData.octaves, area.noiseData.persistance, area.noiseData.lacunarity, Vector2.zero, area.noiseData.normalizeMode);
+
+        mapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(areaNoiseMap), area.noiseRenderer);
+        
         for (int x = 0; x < size; x++)
         {
             for (int y = 0; y < size; y++)
             {
                 Vector3 newPosition = area.areaGrid[x, y].position;
 
-
+                // Generate roads 
                 if (area.areaGrid[x, y].type == CellType.Road)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
@@ -44,12 +47,13 @@ public static class FillArea
                         area.areaGrid[x, y].type = CellType.Empty;
                     }
                 }
+                // Generate buildings 
                 else if (area.data.prefabs.Count > 0 && area.areaGrid[x, y].type == CellType.Empty)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.data.startRadius))
                     {
-                        AreaPrefab areaPrefab = area.data.prefabs[Random.Range(0, area.data.prefabs.Count)];
+                        AreaPrefab areaPrefab = ChooseRandomPrefab(area.data.prefabs, areaNoiseMap[x, y]);
                         
                         bool rotate = Random.Range(0, 100) < 30;
                         
@@ -81,6 +85,33 @@ public static class FillArea
                 }
             }
         }
+    }
+
+
+    public static AreaPrefab ChooseRandomPrefab(List<AreaPrefab> areaPrefabs, float noiseWeight)
+    {
+        
+        float totalWeight = 0;
+        foreach (AreaPrefab areaPrefab in areaPrefabs)
+        {
+            totalWeight += areaPrefab.weight;
+        }
+        
+        // float random = Random.Range(0, totalWeight);
+
+        noiseWeight *= totalWeight;
+        float currentPoint = 0;
+        
+        foreach (AreaPrefab areaPrefab in areaPrefabs)
+        {
+            currentPoint += areaPrefab.weight;
+            if (currentPoint >= noiseWeight)
+            {
+                return areaPrefab;
+            }
+        }
+
+        return new AreaPrefab();
     }
     
     
