@@ -13,8 +13,8 @@ public class DisplayCard : MonoBehaviour
     
     private Card _card;
     private bool isSelected = false;
-    private DrawPileCardManager _drawPileCardManager;
-    private LeftArmDeckCardManager _leftArmDeckCardManager;
+    // private PileManager _pileManager;
+    private DisplayCanvas _displayCanvas;
 
     private TextMeshProUGUI _title;
     private TextMeshProUGUI _description;
@@ -37,29 +37,29 @@ public class DisplayCard : MonoBehaviour
     void Start()
     {
         GetChilds();
-        SetButtonListener();
+        // SetButtonListener();
         GetCardInformations();
     }
-    public void SelectUnselectFromDrawPileCardManager()
-    {
-        if (_drawPileCardManager.CanSelectCard() || isSelected)
-        {
-            SelectUnselect();
-            if (isSelected)
-            {
-                _drawPileCardManager.AddSelectedCard();
-            }
-            else
-            {
-                _drawPileCardManager.RemoveSelectedCard();
-            }
-        }
-    }
-    public void SelectUnselectFromLeftArmDeckManager()
-    {
-        _leftArmDeckCardManager.UnSelectAll();
-        SelectUnselect();
-    }
+    // public void SelectUnselectFromDrawPileCardManager()
+    // {
+    //     if (_pileManager.CanSelectCard() || isSelected)
+    //     {
+    //         SelectUnselect();
+    //         if (isSelected)
+    //         {
+    //             _pileManager.AddSelectedCard();
+    //         }
+    //         else
+    //         {
+    //             _pileManager.RemoveSelectedCard();
+    //         }
+    //     }
+    // }
+    // public void SelectUnselectFromLeftArmDeckManager()
+    // {
+    //     _displayCanvas.UnSelectAll();
+    //     SelectUnselect();
+    // }
     private void SelectUnselect()
     {
         isSelected =! isSelected;
@@ -73,33 +73,33 @@ public class DisplayCard : MonoBehaviour
             _shadow.enabled = false;
             _scale.localScale = new Vector3(1f, 1f, 1f);
         }
-
+    
     }
-    public void Unselect()
-    {
-        isSelected = false;
-        _shadow.enabled = false;
-        _scale.localScale = new Vector3(1f, 1f, 1f);
-    }
-    public void SetDrawPileCardManager(DrawPileCardManager drawPileCardManager)
-    {
-        _drawPileCardManager = drawPileCardManager;
-    }
-    private void SetButtonListener()
-    {
-        if (_drawPileCardManager != null)
-        {
-            _button.onClick.AddListener(SelectUnselectFromDrawPileCardManager);
-        }
-        else
-        {
-            _button.onClick.AddListener(SelectUnselectFromLeftArmDeckManager);
-        }
-    }
-    public void SetLeftArmDeckCardManager(LeftArmDeckCardManager leftArmDeckCardManager)
-    {
-        _leftArmDeckCardManager = leftArmDeckCardManager;
-    }
+    // public void Unselect()
+    // {
+    //     isSelected = false;
+    //     _shadow.enabled = false;
+    //     _scale.localScale = new Vector3(1f, 1f, 1f);
+    // }
+    // public void SetDrawPileCardManager(PileManager pileManager)
+    // {
+    //     _pileManager = pileManager;
+    // }
+    // private void SetButtonListener()
+    // {
+    //     if (_pileManager != null)
+    //     {
+    //         _button.onClick.AddListener(SelectUnselectFromDrawPileCardManager);
+    //     }
+    //     else
+    //     {
+    //         _button.onClick.AddListener(SelectUnselectFromLeftArmDeckManager);
+    //     }
+    // }
+    // public void SetLeftArmDeckCardManager(DisplayCanvas displayCanvas)
+    // {
+    //     _displayCanvas = displayCanvas;
+    // }
 
     public Card GetCard()
     {

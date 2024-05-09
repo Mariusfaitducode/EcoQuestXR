@@ -36,18 +36,18 @@ public class Card
 
 
 
-    // public Card(string title, string price, string description, AreaType areaType, CardAction action, string energy, string ecology, string population, string pollution)
-    // {
-    //     this.title = title;
-    //     this.price = price;
-    //     this.description = description;
-    //     this.areaType = areaType;
-    //     this.action = action;
-    //     this.energy = energy;
-    //     this.ecology = ecology;
-    //     this.population = population;
-    //     this.pollution = pollution;
-    // }
+    public Card(string title, string price, string description, AreaType areaType, ActionType action, string energy, string ecology, string population, string pollution)
+    {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.areaType = areaType;
+        this.action = action;
+        this.energy = energy;
+        this.ecology = ecology;
+        this.population = population;
+        this.pollution = pollution;
+    }
 
     public class CardProperties
     {
