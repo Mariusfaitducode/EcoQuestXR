@@ -28,9 +28,19 @@ public class Card
     
     public CardProperties cardProperties = new CardProperties();
     
+    public GameObject cardObject;
+    
     public AreaType areaType;
     // public CardAction action;
     
+    public void SetCardObject(GameObject cardObject)
+    {
+        this.cardObject = cardObject;
+    }
+    public GameObject GetCardObject()
+    {
+        return cardObject;
+    }
 
     public class CardProperties
     {

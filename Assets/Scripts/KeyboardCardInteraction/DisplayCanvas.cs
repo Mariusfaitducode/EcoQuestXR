@@ -33,14 +33,17 @@ public class DisplayCanvas
         }
     }
     
-    public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab)
+    public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas)
     {
         int idx = 0;
         foreach (Card card in cardsDeck)
         {
             GameObject cardObject = GameObject.Instantiate(cardPrefab, cardLocationPanels[idx].transform);
+            card.SetCardObject(cardObject);
             DisplayCard displayCard =  cardObject.GetComponent<DisplayCard>();
             displayCard.SetCard(card);
+            displayCard.SetCanvas(canvas);
+            displayCard.GetButton().onClick.AddListener(() => cardManager.SelectUnselectEvent(displayCard));
             idx++;
         }
     }
