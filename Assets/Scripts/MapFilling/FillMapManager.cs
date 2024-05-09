@@ -296,7 +296,6 @@ public class FillMapManager : MonoBehaviour
         }
     }
     
-      
     public void GenerateNatureOnMap(MeshData meshData)
     {
         //Destroy all children
@@ -316,7 +315,6 @@ public class FillMapManager : MonoBehaviour
         }
         NatureGenerator.GenerateNature(areas, natureData, mapGenerator, mapDisplay, minHeight, prefabScale, roadVertices);
     }
-    
     
     public void SetRiverShader(MeshData meshData)
     {

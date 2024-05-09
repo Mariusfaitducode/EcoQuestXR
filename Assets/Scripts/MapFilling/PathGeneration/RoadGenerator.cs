@@ -32,6 +32,18 @@ public static class RoadGenerator
         public GameObject road4;
     }
     
+    public struct RoadTile
+    {
+        public GameObject tile;
+        public Quaternion rotation;
+        
+        public RoadTile(GameObject tile, Quaternion rotation)
+        {
+            this.tile = tile;
+            this.rotation = rotation;
+        }
+    }
+    
     // private Random random = new Random();
 
     // Big road extremity
@@ -331,17 +343,6 @@ public static class RoadGenerator
     }
 
     
-    public struct RoadTile
-    {
-        public GameObject tile;
-        public Quaternion rotation;
-        
-        public RoadTile(GameObject tile, Quaternion rotation)
-        {
-            this.tile = tile;
-            this.rotation = rotation;
-        }
-    }
 
     public static RoadTile FindGoodRoadTile(bool up, bool right, bool down, bool left, RoadTiles roadTiles)
     {
