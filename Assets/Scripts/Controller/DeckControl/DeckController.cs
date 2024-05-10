@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckControl : MonoBehaviour
+public class DeckController : MonoBehaviour
 {
     private Canvas _lightCanvas;
     

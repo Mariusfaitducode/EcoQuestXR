@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -11,10 +12,13 @@ public class CardManager : MonoBehaviour
     public string cardsCSVPath = "Csv/cards";
 
     public GameObject cardPrefab;
-    
-    internal List<Card> cards = new List<Card>();
+    public TextMeshProUGUI draftCounterSelectedCardsText;
+
+    internal List<Card> cards;
     internal List<Card> pileCards = new List<Card>();
     internal List<Card> deckCards = new List<Card>();
+    internal List<Card> selectedPileCards = new List<Card>();
+    internal Card selectedDeckCard;
     
     public Canvas deckCanvas;
     public Canvas draftCanvas;
@@ -24,8 +28,10 @@ public class CardManager : MonoBehaviour
     
     internal int nbrSelectedCards = 0;
     public int nbrMaxSelectedCards = 3;
+    public int nbrMaxDeckCards = 5;
+    public int nbrDraftCards = 4;
+    public float factorCostReductionDestruction = 0.2f;
     
-    public Button button;
     // public GameObject cardPrefab;
     
     // Start is called before the first frame update
@@ -39,8 +45,7 @@ public class CardManager : MonoBehaviour
         List<ObjectProperties> objectProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         Debug.Log(objectProperties);
         
-        CardsInitialization.MatchCardWithObjectProperties(cards, objectProperties);
-        Debug.Log(cards);
+        CardsInitialization.MatchCardWithObjectProperties(cards, objectProperties, factorCostReductionDestruction);
         
         
         // Canvas Initialization
@@ -56,7 +61,7 @@ public class CardManager : MonoBehaviour
     public void DrawPileEvent()
     {
         // Draw Pile
-        pileCards = PileManager.DrawPile(cards, 3);
+        pileCards = PileManager.DrawPile(cards, nbrDraftCards);
         
         // Display Canvas
         DisplayCanvas.ShowCanvas(draftCanvas);
@@ -65,47 +70,51 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.DeleteCards(cardsLocationDraftPanels);
         
         DisplayCanvas.DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, this, draftCanvas);
-        // DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, draftCanvas);
-        
-        // Enable Card Interaction
-        // EnableCardInteraction();
     }
     
-    
-
     public void SelectUnselectEvent(DisplayCard displayCard)
     {
         // Debug.L
         
         if (displayCard.GetParentCanvas() == draftCanvas)
         {
-            nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards);
+            nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards, selectedPileCards);
+            DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         }
         else if (displayCard.GetParentCanvas() == deckCanvas)
         {
-            CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
+            selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
         }
         else
         {
             Debug.LogError("Parent Canvas not found");
         }
     }
+    
+    public void ValidateEvent()
+    {
+        // Transfer Drafted Cards
+        PileManager.TransferDraftedCards(selectedPileCards, deckCards);
         
-    // Regular Cards Choice Proposition Event
-    
-    // 1. Pile Manager -> DrawPile
+        // Update Deck
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
+        
+        // Hide Canvas
+        DisplayCanvas.HideCanvas(draftCanvas);
+        
+        // Reset Counter
+        nbrSelectedCards = 0;
+        DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
+    }
 
-    // 2. DisplayCardCanvas -> DisplayDraftCanvas -> DisplayCard
-    
-    // 3. Enable Card Interaction -> select, validate
-    
-    // Update Deck
-    
-   
-    
-   
-
-    
-
-
+    public void PlayEvent()
+    {
+        // Remove Selected Card
+        PileManager.RemoveSelectedCard(deckCards, selectedDeckCard);
+        
+        // Update Deck
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
+        
+        // TODO : Implement action on map
+    }
 }

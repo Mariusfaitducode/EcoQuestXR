@@ -16,7 +16,7 @@ public class CardsInitialization
         
         cards = AffectDatasToCards(data);
         
-        Debug.Log(cards);
+        PrintCards(cards);
         
         return cards;
     }
@@ -51,11 +51,10 @@ public class CardsInitialization
     }
 
 
-    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties)
+    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties, float factorCostReductionDestruction)
     {
         
         // Set objectProperties to cards
-        
         foreach (Card card in cards)
         {
             foreach (ObjectProperties objectProperties in objectsProperties)
@@ -71,12 +70,17 @@ public class CardsInitialization
             }
         }
         
-        // Calculate CardProperties
-        
-        // To change for a good calculation
+        // Set areaType to cards
         foreach (Card card in cards)
         {
-            if (card.objectProperties1 != null)
+            card.areaType = card.objectProperties1.areaType;
+        }
+
+        // Calculate CardProperties
+        // TODO :  Improve card stats calculation
+        foreach (Card card in cards)
+        {
+            if (card.cardType == CardType.Construction)
             {
                 card.cardProperties.price = card.objectProperties1.price * card.quantityObject1;
                 card.cardProperties.ecology = card.objectProperties1.ecology * card.quantityObject1;
@@ -84,14 +88,26 @@ public class CardsInitialization
                 card.cardProperties.energy = card.objectProperties1.energy * card.quantityObject1;
                 card.cardProperties.pollution = card.objectProperties1.pollution * card.quantityObject1;
             }
-            else if (card.objectProperties2 != null)
+            else if (card.cardType == CardType.Destruction)
             {
-                card.cardProperties.price -= card.objectProperties2.price * card.quantityObject2;
-                card.cardProperties.ecology -= card.objectProperties2.ecology * card.quantityObject2;
-                card.cardProperties.population -= card.objectProperties2.population * card.quantityObject2;
-                card.cardProperties.energy -= card.objectProperties2.energy * card.quantityObject2;
-                card.cardProperties.pollution -= card.objectProperties2.pollution * card.quantityObject2;
+                card.cardProperties.price = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction);
+                card.cardProperties.ecology = - card.objectProperties1.ecology * card.quantityObject1;
+                card.cardProperties.population = - card.objectProperties1.population * card.quantityObject1;
+                card.cardProperties.energy = - card.objectProperties1.energy * card.quantityObject1;
+                card.cardProperties.pollution = - card.objectProperties1.pollution * card.quantityObject1;
             }
+            else
+            {
+                Debug.LogError("Card type " + card.cardType + " not implemented");
+            }
+        }
+    }
+    
+    public static void PrintCards(List<Card> cards)
+    {
+        foreach (Card card in cards)
+        {
+            Debug.Log(card.areaType);
         }
     }
 }

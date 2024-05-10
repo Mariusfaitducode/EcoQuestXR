@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DisplayCanvas
@@ -21,7 +22,6 @@ public class DisplayCanvas
         }
         return cardLocationPanels;
     }
-    
     public static void DeleteCards(List<GameObject> cardLocationPanels)
     {
         foreach (GameObject panel in cardLocationPanels)
@@ -32,7 +32,6 @@ public class DisplayCanvas
             }
         }
     }
-    
     public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas)
     {
         int idx = 0;
@@ -52,15 +51,22 @@ public class DisplayCanvas
             idx++;
         }
     }
-    
+    public static void UpdateCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas)
+    {
+        DeleteCards(cardLocationPanels);
+        DrawCards(cardsDeck, cardLocationPanels, cardPrefab, cardManager, canvas);
+    }
     public static void HideCanvas(Canvas canvas)
     {
         canvas.enabled = false;
     }
-    
     public static void ShowCanvas(Canvas canvas)
     {
         canvas.enabled = true;
+    }
+    public static void UpdateCounterText(TextMeshProUGUI counterText, int nbrSelectedCards, int nbrMaxSelectedCards)
+    {
+        counterText.text = nbrSelectedCards + " / " + nbrMaxSelectedCards;
     }
     
     // public static

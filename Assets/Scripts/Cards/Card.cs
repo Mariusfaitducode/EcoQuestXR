@@ -17,21 +17,18 @@ public class Card
     public string description { get; set; }
     
     public CardType cardType { get; set; }
+    public AreaType areaType;
     
     public int idObject1 { get; set; }
     public int idObject2 { get; set; }
     public int quantityObject1 { get; set; }
     public int quantityObject2 { get; set; }
-    
     public ObjectProperties objectProperties1;
     public ObjectProperties objectProperties2;
     
     public CardProperties cardProperties = new CardProperties();
     
     public GameObject cardObject;
-    
-    public AreaType areaType;
-    // public CardAction action;
     
     public void SetCardObject(GameObject cardObject)
     {

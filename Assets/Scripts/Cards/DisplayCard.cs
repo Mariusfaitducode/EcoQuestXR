@@ -92,7 +92,21 @@ public class DisplayCard : MonoBehaviour
         {
             _title.text = _card.title;
             _description.text = _card.description;
-            _price.text = _card.cardProperties.price.ToString();
+
+            float price = (float)_card.cardProperties.price;
+            if (price > 1_000_000)
+            {
+                _price.text = price / 1_000_000 + "M";
+            }
+            else if (price > 1_000)
+            {
+                _price.text = price / 1_000 + "K";
+            }
+            else
+            {
+                _price.text = price.ToString();
+            }
+            
             _image.texture = GetTexture(folderActionImage, _card.cardType.ToString());
             
             
