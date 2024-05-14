@@ -26,6 +26,7 @@ public class MapGenerator : MonoBehaviour {
 	float[,] falloffMap;
 
 	public MeshData meshData;
+	public MapData mapData;
 
 	void Awake() {
 		// textureData.ApplyToMaterial(terrainMaterial);
@@ -63,7 +64,7 @@ public class MapGenerator : MonoBehaviour {
 		
 		
 		// Generate map data : PerlinNoise map and colour map with all parameters
-		MapData mapData = GenerateMapData (Vector2.zero);
+		this.mapData = GenerateMapData (Vector2.zero);
 
 		MapDisplay display = FindObjectOfType<MapDisplay> ();
 		

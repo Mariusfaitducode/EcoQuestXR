@@ -35,20 +35,26 @@ public class FillMapManager : MonoBehaviour
     public int maxMapIteration = 200;
 
     public float prefabScale = 0.1f;
+    public float cellSize = 1f;
     
     
     public List<Area> areas;
     
     public RoadGenerator.RoadData roadData;
+
+    public NatureGenerator.NatureData natureData;
+    
     public RiverGenerator.RiverSettings riverSettings;
     
 
     internal bool validPosition = false;
+    
+    internal List<Vector3> roadVertices = new List<Vector3>();
 
 
     public Vector3 SetMapScale()
     {
-        mapGenerator.DrawMapInEditor();
+        // mapGenerator.DrawMapInEditor();
         
         Vector3 meshScale = meshTerrain.transform.localScale;
         meshTerrain.transform.localScale = new Vector3(1, 1, 1);
@@ -60,6 +66,7 @@ public class FillMapManager : MonoBehaviour
     }
     
 
+    // Editor call
     public void SetAreaInEditor()
     {
         Vector3 meshScale = SetMapScale();
@@ -74,31 +81,34 @@ public class FillMapManager : MonoBehaviour
     
     public void FillAreaInEditor()
     {
+        SetAreaShader(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
         Vector3 meshScale = SetMapScale();
         
         if (validPosition)
         {
-            FillAreaOnMap(mapGenerator.terrainData.uniformScale);
+            FillAreaOnMap(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
+            
         }
         meshTerrain.transform.localScale = meshScale;
+        
+    }
 
-    }
-    
-    public void SetAreaShaderInEditor()
-    {
-        // Vector3 meshScale = SetMapScale();
-     
-        if (validPosition)
-        {
-            SetAreaShader(mapGenerator.meshData, mapGenerator.terrainData.uniformScale);
-        }
-    }
-    
     public void GenerateRoadOnMapInEditor()
     {
         Vector3 meshScale = SetMapScale();
         
         GenerateRoadOnMap(mapGenerator.meshData);
+        
+        meshTerrain.transform.localScale = meshScale;
+
+    }
+    
+    public void GenerateNatureInEditor()
+    {
+        Vector3 meshScale = SetMapScale();
+        
+        // GenerateRoadOnMap(mapGenerator.meshData);
+        GenerateNatureOnMap(mapGenerator.meshData);
         
         meshTerrain.transform.localScale = meshScale;
 
@@ -113,6 +123,9 @@ public class FillMapManager : MonoBehaviour
         meshTerrain.transform.localScale = meshScale;
  
     }
+    
+    
+    // Map Modification
     
     public void PlaceAreaOnMap(MeshData meshData)
     {
@@ -140,11 +153,10 @@ public class FillMapManager : MonoBehaviour
         }
     }
     
-    public void FillAreaOnMap(float uniformScale)
+    public void FillAreaOnMap(MeshData meshData, float uniformScale)
     {
         foreach (Area area in areas)
         {
-            
             //Destroy all children
             while (area.sphere.transform.childCount > 0)
             {
@@ -155,22 +167,27 @@ public class FillMapManager : MonoBehaviour
             // area.uniformRadius = area.data.radius * uniformScale;
             // area.uniformStartRadius = area.data.startSize * uniformScale;
             
-            area.CreateGrid();
-
+            area.CreateGrid(cellSize);
+            
             RoadGenerator.GenerateRoadArea(area);
             
             float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
-
-            FillArea.GenerateAreaContent(area, prefabScale);
+            
+            FillArea.GenerateAreaContent(area, prefabScale, roadData, mapDisplay);
         }
+        // mapDisplay.DrawMesh(meshData);
+
     }
-
-
+    
     public void SetAreaShader(MeshData meshData, float uniformScale)
     {
         foreach (Area area in areas)
         {
-            FillArea.SetAreaVerticesInformation(area, meshTerrain, uniformScale);
+            FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            FillArea.SetAreaVerticesInformation(area, meshData, uniformScale);
+            
+            Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            area.sphere.transform.rotation = rotation;
             
         }
         Debug.Log(meshData);
@@ -178,12 +195,10 @@ public class FillMapManager : MonoBehaviour
         mapDisplay.DrawMesh(meshData);
     }
     
-    
     public void GenerateRoadOnMap(MeshData meshData)
     {
-
-        // float roadScale = 3f;
         
+        //Destroy Children
         while (roadParent.transform.childCount > 0)
         {
             Transform child = roadParent.transform.GetChild(0);
@@ -199,6 +214,7 @@ public class FillMapManager : MonoBehaviour
             }
         }
         
+        // Trace Roads
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
 
         List<FindPath.PathPoint> bigRoadPath = new List<FindPath.PathPoint>();
@@ -220,8 +236,8 @@ public class FillMapManager : MonoBehaviour
         {
             Vector3[] areaRoadExtremity = RoadGenerator.FindAreaClosestRoadCell(area, bigRoadCopy);
             
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Vector3.one * roadData.roadScale);
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Vector3.one * roadData.roadScale);
+            // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Quaternion.identity, Vector3.one * roadData.roadScale);
+            // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Quaternion.identity, Vector3.one * roadData.roadScale);
             
             List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, false);
             
@@ -229,19 +245,77 @@ public class FillMapManager : MonoBehaviour
             bigRoadCopy = bigRoadCopy.Concat(areaRoadPoints).ToList();
         }
         
+        // Get Path Vertices
+        
+        PathUtils.PathVertices pathVertices = PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth + 6);
+        List<PathUtils.PathVertices> listAreaVertices = new List<PathUtils.PathVertices>();
+        
+        foreach (List<FindPath.PathPoint> areaRoad in listAreaRoads)
+        {
+            PathUtils.PathVertices areaPath = PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth + 6);
+            listAreaVertices.Add(areaPath);
+            
+            pathVertices.listVertices = pathVertices.listVertices.Concat(areaPath.listVertices).ToList();
+            pathVertices.listIndex = pathVertices.listIndex.Concat(areaPath.listIndex).ToList();
+        }
+        
+        // Set Path Height and vertices height
+
+        float testMean = FillMapUtils.CalculateMean(pathVertices.listVertices);
+        float mean = PathUtils.MeanWithoutTooLowVertices(pathVertices.listVertices, minHeight);
+        
+        Debug.Log("Mean diff : " + testMean+ " vs " + mean);
+        
+        foreach(int index in pathVertices.listIndex)
+        {
+            // Debug.DrawLine(meshData.vertices[index] *uniformScale, new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z) * uniformScale, Color.blue, 60);
+            meshData.vertices[index] = new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z);
+        }
+
+        mapDisplay.DrawMesh(meshData);
+        
+        PathUtils.ResetPathHeight(bigRoadPath, mean);
+        
+        foreach( List<FindPath.PathPoint> areaRoad in listAreaRoads)
+        {
+            PathUtils.ResetPathHeight(areaRoad, mean);
+        }
+        
+        this.roadVertices = pathVertices.listVertices;
+        
         // Create Road Mesh
         RoadGenerator.GenerateRoadMesh(bigRoadPath, roadParent, roadData.roadWidth);
+        // PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth);
 
         int i = 0;
         foreach (List<FindPath.PathPoint> areaRoad in listAreaRoads)
         {
             RoadGenerator.GenerateRoadMesh(areaRoad, areas[i].roadParent, roadData.roadWidth);
+            // PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth);
             i++;
         }
     }
     
+    public void GenerateNatureOnMap(MeshData meshData)
+    {
+        //Destroy all children
+        while (natureData.natureParent.transform.childCount > 0)
+        {
+            Transform child = natureData.natureParent.transform.GetChild(0);
+            DestroyImmediate(child.gameObject);
+        }
+        
+        foreach (NatureGenerator.ForestData forest in natureData.forestDatas)
+        {
+            while (forest.forestParent.transform.childCount > 0)
+            {
+                Transform child = forest.forestParent.transform.GetChild(0);
+                DestroyImmediate(child.gameObject);
+            }
+        }
+        NatureGenerator.GenerateNature(areas, natureData, mapGenerator, mapDisplay, minHeight, prefabScale, roadVertices);
+    }
     
-
     public void SetRiverShader(MeshData meshData)
     {
         // Trouver le GameObject parent

@@ -6,6 +6,18 @@ TagManager:
   tags:
   - Table
   - Terrain
+  - Location
+  - EnergyText
+  - EcologyText
+  - PopulationText
+  - PollutionText
+  - TitleText
+  - DescriptionText
+  - PriceText
+  - LogoAreaRawImage
+  - LogoActionRawImage
+  - ImageRawImage
+  - BackgroundRawImage
   layers:
   - Default
   - TransparentFX

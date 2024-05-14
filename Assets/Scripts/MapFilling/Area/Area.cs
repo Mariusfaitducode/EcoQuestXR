@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum AreaType { City, Industry, Energy, Agriculture };
 
 [System.Serializable]
 public class Area
 {
-    
     public AreaData data;
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
     
 
     public GameObject sphere;
-    public GameObject testCube;
 
     public GameObject roadParent;
+
+    public NoiseData areaNoise;
+    
+    public Renderer noiseRenderer;
     
     // internal float uniformRadius;
     // internal float uniformStartRadius;
@@ -31,11 +34,15 @@ public class Area
     }
     
     // Go To Area script ?
-    public void CreateGrid()
+    public void CreateGrid(float cellSize)
     {
 
-        int tabSize = data.areaGridSize;
-        gridCellSize = ((float)data.radius * 2 / tabSize);
+        // int tabSize = data.areaGridSize;
+        int tabSize = (int)(data.radius * 2 / cellSize);
+        
+        // gridCellSize = ((float)data.radius * 2 / tabSize);
+        gridCellSize = cellSize;
+        
         AreaCell[,] gridPoints = new AreaCell[tabSize, tabSize];
 
         // int i = 0;

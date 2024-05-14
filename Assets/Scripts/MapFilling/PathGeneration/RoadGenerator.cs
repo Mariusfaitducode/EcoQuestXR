@@ -18,8 +18,30 @@ public static class RoadGenerator
         public float targetDistance = 20f;
         public float roadWidth = 2f;
         
-        public Material roadMaterial = null;
-        public Material testMaterial = null;
+        public RoadTiles roadTiles;
+        
+        public Material roadMaterial;
+    }
+
+    [Serializable]
+    public struct RoadTiles
+    {
+        public GameObject road1;
+        public GameObject road2;
+        public GameObject road3;
+        public GameObject road4;
+    }
+    
+    public struct RoadTile
+    {
+        public GameObject tile;
+        public Quaternion rotation;
+        
+        public RoadTile(GameObject tile, Quaternion rotation)
+        {
+            this.tile = tile;
+            this.rotation = rotation;
+        }
     }
     
     // private Random random = new Random();
@@ -53,10 +75,10 @@ public static class RoadGenerator
 
             if (distance > size.x)
             {
-                FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex, Vector3.one * roadData.roadScale);
-                GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2, Vector3.one * roadData.roadScale);
-                
-                cube.GetComponent<Renderer>().material = roadData.testMaterial;
+                // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex, Quaternion.identity, Vector3.one * roadData.roadScale);
+                // GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, randVertex2, Quaternion.identity, Vector3.one * roadData.roadScale);
+                //
+                // cube.GetComponent<Renderer>().material = roadData.testMaterial;
                 
                 listPoints[1] = randVertex2;
                 valid = true;
@@ -113,10 +135,10 @@ public static class RoadGenerator
             }
         }
         
-        FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0], Vector3.one * roadData.roadScale);
-        GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1], Vector3.one * roadData.roadScale);
-                
-        cube.GetComponent<Renderer>().material = roadData.testMaterial;
+        // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[0],  Quaternion.identity, Vector3.one * roadData.roadScale);
+        // GameObject cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, listPoints[1], Quaternion.identity,  Vector3.one * roadData.roadScale);
+        //         
+        // cube.GetComponent<Renderer>().material = roadData.testMaterial;
 
         return listPoints;
     }
@@ -162,7 +184,6 @@ public static class RoadGenerator
                     }
                 }
                 nextRoadCount += FillMapUtils.GenerateGaussian((double)area.data.pavilionHeightMean);
-                
             }
         }
     }
@@ -295,10 +316,10 @@ public static class RoadGenerator
         Vector3 p3 = next + perpendicular;
         Vector3 p4 = next - perpendicular;
 
-        p1.y = FillMapUtils.GetHeightFromRaycast(p1) + 0.1f;
-        p2.y = FillMapUtils.GetHeightFromRaycast(p2) + 0.1f;
-        p3.y = FillMapUtils.GetHeightFromRaycast(p3) + 0.1f;
-        p4.y = FillMapUtils.GetHeightFromRaycast(p4) + 0.1f;
+        p1.y = FillMapUtils.GetHeightFromRaycast(p1) + 0.05f;
+        p2.y = FillMapUtils.GetHeightFromRaycast(p2) + 0.05f;
+        p3.y = FillMapUtils.GetHeightFromRaycast(p3) + 0.05f;
+        p4.y = FillMapUtils.GetHeightFromRaycast(p4) + 0.05f;
 
 
         vertices.Add(p1);
@@ -321,8 +342,46 @@ public static class RoadGenerator
         return endSegments;
     }
 
-
     
+
+    public static RoadTile FindGoodRoadTile(bool up, bool right, bool down, bool left, RoadTiles roadTiles)
+    {
+        int count = (up ? 1 : 0) + (right ? 1 : 0) + (down ? 1 : 0) + (left ? 1 : 0);
+
+        switch (count)
+        {
+            case 1:  // Cul-de-sac
+                if (up) return new RoadTile(roadTiles.road1, Quaternion.identity);
+                if (right) return new RoadTile(roadTiles.road1, Quaternion.Euler(0, 90, 0));
+                if (down) return new RoadTile(roadTiles.road1, Quaternion.Euler(0, 180, 0));
+                if (left) return new RoadTile(roadTiles.road1, Quaternion.Euler(0, 270, 0));
+                break;
+
+            case 2:  // Ligne droite ou virage
+                if (up && down) return new RoadTile(roadTiles.road1, Quaternion.identity);
+                if (left && right) return new RoadTile(roadTiles.road1, Quaternion.Euler(0, 90, 0));
+                
+                if (up && right) return new RoadTile(roadTiles.road2, Quaternion.Euler(0, 90, 0));
+                if (right && down) return new RoadTile(roadTiles.road2, Quaternion.Euler(0, 270, 0));
+                if (down && left) return new RoadTile(roadTiles.road2, Quaternion.Euler(0, 180, 0) );
+                if (left && up) return new RoadTile(roadTiles.road2, Quaternion.identity);
+                break;
+
+            case 3:  // T intersection
+                if (!left) return new RoadTile(roadTiles.road3,Quaternion.Euler(0, 180, 0));
+                if (!up) return new RoadTile(roadTiles.road3, Quaternion.Euler(0, 270, 0));
+                if (!right) return new RoadTile(roadTiles.road3, Quaternion.identity);
+                if (!down) return new RoadTile(roadTiles.road3, Quaternion.Euler(0, 90, 0));
+                break;
+
+            case 4:  // Croisement à 4 sorties
+                return new RoadTile(roadTiles.road4, Quaternion.identity);
+
+            default:
+                return new RoadTile(null, Quaternion.identity);
+        }
+        return new RoadTile(null, Quaternion.identity);
+    }
     
 
     

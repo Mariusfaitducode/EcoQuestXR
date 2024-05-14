@@ -105,9 +105,9 @@ public class FillMapUtils : MonoBehaviour
     }
 
 
-    public static GameObject InstantiateObjectWithScale(GameObject prefab, Transform parent, Vector3 position, Vector3 scale)
+    public static GameObject InstantiateObjectWithScale(GameObject prefab,  Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
     {
-        GameObject obj = GameObject.Instantiate(prefab, position, Quaternion.identity);
+        GameObject obj = GameObject.Instantiate(prefab, position, rotation);
         
         Vector3 originalScale = obj.transform.localScale;
         

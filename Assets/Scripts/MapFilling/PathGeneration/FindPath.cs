@@ -33,7 +33,6 @@ public class FindPath
     
     public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, bool bigRoad = true)
     {
-        float roadScale = roadData.roadScale;
         
         int count = 0;
         
@@ -66,15 +65,14 @@ public class FindPath
             }
             // exploredVertices.Add(nextPoint.position);
             newPoint = nextPoint;
-            
-            
-            
             i++;
         }
-
+        
+        PathPoint endPath = new PathPoint(end, newPoint.count + 1, newPoint);
+        
         // Go back
         
-        PathPoint lastPoint = newPoint;
+        PathPoint lastPoint = endPath;
         count = lastPoint.count;
 
         List<PathPoint> validPath = new List<PathPoint>();
@@ -83,8 +81,8 @@ public class FindPath
         {
             if (count == lastPoint.count)
             {
-                lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Vector3.one * roadScale);
-                lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+                // lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Quaternion.identity, Vector3.one * roadScale);
+                // lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
                 validPath.Add(lastPoint);
             }
 
@@ -92,6 +90,8 @@ public class FindPath
             lastPoint = lastPoint.parent;
         }
 
+        validPath.Add(lastPoint);
+        
         return validPath;
     }
     
