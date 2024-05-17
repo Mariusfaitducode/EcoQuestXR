@@ -49,7 +49,7 @@ public class CardManager : MonoBehaviour
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deckCanvas);
         
         // Test
-        // Draft();
+        Draft();
         // DrawPileEvent();
     
     }
@@ -118,6 +118,6 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
         
         // TODO : Implement action on map
-        // gameManager.ExecuteCardAction(selectedDeckCard);
+        gameManager.ExecuteCardAction(selectedDeckCard);
     }
 }

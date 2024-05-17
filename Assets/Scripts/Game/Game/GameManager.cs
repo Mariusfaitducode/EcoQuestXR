@@ -50,4 +50,9 @@ public class GameManager : MonoBehaviour
             Debug.Log("Timer stopped");
         }
     }
+    
+    public void ExecuteCardAction(Card card)
+    {
+        objectManager.PlaceObjectsOnMap(card.objectProperties1);
+    }
 }
