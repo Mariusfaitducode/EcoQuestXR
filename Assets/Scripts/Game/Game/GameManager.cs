@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    
+    public static GameManager Instance { get; private set; }
+    
     public CardManager cardManager;
+    public ObjectManager objectManager;
     
     
     public Timer timer = new Timer();
@@ -14,6 +18,8 @@ public class GameManager : MonoBehaviour
     public EventsGestion eventsGestion = new EventsGestion();
 
     
+    
+    private bool hasTransferredObjectsPropertiesFromOMToCM = false;
     
     
     void Start()
@@ -24,8 +30,11 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        
 
+        // Transfers objects properties from GM to CM when CM has initialized its cards
+        GameInitialisation.TransfersObjectsPropertiesToCards(cardManager, objectManager, hasTransferredObjectsPropertiesFromOMToCM);
+        
+        
         if (!timer.stopTime && timer.IsCheckTime())
         {
             Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
@@ -41,6 +50,4 @@ public class GameManager : MonoBehaviour
             Debug.Log("Timer stopped");
         }
     }
-    
-    
 }
