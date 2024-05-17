@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
 public struct Interval
 {
     public int days;
@@ -11,6 +11,7 @@ public struct Interval
     public int years;
 }
 
+[System.Serializable]
 public class Timer
 {
     internal DateTime currentTime;
@@ -36,10 +37,6 @@ public class Timer
 
     public bool IsCheckTime()
     {
-        if (stopTime)
-        {
-            return false;
-        }
         timeCounter += Time.deltaTime * timeScale;
         return timeCounter >= 1.0f;
     }

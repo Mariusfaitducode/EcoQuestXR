@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[System.Serializable]
 public class EventsGestion 
 {
 
@@ -24,12 +25,13 @@ public class EventsGestion
     {
         if (timer.currentTime >= nextEventTime)
         {
-            Debug.Log("Événement déclenché le : " + timer.currentTime.ToString("yyyy-MM-dd"));
+            Debug.Log("Événement déclenché le : " + timer.currentTime.ToString("yyyy-MM-dd-HH"));
 
             isDraftEvent = true;
+            timer.stopTime = true;
+
             SetNextEventTime(timer.currentTime);
             
-            timer.stopTime = true;
         }
         else
         {
@@ -41,6 +43,6 @@ public class EventsGestion
     public void SetNextEventTime(DateTime currentTime)
     {
         nextEventTime = currentTime.AddDays(draftInterval.days).AddMonths(draftInterval.months).AddYears(draftInterval.years);
-        Debug.Log("Prochain événement prévu pour : " + nextEventTime.ToString("yyyy-MM-dd"));
+        Debug.Log("Prochain événement prévu pour : " + nextEventTime.ToString("yyyy-MM-dd-HH"));
     }
 }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public CardManager cardManager;
     
-    [SerializeField]
+    
     public Timer timer = new Timer();
     
     public EventsGestion eventsGestion = new EventsGestion();
@@ -24,10 +24,11 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
+        
 
-        if (timer.IsCheckTime())
+        if (!timer.stopTime && timer.IsCheckTime())
         {
+            Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
             timer.TimeIncrement(eventsGestion);
             eventsGestion.CheckDraftEvent(timer);
             if (eventsGestion.isDraftEvent)
@@ -35,5 +36,11 @@ public class GameManager : MonoBehaviour
                 eventsGestion.DraftEvent(cardManager);
             }
         }
+        else
+        {
+            Debug.Log("Timer stopped");
+        }
     }
+    
+    
 }
