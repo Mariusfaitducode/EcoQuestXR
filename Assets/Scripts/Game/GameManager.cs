@@ -5,31 +5,35 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
-    public static GameManager Instance { get; private set; }
 
-    private DateTime currentTime;
-    public DateTime CurrentTime => currentTime;
-    public float timeScale = 1.0f; // Facteur d'accélération du temps
-    private float timeCounter = 0.0f;
+    public CardManager cardManager;
+    
+    [SerializeField]
+    public Timer timer = new Timer();
+    
+    public EventsGestion eventsGestion = new EventsGestion();
+
     
     
-    // Start is called before the first frame update
+    
     void Start()
     {
-        
+        timer.TimeInitialization();
+        eventsGestion.SetNextEventTime(timer.currentTime);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        timeCounter += Time.deltaTime * timeScale;
-        if (timeCounter >= 1.0f) // 1 seconde réelle écoulée
-        {
-            currentTime = currentTime.AddSeconds(timeCounter); // Ajoute les secondes écoulées à l'heure actuelle
-            timeCounter = 0.0f; // Réinitialise le compteur
+        Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
 
-            CheckMonthlyEvent();
+        if (timer.IsCheckTime())
+        {
+            timer.TimeIncrement(eventsGestion);
+            eventsGestion.CheckDraftEvent(timer);
+            if (eventsGestion.isDraftEvent)
+            {
+                eventsGestion.DraftEvent(cardManager);
+            }
         }
     }
 }

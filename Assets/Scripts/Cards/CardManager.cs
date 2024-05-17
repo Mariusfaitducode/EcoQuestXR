@@ -53,12 +53,12 @@ public class CardManager : MonoBehaviour
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deckCanvas);
         
         // Test
-        DrawPileEvent();
+        Draft();
     
     }
     
     // Tirage au sort de cartes dans la pile
-    public void DrawPileEvent()
+    public void Draft()
     {
         // Draw Pile
         pileCards = PileManager.DrawPile(cards, nbrDraftCards);
