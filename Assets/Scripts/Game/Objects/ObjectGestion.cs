@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ActionsUtils
+public static class ObjectGestion
 {
     public static void PlaceObjectsOnMap(Card card)
     {
@@ -12,7 +12,7 @@ public static class ActionsUtils
         AreaType areaType = card.objectProperties1.areaType;
         
         // Place objects on the map
-        GameObject cardObject = GameObject.Instantiate(objectPrefab, cardLocationPanels[idx].transform);
+        // GameObject cardObject = GameObject.Instantiate(objectPrefab, cardLocationPanels[idx].transform);
     }
     
     public static GameObject LoadObjectPrefab(string objectName)
