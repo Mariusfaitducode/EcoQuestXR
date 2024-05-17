@@ -6,51 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/_6b1c4a44-10a3-4c49-86d0-f211995c39d9.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/_6b1c4a44-10a3-4c49-86d0-f211995c39d9.jpeg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/background_leftArmDeck.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/background_leftArmDeck.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/black_circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/black_circle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/city.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/city.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/coin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/coin.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/house_under_construction.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/house_under_construction.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/leaf.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/leaf.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/lightning.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/lightning.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/pollution.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/pollution.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/population.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/population.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/rectangle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/rectangle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/vertical_rectangle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/vertical_rectangle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/white_circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/white_circle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/wrench.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Images/wrench.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Prefabs/OVRControllerPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Prefabs/OVRControllerPrefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GillesTestCard/PileController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GillesTestCard/PileController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/OVRInterface.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/OVRInterface.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Victor.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Victor.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/DeckControl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/DeckControl.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Card.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Card.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/CreationCard.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/CreationCard.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Ville.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/leftArmDeck/Ville.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/CardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Cards/CardManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +21,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/KeyBoardMapInteraction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/MapControl/MapMouvement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/OvrMapInteraction.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TestControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/ActionsUtils.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@14.0.8/Editor/Data/Graphs/SerializableTexture.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@14.0.8/Editor/Data/Util/PooledList.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -173,6 +130,7 @@
       <workItem from="1715009628425" duration="2149000" />
       <workItem from="1715011826133" duration="488000" />
       <workItem from="1715160931274" duration="37669000" />
+      <workItem from="1715935631887" duration="5969000" />
     </task>
     <servers />
   </component>

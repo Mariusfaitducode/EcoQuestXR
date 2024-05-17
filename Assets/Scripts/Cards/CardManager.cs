@@ -4,11 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    
+    public GameManager gameManager;
+    [FormerlySerializedAs("isCardsInitialized")] public bool areCardsInitialized = false;
     public string cardsCSVPath = "Csv/cards";
 
     public GameObject cardPrefab;
@@ -40,21 +42,20 @@ public class CardManager : MonoBehaviour
     {
         // Cards Initialization
         cards = CardsInitialization.InitializeCards(cardsCSVPath);
-        
-        // To get from GameManager
-        List<ObjectProperties> objectProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
-        Debug.Log(objectProperties);
-        
-        CardsInitialization.MatchCardWithObjectProperties(cards, objectProperties, factorCostReductionDestruction);
-        
+        areCardsInitialized = true;
         
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deckCanvas);
         
         // Test
-        DrawPileEvent();
+        // DrawPileEvent();
     
+    }
+
+    public void SetCardsProperties(List<ObjectProperties> objectsProperties)
+    {
+        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties, factorCostReductionDestruction);
     }
     
     // Tirage au sort de cartes dans la pile
@@ -116,5 +117,6 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
         
         // TODO : Implement action on map
+        gameManager.ExecuteCardAction(selectedDeckCard);
     }
 }
