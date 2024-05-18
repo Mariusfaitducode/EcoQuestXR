@@ -65,6 +65,17 @@ public class FillMapManager : MonoBehaviour
         return meshScale;
     }
     
+    
+    public void GenerateMap()
+    {
+        mapGenerator.DrawMapInEditor();
+        
+        SetAreaInEditor();
+        FillAreaInEditor();
+        GenerateRoadOnMapInEditor();
+        GenerateNatureInEditor();
+    }
+    
 
     // Editor call
     public void SetAreaInEditor()

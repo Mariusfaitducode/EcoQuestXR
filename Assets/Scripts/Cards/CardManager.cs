@@ -53,7 +53,7 @@ public class CardManager : MonoBehaviour
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deckCanvas);
         
         // Test
-        Draft();
+        // Draft();
         // DrawPileEvent();
         
         nbrDraftCards = cardsLocationDraftPanels.Count;

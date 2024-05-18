@@ -46,7 +46,7 @@ public class DisplayCanvas
             displayCard.SetCard(card);
             displayCard.SetCanvas(canvas);
             
-            displayCard._button.onClick.AddListener(delegate { cardManager.SelectUnselectEvent(displayCard); });
+            displayCard._buttonBackground.onClick.AddListener(delegate { cardManager.SelectUnselectEvent(displayCard); });
             
             idx++;
         }

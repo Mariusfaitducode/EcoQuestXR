@@ -22,9 +22,9 @@ public class DisplayCard : MonoBehaviour
     public TextMeshProUGUI _price;
     public RawImage _image;
 
-    public RectTransform _scale;
-    public Button _button;
-    public RawImage _shadow;
+    public RectTransform _scaleBackground;
+    public Button _buttonBackground;
+    public RawImage _shadowBackground;
     public RawImage _background;
     public RawImage _logoArea;
     public RawImage _logoAction;
@@ -39,8 +39,8 @@ public class DisplayCard : MonoBehaviour
     public void Select()
     {
         isSelected = true;
-        _shadow.enabled = true;
-        _scale.localScale = new Vector3(1.12f, 1.12f, 1.12f);
+        _shadowBackground.enabled = true;
+        _scaleBackground.localScale = new Vector3(1.12f, 1.12f, 1.12f);
     }
 
     public Canvas GetParentCanvas()
@@ -54,32 +54,13 @@ public class DisplayCard : MonoBehaviour
     public void Unselect()
     {
         isSelected = false;
-        _shadow.enabled = false;
-        _scale.localScale = new Vector3(1f, 1f, 1f);
+        _shadowBackground.enabled = false;
+        _scaleBackground.localScale = new Vector3(1f, 1f, 1f);
     }
-    // public void SetDrawPileCardManager(PileManager pileManager)
-    // {
-    //     _pileManager = pileManager;
-    // }
-    // private void SetButtonListener()
-    // {
-    //     if (_pileManager != null)
-    //     {
-    //         _button.onClick.AddListener(SelectUnselectFromDrawPileCardManager);
-    //     }
-    //     else
-    //     {
-    //         _button.onClick.AddListener(SelectUnselectFromLeftArmDeckManager);
-    //     }
-    // }
-    // public void SetLeftArmDeckCardManager(DisplayCanvas displayCanvas)
-    // {
-    //     _displayCanvas = displayCanvas;
-    // }
 
     public Button GetButton()
     {
-        return _button;
+        return _buttonBackground;
     }
     public Card GetCard()
     {

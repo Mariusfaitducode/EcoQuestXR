@@ -18,11 +18,19 @@ public class ObjectManager : MonoBehaviour
         objectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         areObjectsPropertiesInitialized = true;
     }
+
+    public void SetAreas(List<Area> areas)
+    {
+        this.areas = areas;
+    }
     
     public void PlaceObjectsOnMap(ObjectProperties objectProperties)
     {
         // Get Prefab
         GameObject objectPrefab = ObjectsInitialization.LoadPrefab(objectProperties);
+        
+        // TODO : Initialize object script with objectProperties and gameManager
+        
         
         // Place objects on the map
         GameObject cardObject = GameObject.Instantiate(objectPrefab, Vector3.zero, Quaternion.identity);
@@ -33,6 +41,15 @@ public class ObjectManager : MonoBehaviour
         //
         // objectsInstantiated.Add(cardObject);
         
+        // TODO : Place object on the map in the good area
         
+        // Place in good area object
+        
+        
+        // TODO : Update area properties
+        
+        
+        
+        // ? List objects instantiated
     }
 }

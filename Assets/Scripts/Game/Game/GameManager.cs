@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public CardManager cardManager;
     public ObjectManager objectManager;
     
+    public FillMapManager fillMapManager;
+    
     
     public Timer timer = new Timer();
     
@@ -24,6 +26,11 @@ public class GameManager : MonoBehaviour
     {
         timer.TimeInitialization();
         eventsGestion.SetNextEventTime(timer.currentTime);
+        
+        fillMapManager.GenerateMap();
+        
+        
+        objectManager.SetAreas(fillMapManager.areas);
     }
     
     void Update()
