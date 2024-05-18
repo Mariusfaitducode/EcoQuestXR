@@ -7,8 +7,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     
-    public static GameManager Instance { get; private set; }
-    
     public CardManager cardManager;
     public ObjectManager objectManager;
     
@@ -49,5 +47,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Timer stopped");
         }
+    }
+    
+    
+    public void DraftFinished()
+    {
+        Debug.Log("Draft Finished In GM");
+        eventsGestion.isDraftEvent = false;
+        timer.stopTime = false;
     }
 }

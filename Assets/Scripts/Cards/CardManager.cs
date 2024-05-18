@@ -29,10 +29,14 @@ public class CardManager : MonoBehaviour
     internal List<GameObject> cardsLocationDraftPanels;
     
     internal int nbrSelectedCards = 0;
-    public int nbrMaxSelectedCards = 3;
-    public int nbrMaxDeckCards = 5;
-    public int nbrDraftCards = 4;
+    
+    internal int nbrMaxSelectedCards = 3;
+    internal int nbrMaxDeckCards = 5;
+    internal int nbrDraftCards = 4;
+    
     public float factorCostReductionDestruction = 0.2f;
+    
+    internal bool draftTime = false;
     
     // public GameObject cardPrefab;
     
@@ -51,7 +55,13 @@ public class CardManager : MonoBehaviour
         // Test
         // Draft();
         // DrawPileEvent();
+        
+        nbrDraftCards = cardsLocationDraftPanels.Count;
+        nbrMaxDeckCards = cardsLocationDeckPanels.Count;
     
+        nbrMaxSelectedCards = nbrMaxDeckCards - deckCards.Count;
+        DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
+
     }
 
     public void SetCardsProperties(List<ObjectProperties> objectsProperties)
@@ -59,9 +69,11 @@ public class CardManager : MonoBehaviour
         CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties, factorCostReductionDestruction);
     }
     
+    
     // Tirage au sort de cartes dans la pile
     public void Draft()
     {
+        draftTime = true;
         // Draw Pile
         pileCards = PileManager.DrawPile(cards, nbrDraftCards);
         
@@ -74,16 +86,15 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, this, draftCanvas);
     }
     
+    
     public void SelectUnselectEvent(DisplayCard displayCard)
     {
-        // Debug.L
-        
         if (displayCard.GetParentCanvas() == draftCanvas)
         {
             nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards, selectedPileCards);
             DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         }
-        else if (displayCard.GetParentCanvas() == deckCanvas)
+        else if (displayCard.GetParentCanvas() == deckCanvas && !draftTime)
         {
             selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
         }
@@ -91,10 +102,14 @@ public class CardManager : MonoBehaviour
         {
             Debug.LogError("Parent Canvas not found");
         }
+        
+        
     }
     
     public void ValidateEvent()
     {
+        
+        
         // Transfer Drafted Cards
         PileManager.TransferDraftedCards(selectedPileCards, deckCards);
         
@@ -105,8 +120,16 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.HideCanvas(draftCanvas);
         
         // Reset Counter
+        nbrMaxSelectedCards = nbrMaxDeckCards - deckCards.Count;
         nbrSelectedCards = 0;
         DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
+        
+        
+        Debug.Log("Draft Finished");
+        gameManager.DraftFinished();
+        draftTime = false;
+        
+        
     }
 
     public void PlayEvent()
@@ -119,5 +142,11 @@ public class CardManager : MonoBehaviour
         
         // TODO : Implement action on map
         // gameManager.ExecuteCardAction(selectedDeckCard);
+        
+        
+        
+        // Update Counter
+        nbrMaxSelectedCards = nbrMaxDeckCards - deckCards.Count;
+        DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
     }
 }
