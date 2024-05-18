@@ -19,20 +19,25 @@ public class ObjectManager : MonoBehaviour
         areObjectsPropertiesInitialized = true;
     }
     
-    public void PlaceObjectsOnMap(ObjectProperties objectProperties)
+    public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
-        // Get Prefab
-        GameObject objectPrefab = ObjectsInitialization.LoadPrefab(objectProperties);
-        
-        // Place objects on the map
-        GameObject cardObject = GameObject.Instantiate(objectPrefab, Vector3.zero, Quaternion.identity);
-        // cardObject.AddComponent<Objects>();
-        // cardObject.GetComponent<Objects>().objectProperties = objectProperties;
-        // cardObject.GetComponent<Objects>().gameManager = gameManager;
-        //
-        //
-        // objectsInstantiated.Add(cardObject);
-        
-        
+        for (int i = 0; i < quantity; i++)
+        {
+            ObjectGestion.PlaceObjectOnMap(objectProperties);
+        }
+    }
+    
+    public void RemoveObjects(ObjectProperties objectProperties, int quantity = 1)
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            ObjectGestion.RemoveObjectOnMap(objectProperties);
+        }
+    }
+    
+    public void UpgradeObjects(ObjectProperties objectProperties1, ObjectProperties objectProperties2, int quantity1 = 1, int quantity2 = 1)
+    {
+        RemoveObjects(objectProperties1, quantity1);
+        PlaceObjects(objectProperties2, quantity2);
     }
 }
