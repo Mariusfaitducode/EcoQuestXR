@@ -4,20 +4,16 @@ using UnityEngine;
 
 public static class ObjectGestion
 {
-    public static void PlaceObjectsOnMap(Card card)
+    public static void PlaceObjectsOnMap(ObjectProperties objectProperties )
     {
-        // Load object prefab
-        GameObject objectPrefab = LoadObjectPrefab(card.objectProperties1.prefabName);
+        // Get Prefab
+        GameObject objectPrefab = ObjectsInitialization.LoadPrefab(objectProperties);
         
-        AreaType areaType = card.objectProperties1.areaType;
+        // AreaType areaType = card.objectProperties1.areaType;
         
         // Place objects on the map
-        // GameObject cardObject = GameObject.Instantiate(objectPrefab, cardLocationPanels[idx].transform);
-    }
-    
-    public static GameObject LoadObjectPrefab(string objectName)
-    {
-        // Load object prefab
-        return Resources.Load<GameObject>("Prefabs/Objects/" + objectName);
+        GameObject cardObject = GameObject.Instantiate(objectPrefab, Vector3.zero, Quaternion.identity);
+        
+        
     }
 }

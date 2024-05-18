@@ -56,4 +56,9 @@ public class GameManager : MonoBehaviour
         eventsGestion.isDraftEvent = false;
         timer.stopTime = false;
     }
+    
+    public void ExecuteCardAction(Card card)
+    {
+        objectManager.PlaceObjectsOnMap(card.objectProperties1);
+    }
 }
