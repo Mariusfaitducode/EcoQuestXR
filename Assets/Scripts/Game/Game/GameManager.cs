@@ -24,22 +24,27 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        // Timing initialization
         timer.TimeInitialization();
         eventsGestion.SetNextEventTime(timer.currentTime);
         
+        // Map initialization
         fillMapManager.GenerateMap();
         
+        // Objects and Cards initialization
+        objectManager.ObjectsStartInitialization();
+        cardManager.CardsStartInitialization();
         
         objectManager.SetAreas(fillMapManager.areas);
+        cardManager.SetCardsProperties(objectManager.objectsProperties);
+        
+        // TODO : Initialize objects already on map script properties 
     }
     
     void Update()
     {
 
-        // Transfers objects properties from GM to CM when CM has initialized its cards
-        GameInitialisation.TransfersObjectsPropertiesToCards(cardManager, objectManager, hasTransferredObjectsPropertiesFromOMToCM);
-        
-        
+
         if (!timer.stopTime && timer.IsCheckTime())
         {
             Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
