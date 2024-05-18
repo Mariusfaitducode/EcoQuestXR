@@ -141,7 +141,7 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
         
         // TODO : Implement action on map
-        gameManager.ExecuteCardAction(selectedDeckCard);
+        gameManager.ExecuteCardEvent(selectedDeckCard);
         
         
         

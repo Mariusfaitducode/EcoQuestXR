@@ -64,8 +64,8 @@ public class GameManager : MonoBehaviour
         timer.stopTime = false;
     }
     
-    public void ExecuteCardAction(Card card)
+    public void ExecuteCardEvent(Card card)
     {
-        objectManager.PlaceObjectsOnMap(card.objectProperties1);
+        Actions.ExecuteCardAction(card, objectManager);
     }
 }

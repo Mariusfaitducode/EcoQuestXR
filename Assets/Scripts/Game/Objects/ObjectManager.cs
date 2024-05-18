@@ -24,8 +24,26 @@ public class ObjectManager : MonoBehaviour
         this.areas = areas;
     }
     
-    public void PlaceObjectsOnMap(ObjectProperties objectProperties)
+    public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
+        for (int i = 0; i < quantity; i++)
+        {
+            ObjectGestion.PlaceObjectOnMap(objectProperties);
+        }
+    }
+    
+    public void RemoveObjects(ObjectProperties objectProperties, int quantity = 1)
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            ObjectGestion.RemoveObjectOnMap(objectProperties);
+        }
+    }
+    
+    public void UpgradeObjects(ObjectProperties objectProperties1, ObjectProperties objectProperties2, int quantity1 = 1, int quantity2 = 1)
+    {
+        RemoveObjects(objectProperties1, quantity1);
+        PlaceObjects(objectProperties2, quantity2);
         // Get Prefab
         GameObject objectPrefab = ObjectsInitialization.LoadPrefab(objectProperties);
         
