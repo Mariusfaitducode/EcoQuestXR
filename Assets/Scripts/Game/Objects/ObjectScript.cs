@@ -12,6 +12,13 @@ public class ObjectScript : MonoBehaviour
     
     
     
+    public void InitObjectScript(ObjectProperties objectProperties, GameManager gameManager, AreaPrefab areaPrefab)
+    {
+        this.objectProperties = objectProperties;
+        this.gameManager = gameManager;
+        this.areaPrefab = areaPrefab;
+    }
+    
     
     void Start()
     {

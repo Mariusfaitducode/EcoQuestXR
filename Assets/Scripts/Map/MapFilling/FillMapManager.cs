@@ -352,7 +352,7 @@ public class FillMapManager : MonoBehaviour
         
         
         
-        ObjectGestion.PlaceObjectOnMap(objectProp, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
+        ObjectGestion.PlaceObjectOnMap(objectProp, 5, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
     }
 
     

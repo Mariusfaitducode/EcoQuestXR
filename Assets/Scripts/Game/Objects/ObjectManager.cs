@@ -31,10 +31,7 @@ public class ObjectManager : MonoBehaviour
     
     public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
-        for (int i = 0; i < quantity; i++)
-        {
-            ObjectGestion.PlaceObjectOnMap(objectProperties, areas, prefabScale, gameManager, mapScale);
-        }
+        ObjectGestion.PlaceObjectOnMap(objectProperties, quantity, areas, prefabScale, gameManager, mapScale);
     }
     
     public void RemoveObjects(ObjectProperties objectProperties, int quantity = 1)

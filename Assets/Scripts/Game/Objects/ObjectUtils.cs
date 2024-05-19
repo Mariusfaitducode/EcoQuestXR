@@ -5,13 +5,65 @@ using UnityEngine;
 public static class ObjectUtils
 {
 
-
-
-    public static Vector2Int FindClosestAreaCell(Area area, float size, ObjectProperties objectProperties)
+    public static List<GameObject> PlaceNeighbourhood(List<AreaCell> areaCells, Area area, int quantity, AreaPrefab areaPrefab, float prefabScale, float uniformScale)
     {
         float minDistance = float.MaxValue;
+        Vector2Int firstLocation = Vector2Int.zero;
+        AreaCell firstCell = null;
+        
+        List<GameObject> placedObjects = new List<GameObject>();
+
+        foreach (AreaCell areaCell in areaCells)
+        {
+            float distance = Vector3.Distance(areaCell.position, area.sphere.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                firstCell = areaCell;
+                firstLocation = areaCell.gridPosition;
+            }
+        }
+        areaCells.Remove(firstCell);
+        
+
+        
+        GameObject placedObject = PlaceBuilding(areaPrefab, area, firstLocation, false, prefabScale, uniformScale);
+        placedObjects.Add(placedObject);
+        quantity--;
+
+        
+        while (quantity > 0)
+        {
+            minDistance = float.MaxValue;
+            Vector2Int newLocation = Vector2Int.zero;
+            
+            foreach (AreaCell areaCell in areaCells)
+            {
+                float distance = Vector3.Distance(areaCell.position, area.areaGrid[firstLocation.x, firstLocation.y].position);
+
+                if (CanPlaceBuilding(areaCell.gridPosition, areaPrefab.size, area.areaGrid) && distance < minDistance)
+                {
+                    minDistance = distance;
+                    newLocation = areaCell.gridPosition;
+                }
+            }
+            GameObject placedObject2 = PlaceBuilding(areaPrefab, area, newLocation, false, prefabScale, uniformScale);
+            placedObjects.Add(placedObject2);
+
+            quantity--;
+        }
+
+        return placedObjects;
+    }
+    
+
+    public static List<AreaCell> FindEmptyAreaCellsInPeriphery(Area area, float size, ObjectProperties objectProperties)
+    {
+        
         // AreaCell closestCell = null;
-        Vector2Int gridLocation = Vector2Int.zero;
+        
+        List<AreaCell> areaCells = new List<AreaCell>();
 
         for (int x = 0; x < size; x++)
         {
@@ -19,8 +71,8 @@ public static class ObjectUtils
             {
                 Vector3 newPosition = area.areaGrid[x, y].position;
 
-                if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                        area.data.radius))
+                if (area.areaGrid[x, y].inArea 
+                    && !area.areaGrid[x, y].inStartArea)
                 {
                     if (area.areaGrid[x, y].type == CellType.Empty)
                     {
@@ -28,21 +80,16 @@ public static class ObjectUtils
                         if (CanPlaceBuilding(new Vector2Int(x, y),
                                 new Vector2Int(objectProperties.sizeX, objectProperties.sizeY), area.areaGrid))
                         {
-                            float distance = Vector3.Distance(newPosition, area.sphere.transform.position);
-                        
-                            if (distance < minDistance)
-                            {
-                                minDistance = distance;
-                                // closestCell = area.areaGrid[x, y];
-                                gridLocation = new Vector2Int(x, y);
-                            }
+                            areaCells.Add(area.areaGrid[x, y]);
+                            
+                            Debug.DrawLine(newPosition, newPosition + Vector3.up * 1000, Color.green, 60);
                         }
                     }
                 }
             }
         }
 
-        return gridLocation;
+        return areaCells;
     }
     
     

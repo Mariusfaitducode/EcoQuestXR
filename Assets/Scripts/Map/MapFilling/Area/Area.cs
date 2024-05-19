@@ -66,8 +66,13 @@ public class Area
                 cell.position = pos;
                 cell.size = gridCellSize;
                 
+                cell.gridPosition = new Vector2Int(i, j);
+                
                 if (Vector3.Distance(pos, center) <= data.radius) {
                     cell.inArea = true;
+                }
+                if (Vector3.Distance(pos, center) <= data.startRadius) {
+                    cell.inStartArea = true;
                 }
                 
                 gridPoints[i, j] = cell;
