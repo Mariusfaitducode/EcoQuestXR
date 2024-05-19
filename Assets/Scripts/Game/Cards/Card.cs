@@ -38,15 +38,6 @@ public class Card
     {
         return cardObject;
     }
-
-    public class CardProperties
-    {
-        public int price;
-        public int ecology;
-        public int population;
-        public int energy;
-        public int pollution;
-    }
     
 
 }

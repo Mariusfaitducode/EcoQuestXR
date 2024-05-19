@@ -138,7 +138,7 @@ public static class ObjectUtils
         
         // Debug.Log("Final position"position);
         
-        GameObject placedObject = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
+        GameObject placedObject = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.hierarchyBuildingFolder.transform, position, Quaternion.identity, 
             Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
         
         placedObject.AddComponent<ObjectScript>();
