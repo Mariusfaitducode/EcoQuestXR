@@ -10,6 +10,9 @@ public class ObjectManager : MonoBehaviour
     internal List<Area> areas;
     internal List<ObjectProperties> objectsProperties;
     
+    public float prefabScale = 1f;
+    public float mapScale = 1f;
+    
     
     public void ObjectsStartInitialization()
     {
@@ -17,16 +20,18 @@ public class ObjectManager : MonoBehaviour
         
     }
 
-    public void SetAreas(List<Area> areas)
+    public void SetMapInformations(FillMapManager fillMapManager)
     {
-        this.areas = areas;
+        areas = fillMapManager.areas;
+        prefabScale = fillMapManager.prefabScale;
+        mapScale = fillMapManager.mapGenerator.terrainData.uniformScale;
     }
     
     public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
         for (int i = 0; i < quantity; i++)
         {
-            ObjectGestion.PlaceObjectOnMap(objectProperties);
+            ObjectGestion.PlaceObjectOnMap(objectProperties, areas, prefabScale, gameManager, mapScale);
         }
     }
     

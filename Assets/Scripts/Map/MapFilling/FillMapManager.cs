@@ -101,7 +101,6 @@ public class FillMapManager : MonoBehaviour
             
         }
         meshTerrain.transform.localScale = meshScale;
-        
     }
 
     public void GenerateRoadOnMapInEditor()
@@ -127,11 +126,11 @@ public class FillMapManager : MonoBehaviour
 
     public void GenerateRiverInEditor()
     {
-        Vector3 meshScale = SetMapScale();
+        // Vector3 meshScale = SetMapScale();
         
         SetRiverShader(mapGenerator.meshData);
 
-        meshTerrain.transform.localScale = meshScale;
+        // meshTerrain.transform.localScale = meshScale;
  
     }
     
@@ -185,8 +184,11 @@ public class FillMapManager : MonoBehaviour
             float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
             
             FillArea.GenerateAreaContent(area, prefabScale, roadData, mapDisplay);
+            
         }
         // mapDisplay.DrawMesh(meshData);
+        
+        Debug.Log("Filled Areas Successfully");
 
     }
     
@@ -201,7 +203,7 @@ public class FillMapManager : MonoBehaviour
             area.sphere.transform.rotation = rotation;
             
         }
-        Debug.Log(meshData);
+        // Debug.Log(meshData);
 
         mapDisplay.DrawMesh(meshData);
     }
@@ -275,7 +277,7 @@ public class FillMapManager : MonoBehaviour
         float testMean = FillMapUtils.CalculateMean(pathVertices.listVertices);
         float mean = PathUtils.MeanWithoutTooLowVertices(pathVertices.listVertices, minHeight);
         
-        Debug.Log("Mean diff : " + testMean+ " vs " + mean);
+        // Debug.Log("Mean diff : " + testMean+ " vs " + mean);
         
         foreach(int index in pathVertices.listIndex)
         {
@@ -305,6 +307,8 @@ public class FillMapManager : MonoBehaviour
             // PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth);
             i++;
         }
+        
+        Debug.Log("Roads Generated Successfully");
     }
     
     public void GenerateNatureOnMap(MeshData meshData)
@@ -325,20 +329,30 @@ public class FillMapManager : MonoBehaviour
             }
         }
         NatureGenerator.GenerateNature(areas, natureData, mapGenerator, mapDisplay, minHeight, prefabScale, roadVertices);
+        
+        Debug.Log("Nature Generated Successfully");
     }
     
     public void SetRiverShader(MeshData meshData)
     {
-        // Trouver le GameObject parent
-        GameObject roadParent = GameObject.Find("BigRoadParent");
+        // // Trouver le GameObject parent
+        // GameObject roadParent = GameObject.Find("BigRoadParent");
+        //
+        // // Récupérer tous les enfants du GameObject parent
+        // Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
+        //
+        // RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
+        //
+        //
+        // mapDisplay.DrawMesh(meshData);
         
-        // Récupérer tous les enfants du GameObject parent
-        Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
+        List<ObjectProperties> objectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         
-        RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
+        ObjectProperties objectProp = objectsProperties.Find(o => o.areaType == AreaType.City);
         
         
-        mapDisplay.DrawMesh(meshData);
+        
+        ObjectGestion.PlaceObjectOnMap(objectProp, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
     }
 
     

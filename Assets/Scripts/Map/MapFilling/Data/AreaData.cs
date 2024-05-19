@@ -24,6 +24,8 @@ public class AreaData : UpdatableData
     public int pavilionWidth = 2;
     public int pavilionHeightMean = 5;
     
+    [Range(0,1)]
+    public float fillPercent;
     
         
     public List<AreaPrefab> prefabs;

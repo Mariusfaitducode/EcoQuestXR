@@ -7,7 +7,7 @@ public static class FillArea
 
     public static void GenerateAreaContent(Area area, float prefabScale, RoadGenerator.RoadData roadData, MapDisplay mapDisplay)
     {
-        Debug.Log("Generate Area Content : " + area.data.type);
+        // Debug.Log("Generate Area Content : " + area.data.type);
 
         // int count = 0;
         
@@ -28,7 +28,7 @@ public static class FillArea
                 if (area.areaGrid[x, y].type == CellType.Road)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                            area.data.startRadius))
+                            area.data.radius))
                     {
                         bool up = (y < size - 1) && area.areaGrid[x, y + 1].type == CellType.Road;
                         bool right = (x < size - 1) && area.areaGrid[x + 1, y].type == CellType.Road;
@@ -53,7 +53,17 @@ public static class FillArea
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.data.startRadius))
                     {
+                        // if (Random.Range(0, 100) < area.data.fillPercent * 100)
+                        // {
+                        //     continue;
+                        // }
+                        
                         AreaPrefab areaPrefab = ChooseRandomPrefab(area.data.prefabs, areaNoiseMap[x, y]);
+                        
+                        if (areaPrefab.prefabLow == null)
+                        {
+                            continue;
+                        }
                         
                         bool rotate = Random.Range(0, 100) < 30;
                         
@@ -66,20 +76,12 @@ public static class FillArea
                         
                         if (CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
                         {
-                            area.areaGrid[x, y].type = CellType.Object;
-                            GameObject prefab = areaPrefab.prefabLow;
-                            // if (Random.Range(0, 100) < 50)
-                            // {
-                            //     prefab = areaPrefab.prefabLow;
-                            // }
                             PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), rotate, prefabScale);
                         }
 
-                        if (rotate)
+                        if (rotate) // Reset size
                         {
                             areaPrefab.size = new Vector2Int(areaPrefab.size.y, areaPrefab.size.x);
-                            // areaPrefab.prefabLow.transform.Rotate(Vector3.up, -90);
-
                         }
                     }
                 }
@@ -115,7 +117,7 @@ public static class FillArea
     }
     
     
-    static bool CanPlaceBuilding(Vector2Int position, Vector2Int size, AreaCell[,] areaGrid)
+    public static bool CanPlaceBuilding(Vector2Int position, Vector2Int size, AreaCell[,] areaGrid)
     {
         for (int x = 0; x < size.x; x++)
         {
@@ -134,7 +136,7 @@ public static class FillArea
         return true;
     }
     
-    static void PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize)
+    public static GameObject PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize, float scale = 1)
     {
         Vector3 position = Vector3.zero;
         
@@ -151,13 +153,21 @@ public static class FillArea
         
         position /= areaPrefab.size.x * areaPrefab.size.y;
         
+        position *= scale;
+        
+        // Debug.Log("Final position"position);
+        
         GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
-            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize));
+            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
+        
+        Debug.DrawLine(position, position + Vector3.up * 10, Color.red, 20);
 
         if (rotate)
         {
             placedPrefab.transform.Rotate(Vector3.up, 90);
         }
+        
+        return placedPrefab;
     }
 
 

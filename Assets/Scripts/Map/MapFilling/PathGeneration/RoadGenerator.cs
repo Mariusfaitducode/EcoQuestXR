@@ -69,7 +69,7 @@ public static class RoadGenerator
             
             Vector3 size = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size;
             
-            Debug.Log(size);
+            // Debug.Log(size);
             
             
 
@@ -116,7 +116,7 @@ public static class RoadGenerator
                 FindPath.FindNeighbours(endList, point,  areas, roadData, copyEndList, true);
             }
         }
-        Debug.Log(startList.Count);
+        // Debug.Log(startList.Count);
         
         foreach (FindPath.PathPoint point in startList)
         {

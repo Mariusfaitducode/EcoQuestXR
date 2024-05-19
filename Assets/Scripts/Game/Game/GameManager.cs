@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     
     
-    private bool hasTransferredObjectsPropertiesFromOMToCM = false;
+    // private bool hasTransferredObjectsPropertiesFromOMToCM = false;
     
     
     void Start()
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
         
-        objectManager.SetAreas(fillMapManager.areas);
+        objectManager.SetMapInformations(   fillMapManager);
         cardManager.SetCardsProperties(objectManager.objectsProperties);
         
         // TODO : Initialize objects already on map script properties 
