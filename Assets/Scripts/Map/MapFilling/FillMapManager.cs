@@ -167,26 +167,30 @@ public class FillMapManager : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-            //Destroy all children
+            //Destroy all children to avoid duplicates
             while (area.sphere.transform.childCount > 0)
             {
                 Transform child = area.sphere.transform.GetChild(0);
                 DestroyImmediate(child.gameObject);
             }
 
-            // area.uniformRadius = area.data.radius * uniformScale;
-            // area.uniformStartRadius = area.data.startSize * uniformScale;
+            // Create sub folders to structure the hierarchy
+            area.hierarchyBuildingFolder = new GameObject("Buildings");
+            area.hierarchyBuildingFolder.transform.parent = area.sphere.transform;
             
+            area.hierarchyRoadFolder = new GameObject("Roads");
+            area.hierarchyRoadFolder.transform.parent = area.sphere.transform;
+
+            // Create virtual grid
             area.CreateGrid(cellSize);
             
-            RoadGenerator.GenerateRoadArea(area);
+            // Place road with random pattern on grid
+            RoadGenerator.GenerateRoadsOnGrid(area);
             
-            float mapSize = meshTerrain.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * uniformScale;
-            
-            FillArea.GenerateAreaContent(area, prefabScale, roadData, mapDisplay);
+            // Fill area with roads and buildings
+            FillArea.InstantiateRoadsAndBuildingsOnArea(area, prefabScale, roadData, mapDisplay);
             
         }
-        // mapDisplay.DrawMesh(meshData);
         
         Debug.Log("Filled Areas Successfully");
 
@@ -212,20 +216,20 @@ public class FillMapManager : MonoBehaviour
     {
         
         //Destroy Children
-        while (roadParent.transform.childCount > 0)
-        {
-            Transform child = roadParent.transform.GetChild(0);
-            DestroyImmediate(child.gameObject);
-        }
+        // while (roadParent.transform.childCount > 0)
+        // {
+        //     Transform child = roadParent.transform.GetChild(0);
+        //     DestroyImmediate(child.gameObject);
+        // }
         
-        foreach (Area area in areas)
-        {
-            while (area.roadParent.transform.childCount > 0)
-            {
-                Transform child = area.roadParent.transform.GetChild(0);
-                DestroyImmediate(child.gameObject);
-            }
-        }
+        // foreach (Area area in areas)
+        // {
+        //     while (area.roadParent.transform.childCount > 0)
+        //     {
+        //         Transform child = area.roadParent.transform.GetChild(0);
+        //         DestroyImmediate(child.gameObject);
+        //     }
+        // }
         
         // Trace Roads
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);

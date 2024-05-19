@@ -8,7 +8,7 @@ public static class Actions
     {
         if (card.cardType == CardType.Construction)
         {
-            objectManager.PlaceObjects(card.objectProperties1);
+            objectManager.PlaceObjects(card.objectProperties1, card.quantityObject1);
         }
         // else if (card.cardType == CardType.Destruction)
         // {

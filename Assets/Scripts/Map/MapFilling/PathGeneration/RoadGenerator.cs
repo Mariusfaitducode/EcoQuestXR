@@ -144,17 +144,12 @@ public static class RoadGenerator
     }
 
     // Road area
-    public static void GenerateRoadArea(Area area)
+    public static void GenerateRoadsOnGrid(Area area)
     {
         int width = area.areaGrid.GetLength(0);
         int height = area.areaGrid.GetLength(1);
-        
-        
-        // int[,] grid = new int[width, height];
-        // Array.Copy(grid, newGrid, grid.Length);
 
-
-        // Initialise avec des routes horizontales
+        // Initialize horizontal roads
         for (int i = 0; i < width; i += area.data.pavilionWidth + 1)
         {
             for (int j = 0; j < height; j++)
@@ -163,7 +158,7 @@ public static class RoadGenerator
             }
         }
         
-        // Génère des intersections verticales aléatoires
+        // Generate random vertical roads
         for (int j = 1; j < height; j += area.data.pavilionWidth + 1)
         {
 

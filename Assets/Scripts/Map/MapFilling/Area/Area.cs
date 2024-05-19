@@ -11,6 +11,9 @@ public class Area
     public AreaData data;
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
+
+    internal GameObject hierarchyRoadFolder;
+    internal GameObject hierarchyBuildingFolder;
     
 
     public GameObject sphere;

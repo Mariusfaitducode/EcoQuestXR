@@ -5,12 +5,8 @@ using UnityEngine;
 public static class FillArea
 {
 
-    public static void GenerateAreaContent(Area area, float prefabScale, RoadGenerator.RoadData roadData, MapDisplay mapDisplay)
+    public static void InstantiateRoadsAndBuildingsOnArea(Area area, float prefabScale, RoadGenerator.RoadData roadData, MapDisplay mapDisplay)
     {
-        // Debug.Log("Generate Area Content : " + area.data.type);
-
-        // int count = 0;
-        
         int size = area.areaGrid.GetLength(0);
 
         float[,] areaNoiseMap = Noise.GenerateNoiseMap(size, size, area.areaNoise.seed, area.areaNoise.noiseScale, 
@@ -38,7 +34,7 @@ public static class FillArea
                         RoadGenerator.RoadTile result = RoadGenerator.FindGoodRoadTile(up, right, down, left, roadData.roadTiles)!;
                         
                         
-                        FillMapUtils.InstantiateObjectWithScale(result.tile, area.sphere.transform, newPosition, result.rotation, 
+                        FillMapUtils.InstantiateObjectWithScale(result.tile, area.hierarchyRoadFolder.transform, newPosition, result.rotation, 
                             Vector3.one * (area.areaGrid[x, y].size * prefabScale));
                         
                     }
@@ -53,11 +49,6 @@ public static class FillArea
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.data.startRadius))
                     {
-                        // if (Random.Range(0, 100) < area.data.fillPercent * 100)
-                        // {
-                        //     continue;
-                        // }
-                        
                         AreaPrefab areaPrefab = ChooseRandomPrefab(area.data.prefabs, areaNoiseMap[x, y]);
                         
                         if (areaPrefab.prefabLow == null)
@@ -155,9 +146,7 @@ public static class FillArea
         
         position *= scale;
         
-        // Debug.Log("Final position"position);
-        
-        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
+        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.hierarchyBuildingFolder.transform, position, Quaternion.identity, 
             Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
         
         Debug.DrawLine(position, position + Vector3.up * 10, Color.red, 20);
