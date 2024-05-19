@@ -25,7 +25,7 @@ public static class ObjectUtils
                     if (area.areaGrid[x, y].type == CellType.Empty)
                     {
 
-                        if (FillArea.CanPlaceBuilding(new Vector2Int(x, y),
+                        if (CanPlaceBuilding(new Vector2Int(x, y),
                                 new Vector2Int(objectProperties.sizeX, objectProperties.sizeY), area.areaGrid))
                         {
                             float distance = Vector3.Distance(newPosition, area.sphere.transform.position);
@@ -46,29 +46,73 @@ public static class ObjectUtils
     }
     
     
-    public static void PlaceObject(ObjectProperties objectProperties, GameObject cardObject, Area area, Vector2Int gridLocation, bool rotate, float prefabSize)
+    public static bool CanPlaceBuilding(Vector2Int position, Vector2Int size, AreaCell[,] areaGrid)
+    {
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                if (position.x + x >= areaGrid.GetLength(0) || position.y + y >= areaGrid.GetLength(1))
+                {
+                    return false;
+                }
+                if (areaGrid[position.x + x, position.y + y].type != CellType.Empty)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+    public static GameObject PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize, float scale = 1)
     {
         Vector3 position = Vector3.zero;
         
-        // Mettre à jour la grille pour indiquer que les cases sont maintenant occupées
-        for (int x = 0; x < objectProperties.sizeX; x++)
+        List<AreaCell> areaCells = new List<AreaCell>();
+        
+        // Calculate position
+        for (int x = 0; x < areaPrefab.size.x; x++)
         {
-            for (int y = 0; y < objectProperties.sizeY; y++)
+            for (int y = 0; y < areaPrefab.size.y; y++)
             {
-                area.areaGrid[gridLocation.x + x, gridLocation.y + y].type = CellType.Object;
+                AreaCell areaCell = area.areaGrid[gridLocation.x + x, gridLocation.y + y];
                 
-                position += area.areaGrid[gridLocation.x + x, gridLocation.y + y].position;
+                position += areaCell.position;
+                
+                areaCells.Add(areaCell);
             }
         }
         
-        position /= objectProperties.sizeX * objectProperties.sizeY;
+        position /= areaPrefab.size.x * areaPrefab.size.y;
         
-        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(cardObject, area.sphere.transform, position, Quaternion.identity, 
-            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize));
+        position *= scale;
+        
+        // Debug.Log("Final position"position);
+        
+        GameObject placedObject = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
+            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
+        
+        placedObject.AddComponent<ObjectScript>();
+        
+        ObjectScript objectScript = placedObject.GetComponent<ObjectScript>();
+        objectScript.areaCells = areaCells;
+
+        foreach (AreaCell areaCell in areaCells)
+        {
+            areaCell.hasObject = true;
+            areaCell.type = CellType.Object;
+            areaCell.objectPrefab = placedObject;
+        }
+        
+        // Debug.DrawLine(position, position + Vector3.up * 10, Color.red, 20);
 
         if (rotate)
         {
-            placedPrefab.transform.Rotate(Vector3.up, 90);
+            placedObject.transform.Rotate(Vector3.up, 90);
         }
+        
+        return placedObject;
     }
 }

@@ -48,15 +48,13 @@ public static class ObjectGestion
         {
             Debug.Log("Cell found : Place Object on the map");
             
-            GameObject placedObject = FillArea.PlaceBuilding(areaPrefab, area, cellLocation, false, prefabScale * 5f, uniformScale);
+            GameObject placedObject = ObjectUtils.PlaceBuilding(areaPrefab, area, cellLocation, false, prefabScale * 5f, uniformScale);
             
             
             // TODO : Initialize object script with objectProperties and gameManager
         
             // Initialize areaPrefab
 
-            placedObject.AddComponent<ObjectScript>();
-            
             ObjectScript objectScript = placedObject.GetComponent<ObjectScript>();
             
             objectScript.objectProperties = objectProperties;

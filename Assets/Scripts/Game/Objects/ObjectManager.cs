@@ -18,6 +18,8 @@ public class ObjectManager : MonoBehaviour
     {
         objectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         
+        // TODO : initialize objects already on map
+        
     }
 
     public void SetMapInformations(FillMapManager fillMapManager)

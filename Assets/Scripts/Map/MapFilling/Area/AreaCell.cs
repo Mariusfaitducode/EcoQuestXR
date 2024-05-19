@@ -12,6 +12,7 @@ public class AreaCell
     
     public CellType type;
     
+    public GameObject objectPrefab;
 
     public bool inArea;
     public bool hasObject;

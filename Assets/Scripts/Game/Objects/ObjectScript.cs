@@ -8,6 +8,9 @@ public class ObjectScript : MonoBehaviour
     internal GameManager gameManager;
     internal AreaPrefab areaPrefab;
     
+    internal List<AreaCell> areaCells;
+    
+    
     
     
     void Start()

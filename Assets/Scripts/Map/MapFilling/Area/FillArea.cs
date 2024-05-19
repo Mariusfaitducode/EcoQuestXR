@@ -74,9 +74,9 @@ public static class FillArea
                             // areaPrefab.prefabLow.transform.Rotate(Vector3.up, 90);
                         }
                         
-                        if (CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
+                        if (ObjectUtils.CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
                         {
-                            PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), rotate, prefabScale);
+                            ObjectUtils.PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), rotate, prefabScale);
                         }
 
                         if (rotate) // Reset size
@@ -117,58 +117,7 @@ public static class FillArea
     }
     
     
-    public static bool CanPlaceBuilding(Vector2Int position, Vector2Int size, AreaCell[,] areaGrid)
-    {
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                if (position.x + x >= areaGrid.GetLength(0) || position.y + y >= areaGrid.GetLength(1))
-                {
-                    return false;
-                }
-                if (areaGrid[position.x + x, position.y + y].type != CellType.Empty)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
     
-    public static GameObject PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize, float scale = 1)
-    {
-        Vector3 position = Vector3.zero;
-        
-        // Mettre à jour la grille pour indiquer que les cases sont maintenant occupées
-        for (int x = 0; x < areaPrefab.size.x; x++)
-        {
-            for (int y = 0; y < areaPrefab.size.y; y++)
-            {
-                area.areaGrid[gridLocation.x + x, gridLocation.y + y].type = CellType.Object;
-                
-                position += area.areaGrid[gridLocation.x + x, gridLocation.y + y].position;
-            }
-        }
-        
-        position /= areaPrefab.size.x * areaPrefab.size.y;
-        
-        position *= scale;
-        
-        // Debug.Log("Final position"position);
-        
-        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
-            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
-        
-        Debug.DrawLine(position, position + Vector3.up * 10, Color.red, 20);
-
-        if (rotate)
-        {
-            placedPrefab.transform.Rotate(Vector3.up, 90);
-        }
-        
-        return placedPrefab;
-    }
 
 
     public static void SetAreaShader(Area area, GameObject meshTerrain, float uniformScale)
