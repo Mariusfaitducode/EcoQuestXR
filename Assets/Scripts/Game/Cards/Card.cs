@@ -26,7 +26,7 @@ public class Card
     public ObjectProperties objectProperties1;
     public ObjectProperties objectProperties2;
     
-    public CardProperties cardProperties = new CardProperties();
+    public GameStats cardProperties = new GameStats();
     
     public GameObject cardObject;
     

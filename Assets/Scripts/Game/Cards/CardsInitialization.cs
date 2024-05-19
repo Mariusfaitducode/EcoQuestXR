@@ -82,27 +82,27 @@ public class CardsInitialization
         {
             if (card.cardType == CardType.Construction)
             {
-                card.cardProperties.price = card.objectProperties1.price * card.quantityObject1;
+                card.cardProperties.money = card.objectProperties1.price * card.quantityObject1;
                 card.cardProperties.ecology = card.objectProperties1.ecology * card.quantityObject1;
-                card.cardProperties.population = card.objectProperties1.population * card.quantityObject1;
-                card.cardProperties.energy = card.objectProperties1.energy * card.quantityObject1;
-                card.cardProperties.pollution = card.objectProperties1.pollution * card.quantityObject1;
+                card.cardProperties.populationSize = card.objectProperties1.population * card.quantityObject1;
+                card.cardProperties.energyStock = card.objectProperties1.energy * card.quantityObject1;
+                card.cardProperties.pollutionAir = card.objectProperties1.pollution * card.quantityObject1;
             }
             else if (card.cardType == CardType.Destruction)
             {
-                card.cardProperties.price = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction);
+                card.cardProperties.money = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction);
                 card.cardProperties.ecology = - card.objectProperties1.ecology * card.quantityObject1;
-                card.cardProperties.population = - card.objectProperties1.population * card.quantityObject1;
-                card.cardProperties.energy = - card.objectProperties1.energy * card.quantityObject1;
-                card.cardProperties.pollution = - card.objectProperties1.pollution * card.quantityObject1;
+                card.cardProperties.populationSize = - card.objectProperties1.population * card.quantityObject1;
+                card.cardProperties.energyStock = - card.objectProperties1.energy * card.quantityObject1;
+                card.cardProperties.pollutionAir = - card.objectProperties1.pollution * card.quantityObject1;
             }
             else if (card.cardType == CardType.Upgrade)
             {
-                card.cardProperties.price = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction) + card.objectProperties2.price * card.quantityObject2;
+                card.cardProperties.money = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction) + card.objectProperties2.price * card.quantityObject2;
                 card.cardProperties.ecology = - card.objectProperties1.ecology * card.quantityObject1 + card.objectProperties2.ecology * card.quantityObject2;
-                card.cardProperties.population = - card.objectProperties1.population * card.quantityObject1 + card.objectProperties2.population * card.quantityObject2;
-                card.cardProperties.energy = - card.objectProperties1.energy * card.quantityObject1 + card.objectProperties2.energy * card.quantityObject2;
-                card.cardProperties.pollution = - card.objectProperties1.pollution * card.quantityObject1 + card.objectProperties2.pollution * card.quantityObject2;
+                card.cardProperties.populationSize = - card.objectProperties1.population * card.quantityObject1 + card.objectProperties2.population * card.quantityObject2;
+                card.cardProperties.energyStock = - card.objectProperties1.energy * card.quantityObject1 + card.objectProperties2.energy * card.quantityObject2;
+                card.cardProperties.pollutionAir = - card.objectProperties1.pollution * card.quantityObject1 + card.objectProperties2.pollution * card.quantityObject2;
             }
             else
             {

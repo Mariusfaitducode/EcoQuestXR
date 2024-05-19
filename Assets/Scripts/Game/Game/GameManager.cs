@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour
     public Timer timer = new Timer();
     
     public EventsGestion eventsGestion = new EventsGestion();
-
     
     
-    private bool hasTransferredObjectsPropertiesFromOMToCM = false;
+    internal GameStats gameStats = new GameStats();
+    public DisplayDashboard displayDashboard;
     
     
     void Start()
@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
         objectManager.SetAreas(fillMapManager.areas);
         cardManager.SetCardsProperties(objectManager.objectsProperties);
         
-        // TODO : Initialize objects already on map script properties 
+        // Dashboard initialization
+        // TODO : Initialize objects already on map script properties and update dashboard
+        displayDashboard.InitialUpdate(gameStats);
     }
     
     void Update()
@@ -47,17 +49,15 @@ public class GameManager : MonoBehaviour
 
         if (!timer.stopTime && timer.IsCheckTime())
         {
-            Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
             timer.TimeIncrement(eventsGestion);
             eventsGestion.CheckDraftEvent(timer);
             if (eventsGestion.isDraftEvent)
             {
                 eventsGestion.DraftEvent(cardManager);
             }
-        }
-        else
-        {
-            Debug.Log("Timer stopped");
+            
+            // Update dashboard
+            displayDashboard.UpdateTime(timer.currentTime);
         }
     }
     
@@ -72,5 +72,7 @@ public class GameManager : MonoBehaviour
     public void ExecuteCardEvent(Card card)
     {
         Actions.ExecuteCardAction(card, objectManager);
+        gameStats.UpdateFromCard(card);
+        displayDashboard.UpdateFromGameStats(gameStats);
     }
 }
