@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 8038677756155717975}
   - component: {fileID: 2610560435902977176}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextEcology
   m_TagString: EcologyText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -849,7 +849,7 @@ GameObject:
   - component: {fileID: 3072111009644588617}
   - component: {fileID: 3514489679778458802}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextEnergy
   m_TagString: EnergyText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,10 +981,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8617595052095113991}
   - component: {fileID: 3276694915219241194}
-  - component: {fileID: 7164781936892663663}
   - component: {fileID: 7333852021119240244}
   - component: {fileID: 6532872707662842687}
   - component: {fileID: 8496834257690635571}
+  - component: {fileID: 3919286924152531636}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -1020,36 +1020,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4821870814718452588}
   m_CullTransparentMesh: 1
---- !u!114 &7164781936892663663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821870814718452588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4323c80c037065d4d995be7d12e73dd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  folderActionImage: Images/ActionImage/
-  folderActionLogo: Images/ActionLogo/
-  folderAreaBackground: Images/AreaBackground/
-  folderAreaLogo: Images/AreaLogo/
-  _title: {fileID: 9205576495628457912}
-  _description: {fileID: 3898671850718968603}
-  _price: {fileID: 254916662840567714}
-  _image: {fileID: 7614776827343839160}
-  _scale: {fileID: 1748026047136195567}
-  _button: {fileID: 1852057674224577936}
-  _shadow: {fileID: 7333852021119240244}
-  _background: {fileID: 893937643135702273}
-  _logoArea: {fileID: 1347519173301274022}
-  _logoAction: {fileID: 9066834520123283041}
-  _energy: {fileID: 3514489679778458802}
-  _ecology: {fileID: 2610560435902977176}
-  _population: {fileID: 2306648678830135073}
-  _pollution: {fileID: 9082657313148549773}
 --- !u!114 &7333852021119240244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,6 +1087,36 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3919286924152531636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821870814718452588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4323c80c037065d4d995be7d12e73dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  folderActionImage: Images/ActionImage/
+  folderActionLogo: Images/ActionLogo/
+  folderAreaBackground: Images/AreaBackground/
+  folderAreaLogo: Images/AreaLogo/
+  _title: {fileID: 9205576495628457912}
+  _description: {fileID: 3898671850718968603}
+  _price: {fileID: 254916662840567714}
+  _image: {fileID: 7614776827343839160}
+  _scaleBackground: {fileID: 1748026047136195567}
+  _buttonBackground: {fileID: 1852057674224577936}
+  _shadowBackground: {fileID: 893937643135702273}
+  _background: {fileID: 893937643135702273}
+  _logoArea: {fileID: 1347519173301274022}
+  _logoAction: {fileID: 9066834520123283041}
+  _energy: {fileID: 3514489679778458802}
+  _ecology: {fileID: 2610560435902977176}
+  _population: {fileID: 2306648678830135073}
+  _pollution: {fileID: 9082657313148549773}
 --- !u!1 &5219234761242468645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,7 +1354,7 @@ GameObject:
   - component: {fileID: 893937643135702273}
   - component: {fileID: 1852057674224577936}
   m_Layer: 5
-  m_Name: Card
+  m_Name: CardBackground
   m_TagString: BackgroundRawImage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1767,7 +1767,7 @@ GameObject:
   - component: {fileID: 7541985490098282592}
   - component: {fileID: 9082657313148549773}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextPollution
   m_TagString: PollutionText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2108,7 +2108,7 @@ GameObject:
   - component: {fileID: 6693257253326317966}
   - component: {fileID: 2306648678830135073}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextPopulation
   m_TagString: PopulationText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

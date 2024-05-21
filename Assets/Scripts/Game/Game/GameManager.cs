@@ -7,47 +7,72 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     
-    public static GameManager Instance { get; private set; }
-    
     public CardManager cardManager;
     public ObjectManager objectManager;
+    
+    public FillMapManager fillMapManager;
     
     
     public Timer timer = new Timer();
     
     public EventsGestion eventsGestion = new EventsGestion();
-
     
     
-    private bool hasTransferredObjectsPropertiesFromOMToCM = false;
+    internal GameStats gameStats = new GameStats();
+    public DisplayDashboard displayDashboard;
     
     
     void Start()
     {
+        // Timing initialization
         timer.TimeInitialization();
         eventsGestion.SetNextEventTime(timer.currentTime);
+        
+        // Map initialization
+        fillMapManager.GenerateMap();
+        
+        // Objects and Cards initialization
+        objectManager.ObjectsStartInitialization();
+        cardManager.CardsStartInitialization();
+        
+        objectManager.SetMapInformations(   fillMapManager);
+        cardManager.SetCardsProperties(objectManager.objectsProperties);
+        
+        // Dashboard initialization
+        // TODO : Initialize objects already on map script properties and update dashboard
+        displayDashboard.InitialUpdate(gameStats);
     }
     
     void Update()
     {
 
-        // Transfers objects properties from GM to CM when CM has initialized its cards
-        GameInitialisation.TransfersObjectsPropertiesToCards(cardManager, objectManager, hasTransferredObjectsPropertiesFromOMToCM);
-        
-        
+
         if (!timer.stopTime && timer.IsCheckTime())
         {
-            Debug.Log(timer.currentTime.ToString("yyyy-MM-dd"));
             timer.TimeIncrement(eventsGestion);
             eventsGestion.CheckDraftEvent(timer);
             if (eventsGestion.isDraftEvent)
             {
                 eventsGestion.DraftEvent(cardManager);
             }
+            
+            // Update dashboard
+            displayDashboard.UpdateTime(timer.currentTime);
         }
-        else
-        {
-            Debug.Log("Timer stopped");
-        }
+    }
+    
+    
+    public void DraftFinished()
+    {
+        Debug.Log("Draft Finished In GM");
+        eventsGestion.isDraftEvent = false;
+        timer.stopTime = false;
+    }
+    
+    public void ExecuteCardEvent(Card card)
+    {
+        Actions.ExecuteCardAction(card, objectManager);
+        gameStats.UpdateFromCard(card);
+        displayDashboard.UpdateFromGameStats(gameStats);
     }
 }

@@ -13,7 +13,7 @@ public class ObjectsInitialization
         
         objectProperties = AffectDatasToObjectsProperties(data);
         
-        Debug.Log(objectProperties);
+        // Debug.Log(objectProperties);
         
         return objectProperties;
     }
@@ -48,7 +48,17 @@ public class ObjectsInitialization
 
         return objectsProperties;
     }
-    
-    
+
+    public static GameObject LoadPrefab(ObjectProperties objProps)
+    {
+        string path = "Prefabs/" + objProps.areaType.ToString() + "/" + objProps.prefabName;
+        GameObject prefab = Resources.Load<GameObject>(path);
+        
+        if (prefab == null)
+        {
+            Debug.LogWarning("No prefab found at : " + path);
+        }
+        return prefab;
+    }
     
 }
