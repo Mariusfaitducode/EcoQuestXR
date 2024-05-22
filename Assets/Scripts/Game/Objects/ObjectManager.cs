@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
     public GameManager gameManager;
-
-    internal List<GameObject> objectsInstantiated;
     internal List<Area> areas;
     internal List<ObjectProperties> listObjectsProperties;
     
     public float prefabScale = 1f;
     public float mapScale = 1f;
-    
-    
-    
     
     public void ObjectsStartInitialization()
     {
@@ -36,9 +32,6 @@ public class ObjectManager : MonoBehaviour
         }
     }
     
-    
-    
-    
     public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
         ObjectGestion.PlaceObjectsOnMap(objectProperties, quantity, areas, prefabScale, gameManager, mapScale);
@@ -53,5 +46,15 @@ public class ObjectManager : MonoBehaviour
     {
         RemoveObjects(objectProperties1, quantity1);
         PlaceObjects(objectProperties2, quantity2);
+    }
+    
+    public List<ObjectScript> GetAllObjectScripts()
+    {
+        List<ObjectScript> objectScripts = new List<ObjectScript>();
+        foreach (Area area in areas)
+        {
+            objectScripts.Concat(area.areaObjects.Select(obj => obj.GetComponent<ObjectScript>()).ToList());
+        }
+        return objectScripts;
     }
 }

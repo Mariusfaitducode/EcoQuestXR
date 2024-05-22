@@ -38,14 +38,17 @@ public class GameManager : MonoBehaviour
         objectManager.SetMapInformations(fillMapManager);
         cardManager.SetCardsProperties(objectManager.listObjectsProperties);
         
-        // Dashboard initialization
+        // Stats and Dashboard initialization
         // TODO : Initialize objects already on map script properties and update dashboard
+        
+        gameStats.StatsStartInitialization();
+        gameStats.objects = objectManager.GetAllObjectScripts();
         
         
         
         
         // Update dashboard
-        displayDashboard.InitialUpdate(gameStats);
+        // displayDashboard.InitialUpdate(gameStats);
     }
     
     void Update()
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
     public void ExecuteCardEvent(Card card)
     {
         Actions.ExecuteCardAction(card, objectManager);
-        gameStats.UpdateFromCard(card);
-        displayDashboard.UpdateFromGameStats(gameStats);
+        gameStats.ComputeGlobalStats();
+        displayDashboard.UpdateFromStats(gameStats.globalStats);
     }
 }

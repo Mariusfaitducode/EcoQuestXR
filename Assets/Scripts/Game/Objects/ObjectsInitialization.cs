@@ -28,7 +28,9 @@ public class ObjectsInitialization
         foreach (string[] row in data.rows)
         {
             ObjectProperties objProps = new ObjectProperties();
+            Stat stats = new Stat();
 
+            // Object properties
             for (int i = 0; i < data.header.Length; i++)
             {
                 data.header[i] = data.header[i].Trim();
@@ -43,6 +45,25 @@ public class ObjectsInitialization
                     propertyInfo.SetValue(objProps, value, null);
                 }
             }
+            
+            //Stats
+            for (int i = 0; i < data.header.Length; i++)
+            {
+                data.header[i] = data.header[i].Trim();
+                
+                // Match Card class to Csv header
+                PropertyInfo propertyInfo = typeof(Stat).GetProperty(data.header[i], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                
+                if (propertyInfo != null && row.Length > i)
+                {
+                    object value = LoadDatas.MatchType(propertyInfo, row, data.header, i);
+                    
+                    propertyInfo.SetValue(stats, value, null);
+                }
+            }
+            objProps.stats = stats;
+            Debug.Log("eco : " + stats.ecology);
+            
             objectsProperties.Add(objProps);
         }
 
