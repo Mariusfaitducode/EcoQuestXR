@@ -18,4 +18,22 @@ public class Stat
         energy = 0;
         pollution = 0;
     }
+    
+    public void Add(Stat stat)
+    {
+        price += stat.price;
+        ecology += stat.ecology;
+        population += stat.population;
+        energy += stat.energy;
+        pollution += stat.pollution;
+    }
+    
+    public void Subtract(Stat stat)
+    {
+        price -= stat.price;
+        ecology -= stat.ecology;
+        population -= stat.population;
+        energy -= stat.energy;
+        pollution -= stat.pollution;
+    }
 }

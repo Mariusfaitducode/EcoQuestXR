@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameStats
@@ -17,13 +18,17 @@ public class GameStats
     public void ComputeGlobalStats()
     {
         globalStats.Reset();
-        foreach (Stat stat in objects.Select(obj => obj.objectProperties.stats))
+        foreach (ObjectScript objScript in objects)
         {
-            globalStats.price += stat.price;
-            globalStats.ecology += stat.ecology;
-            globalStats.population += stat.population;
-            globalStats.energy += stat.energy;
-            globalStats.pollution += stat.pollution;
+            if (objScript.objectProperties != null && objScript.objectProperties.stats != null)
+            {
+                globalStats.Add(objScript.objectProperties.stats);
+            }
+            else
+            {
+                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            }
+            
         }
     }
 }

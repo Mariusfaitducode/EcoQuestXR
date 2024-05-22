@@ -78,7 +78,7 @@ public class ObjectsInitialization
         {
             ObjectScript objectScript = areaObject.GetComponent<ObjectScript>();
             
-            Debug.Log("Object name : " + areaObject.name);
+            // Debug.Log("Object name : " + areaObject.name);
             
             string childName = areaObject.name.Replace("(Clone)", "").Trim();
             

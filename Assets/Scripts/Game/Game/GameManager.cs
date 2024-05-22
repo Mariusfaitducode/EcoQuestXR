@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
     public void ExecuteCardEvent(Card card)
     {
         Actions.ExecuteCardAction(card, objectManager);
+        gameStats.objects = objectManager.GetAllObjectScripts();
         gameStats.ComputeGlobalStats();
         displayDashboard.UpdateFromStats(gameStats.globalStats);
     }

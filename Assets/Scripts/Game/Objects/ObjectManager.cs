@@ -53,8 +53,13 @@ public class ObjectManager : MonoBehaviour
         List<ObjectScript> objectScripts = new List<ObjectScript>();
         foreach (Area area in areas)
         {
-            objectScripts.Concat(area.areaObjects.Select(obj => obj.GetComponent<ObjectScript>()).ToList());
+            foreach (GameObject gameObject in area.areaObjects)
+            {
+                ObjectScript objectScript = gameObject.GetComponent<ObjectScript>();
+                objectScripts.Add(objectScript);
+            }
         }
+        Debug.Log("Lenght22 : " + objectScripts.Count);
         return objectScripts;
     }
 }
