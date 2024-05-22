@@ -54,14 +54,14 @@ public class BusGestion : MonoBehaviour
                 
                 GameObject bus = busPrefabs[Random.Range(0, busPrefabs.Count)];
                 
-                GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, Vector3.zero, Quaternion.identity, Vector3.one);
+                GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, this.transform.position, Quaternion.identity, Vector3.one);
                 
                 // Init bus script
                 
                 buses.Add(newBus);
             }
         }
-        else if ((currentTime.Hour < busStartHour && currentTime.Hour >= busEndHour) && busOut)
+        else if ((currentTime.Hour < busStartHour || currentTime.Hour >= busEndHour) && busOut)
         {
             busOut = false;
             

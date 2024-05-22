@@ -82,7 +82,7 @@ public static class ObjectUtils
                         {
                             areaCells.Add(area.areaGrid[x, y]);
                             
-                            Debug.DrawLine(newPosition, newPosition + Vector3.up * 1000, Color.green, 60);
+                            // Debug.DrawLine(newPosition, newPosition + Vector3.up * 1000, Color.green, 60);
                         }
                     }
                 }

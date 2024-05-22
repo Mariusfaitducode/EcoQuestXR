@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     
     public CardManager cardManager;
     public ObjectManager objectManager;
+    public AgentManager agentManager;
     
     public FillMapManager fillMapManager;
     
@@ -37,6 +38,9 @@ public class GameManager : MonoBehaviour
         
         objectManager.SetMapInformations(fillMapManager);
         cardManager.SetCardsProperties(objectManager.listObjectsProperties);
+        
+        agentManager.SetMapInformations(fillMapManager);
+        
         
         // Dashboard initialization
         // TODO : Initialize objects already on map script properties and update dashboard

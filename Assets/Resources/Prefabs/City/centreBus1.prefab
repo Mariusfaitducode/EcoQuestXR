@@ -118,3 +118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf091e2f9761b746bf725f10ed10f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busQuantity: 10
+  busStartHour: 6
+  busEndHour: 22
+  busPrefabs:
+  - {fileID: 7987608921781956793, guid: 2d4ca77c199a4474d83091307232161f, type: 3}
+  gameManager: {fileID: 0}
+  busOut: 0
