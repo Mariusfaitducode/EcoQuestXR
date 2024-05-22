@@ -5,3 +5,4 @@
 3,Destruction d'un parc de panneaux solaires,Destruction de 2 panneaux solaires,Destruction,3,2,-1,-1
 4,Rénovation d'une zone résidentielle,Remplacement de 2 immeubles par 3 maisons,Upgrade,1,2,0,3
 5,Création de logement low-cost,Remplacement de 2 maisons par 1 immeuble,Upgrade,0,2,1,1
+6,Création d’un centre de bus,Création d’un centre de bus,Construction,4,1,-1,-1
