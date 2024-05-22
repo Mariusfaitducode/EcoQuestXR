@@ -35,11 +35,16 @@ public class GameManager : MonoBehaviour
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
         
-        objectManager.SetMapInformations(   fillMapManager);
-        cardManager.SetCardsProperties(objectManager.objectsProperties);
+        objectManager.SetMapInformations(fillMapManager);
+        cardManager.SetCardsProperties(objectManager.listObjectsProperties);
         
         // Dashboard initialization
         // TODO : Initialize objects already on map script properties and update dashboard
+        
+        
+        
+        
+        // Update dashboard
         displayDashboard.InitialUpdate(gameStats);
     }
     

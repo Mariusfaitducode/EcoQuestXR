@@ -38,5 +38,9 @@ public class FillMapEditor : Editor {
         if (GUILayout.Button ("Generate river")) {
             fillMap.GenerateRiverInEditor();
         }
+        
+        if (GUILayout.Button ("Test button")) {
+            fillMap.TestButton();
+        }
     }
 }

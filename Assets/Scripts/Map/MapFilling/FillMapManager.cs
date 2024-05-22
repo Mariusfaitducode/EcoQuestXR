@@ -126,11 +126,11 @@ public class FillMapManager : MonoBehaviour
 
     public void GenerateRiverInEditor()
     {
-        // Vector3 meshScale = SetMapScale();
+        Vector3 meshScale = SetMapScale();
         
         SetRiverShader(mapGenerator.meshData);
 
-        // meshTerrain.transform.localScale = meshScale;
+        meshTerrain.transform.localScale = meshScale;
  
     }
     
@@ -339,24 +339,30 @@ public class FillMapManager : MonoBehaviour
     
     public void SetRiverShader(MeshData meshData)
     {
-        // // Trouver le GameObject parent
-        // GameObject roadParent = GameObject.Find("BigRoadParent");
-        //
-        // // Récupérer tous les enfants du GameObject parent
-        // Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
-        //
-        // RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
-        //
-        //
-        // mapDisplay.DrawMesh(meshData);
+        // Trouver le GameObject parent
+        GameObject roadParent = GameObject.Find("BigRoadParent");
         
+        // Récupérer tous les enfants du GameObject parent
+        Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
+        
+        RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
+        
+        
+        mapDisplay.DrawMesh(meshData);
+        
+        
+    }
+
+
+    public void TestButton()
+    {
         List<ObjectProperties> objectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         
         ObjectProperties objectProp = objectsProperties.Find(o => o.areaType == AreaType.City);
         
+        // ObjectGestion.PlaceObjectsOnMap(objectProp, 5, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
         
-        
-        ObjectGestion.PlaceObjectOnMap(objectProp, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
+        ObjectGestion.RemoveObjectOnMap(objectProp, 4, areas);
     }
 
     
