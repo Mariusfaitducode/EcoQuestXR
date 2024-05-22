@@ -8,6 +8,8 @@ public enum AreaType { City, Industry, Energy, Agriculture };
 [System.Serializable]
 public class Area
 {
+    // Génération
+    
     public AreaData data;
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
@@ -15,21 +17,20 @@ public class Area
     internal GameObject hierarchyRoadFolder;
     internal GameObject hierarchyBuildingFolder;
     
-
     public GameObject sphere;
-
     public GameObject roadParent;
-
+    
     public NoiseData areaNoise;
-    
     public Renderer noiseRenderer;
-    
+
     // internal float uniformRadius;
     // internal float uniformStartRadius;
     
-    internal float gridCellSize;
+    // Game
     
+    internal float gridCellSize;
     internal AreaCell[,] areaGrid;
+    internal List<GameObject> areaObjects = new List<GameObject>();
         
     public void SetPosition(Vector3 position)
     {

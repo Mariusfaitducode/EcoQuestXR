@@ -49,6 +49,31 @@ public class ObjectsInitialization
         return objectsProperties;
     }
 
+
+    public static void InitializeObjectAlreadyOnArea(Area area, List<ObjectProperties> objectsProperties, GameManager gameManager)
+    {
+
+        foreach(GameObject areaObject in area.areaObjects)
+        {
+            ObjectScript objectScript = areaObject.GetComponent<ObjectScript>();
+            
+            Debug.Log("Object name : " + areaObject.name);
+            
+            string childName = areaObject.name.Replace("(Clone)", "").Trim();
+            
+            ObjectProperties objectProps = objectsProperties.Find(o => o.prefabName == childName);
+            
+            if (objectProps == null)
+            {
+                Debug.LogWarning("No object properties found for object : " + areaObject.name);
+                continue;
+            }
+            
+            objectScript.InitObjectScript(objectProps, gameManager);
+        }
+
+    }
+    
     public static GameObject LoadPrefab(ObjectProperties objProps)
     {
         string path = "Prefabs/" + objProps.areaType.ToString() + "/" + objProps.prefabName;

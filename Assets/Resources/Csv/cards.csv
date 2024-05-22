@@ -1,6 +1,6 @@
 ﻿id,title,description,cardType,idObject1,quantityObject1,idObject2,quantityObject2
 0,Création d'un quartier moderne,Construction de 4 maisons modernes et isolées,Construction,0,4,-1,-1
-1,Destruction d'un HLM,Destruction de 1 HLM de 34 logements,Destruction,1,1,-1,-1
+1,Destruction d'un HLM,Destruction de 1 HLM de 34 logements,Destruction,1,3,-1,-1
 2,Contruction d'éoliennes,Construction d'un parc de 5 éoliennes,Construction,2,5,-1,-1
 3,Destruction d'un parc de panneaux solaires,Destruction de 2 panneaux solaires,Destruction,3,2,-1,-1
 4,Rénovation d'une zone résidentielle,Remplacement de 2 immeubles par 3 maisons,Upgrade,1,2,0,3

@@ -145,7 +145,11 @@ public static class ObjectUtils
         
         ObjectScript objectScript = placedObject.GetComponent<ObjectScript>();
         objectScript.areaCells = areaCells;
+        objectScript.areaPrefab = areaPrefab;
 
+        // Update area informations
+        area.areaObjects.Add(placedObject);
+        
         foreach (AreaCell areaCell in areaCells)
         {
             areaCell.hasObject = true;
@@ -162,4 +166,73 @@ public static class ObjectUtils
         
         return placedObject;
     }
+    
+    
+    
+    public static List<GameObject> FindAreaObjectsWithPrefabName(Area area, string prefabName)
+    {
+        List<GameObject> objects = new List<GameObject>();
+
+        foreach (GameObject obj in area.areaObjects)
+        {
+            ObjectScript objectScript = obj.GetComponent<ObjectScript>();
+            
+            if (objectScript != null && objectScript.objectProperties != null && objectScript.objectProperties.prefabName == prefabName)
+            {
+                objects.Add(obj);
+            }
+        }
+        
+        return objects;
+    }
+
+
+    public static void RemoveNeighbourhood(List<GameObject> validObjectsToRemove, int quantity, Area area)
+    {
+        List<GameObject> objectsToRemove = new List<GameObject>();
+        
+        GameObject firstObject = validObjectsToRemove[Random.Range(0, validObjectsToRemove.Count)];
+
+        validObjectsToRemove.Remove(firstObject);
+        objectsToRemove.Add(firstObject);
+        
+        quantity--;
+        
+        while (quantity > 0)
+        {
+            float minDistance = float.MaxValue;
+            GameObject newObject = null;
+            
+            foreach (GameObject obj in validObjectsToRemove)
+            {
+                float distance = Vector3.Distance(firstObject.transform.position, obj.transform.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    newObject = obj;
+                }
+            }
+            validObjectsToRemove.Remove(newObject);
+            objectsToRemove.Add(newObject);
+            quantity--;
+        }
+        
+        // Delete and update area informations
+        foreach (GameObject objectToRemove in objectsToRemove)
+        {
+            ObjectScript objectScript = objectToRemove.GetComponent<ObjectScript>();
+            
+            foreach (AreaCell areaCell in objectScript.areaCells)
+            {
+                areaCell.hasObject = false;
+                areaCell.type = CellType.Empty;
+                areaCell.objectPrefab = null;
+            }
+            
+            area.areaObjects.Remove(objectToRemove);
+            Object.Destroy(objectToRemove);
+        }
+    }
+    
 }
