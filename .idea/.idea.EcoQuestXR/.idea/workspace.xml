@@ -6,11 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/.~lock.objects.csv#" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/.~lock.objects.csv#" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Agents.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Agents/AgentManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Agents/AgentManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/GameStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/GameStats.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Stat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Stat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/Card.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/Card.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardsInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardsInitialization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/DisplayCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/DisplayCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/EventsGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/EventsGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsInitialization.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +153,7 @@
       <workItem from="1716374182994" duration="3797000" />
       <workItem from="1716387471314" duration="2269000" />
       <workItem from="1716412411252" duration="9319000" />
+      <workItem from="1716459431131" duration="11623000" />
     </task>
     <servers />
   </component>

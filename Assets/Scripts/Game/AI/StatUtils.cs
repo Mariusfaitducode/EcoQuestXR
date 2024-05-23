@@ -6,87 +6,94 @@ public static class StatUtils
 {
     public static string ConvertNumberToText(int number)
     {
+        string sign = number < 0 ? "-" : "";
+        number = Mathf.Abs(number);
+        
         if (number < 1000)
         {
-            return number.ToString();
+            return sign + number.ToString();
         }
         else if (number < 1000000)
         {
-            return (number / 1000).ToString() + "K";
+            return sign + (number / 1000).ToString() + "K";
         }
         else if (number < 1000000000)
         {
-            return (number / 1000000).ToString() + "M";
+            return sign + (number / 1000000).ToString() + "M";
         }
         else
         {
-            return (number / 1000000000).ToString() + "B";
+            return sign + (number / 1000000000).ToString() + "B";
         }
     }
-    
-    public static Stat GetStatFromConstruction(Stat stat, int multiplier)
-    {
-        Stat newStat = new Stat();
-        newStat.constructionCost = stat.constructionCost * multiplier;
-        newStat.destructionCost = stat.destructionCost * multiplier;
-        newStat.profits = stat.profits * multiplier;
-        newStat.losses = stat.losses * multiplier;
-        newStat.airQuality = stat.airQuality * multiplier;
-        newStat.groundQuality = stat.groundQuality * multiplier;
-        newStat.biodiversity = stat.biodiversity * multiplier;
-        newStat.size = stat.size * multiplier;
-        newStat.health = stat.health * multiplier;
-        newStat.happiness = stat.happiness * multiplier;
-        newStat.sensibilisation = stat.sensibilisation * multiplier;
-        newStat.energyConstructionCost = stat.energyConstructionCost * multiplier;
-        newStat.energyDestructionCost = stat.energyDestructionCost * multiplier;
-        newStat.energyProduction = stat.energyProduction * multiplier;
-        newStat.energyConsumption = stat.energyConsumption * multiplier;
-        return newStat;
-    }
-    
-    public static Stat GetStatFromDestruction(Stat stat, int multiplier)
-    {
-        Stat newStat = new Stat();
-        newStat.constructionCost = stat.constructionCost * multiplier;
-        newStat.destructionCost = stat.destructionCost * multiplier;
-        newStat.profits = - stat.profits * multiplier;
-        newStat.losses = - stat.losses * multiplier;
-        newStat.airQuality = - stat.airQuality * multiplier;
-        newStat.groundQuality = - stat.groundQuality * multiplier;
-        newStat.biodiversity = - stat.biodiversity * multiplier;
-        newStat.size = - stat.size * multiplier;
-        newStat.health = - stat.health * multiplier;
-        newStat.happiness = - stat.happiness * multiplier;
-        newStat.sensibilisation = - stat.sensibilisation * multiplier;
-        newStat.energyConstructionCost = stat.energyConstructionCost * multiplier;
-        newStat.energyDestructionCost = stat.energyDestructionCost * multiplier;
-        newStat.energyProduction = - stat.energyProduction * multiplier;
-        newStat.energyConsumption = - stat.energyConsumption * multiplier;
-        return newStat;
-    }
 
-    public static Stat GetStatFromUpgrade(Stat stat1, Stat stat2, int multiplier1, int multiplier2)
+    public static void GetObjectStat(Card card)
     {
-        Stat newStat = new Stat();
+        card.stats.Reset();
         
-        newStat.constructionCost = stat2.constructionCost * multiplier2;
-        newStat.destructionCost = stat1.destructionCost * multiplier1;
-        newStat.energyConstructionCost = stat2.energyConstructionCost * multiplier2;
-        newStat.energyDestructionCost = stat1.energyDestructionCost * multiplier1;
+        // Check if statObject2 is null for card type Upgrade
+        if (card.cardType == CardType.Upgrade && card.objectProperties2 == null)
+        {
+            Debug.LogError("StatObject2 is null for card type Upgrade");
+        }
         
-        newStat.profits = stat2.profits * multiplier2 - stat1.profits * multiplier1;
-        newStat.losses = stat2.losses * multiplier2 - stat1.losses * multiplier1;
-        newStat.airQuality = stat2.airQuality * multiplier2 - stat1.airQuality * multiplier1;
-        newStat.groundQuality = stat2.groundQuality * multiplier2 - stat1.groundQuality * multiplier1;
-        newStat.biodiversity = stat2.biodiversity * multiplier2 - stat1.biodiversity * multiplier1;
-        newStat.size = stat2.size * multiplier2 - stat1.size * multiplier1;
-        newStat.health = stat2.health * multiplier2 - stat1.health * multiplier1;
-        newStat.happiness = stat2.happiness * multiplier2 - stat1.happiness * multiplier1;
-        newStat.sensibilisation = stat2.sensibilisation * multiplier2 - stat1.sensibilisation * multiplier1;
-        newStat.energyProduction = stat2.energyProduction * multiplier2 - stat1.energyProduction * multiplier1;
-        newStat.energyConsumption = stat2.energyConsumption * multiplier2 - stat1.energyConsumption * multiplier1;
-        
-        return newStat;
+        if (card.cardType == CardType.Construction)
+        {
+            card.stats.profits = card.objectProperties1.stats.profits * card.quantityObject1;
+            card.stats.losses = card.objectProperties1.stats.losses * card.quantityObject1;
+            
+            card.stats.airQuality = card.objectProperties1.stats.airQuality * card.quantityObject1;
+            card.stats.groundQuality = card.objectProperties1.stats.groundQuality * card.quantityObject1;
+            card.stats.biodiversity = card.objectProperties1.stats.biodiversity * card.quantityObject1;
+            
+            card.stats.size = card.objectProperties1.stats.size * card.quantityObject1;
+            
+            card.stats.health = card.objectProperties1.stats.health * card.quantityObject1;
+            card.stats.happiness = card.objectProperties1.stats.happiness * card.quantityObject1;
+            card.stats.sensibilisation = card.objectProperties1.stats.sensibilisation * card.quantityObject1;
+            
+            card.stats.energyProduction = card.objectProperties1.stats.energyProduction * card.quantityObject1;
+            card.stats.energyConsumption = card.objectProperties1.stats.energyConsumption * card.quantityObject1;
+        }
+        else if (card.cardType == CardType.Destruction)
+        {
+            card.stats.profits = -card.objectProperties1.stats.profits * card.quantityObject1;
+            card.stats.losses = -card.objectProperties1.stats.losses * card.quantityObject1;
+            
+            card.stats.airQuality = -card.objectProperties1.stats.airQuality * card.quantityObject1;
+            card.stats.groundQuality = -card.objectProperties1.stats.groundQuality * card.quantityObject1;
+            card.stats.biodiversity = -card.objectProperties1.stats.biodiversity * card.quantityObject1;
+            
+            card.stats.size = -card.objectProperties1.stats.size * card.quantityObject1;
+
+            card.stats.health = -card.objectProperties1.stats.health * card.quantityObject1;
+            card.stats.happiness = -card.objectProperties1.stats.happiness * card.quantityObject1;
+            card.stats.sensibilisation = -card.objectProperties1.stats.sensibilisation * card.quantityObject1;
+            
+            card.stats.energyProduction = -card.objectProperties1.stats.energyProduction * card.quantityObject1;
+            card.stats.energyConsumption = -card.objectProperties1.stats.energyConsumption * card.quantityObject1;
+        }
+        else if (card.cardType == CardType.Upgrade)
+        {
+            card.stats.profits = -card.objectProperties1.stats.profits * card.quantityObject1 + card.objectProperties2.stats.profits * card.quantityObject2;
+            card.stats.losses = -card.objectProperties1.stats.losses * card.quantityObject1 + card.objectProperties2.stats.losses * card.quantityObject2;
+            
+            card.stats.airQuality = -card.objectProperties1.stats.airQuality * card.quantityObject1 + card.objectProperties2.stats.airQuality * card.quantityObject2;
+            card.stats.groundQuality = -card.objectProperties1.stats.groundQuality * card.quantityObject1 + card.objectProperties2.stats.groundQuality * card.quantityObject2;
+            card.stats.biodiversity = -card.objectProperties1.stats.biodiversity * card.quantityObject1 + card.objectProperties2.stats.biodiversity * card.quantityObject2;
+            
+            card.stats.size = -card.objectProperties1.stats.size * card.quantityObject1 + card.objectProperties2.stats.size * card.quantityObject2;
+            
+            card.stats.health = -card.objectProperties1.stats.health * card.quantityObject1 + card.objectProperties2.stats.health * card.quantityObject2;
+            card.stats.happiness = -card.objectProperties1.stats.happiness * card.quantityObject1 + card.objectProperties2.stats.happiness * card.quantityObject2;
+            card.stats.sensibilisation = -card.objectProperties1.stats.sensibilisation * card.quantityObject1 + card.objectProperties2.stats.sensibilisation * card.quantityObject2;
+            
+            card.stats.energyProduction = -card.objectProperties1.stats.energyProduction * card.quantityObject1 + card.objectProperties2.stats.energyProduction * card.quantityObject2;
+            card.stats.energyConsumption = -card.objectProperties1.stats.energyConsumption * card.quantityObject1 + card.objectProperties2.stats.energyConsumption * card.quantityObject2;
+        }
+        else
+        {
+            Debug.LogError("Card type " + card.cardType + " not implemented");
+        }
     }
 }

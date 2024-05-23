@@ -78,28 +78,13 @@ public class DisplayCard : MonoBehaviour
             _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
             _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
             _logoAction.texture = GetTexture(folderActionLogo, _card.cardType.ToString());
-            
-            _energy.text = _card.stats.GetStatString(statType.energyConsumption);
-            _ecology.text = _card.stats.GetStatString(statType.biodiversity);
-            _population.text = _card.stats.GetStatString(statType.size);
-            _pollution.text = _card.stats.GetStatString(statType.airQuality);
-            
-            if (_card.cardType == CardType.Construction)
-            {
-                _price.text = _card.stats.GetStatString(statType.constructionCost);
-            }
-            else if (_card.cardType == CardType.Destruction)
-            {
-                _price.text = _card.stats.GetStatString(statType.destructionCost);
-            }
-            else if (_card.cardType == CardType.Upgrade)
-            {
-                _price.text = _card.stats.GetStatString(statType.constructionCost);
-            }
-            else
-            {
-                _price.text = "0";
-            }
+
+            //TODO : Change card stats
+            _price.text = StatUtils.ConvertNumberToText(_card.actionCost);
+            _energy.text = StatUtils.ConvertNumberToText(_card.actionEnergyCost);
+            _ecology.text = StatUtils.ConvertNumberToText(_card.ecologyRate);
+            _population.text = StatUtils.ConvertNumberToText(_card.stats.size);
+            _pollution.text = StatUtils.ConvertNumberToText(_card.stats.airQuality);
         }
     }
     public void SetCard(Card card)

@@ -75,43 +75,5 @@ public class Stat
         energyProduction += stat.energyProduction;
         energyConsumption += stat.energyConsumption;
     }
-    public string GetStatString(statType statType)
-    {
-        switch (statType)
-        {
-            case statType.constructionCost:
-                return StatUtils.ConvertNumberToText(constructionCost);
-            case statType.destructionCost:
-                return StatUtils.ConvertNumberToText(destructionCost);
-            case statType.profits:
-                return StatUtils.ConvertNumberToText(profits);
-            case statType.losses:
-                return StatUtils.ConvertNumberToText(losses);
-            case statType.airQuality:
-                return StatUtils.ConvertNumberToText(airQuality);
-            case statType.groundQuality:
-                return StatUtils.ConvertNumberToText(groundQuality);
-            case statType.biodiversity:
-                return StatUtils.ConvertNumberToText(biodiversity);
-            case statType.size:
-                return StatUtils.ConvertNumberToText(size);
-            case statType.health:
-                return StatUtils.ConvertNumberToText(health);
-            case statType.happiness:
-                return StatUtils.ConvertNumberToText(happiness);
-            case statType.sensibilisation:
-                return StatUtils.ConvertNumberToText(sensibilisation);
-            case statType.energyConstructionCost:
-                return StatUtils.ConvertNumberToText(energyConstructionCost);
-            case statType.energyDestructionCost:
-                return StatUtils.ConvertNumberToText(energyDestructionCost);
-            case statType.energyProduction:
-                return StatUtils.ConvertNumberToText(energyProduction);
-            case statType.energyConsumption:
-                return StatUtils.ConvertNumberToText(energyConsumption);
-            default:
-                return "Error: statType not found";
-        }
-    }
     
 }
