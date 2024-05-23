@@ -43,12 +43,8 @@ public class GameManager : MonoBehaviour
         
         gameStats.StatsStartInitialization();
         gameStats.objects = objectManager.GetAllObjectScripts();
-        
-        
-        
-        
-        // Update dashboard
-        // displayDashboard.InitialUpdate(gameStats);
+        gameStats.ComputeGlobalStats();
+        displayDashboard.UpdateFromStats(gameStats.globalStats);
     }
     
     void Update()

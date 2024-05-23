@@ -59,7 +59,7 @@ public class ObjectManager : MonoBehaviour
                 objectScripts.Add(objectScript);
             }
         }
-        Debug.Log("Lenght22 : " + objectScripts.Count);
+        Debug.Log("Number of objects found on the map : " + objectScripts.Count);
         return objectScripts;
     }
 }

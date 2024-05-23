@@ -6,32 +6,30 @@ using UnityEngine;
 
 public class DisplayDashboard : MonoBehaviour
 {
-    public TextMeshProUGUI moneyText;
     public TextMeshProUGUI TimeText;
     
-    public TextMeshProUGUI populationSizeText;
-    public TextMeshProUGUI populationHealthText;
-    public TextMeshProUGUI populationHappinessText;
-    public TextMeshProUGUI populationSensibilisationText;
-    public TextMeshProUGUI populationAcceptationText;
+    public TextMeshProUGUI totalMoneyText;
+    public TextMeshProUGUI profitsText;
+    public TextMeshProUGUI lossesText;
+    public TextMeshProUGUI constructionCostText;
+    public TextMeshProUGUI destructionCostText;
     
-    public TextMeshProUGUI energyStockText;
+    public TextMeshProUGUI totalEnergyText;
     public TextMeshProUGUI energyProductionText;
     public TextMeshProUGUI energyConsumptionText;
+    public TextMeshProUGUI energyConstructionCostText;
+    public TextMeshProUGUI energyDestructionCostText;
     
     public TextMeshProUGUI ecologyText;
     public TextMeshProUGUI biodiversityText;
+    public TextMeshProUGUI airQualityText;
+    public TextMeshProUGUI groundQualityText;
     
-    public TextMeshProUGUI pollutionAirText;
-    public TextMeshProUGUI pollutionGroundText;
-    public TextMeshProUGUI pollutionNoiseText;
-    public TextMeshProUGUI pollutionVisualText;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public TextMeshProUGUI populationSensibilisationText;
+    public TextMeshProUGUI populationSizeText;
+    public TextMeshProUGUI populationHealthText;
+    public TextMeshProUGUI populationHappinessText;
+    public TextMeshProUGUI populationAcceptationText;
     
     public void UpdateTime(DateTime currentTime)
     {
@@ -40,24 +38,29 @@ public class DisplayDashboard : MonoBehaviour
     
     public void UpdateFromStats(Stat stats)
     {
-        moneyText.text = stats.price.ToString();
+        // totalMoneyText.text = StatUtils.ConvertNumberToText(stats.totalMoney);
         
-        populationSizeText.text = stats.population.ToString();
-        populationHealthText.text = 0.ToString();
-        populationHappinessText.text = 0.ToString();
-        populationSensibilisationText.text = 0.ToString();
-        populationAcceptationText.text = 0.ToString();
+        profitsText.text = StatUtils.ConvertNumberToText(stats.profits);
+        lossesText.text = StatUtils.ConvertNumberToText(stats.losses);
+        constructionCostText.text = StatUtils.ConvertNumberToText(stats.constructionCost);
+        destructionCostText.text = StatUtils.ConvertNumberToText(stats.destructionCost);
         
-        energyStockText.text = stats.energy.ToString();
-        energyProductionText.text = 0.ToString();
-        energyConsumptionText.text = 0.ToString();
+        // totalEnergyText.text = StatUtils.ConvertNumberToText(stats.totalEnergy);
+        energyProductionText.text = StatUtils.ConvertNumberToText(stats.energyProduction);
+        energyConsumptionText.text = StatUtils.ConvertNumberToText(stats.energyConsumption);
+        energyConstructionCostText.text = StatUtils.ConvertNumberToText(stats.energyConstructionCost);
+        energyDestructionCostText.text = StatUtils.ConvertNumberToText(stats.energyDestructionCost);
         
-        ecologyText.text = stats.ecology.ToString();
-        biodiversityText.text = 0.ToString();
+        // ecologyText.text = StatUtils.ConvertNumberToText(stats.ecology);
+        biodiversityText.text = StatUtils.ConvertNumberToText(stats.biodiversity);
+        airQualityText.text = StatUtils.ConvertNumberToText(stats.airQuality);
+        groundQualityText.text = StatUtils.ConvertNumberToText(stats.groundQuality);
         
-        pollutionAirText.text = stats.pollution.ToString();
-        pollutionGroundText.text = 0.ToString();
-        pollutionNoiseText.text = 0.ToString();
-        pollutionVisualText.text = 0.ToString();
+        populationSensibilisationText.text = StatUtils.ConvertNumberToText(stats.sensibilisation);
+        populationSizeText.text = StatUtils.ConvertNumberToText(stats.size);
+        populationHealthText.text = StatUtils.ConvertNumberToText(stats.health);
+        populationHappinessText.text = StatUtils.ConvertNumberToText(stats.happiness);
+        // populationAcceptationText.text = StatUtils.ConvertNumberToText(stats.acceptation);
+        
     }
 }

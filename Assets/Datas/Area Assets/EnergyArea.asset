@@ -19,16 +19,29 @@ MonoBehaviour:
   startRadius: 12
   pavilionWidth: 4
   pavilionHeightMean: 3
+  fillPercent: 0
   prefabs:
-  - prefabLow: {fileID: 919132149155446097, guid: 00beee0c204e58340ae4e7136a746f1d,
+  - prefabLow: {fileID: 1741507749406875900, guid: 1816ef876c2d14f47984ca1134c27e0b,
       type: 3}
-    prefabHigh: {fileID: 919132149155446097, guid: 00beee0c204e58340ae4e7136a746f1d,
+    prefabHigh: {fileID: 1741507749406875900, guid: 1816ef876c2d14f47984ca1134c27e0b,
       type: 3}
     size: {x: 4, y: 4}
-    weight: 20
-  - prefabLow: {fileID: 919132149155446097, guid: 8da9623fa732dfe42b6b4412363624b3,
+    weight: 10
+  - prefabLow: {fileID: 1902510447799414756, guid: d42d72314fc01a24894e87f16f152646,
       type: 3}
-    prefabHigh: {fileID: 919132149155446097, guid: 8da9623fa732dfe42b6b4412363624b3,
+    prefabHigh: {fileID: 1902510447799414756, guid: d42d72314fc01a24894e87f16f152646,
+      type: 3}
+    size: {x: 4, y: 4}
+    weight: 10
+  - prefabLow: {fileID: 3015866270603773894, guid: e0546d3d866b0de4f8100f3a960d6b6e,
+      type: 3}
+    prefabHigh: {fileID: 3015866270603773894, guid: e0546d3d866b0de4f8100f3a960d6b6e,
       type: 3}
     size: {x: 2, y: 2}
-    weight: 80
+    weight: 40
+  - prefabLow: {fileID: 3543652722131407738, guid: 732671d49d42f6549bcce90404415b86,
+      type: 3}
+    prefabHigh: {fileID: 3543652722131407738, guid: 732671d49d42f6549bcce90404415b86,
+      type: 3}
+    size: {x: 2, y: 2}
+    weight: 40

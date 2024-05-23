@@ -62,7 +62,6 @@ public class ObjectsInitialization
                 }
             }
             objProps.stats = stats;
-            Debug.Log("eco : " + stats.ecology);
             
             objectsProperties.Add(objProps);
         }
@@ -80,9 +79,9 @@ public class ObjectsInitialization
             
             // Debug.Log("Object name : " + areaObject.name);
             
-            string childName = areaObject.name.Replace("(Clone)", "").Trim();
+            // string childName = areaObject.name.Replace("(Clone)", "").Trim();
             
-            ObjectProperties objectProps = objectsProperties.Find(o => o.prefabName == childName);
+            ObjectProperties objectProps = objectsProperties.Find(o => o.prefabName == areaObject.name);
             
             if (objectProps == null)
             {
@@ -97,7 +96,7 @@ public class ObjectsInitialization
     
     public static GameObject LoadPrefab(ObjectProperties objProps)
     {
-        string path = "Prefabs/" + objProps.areaType.ToString() + "/" + objProps.prefabName;
+        string path = "Prefabs/" + objProps.prefabPath + "/" + objProps.prefabName;
         GameObject prefab = Resources.Load<GameObject>(path);
         
         if (prefab == null)

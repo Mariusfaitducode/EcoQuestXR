@@ -8,6 +8,8 @@ public class ObjectProperties
     public string name { get; set; }
     public string prefabName { get; set; }
     
+    public string prefabPath { get; set; }
+    
     public AreaType areaType { get; set; }
     
     public int sizeX { get; set; }

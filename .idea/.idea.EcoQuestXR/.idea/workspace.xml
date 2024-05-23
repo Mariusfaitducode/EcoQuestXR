@@ -6,6 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Datas/Area Assets/AgricultureArea.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Datas/Area Assets/AgricultureArea.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Datas/Area Assets/CityArea.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Datas/Area Assets/CityArea.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Datas/Area Assets/EnergyArea.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Datas/Area Assets/EnergyArea.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dashboard.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dashboard.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/cards.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/cards.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/cards.csv.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/cards.csv.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/objects.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/objects.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/objects.csv.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/objects.csv.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Stat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Stat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardsInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardsInitialization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/DisplayCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/DisplayCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsInitialization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsProperties.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsProperties.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/MapFilling/FillMapUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/MapFilling/FillMapUtils.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +148,7 @@
       <workItem from="1716365305226" duration="2804000" />
       <workItem from="1716374182994" duration="3797000" />
       <workItem from="1716387471314" duration="2269000" />
+      <workItem from="1716412411252" duration="9319000" />
     </task>
     <servers />
   </component>
