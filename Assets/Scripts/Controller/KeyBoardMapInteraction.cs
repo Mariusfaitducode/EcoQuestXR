@@ -7,8 +7,9 @@ public static class KeyBoardMapInteraction
 {
 
 
-    public static void Controller(Transform objectTransform, Vector3 initialPosition, Renderer objectRenderer, MapController.MouvementSettings settings, float mapSize )
+    public static bool Controller(Transform objectTransform, Vector3 initialPosition, Renderer objectRenderer, MapController.MouvementSettings settings, float mapSize )
     {
+        bool moved = false;
 
         // Détecter la touche Shift (Left ou Right)
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -20,6 +21,8 @@ public static class KeyBoardMapInteraction
             // Rotation
             if (Input.GetKey(KeyCode.RightArrow)) { MapMouvement.RotateObjectAroundPoint(objectTransform, initialPosition, settings.rotationSpeed); }
             else if (Input.GetKey(KeyCode.LeftArrow)) { MapMouvement.RotateObjectAroundPoint(objectTransform, initialPosition, -settings.rotationSpeed); }
+            
+            moved = true;
         }
         else
         {
@@ -42,9 +45,11 @@ public static class KeyBoardMapInteraction
             
                 MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, xVectorPlayer, settings.movingSpeed, mapSize);
                 MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, yVectorPlayer, settings.movingSpeed, mapSize);
-
-            }  
+                
+                moved = true;
+            }
         }
+        return moved;
     }
     
    

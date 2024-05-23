@@ -214,11 +214,11 @@ public static class RoadGenerator
                 {
                     if (area.areaGrid[i, j].type == CellType.Road)
                     {
-                        float distance = Vector3.Distance(area.areaGrid[i, j].position, closestPoint.position);
+                        float distance = Vector3.Distance(area.areaGrid[i, j].cellPosition.transform.position, closestPoint.position);
                         if (distance < minDistance)
                         {
                             minDistance = distance;
-                            areaPoint = new FindPath.PathPoint(area.areaGrid[i, j].position, 0, null);
+                            areaPoint = new FindPath.PathPoint(area.areaGrid[i, j].cellPosition.transform.position, 0, null);
                         }
                     }
                 }

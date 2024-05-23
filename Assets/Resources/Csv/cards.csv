@@ -1,7 +1,29 @@
-﻿id,title,description,cardType,idObject1,quantityObject1,idObject2,quantityObject2
+id,title,description,cardType,idObject1,quantityObject1,idObject2,quantityObject2
 0,Création d'un quartier moderne,Construction de 4 maisons modernes et isolées,Construction,0,4,-1,-1
-1,Destruction d'un HLM,Destruction de 1 HLM de 34 logements,Destruction,1,1,-1,-1
-2,Contruction d'éoliennes,Construction d'un parc de 5 éoliennes,Construction,2,5,-1,-1
-3,Destruction d'un parc de panneaux solaires,Destruction de 2 panneaux solaires,Destruction,3,2,-1,-1
-4,Rénovation d'une zone résidentielle,Remplacement de 2 immeubles par 3 maisons,Upgrade,1,2,0,3
-5,Création de logement low-cost,Remplacement de 2 maisons par 1 immeuble,Upgrade,0,2,1,1
+1,Destruction d'un HLM,Destruction de 1 HLM de 34 logements,Destruction,6,3,-1,-1
+2,Construction d'éoliennes,Construction d'un parc de 5 éoliennes,Construction,11,5,-1,-1
+3,Destruction d'un parc de panneaux solaires,Destruction de 2 panneaux solaires,Destruction,12,2,-1,-1
+4,Rénovation d'une zone résidentielle,Remplacement de 2 immeubles par 3 maisons,Upgrade,7,2,0,3
+5,Création de logement low-cost,Remplacement de 2 maisons par 1 immeuble,Upgrade,2,2,6,1
+6,Aménagement de maisons écologiques,Construction de 3 nouvelles maisons écologiques,Construction,4,3,-1,-1
+8,Installation de nouvelles fermes solaires,Construction de 4 fermes solaires,Construction,12,4,-1,-1
+9,Démolition de champs de blé,Destruction de 5 champs de blé,Destruction,13,5,-1,-1
+11,Aménagement d'un quartier résidentiel,Construction de 6 maisons modernes,Construction,3,6,-1,-1
+12,Suppression d'une centrale nucléaire,Destruction de 1 centrale nucléaire,Destruction,9,1,-1,-1
+13,Développement de logements durables,Construction de 5 maisons écologiques,Construction,6,5,-1,-1
+14,Démolition d'un bâtiment ancien,Destruction de 2 bâtiments anciens,Destruction,7,2,-1,-1
+15,Rénovation énergétique,Remplacement de 3 maisons par 2 bâtiments modernes,Upgrade,5,3,7,2
+16,Construction d'un complexe de biogaz,Construction de 2 centrales de biogaz,Construction,10,2,-1,-1
+17,Démolition d'un parc éolien,Destruction de 3 éoliennes,Destruction,11,3,-1,-1
+18,Transformation agricole,Remplacement de 4 champs de blé par 1 ferme solaire,Upgrade,13,4,12,1
+19,Création de logements haut standing,Construction de 2 nouvelles maisons de luxe,Construction,2,2,-1,-1
+20,Amélioration de l'infrastructure de transport,Remplacement de 1 centre de bus par 3 maisons,Upgrade,8,1,0,3
+21,Suppression de vieilles maisons,Destruction de 4 vieilles maisons,Destruction,1,4,-1,-1
+22,Élargissement du parc énergétique,Construction de 1 centrale nucléaire,Construction,9,1,-1,-1
+23,Démolition d'immeubles vétustes,Destruction de 2 vieux immeubles,Destruction,6,2,-1,-1
+24,Développement d'un espace agricole,Construction de 3 champs de blé,Construction,13,3,-1,-1
+25,Éco-rénovation urbaine,Remplacement de 3 maisons par 1 parc éolien,Upgrade,0,3,11,1
+26,Expansion industrielle,Construction de 2 nouveaux bâtiments,Construction,6,2,-1,-1
+27,Démolition de centrales de biogaz,Destruction de 1 centrale de biogaz,Destruction,10,1,-1,-1
+28,Transformation résidentielle,Remplacement de 2 immeubles par 4 maisons,Upgrade,7,2,3,4
+29,Construction de centres de transport,Construction de 2 centres de bus,Construction,8,2,-1,-1

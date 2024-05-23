@@ -93,7 +93,7 @@ public static class MapMouvement
 
             float dotProduct = Vector2.Dot(new Vector2(circleLocalPosition.x, circleLocalPosition.z), direction);
             
-            Debug.Log(dotProduct);
+            // Debug.Log(dotProduct);
             
             if (dotProduct < 0)
             {

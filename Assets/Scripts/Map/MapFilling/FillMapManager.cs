@@ -126,11 +126,11 @@ public class FillMapManager : MonoBehaviour
 
     public void GenerateRiverInEditor()
     {
-        // Vector3 meshScale = SetMapScale();
+        Vector3 meshScale = SetMapScale();
         
         SetRiverShader(mapGenerator.meshData);
 
-        // meshTerrain.transform.localScale = meshScale;
+        meshTerrain.transform.localScale = meshScale;
  
     }
     
@@ -200,7 +200,10 @@ public class FillMapManager : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-            FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            // FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            
+            mapGenerator.updateTerrainRenderer.SetAreaShader(area);
+            
             FillArea.SetAreaVerticesInformation(area, meshData, uniformScale);
             
             Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
@@ -215,22 +218,6 @@ public class FillMapManager : MonoBehaviour
     public void GenerateRoadOnMap(MeshData meshData)
     {
         
-        //Destroy Children
-        // while (roadParent.transform.childCount > 0)
-        // {
-        //     Transform child = roadParent.transform.GetChild(0);
-        //     DestroyImmediate(child.gameObject);
-        // }
-        
-        // foreach (Area area in areas)
-        // {
-        //     while (area.roadParent.transform.childCount > 0)
-        //     {
-        //         Transform child = area.roadParent.transform.GetChild(0);
-        //         DestroyImmediate(child.gameObject);
-        //     }
-        // }
-        
         // Trace Roads
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
 
@@ -241,7 +228,7 @@ public class FillMapManager : MonoBehaviour
             Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
                 testCube, roadParent);
             
-            Debug.Log(validExtremityPoints);
+            // Debug.Log(validExtremityPoints);
             
             bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent);
         }
@@ -339,24 +326,30 @@ public class FillMapManager : MonoBehaviour
     
     public void SetRiverShader(MeshData meshData)
     {
-        // // Trouver le GameObject parent
-        // GameObject roadParent = GameObject.Find("BigRoadParent");
-        //
-        // // Récupérer tous les enfants du GameObject parent
-        // Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
-        //
-        // RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
-        //
-        //
-        // mapDisplay.DrawMesh(meshData);
+        // Trouver le GameObject parent
+        GameObject roadParent = GameObject.Find("BigRoadParent");
         
+        // Récupérer tous les enfants du GameObject parent
+        Transform[] transforms = roadParent.GetComponentsInChildren<Transform>();
+        
+        RiverGenerator.Generate(transforms, roadParent.transform, meshData, riverSettings.riverWidth);
+        
+        
+        mapDisplay.DrawMesh(meshData);
+        
+        
+    }
+
+
+    public void TestButton()
+    {
         List<ObjectProperties> objectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         
         ObjectProperties objectProp = objectsProperties.Find(o => o.areaType == AreaType.City);
         
+        // ObjectGestion.PlaceObjectsOnMap(objectProp, 5, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
         
-        
-        ObjectGestion.PlaceObjectOnMap(objectProp, 5, areas, prefabScale, null, mapGenerator.terrainData.uniformScale);
+        ObjectGestion.RemoveObjectOnMap(objectProp, 4, areas);
     }
 
     

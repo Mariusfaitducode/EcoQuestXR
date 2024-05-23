@@ -8,28 +8,31 @@ public enum AreaType { City, Industry, Energy, Agriculture };
 [System.Serializable]
 public class Area
 {
+    // Génération
+    
     public AreaData data;
     public float flatnessThreshold = 0.1f;
     internal Vector3 position;
 
     internal GameObject hierarchyRoadFolder;
     internal GameObject hierarchyBuildingFolder;
+    // internal GameObject hierarchyAreaGridFolder;
     
-
+    
     public GameObject sphere;
-
     public GameObject roadParent;
-
+    
     public NoiseData areaNoise;
-    
     public Renderer noiseRenderer;
-    
+
     // internal float uniformRadius;
     // internal float uniformStartRadius;
     
-    internal float gridCellSize;
+    // Game
     
+    internal float gridCellSize;
     internal AreaCell[,] areaGrid;
+    internal List<GameObject> areaObjects = new List<GameObject>();
         
     public void SetPosition(Vector3 position)
     {
@@ -39,6 +42,8 @@ public class Area
     // Go To Area script ?
     public void CreateGrid(float cellSize)
     {
+        GameObject areaGridFolder = new GameObject("AreaGrid");
+        areaGridFolder.transform.parent = this.sphere.transform;
 
         // int tabSize = data.areaGridSize;
         int tabSize = (int)(data.radius * 2 / cellSize);
@@ -66,7 +71,18 @@ public class Area
                 Vector3 pos = new Vector3(x, center.y, z);
                 pos.y = FillMapUtils.GetHeightFromRaycast(pos);
                 
-                cell.position = pos;
+                // cell.position = pos;
+                
+                
+                
+                // CellPosition
+                GameObject cellPosition = new GameObject();
+                cellPosition.transform.parent = areaGridFolder.transform;
+
+                cellPosition.transform.position = pos;
+
+                cell.cellPosition = cellPosition;
+                
                 cell.size = gridCellSize;
                 
                 cell.gridPosition = new Vector2Int(i, j);

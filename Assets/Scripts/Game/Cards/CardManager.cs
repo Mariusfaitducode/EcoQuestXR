@@ -70,6 +70,8 @@ public class CardManager : MonoBehaviour
     // Tirage au sort de cartes dans la pile
     public void Draft()
     {
+        // TODO : Pile manager give only valid cards
+        
         draftTime = true;
         // Draw Pile
         pileCards = PileManager.DrawPile(cards, nbrDraftCards);

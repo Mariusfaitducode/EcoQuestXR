@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class ObjectGestion
 {
-    public static void PlaceObjectOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas, float prefabScale, GameManager gameManager, float uniformScale)
+    public static void PlaceObjectsOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas, float prefabScale, GameManager gameManager, float uniformScale)
     {
         // Load Prefab
         
@@ -17,8 +17,6 @@ public static class ObjectGestion
         areaPrefab.prefabHigh = objectPrefab; // TODO : Load prefabHigh
         areaPrefab.size = new Vector2Int(objectProperties.sizeX, objectProperties.sizeY);
         areaPrefab.weight = objectProperties.weight;
-        
-        // TODO : Place object on the map in the good area
         
         // Place in good area object
         
@@ -37,30 +35,35 @@ public static class ObjectGestion
             
             List<GameObject> placedObjects = ObjectUtils.PlaceNeighbourhood(areaCells, area, quantity, areaPrefab, prefabScale, uniformScale);
             
+            // Initialize object script with objectProperties gameManager and areaPrefab
             
-            // TODO : Initialize object script with objectProperties and gameManager
-            // Initialize areaPrefab
-
             foreach (GameObject placedObject in placedObjects)
             {
                 ObjectScript objectScript = placedObject.GetComponent<ObjectScript>();
                 
-                objectScript.InitObjectScript(objectProperties, gameManager, areaPrefab);
+                objectScript.InitObjectScript(objectProperties, gameManager);
             }
         }
-            
-        
-        
-        // TODO : Update area properties
-        
-        // ? List objects instantiated
-        
-        // objectsInstantiated.Add(cardObject);
     }
     
-    public static void RemoveObjectOnMap(ObjectProperties objectProperties)
+    public static void RemoveObjectOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas)
     {
-        // Remove objects from the map
+        // Find objects with prefabName
+        
+        Area area = areas.Find(a => a.data.type == objectProperties.areaType);
+        
+        List<GameObject> objectsToRemove = ObjectUtils.FindAreaObjectsWithPrefabName(area, objectProperties.prefabName);
+        
+        // Choose one object to remove
+        
+        if (objectsToRemove.Count == 0)
+        {
+            Debug.LogWarning("No object found to remove");
+        }
+        else
+        {
+            ObjectUtils.RemoveNeighbourhood(objectsToRemove, quantity, area);
+        }
     }
     
     

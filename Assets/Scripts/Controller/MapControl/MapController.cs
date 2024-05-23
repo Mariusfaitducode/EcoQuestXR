@@ -30,6 +30,8 @@ public class MapController : MonoBehaviour
     public GameObject ovrPlayer;
     
     public UpdateTerrainRenderer updateTerrainRenderer;
+    
+    public GameManager gameManager;
 
     public bool useKeyboard = true;
     
@@ -54,7 +56,14 @@ public class MapController : MonoBehaviour
 
         if (useKeyboard)
         {
-            KeyBoardMapInteraction.Controller(this.transform, Vector3.zero, renderer, mouvementSettings, originalSize);
+            bool moved = KeyBoardMapInteraction.Controller(this.transform, Vector3.zero, renderer, mouvementSettings, originalSize);
+
+
+            if (moved)
+            {
+                updateTerrainRenderer.UpdateMapInformations(false);
+                updateTerrainRenderer.SetObjectsVisibility(gameManager);
+            }
         }
         else
         {
@@ -96,7 +105,7 @@ public class MapController : MonoBehaviour
         Vector3 initialPosition = table.transform.position;
         transform.position = initialPosition;
         
-        updateTerrainRenderer.UpdateCenter();
+        updateTerrainRenderer.UpdateLimitTerrainCenter();
         
         if (OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) != Vector2.zero || OVRInput.Get(OVRInput.RawAxis2D.LThumbstick) != Vector2.zero)
         {

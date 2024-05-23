@@ -73,32 +73,33 @@ public class DisplayCard : MonoBehaviour
         {
             _title.text = _card.title;
             _description.text = _card.description;
-
-            float price = (float)_card.cardProperties.money;
-            if (price > 1_000_000)
-            {
-                _price.text = price / 1_000_000 + "M";
-            }
-            else if (price > 1_000)
-            {
-                _price.text = price / 1_000 + "K";
-            }
-            else
-            {
-                _price.text = price.ToString();
-            }
             
             _image.texture = GetTexture(folderActionImage, _card.cardType.ToString());
-            
-            
             _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
             _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
             _logoAction.texture = GetTexture(folderActionLogo, _card.cardType.ToString());
             
-            _energy.text = _card.cardProperties.energyStock.ToString();
-            _ecology.text = _card.cardProperties.ecology.ToString();
-            _population.text = _card.cardProperties.populationSize.ToString();
-            _pollution.text = _card.cardProperties.pollutionAir.ToString();
+            _energy.text = _card.stats.GetStatString(statType.energyConsumption);
+            _ecology.text = _card.stats.GetStatString(statType.biodiversity);
+            _population.text = _card.stats.GetStatString(statType.size);
+            _pollution.text = _card.stats.GetStatString(statType.airQuality);
+            
+            if (_card.cardType == CardType.Construction)
+            {
+                _price.text = _card.stats.GetStatString(statType.constructionCost);
+            }
+            else if (_card.cardType == CardType.Destruction)
+            {
+                _price.text = _card.stats.GetStatString(statType.destructionCost);
+            }
+            else if (_card.cardType == CardType.Upgrade)
+            {
+                _price.text = _card.stats.GetStatString(statType.constructionCost);
+            }
+            else
+            {
+                _price.text = "0";
+            }
         }
     }
     public void SetCard(Card card)

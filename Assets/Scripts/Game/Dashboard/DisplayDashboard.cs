@@ -6,82 +6,61 @@ using UnityEngine;
 
 public class DisplayDashboard : MonoBehaviour
 {
-    public TextMeshProUGUI moneyText;
     public TextMeshProUGUI TimeText;
     
-    public TextMeshProUGUI populationSizeText;
-    public TextMeshProUGUI populationHealthText;
-    public TextMeshProUGUI populationHappinessText;
-    public TextMeshProUGUI populationSensibilisationText;
-    public TextMeshProUGUI populationAcceptationText;
+    public TextMeshProUGUI totalMoneyText;
+    public TextMeshProUGUI profitsText;
+    public TextMeshProUGUI lossesText;
+    public TextMeshProUGUI constructionCostText;
+    public TextMeshProUGUI destructionCostText;
     
-    public TextMeshProUGUI energyStockText;
+    public TextMeshProUGUI totalEnergyText;
     public TextMeshProUGUI energyProductionText;
     public TextMeshProUGUI energyConsumptionText;
+    public TextMeshProUGUI energyConstructionCostText;
+    public TextMeshProUGUI energyDestructionCostText;
     
     public TextMeshProUGUI ecologyText;
     public TextMeshProUGUI biodiversityText;
+    public TextMeshProUGUI airQualityText;
+    public TextMeshProUGUI groundQualityText;
     
-    public TextMeshProUGUI pollutionAirText;
-    public TextMeshProUGUI pollutionGroundText;
-    public TextMeshProUGUI pollutionNoiseText;
-    public TextMeshProUGUI pollutionVisualText;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public TextMeshProUGUI populationSensibilisationText;
+    public TextMeshProUGUI populationSizeText;
+    public TextMeshProUGUI populationHealthText;
+    public TextMeshProUGUI populationHappinessText;
+    public TextMeshProUGUI populationAcceptationText;
     
     public void UpdateTime(DateTime currentTime)
     {
         TimeText.text = currentTime.ToString("yyyy-MM-dd-HH:mm:ss");
     }
     
-    public void UpdateFromGameStats(GameStats gameStats)
+    public void UpdateFromStats(Stat stats)
     {
-        moneyText.text = gameStats.money.ToString();
+        // totalMoneyText.text = StatUtils.ConvertNumberToText(stats.totalMoney);
         
-        populationSizeText.text = gameStats.populationSize.ToString();
-        // populationHealthText.text = gameStats.populationHealth.ToString();
-        // populationHappinessText.text = gameStats.populationHappiness.ToString();
-        // populationSensibilisationText.text = gameStats.populationSensibilisation.ToString();
-        // populationAcceptationText.text = gameStats.populationAcceptation.ToString();
+        profitsText.text = StatUtils.ConvertNumberToText(stats.profits);
+        lossesText.text = StatUtils.ConvertNumberToText(stats.losses);
+        constructionCostText.text = StatUtils.ConvertNumberToText(stats.constructionCost);
+        destructionCostText.text = StatUtils.ConvertNumberToText(stats.destructionCost);
         
-        energyStockText.text = gameStats.energyStock.ToString();
-        // energyProductionText.text = gameStats.energyProduction.ToString();
-        // energyConsumptionText.text = gameStats.energyConsumption.ToString();
+        // totalEnergyText.text = StatUtils.ConvertNumberToText(stats.totalEnergy);
+        energyProductionText.text = StatUtils.ConvertNumberToText(stats.energyProduction);
+        energyConsumptionText.text = StatUtils.ConvertNumberToText(stats.energyConsumption);
+        energyConstructionCostText.text = StatUtils.ConvertNumberToText(stats.energyConstructionCost);
+        energyDestructionCostText.text = StatUtils.ConvertNumberToText(stats.energyDestructionCost);
         
-        ecologyText.text = gameStats.ecology.ToString();
-        // biodiversityText.text = gameStats.biodiversity.ToString();
+        // ecologyText.text = StatUtils.ConvertNumberToText(stats.ecology);
+        biodiversityText.text = StatUtils.ConvertNumberToText(stats.biodiversity);
+        airQualityText.text = StatUtils.ConvertNumberToText(stats.airQuality);
+        groundQualityText.text = StatUtils.ConvertNumberToText(stats.groundQuality);
         
-        pollutionAirText.text = gameStats.pollutionAir.ToString();
-        // pollutionGroundText.text = gameStats.pollutionGround.ToString();
-        // pollutionNoiseText.text = gameStats.pollutionNoise.ToString();
-        // pollutionVisualText.text = gameStats.pollutionVisual.ToString();
-    }
-    
-    // TODO : Remove this function and use UpdateFromGameStats instead when all stats are implemented
-    public void InitialUpdate(GameStats gameStats)
-    {
-        moneyText.text = gameStats.money.ToString();
+        populationSensibilisationText.text = StatUtils.ConvertNumberToText(stats.sensibilisation);
+        populationSizeText.text = StatUtils.ConvertNumberToText(stats.size);
+        populationHealthText.text = StatUtils.ConvertNumberToText(stats.health);
+        populationHappinessText.text = StatUtils.ConvertNumberToText(stats.happiness);
+        // populationAcceptationText.text = StatUtils.ConvertNumberToText(stats.acceptation);
         
-        populationSizeText.text = gameStats.populationSize.ToString();
-        populationHealthText.text = gameStats.populationHealth.ToString();
-        populationHappinessText.text = gameStats.populationHappiness.ToString();
-        populationSensibilisationText.text = gameStats.populationSensibilisation.ToString();
-        populationAcceptationText.text = gameStats.populationAcceptation.ToString();
-        
-        energyStockText.text = gameStats.energyStock.ToString();
-        energyProductionText.text = gameStats.energyProduction.ToString();
-        energyConsumptionText.text = gameStats.energyConsumption.ToString();
-        
-        ecologyText.text = gameStats.ecology.ToString();
-        biodiversityText.text = gameStats.biodiversity.ToString();
-        
-        pollutionAirText.text = gameStats.pollutionAir.ToString();
-        pollutionGroundText.text = gameStats.pollutionGround.ToString();
-        pollutionNoiseText.text = gameStats.pollutionNoise.ToString();
-        pollutionVisualText.text = gameStats.pollutionVisual.ToString();
     }
 }

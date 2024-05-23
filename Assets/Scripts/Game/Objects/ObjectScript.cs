@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class ObjectScript : MonoBehaviour
 {
+    
     internal ObjectProperties objectProperties;
     internal GameManager gameManager;
-    internal AreaPrefab areaPrefab;
     
+    // Init on Place building
+    internal AreaPrefab areaPrefab;
     internal List<AreaCell> areaCells;
     
     
     
-    public void InitObjectScript(ObjectProperties objectProperties, GameManager gameManager, AreaPrefab areaPrefab)
+    public void InitObjectScript(ObjectProperties objectProperties, GameManager gameManager)
     {
         this.objectProperties = objectProperties;
         this.gameManager = gameManager;
-        this.areaPrefab = areaPrefab;
+        // this.areaPrefab = areaPrefab;
     }
     
     
