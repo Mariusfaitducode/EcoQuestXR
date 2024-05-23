@@ -111,40 +111,7 @@ public static class FillArea
     
 
 
-    public static void SetAreaShader(Area area, GameObject meshTerrain, float uniformScale)
-    {
-        Material material = meshTerrain.GetComponent<Renderer>().sharedMaterial;
-        
-        Vector2 position = new Vector2(area.sphere.transform.position.x, area.sphere.transform.position.z);
-
-        if (area.data.type == AreaType.City)
-        {
-            material.SetFloat("_City_Radius", area.data.radius * uniformScale);
-            material.SetFloat("_City_Start_Radius", area.data.startRadius * uniformScale);
-            material.SetVector("_City_Center", new Vector2(position.x, position.y));
-        }
-        
-        if (area.data.type == AreaType.Industry)
-        {
-            material.SetFloat("_Industry_Radius", area.data.radius * uniformScale);
-            material.SetFloat("_Industry_Start_Radius", area.data.startRadius * uniformScale);
-            material.SetVector("_Industry_Center", new Vector2(position.x, position.y));
-        }
-        
-        if (area.data.type == AreaType.Energy)
-        {
-            material.SetFloat("_Energy_Radius", area.data.radius * uniformScale);
-            material.SetFloat("_Energy_Start_Radius", area.data.startRadius * uniformScale);
-            material.SetVector("_Energy_Center", new Vector2(position.x, position.y));
-        }
-        
-        if (area.data.type == AreaType.Agriculture)
-        {
-            material.SetFloat("_Agriculture_Radius", area.data.radius * uniformScale);
-            material.SetFloat("_Agriculture_Start_Radius", area.data.startRadius * uniformScale);
-            material.SetVector("_Agriculture_Center", new Vector2(position.x, position.y));
-        }
-    }
+    
 
     public static void SetAreaVerticesInformation(Area area, MeshData meshData, float uniformScale)
     {

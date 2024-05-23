@@ -200,7 +200,10 @@ public class FillMapManager : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-            FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            // FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            
+            mapGenerator.updateTerrainRenderer.SetAreaShader(area);
+            
             FillArea.SetAreaVerticesInformation(area, meshData, uniformScale);
             
             Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
