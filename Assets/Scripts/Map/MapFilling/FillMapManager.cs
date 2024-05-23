@@ -228,7 +228,7 @@ public class FillMapManager : MonoBehaviour
             Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
                 testCube, roadParent);
             
-            Debug.Log(validExtremityPoints);
+            // Debug.Log(validExtremityPoints);
             
             bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent);
         }

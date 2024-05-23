@@ -18,7 +18,7 @@ public static class FillArea
         {
             for (int y = 0; y < size; y++)
             {
-                Vector3 newPosition = area.areaGrid[x, y].position;
+                Vector3 newPosition = area.areaGrid[x, y].cellPosition.transform.position;
 
                 // Generate roads 
                 if (area.areaGrid[x, y].type == CellType.Road)

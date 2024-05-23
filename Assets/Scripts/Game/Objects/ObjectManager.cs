@@ -10,7 +10,9 @@ public class ObjectManager : MonoBehaviour
     internal List<ObjectProperties> listObjectsProperties;
     
     public float prefabScale = 1f;
-    public float mapScale = 1f;
+    // public float mapScale = 1f;
+
+    public GameObject meshTerrain;
     
     public void ObjectsStartInitialization()
     {
@@ -24,7 +26,7 @@ public class ObjectManager : MonoBehaviour
     {
         areas = fillMapManager.areas;
         prefabScale = fillMapManager.prefabScale;
-        mapScale = fillMapManager.mapGenerator.terrainData.uniformScale;
+        // mapScale = fillMapManager.mapGenerator.terrainData.uniformScale;
 
         foreach (Area area in areas)
         {
@@ -34,7 +36,7 @@ public class ObjectManager : MonoBehaviour
     
     public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
-        ObjectGestion.PlaceObjectsOnMap(objectProperties, quantity, areas, prefabScale, gameManager, mapScale);
+        ObjectGestion.PlaceObjectsOnMap(objectProperties, quantity, areas, prefabScale, gameManager, meshTerrain.transform.localScale.x);
     }
     
     public void RemoveObjects(ObjectProperties objectProperties, int quantity = 1)

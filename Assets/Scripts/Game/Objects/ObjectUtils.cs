@@ -15,7 +15,7 @@ public static class ObjectUtils
 
         foreach (AreaCell areaCell in areaCells)
         {
-            float distance = Vector3.Distance(areaCell.position, area.sphere.transform.position);
+            float distance = Vector3.Distance(areaCell.cellPosition.transform.position, area.sphere.transform.position);
 
             if (distance < minDistance)
             {
@@ -40,7 +40,7 @@ public static class ObjectUtils
             
             foreach (AreaCell areaCell in areaCells)
             {
-                float distance = Vector3.Distance(areaCell.position, area.areaGrid[firstLocation.x, firstLocation.y].position);
+                float distance = Vector3.Distance(areaCell.cellPosition.transform.position, area.areaGrid[firstLocation.x, firstLocation.y].cellPosition.transform.position);
 
                 if (CanPlaceBuilding(areaCell.gridPosition, areaPrefab.size, area.areaGrid) && distance < minDistance)
                 {
@@ -69,7 +69,7 @@ public static class ObjectUtils
         {
             for (int y = 0; y < size; y++)
             {
-                Vector3 newPosition = area.areaGrid[x, y].position;
+                Vector3 newPosition = area.areaGrid[x, y].cellPosition.transform.position;
 
                 if (area.areaGrid[x, y].inArea 
                     && !area.areaGrid[x, y].inStartArea)
@@ -116,6 +116,7 @@ public static class ObjectUtils
     public static GameObject PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize, float scale = 1)
     {
         Vector3 position = Vector3.zero;
+        Quaternion rotation = Quaternion.identity;
         
         List<AreaCell> areaCells = new List<AreaCell>();
         
@@ -125,20 +126,22 @@ public static class ObjectUtils
             for (int y = 0; y < areaPrefab.size.y; y++)
             {
                 AreaCell areaCell = area.areaGrid[gridLocation.x + x, gridLocation.y + y];
-                
-                position += areaCell.position;
+
+                position += areaCell.cellPosition.transform.position;
+                rotation = areaCell.cellPosition.transform.rotation;
                 
                 areaCells.Add(areaCell);
             }
         }
         
         position /= areaPrefab.size.x * areaPrefab.size.y;
-        
-        position *= scale;
+
+
+        // position *= scale;
         
         // Debug.Log("Final position"position);
         
-        GameObject placedObject = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.hierarchyBuildingFolder.transform, position, Quaternion.identity, 
+        GameObject placedObject = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.hierarchyBuildingFolder.transform, position, rotation, 
             Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
         
         placedObject.AddComponent<ObjectScript>();
