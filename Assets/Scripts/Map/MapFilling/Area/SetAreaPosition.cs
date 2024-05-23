@@ -12,7 +12,7 @@ public static class SetAreaPosition
             return false;
         }
         
-        Debug.Log("Try number : " + triesLeft);
+        // Debug.Log("Try number : " + triesLeft);
         
         List<FillMapManager.Sphere> placedSpheres = new List<FillMapManager.Sphere>();
         

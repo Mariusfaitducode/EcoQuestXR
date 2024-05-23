@@ -13,7 +13,7 @@ public class ObjectsInitialization
         
         objectProperties = AffectDatasToObjectsProperties(data);
         
-        Debug.Log(objectProperties);
+        // Debug.Log(objectProperties);
         
         return objectProperties;
     }

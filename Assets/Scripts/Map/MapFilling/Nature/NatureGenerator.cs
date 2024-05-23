@@ -66,7 +66,7 @@ public static class NatureGenerator
         // Generate forests
 
         // Generate forests
-        int placedForests = 0;
+        // int placedForests = 0;
         foreach(ForestData forestData in natureData.forestDatas)
         {
             int randomIndex = Random.Range(0, meshVertices.Count);

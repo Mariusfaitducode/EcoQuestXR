@@ -26,7 +26,7 @@ public class Card
     public ObjectProperties objectProperties1;
     public ObjectProperties objectProperties2;
     
-    public CardProperties cardProperties = new CardProperties();
+    public GameStats cardProperties = new GameStats();
     
     public GameObject cardObject;
     
@@ -37,15 +37,6 @@ public class Card
     public GameObject GetCardObject()
     {
         return cardObject;
-    }
-
-    public class CardProperties
-    {
-        public int price;
-        public int ecology;
-        public int population;
-        public int energy;
-        public int pollution;
     }
     
 

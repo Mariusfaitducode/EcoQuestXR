@@ -5,12 +5,8 @@ using UnityEngine;
 public static class FillArea
 {
 
-    public static void GenerateAreaContent(Area area, float prefabScale, RoadGenerator.RoadData roadData, MapDisplay mapDisplay)
+    public static void InstantiateRoadsAndBuildingsOnArea(Area area, float prefabScale, RoadGenerator.RoadData roadData, MapDisplay mapDisplay)
     {
-        Debug.Log("Generate Area Content : " + area.data.type);
-
-        // int count = 0;
-        
         int size = area.areaGrid.GetLength(0);
 
         float[,] areaNoiseMap = Noise.GenerateNoiseMap(size, size, area.areaNoise.seed, area.areaNoise.noiseScale, 
@@ -28,7 +24,7 @@ public static class FillArea
                 if (area.areaGrid[x, y].type == CellType.Road)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
-                            area.data.startRadius))
+                            area.data.radius))
                     {
                         bool up = (y < size - 1) && area.areaGrid[x, y + 1].type == CellType.Road;
                         bool right = (x < size - 1) && area.areaGrid[x + 1, y].type == CellType.Road;
@@ -38,7 +34,7 @@ public static class FillArea
                         RoadGenerator.RoadTile result = RoadGenerator.FindGoodRoadTile(up, right, down, left, roadData.roadTiles)!;
                         
                         
-                        FillMapUtils.InstantiateObjectWithScale(result.tile, area.sphere.transform, newPosition, result.rotation, 
+                        FillMapUtils.InstantiateObjectWithScale(result.tile, area.hierarchyRoadFolder.transform, newPosition, result.rotation, 
                             Vector3.one * (area.areaGrid[x, y].size * prefabScale));
                         
                     }
@@ -55,6 +51,11 @@ public static class FillArea
                     {
                         AreaPrefab areaPrefab = ChooseRandomPrefab(area.data.prefabs, areaNoiseMap[x, y]);
                         
+                        if (areaPrefab.prefabLow == null)
+                        {
+                            continue;
+                        }
+                        
                         bool rotate = Random.Range(0, 100) < 30;
                         
                         // Rotate randomly the prefab
@@ -64,22 +65,14 @@ public static class FillArea
                             // areaPrefab.prefabLow.transform.Rotate(Vector3.up, 90);
                         }
                         
-                        if (CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
+                        if (ObjectUtils.CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
                         {
-                            area.areaGrid[x, y].type = CellType.Object;
-                            GameObject prefab = areaPrefab.prefabLow;
-                            // if (Random.Range(0, 100) < 50)
-                            // {
-                            //     prefab = areaPrefab.prefabLow;
-                            // }
-                            PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), rotate, prefabScale);
+                            ObjectUtils.PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), rotate, prefabScale);
                         }
 
-                        if (rotate)
+                        if (rotate) // Reset size
                         {
                             areaPrefab.size = new Vector2Int(areaPrefab.size.y, areaPrefab.size.x);
-                            // areaPrefab.prefabLow.transform.Rotate(Vector3.up, -90);
-
                         }
                     }
                 }
@@ -115,50 +108,7 @@ public static class FillArea
     }
     
     
-    static bool CanPlaceBuilding(Vector2Int position, Vector2Int size, AreaCell[,] areaGrid)
-    {
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                if (position.x + x >= areaGrid.GetLength(0) || position.y + y >= areaGrid.GetLength(1))
-                {
-                    return false;
-                }
-                if (areaGrid[position.x + x, position.y + y].type != CellType.Empty)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
     
-    static void PlaceBuilding(AreaPrefab areaPrefab, Area area, Vector2Int gridLocation, bool rotate, float prefabSize)
-    {
-        Vector3 position = Vector3.zero;
-        
-        // Mettre à jour la grille pour indiquer que les cases sont maintenant occupées
-        for (int x = 0; x < areaPrefab.size.x; x++)
-        {
-            for (int y = 0; y < areaPrefab.size.y; y++)
-            {
-                area.areaGrid[gridLocation.x + x, gridLocation.y + y].type = CellType.Object;
-                
-                position += area.areaGrid[gridLocation.x + x, gridLocation.y + y].position;
-            }
-        }
-        
-        position /= areaPrefab.size.x * areaPrefab.size.y;
-        
-        GameObject placedPrefab = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.sphere.transform, position, Quaternion.identity, 
-            Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize));
-
-        if (rotate)
-        {
-            placedPrefab.transform.Rotate(Vector3.up, 90);
-        }
-    }
 
 
     public static void SetAreaShader(Area area, GameObject meshTerrain, float uniformScale)

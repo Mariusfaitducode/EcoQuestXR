@@ -51,6 +51,7 @@ public class CardManager : MonoBehaviour
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deckCanvas);
+        DisplayCanvas.HideCanvas(draftCanvas);
 
         nbrDraftCards = cardsLocationDraftPanels.Count;
         nbrMaxDeckCards = cardsLocationDeckPanels.Count;
@@ -90,7 +91,8 @@ public class CardManager : MonoBehaviour
             nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards, selectedPileCards);
             DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         }
-        else if (displayCard.GetParentCanvas() == deckCanvas && !draftTime)
+        // else if (displayCard.GetParentCanvas() == deckCanvas && !draftTime)
+        else if (displayCard.GetParentCanvas() == deckCanvas)
         {
             selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
         }

@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ObjectScript : MonoBehaviour
+{
+    internal ObjectProperties objectProperties;
+    internal GameManager gameManager;
+    internal AreaPrefab areaPrefab;
+    
+    internal List<AreaCell> areaCells;
+    
+    
+    
+    public void InitObjectScript(ObjectProperties objectProperties, GameManager gameManager, AreaPrefab areaPrefab)
+    {
+        this.objectProperties = objectProperties;
+        this.gameManager = gameManager;
+        this.areaPrefab = areaPrefab;
+    }
+    
+    
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        
+    }
+}

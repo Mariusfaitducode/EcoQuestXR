@@ -74,7 +74,7 @@ public class DisplayCard : MonoBehaviour
             _title.text = _card.title;
             _description.text = _card.description;
 
-            float price = (float)_card.cardProperties.price;
+            float price = (float)_card.cardProperties.money;
             if (price > 1_000_000)
             {
                 _price.text = price / 1_000_000 + "M";
@@ -95,10 +95,10 @@ public class DisplayCard : MonoBehaviour
             _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
             _logoAction.texture = GetTexture(folderActionLogo, _card.cardType.ToString());
             
-            _energy.text = _card.cardProperties.energy.ToString();
+            _energy.text = _card.cardProperties.energyStock.ToString();
             _ecology.text = _card.cardProperties.ecology.ToString();
-            _population.text = _card.cardProperties.population.ToString();
-            _pollution.text = _card.cardProperties.pollution.ToString();
+            _population.text = _card.cardProperties.populationSize.ToString();
+            _pollution.text = _card.cardProperties.pollutionAir.ToString();
         }
     }
     public void SetCard(Card card)

@@ -141,7 +141,7 @@ public class FindPath
         // No area collision
         foreach (Area area in areas)
         {
-            float areaRadius = bigRoad ? area.data.radius : area.data.startRadius;
+            float areaRadius = area.data.radius;
             if (FillMapUtils.IsVertexInsideCircle(new Vector3(newPosition.x, newPosition.y, newPosition.z), area.sphere.transform.position, areaRadius))
             {
                 notValid = true;
