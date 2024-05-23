@@ -26,21 +26,28 @@ public class BusGestion : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
 
-        if (gameManager != null)
-        {
-            currentTime = gameManager.timer.currentTime;
-        }
-        else
-        {
-            Debug.LogError("GameManager n'a pas été trouvé dans la scène !");
-        }
+        // if (gameManager != null)
+        // {
+        //     currentTime = gameManager.timer.currentTime;
+        // }
+        // else
+        // {
+        //     Debug.LogError("GameManager n'a pas été trouvé dans la scène !");
+        // }
     }
 
     void Update()
     {
         // Instantiate / Destroy buses with GameManager informations
         
+        Debug.Log("CurrentTime :"+currentTime);
         
+        if (gameManager != null)
+        {
+            currentTime = gameManager.timer.currentTime;
+        }
+
+
         if ((currentTime.Hour >= busStartHour && currentTime.Hour < busEndHour) && !busOut)
         {
             busOut = true;
@@ -57,21 +64,20 @@ public class BusGestion : MonoBehaviour
                 GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, this.transform.position, Quaternion.identity, Vector3.one);
                 
                 // Init bus script
-                
                 buses.Add(newBus);
             }
         }
         else if ((currentTime.Hour < busStartHour || currentTime.Hour >= busEndHour) && busOut)
         {
-            busOut = false;
-            
             Debug.Log("BusGestion Destroy buses");
+            
             
             // Destroy buses
             foreach (GameObject bus in buses)
             {
                 Destroy(bus);
             }
+            busOut = false;
         }
     }
 }

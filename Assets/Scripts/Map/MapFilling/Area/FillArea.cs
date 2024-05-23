@@ -113,7 +113,7 @@ public static class FillArea
 
     public static void SetAreaShader(Area area, GameObject meshTerrain, float uniformScale)
     {
-        Material material = meshTerrain.GetComponent<Renderer>().material;
+        Material material = meshTerrain.GetComponent<Renderer>().sharedMaterial;
         
         Vector2 position = new Vector2(area.sphere.transform.position.x, area.sphere.transform.position.z);
 

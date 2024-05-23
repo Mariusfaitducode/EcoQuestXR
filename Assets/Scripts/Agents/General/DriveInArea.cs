@@ -18,6 +18,8 @@ public class DriveInArea : MonoBehaviour
     internal AreaCell nextCell;
     internal AreaCell lastCell;
 
+    public bool stopped;
+
     
     // Start is called before the first frame update
     void Start()
@@ -52,16 +54,18 @@ public class DriveInArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = (nextCell.position * agentManager.mapScale) - (actualCell.position * agentManager.mapScale);
-        
-        this.transform.Translate(direction * speed * Time.deltaTime);
 
-        if (Vector3.Distance(this.transform.position, (nextCell.position * agentManager.mapScale)) < treshold)
+        if (!agentManager.timer.stopTime)
         {
-            ChangeTarget();
+            Vector3 direction = (nextCell.position * agentManager.mapScale) - (actualCell.position * agentManager.mapScale);
+        
+            this.transform.Translate(direction * speed * Time.deltaTime);
+
+            if (Vector3.Distance(this.transform.position, (nextCell.position * agentManager.mapScale)) < treshold)
+            {
+                ChangeTarget();
+            }
         }
-        
-        
     }
 
 
@@ -79,7 +83,7 @@ public class DriveInArea : MonoBehaviour
         int y = actualCell.gridPosition.y;
         int size = areaGrid.GetLength(0);
         
-        Debug.Log(size);
+        // Debug.Log(size);
         
         List<AreaCell> validCells = new List<AreaCell>();
 
@@ -117,7 +121,6 @@ public class DriveInArea : MonoBehaviour
         else
         {
             nextCell = validCells[Random.Range(0, validCells.Count)];
-
         }
         
     }
