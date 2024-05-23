@@ -113,6 +113,18 @@ public class UpdateTerrainRenderer : MonoBehaviour
         SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
         
         
+        // Roads
+        
+        GameObject roadParent = fillMapManager.roadParent;
+        
+        Material roadMaterial = roadParent.GetComponent<Renderer>().sharedMaterial;
+        
+        roadMaterial.SetVector("_Map_Center", new Vector2(mapCenter.x, mapCenter.z));
+        roadMaterial.SetFloat("_Limit_Terrain", limitTerrain);
+        
+        // roadMaterial.SetFloat("_Uniform_Scale", this.transform.localScale.x);
+        
+        
     }
     
     

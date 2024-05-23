@@ -218,22 +218,6 @@ public class FillMapManager : MonoBehaviour
     public void GenerateRoadOnMap(MeshData meshData)
     {
         
-        //Destroy Children
-        // while (roadParent.transform.childCount > 0)
-        // {
-        //     Transform child = roadParent.transform.GetChild(0);
-        //     DestroyImmediate(child.gameObject);
-        // }
-        
-        // foreach (Area area in areas)
-        // {
-        //     while (area.roadParent.transform.childCount > 0)
-        //     {
-        //         Transform child = area.roadParent.transform.GetChild(0);
-        //         DestroyImmediate(child.gameObject);
-        //     }
-        // }
-        
         // Trace Roads
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
 
