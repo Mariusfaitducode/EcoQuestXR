@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         
         // Dashboard initialization
         // Stats and Dashboard initialization
+        // Stats and Dashboard initialization
+        // TODO : Initialize objects already on map script properties and update dashboard
         
         gameStats.StatsStartInitialization();
         gameStats.objects = objectManager.GetAllObjectScripts();
