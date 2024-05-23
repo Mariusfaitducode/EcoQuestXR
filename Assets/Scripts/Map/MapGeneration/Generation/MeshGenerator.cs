@@ -40,6 +40,7 @@ public static class MeshGenerator {
 
 		for (int y = 0; y < borderedSize; y += meshSimplificationIncrement) {
 			for (int x = 0; x < borderedSize; x += meshSimplificationIncrement) {
+				
 				int vertexIndex = vertexIndicesMap [x, y];
 				Vector2 percent = new Vector2 ((x-meshSimplificationIncrement) / (float)meshSize, (y-meshSimplificationIncrement) / (float)meshSize);
 				float height = heightCurve.Evaluate (heightMap [x, y]) * heightMultiplier;
@@ -59,7 +60,8 @@ public static class MeshGenerator {
 				vertexIndex++;
 			}
 		}
-
+		
+		meshData.vertexIndicesMap = vertexIndicesMap;
 		meshData.ProcessMesh ();
 
 		return meshData;
@@ -80,6 +82,8 @@ public class MeshData {
 	int borderTriangleIndex;
 
 	bool useFlatShading;
+	
+	public int[,] vertexIndicesMap;
 
 	public MeshData(int verticesPerLine, bool useFlatShading) {
 		this.useFlatShading = useFlatShading;
@@ -211,5 +215,9 @@ public class MeshData {
 		}
 		return mesh;
 	}
+	
+	
+	
+	
 
 }

@@ -162,11 +162,26 @@ public class FillMapUtils : MonoBehaviour
         return (int)Mathf.Round((float)gaussianValue);
     }
     
+    public static float GaussianProbability(float value, float mean, float stdDev)
+    {
+        float exponent = Mathf.Exp(-0.5f * Mathf.Pow((value - mean) / stdDev, 2));
+        return (1 / (stdDev * Mathf.Sqrt(2 * Mathf.PI))) * exponent;
+    }
+    
+    
     public static Vector3 GetPerpendicularDirection(Vector3 currentDirection, Vector3 nextDirection)
     {
         Vector3 averageDirection = (currentDirection + nextDirection).normalized;
         return Vector3.Cross(averageDirection, Vector3.up);
     }
     
-    
+    public static Color GetRandomColorVariation(Color baseColor, float variationRate)
+    {
+        // variationRate contrôle la variance maximum autour de la couleur de base
+        float red = Mathf.Clamp01(baseColor.r + Random.Range(-variationRate, variationRate));
+        float green = Mathf.Clamp01(baseColor.g + Random.Range(-variationRate, variationRate));
+        float blue = Mathf.Clamp01(baseColor.b + Random.Range(-variationRate, variationRate));
+
+        return new Color(red, green, blue, baseColor.a); // conserve l'alpha de la couleur originale
+    }
 }
