@@ -16,7 +16,7 @@ public class CardsInitialization
         
         cards = AffectDatasToCards(data);
         
-        PrintCards(cards);
+        // PrintCards(cards);
         
         return cards;
     }
@@ -82,27 +82,15 @@ public class CardsInitialization
         {
             if (card.cardType == CardType.Construction)
             {
-                card.cardProperties.money = card.objectProperties1.price * card.quantityObject1;
-                card.cardProperties.ecology = card.objectProperties1.ecology * card.quantityObject1;
-                card.cardProperties.populationSize = card.objectProperties1.population * card.quantityObject1;
-                card.cardProperties.energyStock = card.objectProperties1.energy * card.quantityObject1;
-                card.cardProperties.pollutionAir = card.objectProperties1.pollution * card.quantityObject1;
+                card.stats = StatUtils.GetStatFromConstruction(card.objectProperties1.stats, card.quantityObject1);
             }
             else if (card.cardType == CardType.Destruction)
             {
-                card.cardProperties.money = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction);
-                card.cardProperties.ecology = - card.objectProperties1.ecology * card.quantityObject1;
-                card.cardProperties.populationSize = - card.objectProperties1.population * card.quantityObject1;
-                card.cardProperties.energyStock = - card.objectProperties1.energy * card.quantityObject1;
-                card.cardProperties.pollutionAir = - card.objectProperties1.pollution * card.quantityObject1;
+                card.stats = StatUtils.GetStatFromDestruction(card.objectProperties1.stats, card.quantityObject1);
             }
             else if (card.cardType == CardType.Upgrade)
             {
-                card.cardProperties.money = (int)(card.objectProperties1.price * card.quantityObject1 * factorCostReductionDestruction) + card.objectProperties2.price * card.quantityObject2;
-                card.cardProperties.ecology = - card.objectProperties1.ecology * card.quantityObject1 + card.objectProperties2.ecology * card.quantityObject2;
-                card.cardProperties.populationSize = - card.objectProperties1.population * card.quantityObject1 + card.objectProperties2.population * card.quantityObject2;
-                card.cardProperties.energyStock = - card.objectProperties1.energy * card.quantityObject1 + card.objectProperties2.energy * card.quantityObject2;
-                card.cardProperties.pollutionAir = - card.objectProperties1.pollution * card.quantityObject1 + card.objectProperties2.pollution * card.quantityObject2;
+                card.stats = StatUtils.GetStatFromUpgrade(card.objectProperties1.stats, card.objectProperties2.stats, card.quantityObject1, card.quantityObject2);
             }
             else
             {

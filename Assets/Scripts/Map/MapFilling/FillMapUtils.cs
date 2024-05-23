@@ -109,6 +109,9 @@ public class FillMapUtils : MonoBehaviour
     {
         GameObject obj = GameObject.Instantiate(prefab, position, rotation);
         
+        //Remove (Clone) from name
+        obj.name = prefab.name;
+        
         Vector3 originalScale = obj.transform.localScale;
         
         Vector3 finalScale = new Vector3(

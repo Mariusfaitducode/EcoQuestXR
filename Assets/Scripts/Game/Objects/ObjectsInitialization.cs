@@ -28,7 +28,9 @@ public class ObjectsInitialization
         foreach (string[] row in data.rows)
         {
             ObjectProperties objProps = new ObjectProperties();
+            Stat stats = new Stat();
 
+            // Object properties
             for (int i = 0; i < data.header.Length; i++)
             {
                 data.header[i] = data.header[i].Trim();
@@ -43,6 +45,24 @@ public class ObjectsInitialization
                     propertyInfo.SetValue(objProps, value, null);
                 }
             }
+            
+            //Stats
+            for (int i = 0; i < data.header.Length; i++)
+            {
+                data.header[i] = data.header[i].Trim();
+                
+                // Match Card class to Csv header
+                PropertyInfo propertyInfo = typeof(Stat).GetProperty(data.header[i], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                
+                if (propertyInfo != null && row.Length > i)
+                {
+                    object value = LoadDatas.MatchType(propertyInfo, row, data.header, i);
+                    
+                    propertyInfo.SetValue(stats, value, null);
+                }
+            }
+            objProps.stats = stats;
+            
             objectsProperties.Add(objProps);
         }
 
@@ -57,11 +77,11 @@ public class ObjectsInitialization
         {
             ObjectScript objectScript = areaObject.GetComponent<ObjectScript>();
             
-            Debug.Log("Object name : " + areaObject.name);
+            // Debug.Log("Object name : " + areaObject.name);
             
-            string childName = areaObject.name.Replace("(Clone)", "").Trim();
+            // string childName = areaObject.name.Replace("(Clone)", "").Trim();
             
-            ObjectProperties objectProps = objectsProperties.Find(o => o.prefabName == childName);
+            ObjectProperties objectProps = objectsProperties.Find(o => o.prefabName == areaObject.name);
             
             if (objectProps == null)
             {
@@ -76,7 +96,7 @@ public class ObjectsInitialization
     
     public static GameObject LoadPrefab(ObjectProperties objProps)
     {
-        string path = "Prefabs/" + objProps.areaType.ToString() + "/" + objProps.prefabName;
+        string path = "Prefabs/" + objProps.prefabPath + "/" + objProps.prefabName;
         GameObject prefab = Resources.Load<GameObject>(path);
         
         if (prefab == null)

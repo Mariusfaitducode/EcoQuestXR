@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5287112804831064173}
   - component: {fileID: 4878633586351186061}
   m_Layer: 0
-  m_Name: centreBus1
+  m_Name: busCenter1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
