@@ -14,6 +14,8 @@ public class MapController : MonoBehaviour
         public float movingSpeed;
         public float scalingSpeed;
         public float scalingMin;
+        
+        public float angleAdapter;
 
     }
     
@@ -74,6 +76,7 @@ public class MapController : MonoBehaviour
                 SetMapPosition();
                 return;
             }
+            
             //if (!playerHasMoved)
             //{
             //    // GetTableLocation();
@@ -81,7 +84,7 @@ public class MapController : MonoBehaviour
             //}
 
 
-            OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize);
+            OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize, ovrPlayer.transform);
             // Use OVR controller
         }
         

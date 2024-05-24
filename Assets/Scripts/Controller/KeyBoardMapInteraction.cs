@@ -39,12 +39,12 @@ public static class KeyBoardMapInteraction
                 //
                 vectorPlayer = MapMouvement.RotateReference(vectorPlayer, mapRotation);
                 
-                Vector2 xVectorPlayer = MapMouvement.RotateReference(new Vector2(vectorPlayer.x, 0), -mapRotation); 
-                Vector2 yVectorPlayer = MapMouvement.RotateReference(new Vector2(0, vectorPlayer.y), -mapRotation); 
+                // Vector2 xVectorPlayer = MapMouvement.RotateReference(new Vector2(vectorPlayer.x, 0), -mapRotation); 
+                // Vector2 yVectorPlayer = MapMouvement.RotateReference(new Vector2(0, vectorPlayer.y), -mapRotation); 
 
             
-                MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, xVectorPlayer, settings.movingSpeed, mapSize);
-                MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, yVectorPlayer, settings.movingSpeed, mapSize);
+                MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, new Vector2(vectorPlayer.x, 0), settings.movingSpeed, mapSize);
+                MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, new Vector2(0, vectorPlayer.y), settings.movingSpeed, mapSize);
                 
                 moved = true;
             }

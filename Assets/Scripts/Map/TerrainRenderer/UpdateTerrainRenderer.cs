@@ -103,27 +103,27 @@ public class UpdateTerrainRenderer : MonoBehaviour
         float limitTerrain = material.GetFloat("_Limit_Terrain");
         
 
-        //FillMapManager fillMapManager = gameManager.fillMapManager;
+        FillMapManager fillMapManager = gameManager.fillMapManager;
 
-        //foreach (Area area in fillMapManager.areas)
-        //{
-        //    SetChildrenVisibility(area.hierarchyBuildingFolder, mapCenter, limitTerrain);
-        //    SetChildrenVisibility(area.hierarchyRoadFolder, mapCenter, limitTerrain);
-        //}
+        foreach (Area area in fillMapManager.areas)
+        {
+            SetChildrenVisibility(area.hierarchyBuildingFolder, mapCenter, limitTerrain);
+            SetChildrenVisibility(area.hierarchyRoadFolder, mapCenter, limitTerrain);
+        }
         
-        //SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
+        SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
         
         
-        //// Roads
+        // Roads
         
-        //GameObject roadParent = fillMapManager.roadParent;
+        GameObject roadParent = fillMapManager.roadParent;
         
-        //Material roadMaterial = roadParent.GetComponent<Renderer>().sharedMaterial;
+        Material roadMaterial = roadParent.GetComponent<Renderer>().sharedMaterial;
         
-        //roadMaterial.SetVector("_Map_Center", new Vector2(mapCenter.x, mapCenter.z));
-        //roadMaterial.SetFloat("_Limit_Terrain", limitTerrain);
+        roadMaterial.SetVector("_Map_Center", new Vector2(mapCenter.x, mapCenter.z));
+        roadMaterial.SetFloat("_Limit_Terrain", limitTerrain);
         
-        // roadMaterial.SetFloat("_Uniform_Scale", this.transform.localScale.x);
+         roadMaterial.SetFloat("_Uniform_Scale", this.transform.localScale.x);
         
         
     }
