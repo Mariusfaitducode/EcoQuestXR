@@ -71,17 +71,17 @@ public class MapController : MonoBehaviour
             if (!tableFound)
             {
                 FindTable();
+                SetMapPosition();
                 return;
             }
-            if (!playerHasMoved)
-            {
-                // GetTableLocation();
-                SetMapPosition();
-            }
-            else
-            {
-                OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize);
-            }
+            //if (!playerHasMoved)
+            //{
+            //    // GetTableLocation();
+            //    SetMapPosition();
+            //}
+
+
+            OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize);
             // Use OVR controller
         }
         

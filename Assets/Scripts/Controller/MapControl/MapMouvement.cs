@@ -8,36 +8,36 @@ public static class MapMouvement
      public static void ScaleObjectAroundPoint(Transform mapTransform, Vector3 pivot, float scalingSpeed, float scalingMin)
     {
         float newScale = mapTransform.localScale.x + scalingSpeed * Time.deltaTime;
-        
+
         if (newScale < scalingMin)
         {
             newScale = scalingMin;
-            
+
         }
-        
+
+        //mapTransform.localScale = new Vector3(newScale, newScale, newScale);
+
+        float newRatio = newScale / mapTransform.localScale.x;
+
+        Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
+
+
+        // Mettre à jour la scale
         mapTransform.localScale = new Vector3(newScale, newScale, newScale);
 
-        // float newRatio = newScale / mapTransform.localScale.x;
-        //
-        // Debug.Log(newScale);
-        // Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
-        //
-        //
-        // // Mettre à jour la scale
-        // mapTransform.localScale = new Vector3(newScale, newScale, newScale);
-        //
-        // // Calculer la nouvelle position relative du pivot
-        // Vector3 pivotToPosition = mapTransform.position - pivot;
-        // Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
-        //
-        // // Mise à jour de la position pour compenser le scaling autour du pivot
-        // mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
+        // Calculer la nouvelle position relative du pivot
+        Vector3 pivotToPosition = mapTransform.position - pivot;
+        Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
 
-    }
-    
+        // Mise à jour de la position pour compenser le scaling autour du pivot
+        mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, pivot.y + newPivotToPosition.y, pivot.z + newPivotToPosition.z);
+        //mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
+
+     }
+
     public static void RotateObjectAroundPoint(Transform obj, Vector3 point, float angle)
     {
-        
+        Debug.Log(point);
         Vector3 direction = obj.position - point;
         
         Quaternion rotation = Quaternion.Euler(0, angle, 0);
