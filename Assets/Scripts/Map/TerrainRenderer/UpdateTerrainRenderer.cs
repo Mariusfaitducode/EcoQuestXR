@@ -42,10 +42,10 @@ public class UpdateTerrainRenderer : MonoBehaviour
     {
         material.SetFloat("_Uniform_Scale", this.transform.localScale.x);
         
-        material.SetVector("_Agriculture_Center", new Vector2(agricultureSphere.transform.position.x , agricultureSphere.transform.position.z ));
-        material.SetVector("_City_Center", new Vector2(citySphere.transform.position.x , citySphere.transform.position.z ));
-        material.SetVector("_Energy_Center", new Vector2(energySphere.transform.position.x , energySphere.transform.position.z ));
-        material.SetVector("_Industry_Center", new Vector2(industrySphere.transform.position.x , industrySphere.transform.position.z ));
+        if (agricultureSphere != null) material.SetVector("_Agriculture_Center", new Vector2(agricultureSphere.transform.position.x , agricultureSphere.transform.position.z ));
+        if (citySphere != null) material.SetVector("_City_Center", new Vector2(citySphere.transform.position.x , citySphere.transform.position.z ));
+        if (energySphere != null) material.SetVector("_Energy_Center", new Vector2(energySphere.transform.position.x , energySphere.transform.position.z ));
+        if (industrySphere != null) material.SetVector("_Industry_Center", new Vector2(industrySphere.transform.position.x , industrySphere.transform.position.z ));
     }
 
     public void UpdateMeshHeights(float minHeight, float maxHeight)
@@ -102,25 +102,26 @@ public class UpdateTerrainRenderer : MonoBehaviour
         Vector3 mapCenter = new Vector3(center.x, 0, center.y);
         float limitTerrain = material.GetFloat("_Limit_Terrain");
         
-        FillMapManager fillMapManager = gameManager.fillMapManager;
 
-        foreach (Area area in fillMapManager.areas)
-        {
-            SetChildrenVisibility(area.hierarchyBuildingFolder, mapCenter, limitTerrain);
-            SetChildrenVisibility(area.hierarchyRoadFolder, mapCenter, limitTerrain);
-        }
+        //FillMapManager fillMapManager = gameManager.fillMapManager;
+
+        //foreach (Area area in fillMapManager.areas)
+        //{
+        //    SetChildrenVisibility(area.hierarchyBuildingFolder, mapCenter, limitTerrain);
+        //    SetChildrenVisibility(area.hierarchyRoadFolder, mapCenter, limitTerrain);
+        //}
         
-        SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
+        //SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
         
         
-        // Roads
+        //// Roads
         
-        GameObject roadParent = fillMapManager.roadParent;
+        //GameObject roadParent = fillMapManager.roadParent;
         
-        Material roadMaterial = roadParent.GetComponent<Renderer>().sharedMaterial;
+        //Material roadMaterial = roadParent.GetComponent<Renderer>().sharedMaterial;
         
-        roadMaterial.SetVector("_Map_Center", new Vector2(mapCenter.x, mapCenter.z));
-        roadMaterial.SetFloat("_Limit_Terrain", limitTerrain);
+        //roadMaterial.SetVector("_Map_Center", new Vector2(mapCenter.x, mapCenter.z));
+        //roadMaterial.SetFloat("_Limit_Terrain", limitTerrain);
         
         // roadMaterial.SetFloat("_Uniform_Scale", this.transform.localScale.x);
         
