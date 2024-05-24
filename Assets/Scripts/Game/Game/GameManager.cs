@@ -33,20 +33,23 @@ public class GameManager : MonoBehaviour
         // Map initialization
         fillMapManager.GenerateMap();
         
-        // Objects and Cards initialization
+        // Scripts initialization
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
         gameStats.StatsStartInitialization();
         
+        // Transfer informations to other scripts
         objectManager.SetMapInformations(fillMapManager);
         cardManager.SetCardsProperties(objectManager.listObjectsProperties);
-
         
         agentManager.SetMapInformations(fillMapManager);
         agentManager.SetTimerInformations(timer);
         
         // Stats and Dashboard initialization
-        gameStats.UpdateObjectStatsFromObject(objectManager.GetAllObjectScripts());
+        gameStats.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
+        gameStats.UpdateObjectStatsFromObjectsAndCitizens(objectManager.GetAllObjectScripts());
+        
+        // Update dashboard
         displayDashboard.UpdateFromStats(gameStats);
     }
     
@@ -93,7 +96,7 @@ public class GameManager : MonoBehaviour
         
         // Update global and object stats
         gameStats.UpdateGlobalStatsFromCard(card);
-        gameStats.UpdateObjectStatsFromObject(objectManager.GetAllObjectScripts());
+        gameStats.UpdateObjectStatsFromObjectsAndCitizens(objectManager.GetAllObjectScripts());
         
         // Update dashboard
         displayDashboard.UpdateFromStats(gameStats);

@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameStats
 {
     internal Stat globalStats = new Stat();
+    internal CitizensGestion citizensGestion = new CitizensGestion();
     
     internal int initialMoneyInBank = 0;
     internal int initialEnergyInStock = 0;
@@ -21,6 +22,8 @@ public class GameStats
         globalStats.Reset();
         currentMoneyInBank = initialMoneyInBank;
         currentEnergyInStock = initialEnergyInStock;
+        citizensGestion.CitizensGestionStartInitialization();
+        
     }
     
     public void UpdateGlobalStatsFromCard(Card card)
@@ -48,10 +51,12 @@ public class GameStats
         }
     }
 
-    public void UpdateObjectStatsFromObject(List<ObjectScript> objects)
+    public void UpdateObjectStatsFromObjectsAndCitizens(List<ObjectScript> objects)
     {
+        // Set all object stats to 0
         globalStats.Reset();
         
+        // Add stats from all the objects on the map
         foreach (ObjectScript objScript in objects)
         {
             if (objScript.objectProperties != null && objScript.objectProperties.stats != null)
@@ -64,5 +69,17 @@ public class GameStats
             }
             
         }
+        
+        // Add to global stats the consequence of human activities (influence of transport use -> pollution, biodiversity)
+        // Stat citizensStats = citizensGestion.ComputeInfluenceOnGlobalStats();
+        // citizensStats.DisplayStats();
+        globalStats.Add(citizensGestion.ComputeInfluenceOnGlobalStats());
+
+        // Get the stats from the citizens (health, happiness, sensibilisation)
+        
+        globalStats.Overwrite(citizensGestion.GetCitizensStats());
+        
+        // Stat citizensStats2 = citizensGestion.GetCitizensStats();
+        // citizensStats2.DisplayStats();
     }
 }

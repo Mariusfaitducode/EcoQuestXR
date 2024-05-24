@@ -75,5 +75,48 @@ public class Stat
         energyProduction += stat.energyProduction;
         energyConsumption += stat.energyConsumption;
     }
+    public void ResetPopulationStats()
+    {
+        health = 0;
+        happiness = 0;
+        sensibilisation = 0;
+    }
+    public void Overwrite(Stat stat)
+    {
+        // For each stat, if the value of stat is not 0, overwrite the value of the current stat
+        if (stat.constructionCost != 0) constructionCost = stat.constructionCost;
+        if (stat.destructionCost != 0) destructionCost = stat.destructionCost;
+        if (stat.profits != 0) profits = stat.profits;
+        if (stat.losses != 0) losses = stat.losses;
+        if (stat.airQuality != 0) airQuality = stat.airQuality;
+        if (stat.groundQuality != 0) groundQuality = stat.groundQuality;
+        if (stat.biodiversity != 0) biodiversity = stat.biodiversity;
+        if (stat.size != 0) size = stat.size;
+        if (stat.health != 0) health = stat.health;
+        if (stat.happiness != 0) happiness = stat.happiness;
+        if (stat.sensibilisation != 0) sensibilisation = stat.sensibilisation;
+        if (stat.energyConstructionCost != 0) energyConstructionCost = stat.energyConstructionCost;
+        if (stat.energyDestructionCost != 0) energyDestructionCost = stat.energyDestructionCost;
+        if (stat.energyProduction != 0) energyProduction = stat.energyProduction;
+        if (stat.energyConsumption != 0) energyConsumption = stat.energyConsumption;
+    }
     
+    public void DisplayStats()
+    {
+        Debug.Log("Construction cost : " + constructionCost);
+        Debug.Log("Destruction cost : " + destructionCost);
+        Debug.Log("Profits : " + profits);
+        Debug.Log("Losses : " + losses);
+        Debug.Log("Air quality : " + airQuality);
+        Debug.Log("Ground quality : " + groundQuality);
+        Debug.Log("Biodiversity : " + biodiversity);
+        Debug.Log("Size : " + size);
+        Debug.Log("Health : " + health);
+        Debug.Log("Happiness : " + happiness);
+        Debug.Log("Sensibilisation : " + sensibilisation);
+        Debug.Log("Energy construction cost : " + energyConstructionCost);
+        Debug.Log("Energy destruction cost : " + energyDestructionCost);
+        Debug.Log("Energy production : " + energyProduction);
+        Debug.Log("Energy consumption : " + energyConsumption);
+    }
 }

@@ -23,6 +23,7 @@ public class EventsGestion
     public void StatsEvent(GameStats gameStats,  List<ObjectScript> objects, DisplayDashboard displayDashboard)
     {
         gameStats.UpdateGlobalStatsFromObject(objects);
+        gameStats.UpdateObjectStatsFromObjectsAndCitizens(objects);
         displayDashboard.UpdateFromStats(gameStats);
     }
 
