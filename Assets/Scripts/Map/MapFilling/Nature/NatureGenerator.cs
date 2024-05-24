@@ -16,10 +16,10 @@ public static class NatureGenerator
         
         public float prefabSizeMultiplier = 3f;
 
-        public Renderer noiseRenderer;
+        // public Renderer noiseRenderer;
         public NoiseData forestNoise;
         
-        public List<ForestData> forestDatas;
+        // public List<ForestData> forestDatas;
         
         public List<NaturePrefab> naturePrefabs;
 
@@ -51,7 +51,7 @@ public static class NatureGenerator
         MeshData meshData = mapGenerator.meshData;
         List<Vector3> meshVertices = new List<Vector3>(meshData.vertices);
         
-        int placedTrees = 0;
+        // int placedTrees = 0;
         
         List<Vector3> exploredPositions = new List<Vector3>();
 

@@ -12,7 +12,7 @@ public static class FillArea
         float[,] areaNoiseMap = Noise.GenerateNoiseMap(size, size, area.areaNoise.seed, area.areaNoise.noiseScale, 
             area.areaNoise.octaves, area.areaNoise.persistance, area.areaNoise.lacunarity, Vector2.zero, area.areaNoise.normalizeMode);
 
-        mapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(areaNoiseMap), area.noiseRenderer);
+        // mapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(areaNoiseMap), area.noiseRenderer);
         
         for (int x = 0; x < size; x++)
         {

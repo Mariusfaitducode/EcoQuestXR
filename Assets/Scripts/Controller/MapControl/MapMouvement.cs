@@ -30,7 +30,7 @@ public static class MapMouvement
         Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
 
         // Mise à jour de la position pour compenser le scaling autour du pivot
-        mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, pivot.y + newPivotToPosition.y, pivot.z + newPivotToPosition.z);
+        mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.position.y, pivot.z + newPivotToPosition.z);
         //mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
 
      }

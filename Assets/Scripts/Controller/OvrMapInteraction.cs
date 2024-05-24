@@ -9,8 +9,10 @@ public static class OvrMapInteraction
 
 
 
-    public static void Controller(Transform objectTransform, Vector3 initialPosition, Renderer objectRenderer, MapController.MouvementSettings settings, float mapSize, Transform player)
+    public static bool Controller(Transform objectTransform, Vector3 initialPosition, Renderer objectRenderer, MapController.MouvementSettings settings, float mapSize, Transform player)
     {
+        
+        bool moved = false;
         Vector2 leftAxis = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick);;
         
         // Rotate or Scale
@@ -25,6 +27,8 @@ public static class OvrMapInteraction
             {
                 MapMouvement.ScaleObjectAroundPoint(objectTransform, initialPosition, leftAxis.y * settings.scalingSpeed, settings.scalingMin);
             }
+
+            moved = true;
         }
 
         // RIGHT AXIS
@@ -33,7 +37,7 @@ public static class OvrMapInteraction
 
         Vector3 vectorPlayer = initialPosition - player.transform.position;
         
-        Debug.Log("Right axis : " + rightAxis);
+        // Debug.Log("Right axis : " + rightAxis);
         
         if (Math.Abs(rightAxis.x) > 0.5 || Math.Abs(rightAxis.y) > 0.5)
         {
@@ -46,24 +50,18 @@ public static class OvrMapInteraction
             
             
             // float mapRotation = objectRenderer.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-            //
             // rightAxis = MapMouvement.RotateReference(rightAxis, settings.angleAdapter * Mathf.Deg2Rad);
-            //     
+                 
             Vector2 xVectorPlayer = MapMouvement.RotateReference(vectorPlayerFront, settings.angleAdapter * Mathf.Deg2Rad); 
             Vector2 yVectorPlayer = MapMouvement.RotateReference(vectorPlayerRight, settings.angleAdapter * Mathf.Deg2Rad); 
-
             
             MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, xVectorPlayer, settings.movingSpeed, mapSize);
             MapMouvement.Translate(objectTransform, initialPosition, objectRenderer, yVectorPlayer, settings.movingSpeed, mapSize);
 
+            moved = true;
         }
 
-        // if (Math.Abs(rightAxis.y) > 0.5)
-        // {
-        //     // Move vertical
-        //     MapInteraction.Translate(this.transform, _table.transform, _material.GetFloat("_Limit_Terrain"), rightAxis, movingSpeed);
-        //
-        // }
+        return moved;
     }
     
     

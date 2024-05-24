@@ -8,17 +8,31 @@ public class UpdateTerrainRenderer : MonoBehaviour
     private new Renderer renderer;
     private Material material;
     
+    public GameObject shaderCenter;
+    
     public GameObject citySphere;
     public GameObject agricultureSphere;
     public GameObject energySphere;
     public GameObject industrySphere;
+    
+    internal Vector3 lastMapPosition;
+    internal float lastMapScale;
+    
     
 
     void Start()
     {
         renderer = GetComponent<Renderer>();
         material = renderer.material;
-        UpdateLimitTerrainCenter();
+        // UpdateLimitTerrainCenter();
+    }
+    
+    
+    public Vector3 GetMapCenter()
+    {
+        Vector2 center = material.GetVector("_Map_Center");
+        
+        return new Vector3(center.x, 0, center.y);
     }
 
 
@@ -30,12 +44,44 @@ public class UpdateTerrainRenderer : MonoBehaviour
         {
             UpdateLimitTerrainCenter();
         }
+        else
+        {
+            lastMapPosition = this.transform.position;
+            lastMapScale = this.transform.localScale.x;
+        }
     }
     
     
     public void UpdateLimitTerrainCenter()
     {
+        Vector3 translation = this.transform.position - lastMapPosition;
+        float scale = this.transform.localScale.x / lastMapScale;
+        
+        Debug.Log("SCALE : " + scale);
+        
+        Vector2 center = material.GetVector("_Map_Center");
+        
+        material.SetVector("_Map_Center", new Vector2(center.x + translation.x, center.y + translation.z));
+        this.shaderCenter.transform.position = new Vector3(center.x + translation.x, 0, center.y + translation.z);
+        
+        material.SetFloat("_Limit_Terrain", material.GetFloat("_Limit_Terrain") * scale);
+        
+        lastMapPosition = this.transform.position;
+        lastMapScale = this.transform.localScale.x;
+    }
+    
+    
+    public void InitShaderCenter()
+    {
         material.SetVector("_Map_Center", new Vector2(this.transform.position.x, this.transform.position.z));
+        
+        lastMapPosition = this.transform.position;
+        lastMapScale = this.transform.localScale.x;
+        // shaderCenter = new Vector3(
+        //     this.transform.position.x,
+        //     this.transform.position.y,
+        //     this.transform.position.z
+        // );
     }
 
     public void UpdateAreasCenter()
@@ -96,14 +142,18 @@ public class UpdateTerrainRenderer : MonoBehaviour
     
     // Objects visibility
 
-    public void SetObjectsVisibility(GameManager gameManager)
+    public void SetObjectsVisibility(FillMapManager fillMapManager)
     {
         Vector2 center = material.GetVector("_Map_Center");
+        
+        // shaderCenter.transform.position = new Vector3(center.x, 0, center.y);
+        
+        
         Vector3 mapCenter = new Vector3(center.x, 0, center.y);
         float limitTerrain = material.GetFloat("_Limit_Terrain");
         
 
-        FillMapManager fillMapManager = gameManager.fillMapManager;
+        // FillMapManager fillMapManager = gameManager.fillMapManager;
 
         foreach (Area area in fillMapManager.areas)
         {
@@ -114,6 +164,18 @@ public class UpdateTerrainRenderer : MonoBehaviour
         SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
         
         
+        
+    }
+
+    public void SetRoadsVisibility(FillMapManager fillMapManager)
+    {
+        Vector2 center = material.GetVector("_Map_Center");
+        
+        // shaderCenter.transform.position = new Vector3(center.x, 0, center.y);
+        
+        Vector3 mapCenter = new Vector3(center.x, 0, center.y);
+        float limitTerrain = material.GetFloat("_Limit_Terrain");
+        
         // Roads
         
         GameObject roadParent = fillMapManager.roadParent;
@@ -123,13 +185,11 @@ public class UpdateTerrainRenderer : MonoBehaviour
         roadMaterial.SetVector("_Map_Center", new Vector2(mapCenter.x, mapCenter.z));
         roadMaterial.SetFloat("_Limit_Terrain", limitTerrain);
         
-         roadMaterial.SetFloat("_Uniform_Scale", this.transform.localScale.x);
-        
-        
+        roadMaterial.SetFloat("_Uniform_Scale", this.transform.localScale.x);   
     }
     
     
-    public void SetChildrenVisibility(GameObject parent, Vector2 center, float radius)
+    public void SetChildrenVisibility(GameObject parent, Vector3 center, float radius)
     {
         foreach (Transform child in parent.transform)
         {

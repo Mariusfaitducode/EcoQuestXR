@@ -311,14 +311,14 @@ public class FillMapManager : MonoBehaviour
             DestroyImmediate(child.gameObject);
         }
         
-        foreach (NatureGenerator.ForestData forest in natureData.forestDatas)
-        {
-            while (forest.forestParent.transform.childCount > 0)
-            {
-                Transform child = forest.forestParent.transform.GetChild(0);
-                DestroyImmediate(child.gameObject);
-            }
-        }
+        // foreach (NatureGenerator.ForestData forest in natureData.forestDatas)
+        // {
+        //     while (forest.forestParent.transform.childCount > 0)
+        //     {
+        //         Transform child = forest.forestParent.transform.GetChild(0);
+        //         DestroyImmediate(child.gameObject);
+        //     }
+        // }
         NatureGenerator.GenerateNature(areas, natureData, mapGenerator, mapDisplay, minHeight, prefabScale, roadVertices);
         
         Debug.Log("Nature Generated Successfully");

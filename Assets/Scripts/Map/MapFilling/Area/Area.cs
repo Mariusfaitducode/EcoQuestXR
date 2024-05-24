@@ -23,7 +23,7 @@ public class Area
     public GameObject roadParent;
     
     public NoiseData areaNoise;
-    public Renderer noiseRenderer;
+    // public Renderer noiseRenderer;
 
     // internal float uniformRadius;
     // internal float uniformStartRadius;

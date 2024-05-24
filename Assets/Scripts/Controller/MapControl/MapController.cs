@@ -24,8 +24,8 @@ public class MapController : MonoBehaviour
     // Move
     private GameObject table;
 
-    private bool playerHasMoved = false;
-    private bool tableFound = false;
+    // private bool playerHasMoved = false;
+    // private bool tableFound = false;
     
     private new Renderer renderer;
     
@@ -64,55 +64,42 @@ public class MapController : MonoBehaviour
             if (moved)
             {
                 updateTerrainRenderer.UpdateMapInformations(false);
-                updateTerrainRenderer.SetObjectsVisibility(gameManager);
+                // updateTerrainRenderer.SetObjectsVisibility(gameManager);
             }
         }
         else
         {
             
-            if (!tableFound)
+            if (table == null)
             {
-                FindTable();
-                SetMapPosition();
+                table = GameObject.FindGameObjectWithTag("Table");
+
+                if (table != null)
+                {
+                    Vector3 initialPosition = table.transform.position;
+                    transform.position = initialPosition;
+                    updateTerrainRenderer.InitShaderCenter();
+                }
                 return;
             }
-            
-            //if (!playerHasMoved)
-            //{
-            //    // GetTableLocation();
-            //    SetMapPosition();
-            //}
 
 
-            OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize, ovrPlayer.transform);
-            // Use OVR controller
-        }
-        
-    }
-    
-    
+            bool moved = OvrMapInteraction.Controller(this.transform, updateTerrainRenderer.GetMapCenter(), renderer, mouvementSettings, originalSize, ovrPlayer.transform);
 
-    void FindTable()
-    {
-        table = GameObject.FindGameObjectWithTag("Table");
-        if (table != null)
-        {
-            tableFound = true;
-            Debug.Log("Table found");
-        }
-    }
+            if (moved)
+            {
+                updateTerrainRenderer.UpdateMapInformations(false);
+                updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
+                updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
 
-    // While the player has not interacted with map, we continue checking for the table position.
-    void SetMapPosition()
-    {
-        Vector3 initialPosition = table.transform.position;
-        transform.position = initialPosition;
-        
-        updateTerrainRenderer.UpdateLimitTerrainCenter();
-        
-        if (OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) != Vector2.zero || OVRInput.Get(OVRInput.RawAxis2D.LThumbstick) != Vector2.zero)
-        {
-            playerHasMoved = true;
+            }
+            else
+            {
+                updateTerrainRenderer.UpdateMapInformations(true);
+                updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
+                updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
+
+            }
         }
     }
     
