@@ -7,19 +7,26 @@
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/GameStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/GameStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Stat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Stat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Agents/General/DriveInArea.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Agents/General/DriveInArea.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/CitizensGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/CitizensGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/GameStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/GameStats.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/Card.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/Card.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardsInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardsInitialization.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/DisplayCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/DisplayCard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Actions.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Actions/Actions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Actions/Actions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Actions/ActionsUtils.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Actions/ActionsUtils.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Cards/CardManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DashboardManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DashboardManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Dashboard/DisplayDashboard.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/EventsGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/EventsGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameInitialisation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameInitialisation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectGestion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectsInitialization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/Timer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

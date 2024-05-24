@@ -10,95 +10,41 @@ public class GameManager : MonoBehaviour
     public CardManager cardManager;
     public ObjectManager objectManager;
     public AgentManager agentManager;
-    
+    public StatManager statManager;
     public FillMapManager fillMapManager;
     
-    
     public Timer timer = new Timer();
-    
     public EventsGestion eventsGestion = new EventsGestion();
-    
-    
-    internal GameStats gameStats = new GameStats();
-    public DisplayDashboard displayDashboard;
     
     
     void Start()
     {
-        // Timing initialization
-        timer.TimeInitialization();
-        eventsGestion.SetNextDraftEventTime(timer.currentTime);
-        eventsGestion.SetNextStatsEventTime(timer.currentTime);
-        
-        // Map initialization
-        fillMapManager.GenerateMap();
-        
-        // Scripts initialization
-        objectManager.ObjectsStartInitialization();
-        cardManager.CardsStartInitialization();
-        gameStats.StatsStartInitialization();
-        
-        // Transfer informations to other scripts
-        objectManager.SetMapInformations(fillMapManager);
-        cardManager.SetCardsProperties(objectManager.listObjectsProperties);
-        
-        agentManager.SetMapInformations(fillMapManager);
-        agentManager.SetTimerInformations(timer);
-        
-        // Stats and Dashboard initialization
-        gameStats.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
-        gameStats.UpdateObjectStatsFromObjectsAndCitizens(objectManager.GetAllObjectScripts());
-        
-        // Update dashboard
-        displayDashboard.UpdateFromStats(gameStats);
+        GameInitialisation.InitializeGame(
+            timer,
+            fillMapManager,
+            objectManager,
+            cardManager,
+            statManager,
+            agentManager,
+            eventsGestion);
     }
     
     void Update()
     {
-
-
-        if (!timer.stopTime && timer.IsCheckTime())
+        if (!timer.isTimePaused && timer.IsCheckTime())
         {
-            timer.TimeIncrement(eventsGestion);
+            timer.TimeIncrement();
             
-            eventsGestion.CheckDraftEvent(timer);
-            if (eventsGestion.isDraftEvent)
-            {
-                eventsGestion.DraftEvent(cardManager);
-            }
-            
-            eventsGestion.CheckStatsEvent(timer);
-            if (eventsGestion.isStatsEvent)
-            {
-                eventsGestion.StatsEvent(gameStats, objectManager.GetAllObjectScripts(), displayDashboard);
-                Debug.Log("Stats Finished In GM");
-                eventsGestion.isStatsEvent = false;
-                timer.stopTime = false;
-            }
+            // Check events
+            eventsGestion.CheckEvents(timer.currentTime);
             
             // Update dashboard
-            displayDashboard.UpdateTime(timer.currentTime);
+            statManager.UpdateDashboardTimeEvent(timer.currentTime);
         }
-    }
-    
-    
-    public void DraftFinished()
-    {
-        Debug.Log("Draft Finished In GM");
-        eventsGestion.isDraftEvent = false;
-        timer.stopTime = false;
     }
     
     public void ExecuteCardEvent(Card card)
     {
-        // Execute card action on map
-        Actions.ExecuteCardAction(card, objectManager);
-        
-        // Update global and object stats
-        gameStats.UpdateGlobalStatsFromCard(card);
-        gameStats.UpdateObjectStatsFromObjectsAndCitizens(objectManager.GetAllObjectScripts());
-        
-        // Update dashboard
-        displayDashboard.UpdateFromStats(gameStats);
+        GameUtils.ExecuteCardAction(card, objectManager, statManager);
     }
 }

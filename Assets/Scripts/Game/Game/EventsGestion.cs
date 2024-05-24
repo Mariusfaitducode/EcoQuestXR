@@ -7,72 +7,41 @@ using System;
 public class EventsGestion 
 {
 
-    public Interval draftInterval;
-    private DateTime nextDraftEventTime;
-    public bool isDraftEvent = false;
-    
-    public Interval statsInterval;
-    private DateTime nextStatsEventTime;
-    public bool isStatsEvent = false;
-
-    public void DraftEvent(CardManager cardManager)
+    public List<PeriodicEvent> periodicEvents = new List<PeriodicEvent>();
+    public void EventsGestionStartInitialization()
     {
-        cardManager.Draft();
-    }
-    
-    public void StatsEvent(GameStats gameStats,  List<ObjectScript> objects, DisplayDashboard displayDashboard)
-    {
-        gameStats.UpdateGlobalStatsFromObject(objects);
-        gameStats.UpdateObjectStatsFromObjectsAndCitizens(objects);
-        displayDashboard.UpdateFromStats(gameStats);
+        //
     }
 
-
-    public void CheckDraftEvent(Timer timer)
+    public void AddEvent(PeriodicEvent periodicEvent)
     {
-        if (timer.currentTime >= nextDraftEventTime)
-        {
-            Debug.Log("Événement DRAFT déclenché le : " + timer.currentTime.ToString("yyyy-MM-dd-HH"));
-
-            isDraftEvent = true;
-            timer.stopTime = true;
-
-            SetNextDraftEventTime(timer.currentTime);
-            
-        }
-        else
-        {
-            isDraftEvent = false;
-        }
+        periodicEvents.Add(periodicEvent);
     }
     
-    public void CheckStatsEvent(Timer timer)
+    public PeriodicEvent GetEventByName(string eventName)
     {
-        if (timer.currentTime >= nextStatsEventTime)
+        foreach (PeriodicEvent periodicEvent in periodicEvents)
         {
-            Debug.Log("Événement STATS déclenché le : " + timer.currentTime.ToString("yyyy-MM-dd-HH"));
-            
-            isStatsEvent = true;
-            timer.stopTime = true;
-            
-            SetNextStatsEventTime(timer.currentTime);
+            if (periodicEvent.eventName == eventName)
+            {
+                return periodicEvent;
+            }
         }
-        else
-        {
-            isStatsEvent = false;
-        }
+        Debug.LogError("No event found with the name: " + eventName);
+        return null;
     }
     
+    public void CheckEvents(DateTime currentTime)
+    {
+        foreach (PeriodicEvent periodicEvent in periodicEvents)
+        {
+            periodicEvent.CheckToStartEvent(currentTime);
+        }
+    }
     
     public void SetNextDraftEventTime(DateTime currentTime)
     {
-        nextDraftEventTime = currentTime.AddDays(draftInterval.days).AddMonths(draftInterval.months).AddYears(draftInterval.years);
-        Debug.Log("Prochain événement DRAFT prévu pour : " + nextDraftEventTime.ToString("yyyy-MM-dd-HH"));
-    }
-    
-    public void SetNextStatsEventTime(DateTime currentTime)
-    {
-        nextStatsEventTime = currentTime.AddDays(statsInterval.days).AddMonths(statsInterval.months).AddYears(statsInterval.years);
-        Debug.Log("Prochain événement STATS prévu pour : " + nextStatsEventTime.ToString("yyyy-MM-dd-HH"));
+        PeriodicEvent draftEvent = GetEventByName("Draft");
+        draftEvent.SetNextEventDateTime(currentTime);
     }
 }

@@ -55,7 +55,7 @@ public class DriveInArea : MonoBehaviour
     void Update()
     {
 
-        if (!agentManager.timer.stopTime)
+        if (!agentManager.timer.isTimePaused)
         {
             Vector3 direction = (nextCell.position * agentManager.mapScale) - (actualCell.position * agentManager.mapScale);
         

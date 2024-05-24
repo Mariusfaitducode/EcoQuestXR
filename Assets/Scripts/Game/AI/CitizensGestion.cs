@@ -21,7 +21,7 @@ public class CitizensGestion
     internal Probability healthProbs;
     internal Probability happinessProbs;
     internal Probability sensibilisationProbs;
-    internal int maxDistanceToWorkplace = 0;
+    internal int maxDistanceToWorkplace = 30;
     internal int minDistanceToWorkplace = 0;
     
     public void CitizensGestionStartInitialization()

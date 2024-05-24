@@ -157,4 +157,55 @@ public static class StatUtils
         bus.energyProduction = 0;
         bus.energyConsumption = 0;
     }
+    
+    public static void UpdateGlobalStatsFromObjects(GlobalStats globalStats, List<ObjectScript> objects)
+    {
+        foreach (ObjectScript objScript in objects)
+        {
+            if (objScript.objectProperties != null && objScript.objectProperties.stats != null)
+            {
+                globalStats.currentMoneyInBank += objScript.objectProperties.stats.profits;
+                globalStats.currentMoneyInBank -= objScript.objectProperties.stats.losses;
+                
+                globalStats.currentEnergyInStock += objScript.objectProperties.stats.energyProduction;
+                globalStats.currentEnergyInStock -= objScript.objectProperties.stats.energyConsumption;
+            }
+            else
+            {
+                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            }
+        }
+    }
+    
+    public static void UpdateObjectStatsFromObjectsAndCitizens(Stat objectsStats, List<ObjectScript> objects, CitizensGestion citizensGestion)
+    {
+        // Set all object stats to 0
+        objectsStats.Reset();
+        
+        // Add stats from all the objects on the map
+        foreach (ObjectScript objScript in objects)
+        {
+            if (objScript.objectProperties != null && objScript.objectProperties.stats != null)
+            {
+                objectsStats.Add(objScript.objectProperties.stats);
+            }
+            else
+            {
+                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            }
+            
+        }
+        
+        // Add to global stats the consequence of human activities (influence of transport use -> pollution, biodiversity)
+        objectsStats.Add(citizensGestion.ComputeInfluenceOnGlobalStats());
+
+        // Get the stats from the citizens (health, happiness, sensibilisation)
+        objectsStats.Overwrite(citizensGestion.GetCitizensStats());
+    }
+    
+    public static void UpdateGlobalStatsFromCard(GlobalStats globalStats, Card card)
+    {
+        globalStats.currentMoneyInBank -= card.actionCost;
+        globalStats.currentEnergyInStock -= card.actionEnergyCost;
+    }
 }
