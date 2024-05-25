@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public struct Probability
+public class Probability
 {
     public float mean;
     public float stddev;
@@ -11,16 +11,36 @@ public struct Probability
 
 public class TransportMode
 {
-    public int id;
+    public int id { get; set; }
     public string name { get; set; }
     public bool isAvailable = false;
     public float qualityRate = 0.5f;
-    public Ponderation ponderation;
-    public Stat stats;
+    public Ponderation ponderation = new Ponderation();
+    public Stat stats = new Stat();
     public int dailyUsers = 0;
+
+    public void Display()
+    {
+        string message = " - Transport Mode: \n" +
+                         "id: " + id + "\n" +
+                         "name: " + name + "\n" +
+                         "isAvailable: " + isAvailable + "\n" +
+                         "Quality Rate: " + qualityRate + "\n" +
+                         " - Ponderation: \n" +
+                         "Health: " + ponderation.health + "\n" +
+                         "Happiness: " + ponderation.happiness + "\n" +
+                         "Sensibilisation: " + ponderation.sensibilisation + "\n" +
+                         " - Stats: \n" +
+                         "airQuality: " + stats.airQuality + "\n" +
+                         "groundQuality: " + stats.groundQuality + "\n" +
+                         "biodiversity: " + stats.biodiversity + "\n" +
+                         "health: " + stats.health + "\n";
+
+        Debug.Log(message);
+    }
 }
 
-public struct Ponderation
+public class Ponderation
 {
     public float health { get; set; }
     public float happiness { get; set; }
@@ -51,6 +71,7 @@ public class CitizensGestion
     internal Probability salaryProbs = new Probability();
     
     List<TransportMode> transportModes = new List<TransportMode>();
+    List<TransportMode> availableTransportModes = new List<TransportMode>();
     
     
     public void CitizensGestionStartInitialization()
@@ -59,11 +80,65 @@ public class CitizensGestion
         
         StatInitialization.LoadTransportPonderationsFromCsv(pathCSVTransportPonderations, transportModes);
         StatInitialization.LoadTransportStatsFromCsv(pathCSVTransportStats, transportModes);
+        
+        DisplayInitialProbs();
+        
+        foreach (TransportMode transportMode in transportModes)
+        {
+            // Active Initial Transport Modes
+            if (transportMode.name == "walk" || transportMode.name == "bike" || transportMode.name == "car" || transportMode.name == "bus" || transportMode.name == "electricScooter")
+            {
+                transportMode.isAvailable = true;
+            }
+            
+            transportMode.Display();
+        }
+        UpdateAvailableTransportModes();
     }
     
     private Citizen GenerateCitizen()
     {
         return new Citizen(GenerateCitizenStats());
+    }
+    
+    public void ImpactPopulationStats(Stat stats, float percentage = 0.1f)
+    {
+        // Update the mean of the population stats
+        healthProbs.mean += stats.health;
+        happinessProbs.mean += stats.happiness;
+        sensibilisationProbs.mean += stats.sensibilisation;
+        
+        DisplayInitialProbs();
+        
+        // Replace a part of the population
+        int number = (int)(percentage * maxPopSize);
+        RemoveCitizens(number);
+        GenerateCitizens(number);
+    }
+    
+    private void DisplayInitialProbs()
+    {
+        string message = " - Initial Population Stats: \n" +
+                         "Health: " + healthProbs.mean + ", " + healthProbs.stddev + "\n" +
+                         "Happiness: " + happinessProbs.mean + ", " + happinessProbs.stddev + "\n" +
+                         "Sensibilisation: " + sensibilisationProbs.mean + ", " + sensibilisationProbs.stddev + "\n" +
+                         "Distance to workplace: " + distanceToWorkplaceProbs.mean + ", " + distanceToWorkplaceProbs.stddev + "\n" +
+                         "Salary: " + salaryProbs.mean + ", " + salaryProbs.stddev;
+
+        Debug.Log(message);
+    }
+    
+    public void UpdateAvailableTransportModes()
+    {
+        availableTransportModes.Clear();
+        
+        foreach (TransportMode transportMode in transportModes)
+        {
+            if (transportMode.isAvailable)
+            {
+                availableTransportModes.Add(transportMode);
+            }
+        }
     }
     
     private CitizenStats GenerateCitizenStats()
@@ -126,20 +201,30 @@ public class CitizensGestion
         stats.Reset();
 
         foreach (Citizen citizen in citizens) {
-            stats.health += citizen.citizenStats.health;
-            stats.happiness += citizen.citizenStats.happiness;
-            stats.sensibilisation += citizen.citizenStats.sensibilisation;
+            stats.health += citizen.citizenStats.health / citizens.Count;
+            stats.happiness += citizen.citizenStats.happiness / citizens.Count;
+            stats.sensibilisation += citizen.citizenStats.sensibilisation / citizens.Count;
         }
         
         return stats;
     }
     
-    public void ResetDailyUsers()
+    private void ResetDailyUsers()
     {
         foreach (TransportMode transportMode in transportModes)
         {
             transportMode.dailyUsers = 0;
         }
+    }
+    
+    private void DisplayDailyUsers(List<TransportMode> ttransportModes)
+    {
+        string message = " - Daily Users: \n";
+        foreach (TransportMode transportMode in ttransportModes)
+        {
+            message += transportMode.name + ": " + transportMode.dailyUsers + "\n";
+        }
+        Debug.Log(message);
     }
     
     public Stat ComputeInfluenceOnGlobalStats()
@@ -151,12 +236,15 @@ public class CitizensGestion
         
         foreach (Citizen citizen in citizens)
         {
-            TransportMode transportMode = citizen.GetTransportMode(transportModes);
+            TransportMode transportMode = citizen.GetTransportMode(availableTransportModes);
             transportMode.dailyUsers++;
             totalCitizensStat.Add(transportMode.stats);
         }
         
+        
+        
         totalCitizensStat.ResetPopulationStats();
+        DisplayDailyUsers(availableTransportModes);
         
         return totalCitizensStat;
     }

@@ -27,11 +27,14 @@ public class Citizen
         
         foreach (TransportMode transportMode in transportModes)
         {
+            
+            // Sum of the ponderation of each stat * the stat value (max 1 * number of parameters)
             float score = transportMode.ponderation.health * citizenStats.health +
                         transportMode.ponderation.happiness * citizenStats.happiness +
                         transportMode.ponderation.sensibilisation * citizenStats.sensibilisation +
                         StatUtils.GetFloatWeight(citizenStats.distance_to_workplace, transportMode.ponderation.meanDistance, transportMode.ponderation.stddevDistance) * citizenStats.distance_to_workplace +
-                        StatUtils.GetFloatWeight(citizenStats.salary, transportMode.ponderation.meanSalary, transportMode.ponderation.stddevSalary) * citizenStats.salary;
+                        StatUtils.GetFloatWeight(citizenStats.salary, transportMode.ponderation.meanSalary, transportMode.ponderation.stddevSalary) * citizenStats.salary+
+                        2 * transportMode.qualityRate;
             
             scores.Add(score);
             totalScore += score;

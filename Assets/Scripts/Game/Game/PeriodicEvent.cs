@@ -43,6 +43,7 @@ public class PeriodicEvent
     
     public void EndEvent(DateTime currentTime)
     {
+        Debug.Log(eventName + " ended");
         isEventActive = false;
         SetNextEventDateTime(currentTime);
     }

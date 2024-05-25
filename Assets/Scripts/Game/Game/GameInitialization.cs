@@ -50,14 +50,14 @@ public static class GameInitialization
        PeriodicEvent draftEvent = new PeriodicEvent(
             "DraftEvent",
             currentTime,
-            new Interval { days = 0, months = 2, years = 0 }, 
+            new Interval { days = 5, months = 0, years = 0 }, 
             () => cardManager.DraftEvent(),
             false);
         
         PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
             "UpdateGlobalStatsFromObjectsEvent",
             currentTime,
-            new Interval { days = 5, months = 0, years = 0 }, 
+            new Interval { days = 0, months = 1, years = 0 }, 
             () => statManager.UpdateGlobalStatsFromObjectsEvent(objectManager.GetAllObjectScripts()));
         
         PeriodicEvent updateObjectStatsFromObjectsAndCitizensEvent = new PeriodicEvent(

@@ -75,6 +75,28 @@ public class Stat
         energyProduction += stat.energyProduction;
         energyConsumption += stat.energyConsumption;
     }
+    
+    public Stat Devide(int value)
+    {
+        Stat stat = new Stat();
+        stat.constructionCost = constructionCost / value;
+        stat.destructionCost = destructionCost / value;
+        stat.profits = profits / value;
+        stat.losses = losses / value;
+        stat.airQuality = airQuality / value;
+        stat.groundQuality = groundQuality / value;
+        stat.biodiversity = biodiversity / value;
+        stat.size = size / value;
+        stat.health = health / value;
+        stat.happiness = happiness / value;
+        stat.sensibilisation = sensibilisation / value;
+        stat.energyConstructionCost = energyConstructionCost / value;
+        stat.energyDestructionCost = energyDestructionCost / value;
+        stat.energyProduction = energyProduction / value;
+        stat.energyConsumption = energyConsumption / value;
+        return stat;
+    }
+    
     public void ResetPopulationStats()
     {
         health = 0;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [System.Serializable]
-public struct Interval
+public class Interval
 {
     public int days;
     public int months;

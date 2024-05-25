@@ -126,6 +126,7 @@ public class CardManager : MonoBehaviour
         nbrSelectedCards = 0;
         DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         
+        gameManager.timer.ResumeTime();
         gameManager.eventsGestion.GetEventByName("DraftEvent").EndEvent(gameManager.timer.currentTime);
         
         

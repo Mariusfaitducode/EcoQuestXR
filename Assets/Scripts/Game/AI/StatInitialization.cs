@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,17 @@ public static class StatInitialization
 {
     public static void LoadPopulationStatsFromCsv(string filePath, Probability healthProbs, Probability happinessProbs, Probability sensibilisationProbs, Probability distanceProbs, Probability salaryProbs)
     {
-        var lines = File.ReadAllLines(filePath);
+        // Load the CSV file from the Resources folder
+        TextAsset csvFile = Resources.Load<TextAsset>(filePath);
+        if (csvFile == null)
+        {
+            Debug.LogError($"File not found: {filePath}");
+        }
+
+        var lines = csvFile.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var line in lines)
         {
-            var parts = line.Split('\t');
+            var parts = line.Split(',');
             switch (parts[0])
             {
                 case "meanHealth":
@@ -61,18 +69,33 @@ public static class StatInitialization
         {
             TransportMode transportMode = new TransportMode();
             
+            // Get id and name of the transport mode
+            transportMode.id = int.Parse(row[0]);
+            transportMode.name = row[1];
+            
+            // Create ponderation object
+            
+            Ponderation ponderation = new Ponderation();
+            
             for (int i = 0; i < data.header.Length; i++)
             {
                 data.header[i] = data.header[i].Trim();
                 
                 // Match Card class to Csv header
-                PropertyInfo propertyInfo = typeof(TransportMode).GetProperty(data.header[i], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                PropertyInfo propertyInfo = typeof(Ponderation).GetProperty(data.header[i], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
                 
                 if (propertyInfo != null && row.Length > i)
                 {
                     object value = LoadDatas.MatchType(propertyInfo, row, data.header, i);
                     
-                    propertyInfo.SetValue(transportMode, value, null);
+                    propertyInfo.SetValue(ponderation, value, null);
+                }
+                else
+                {
+                    if (data.header[i] != "name" && data.header[i] != "id")
+                    {
+                        Debug.LogError("Could not find the property " + data.header[i] + " in the ponderation object.");
+                    }
                 }
             }
             // Check errors
@@ -80,9 +103,11 @@ public static class StatInitialization
             {
                 Debug.LogError("Transport mode name is null");
             }
-            
+            transportMode.ponderation = ponderation;
             transportModes.Add(transportMode);
         }
+        
+        Debug.Log("Count of transport modes: " + transportModes.Count);
     }
 
     public static void LoadTransportStatsFromCsv(string pathCSV, List<TransportMode> transportModes)
@@ -93,20 +118,19 @@ public static class StatInitialization
         // Affect CSV data to TransportMode objects
         foreach (string[] row in data.rows)
         {
-            Stat stats = new Stat();
-            stats.Reset();
-
             // Get string name of the stat to affect to the correposnding TransportMode
-            PropertyInfo nameInfo = typeof(TransportMode).GetProperty("name",
-                BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+            string name = row[1];
 
-            if (nameInfo == null)
+            if (name == null)
             {
-                Debug.LogError("In transport ponderations CSV, could not find the name of the transport mode");
+                Debug.LogError("In transport ponderations CSV, could not find the name of the transport mode in 2nd column of the row.");
             }
 
             // Get associated transport mode
-            TransportMode transportMode = StatUtils.GetTransportModeByName(transportModes, nameInfo.ToString());
+            TransportMode transportMode = StatUtils.GetTransportModeByName(transportModes, name);
+            
+            Stat stats = new Stat();
+            stats.Reset();
 
             // Affect stats to the transport mode
             for (int i = 0; i < data.header.Length; i++)
@@ -125,7 +149,7 @@ public static class StatInitialization
                 }
             }
 
-            transportModes.Add(transportMode);
+            transportMode.stats = stats;
         }
     }
 }

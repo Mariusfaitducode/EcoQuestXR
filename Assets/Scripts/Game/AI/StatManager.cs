@@ -5,7 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public struct GlobalStats
+public class GlobalStats
 {
     internal int currentMoneyInBank;
     internal int currentEnergyInStock;
@@ -62,6 +62,7 @@ public class StatManager : MonoBehaviour
     {
         citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
         StatUtils.UpdateObjectStatsFromObjectsAndCitizens(objectsStats, objectManager.GetAllObjectScripts(), citizensGestion);
+        StatUtils.UpdateGlobalStatsFromObjects(globalStats, objectManager.GetAllObjectScripts());
         UpdateDashboard();
     }
     

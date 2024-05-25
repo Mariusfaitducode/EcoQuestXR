@@ -28,6 +28,12 @@ public static class StatUtils
         }
     }
     
+    public static string ConvertPercentToText(float number)
+    {
+        // Display 2 decimal after the comma( ex: 0.12789456 -> 12.79%)
+        return (number * 100).ToString("F2") + "%";
+    }
+    
     // Fonction de transformation de la distance
     public static float GetFloatWeight(float number, float mean, float stddev) {
         return Mathf.Exp(-Mathf.Pow((number - mean) / stddev, 2));

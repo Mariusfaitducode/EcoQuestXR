@@ -20,8 +20,13 @@ public static class GameUtils
             objectManager.PlaceObjects(card.objectProperties2, card.quantityObject2);
         }
         
-        // Update global and object stats
+        // Update global stats
         statManager.UpdateGlobalStatsFromCardEvent(card);
+        
+        // Update populations stats
+        statManager.citizensGestion.ImpactPopulationStats(card.stats);
+        
+        // Update objects stats
         statManager.UpdateObjectStatsFromObjectsAndCitizensEvent(objectManager);
     }
 }
