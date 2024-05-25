@@ -1,0 +1,10 @@
+meanHealth,0.5
+stddevHealth,1
+meanHappiness,0.5
+stddevHappiness,1
+meanSensibilisation,0.5
+stddevSensibilisation,1
+meanDistanceToWorkplace,10
+stddevDistanceToWorkplace,10
+meanSalary,45000
+stddevSalary,17000

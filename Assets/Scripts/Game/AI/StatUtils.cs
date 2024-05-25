@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public static class StatUtils
@@ -28,8 +29,8 @@ public static class StatUtils
     }
     
     // Fonction de transformation de la distance
-    public static float DistanceWeight(float distance, float mean, float stddev) {
-        return Mathf.Exp(-Mathf.Pow((distance - mean) / stddev, 2));
+    public static float GetFloatWeight(float number, float mean, float stddev) {
+        return Mathf.Exp(-Mathf.Pow((number - mean) / stddev, 2));
     }
 
     public static void GetObjectStat(Card card)
@@ -102,62 +103,6 @@ public static class StatUtils
         }
     }
     
-    public static void InitializeTransportsStats(Stat walk, Stat car, Stat bike, Stat bus)
-    {
-        walk.Reset();
-        car.Reset();
-        bike.Reset();
-        bus.Reset();
-        
-        walk.profits = 1000;
-        walk.losses = 100;
-        walk.airQuality = 100;
-        walk.groundQuality = 0;
-        walk.biodiversity = 0;
-        walk.size = 0;
-        walk.health = 100;
-        walk.happiness = 100;
-        walk.sensibilisation = 100;
-        walk.energyProduction = 0;
-        walk.energyConsumption = 0;
-        
-        car.profits = 0;
-        car.losses = 0;
-        car.airQuality = -100;
-        car.groundQuality = -100;
-        car.biodiversity = -100;
-        car.size = 0;
-        car.health = -10;
-        car.happiness = 0;
-        car.sensibilisation = 0;
-        car.energyProduction = 0;
-        car.energyConsumption = 0;
-        
-        bike.profits = 0;
-        bike.losses = 0;
-        bike.airQuality = 0;
-        bike.groundQuality = 0;
-        bike.biodiversity = 0;
-        bike.size = 0;
-        bike.health = 10;
-        bike.happiness = 10;
-        bike.sensibilisation = 0;
-        bike.energyProduction = 0;
-        bike.energyConsumption = 0;
-        
-        bus.profits = 0;
-        bus.losses = 0;
-        bus.airQuality = 0;
-        bus.groundQuality = 0;
-        bus.biodiversity = 0;
-        bus.size = 0;
-        bus.health = 0;
-        bus.happiness = 0;
-        bus.sensibilisation = 0;
-        bus.energyProduction = 0;
-        bus.energyConsumption = 0;
-    }
-    
     public static void UpdateGlobalStatsFromObjects(GlobalStats globalStats, List<ObjectScript> objects)
     {
         foreach (ObjectScript objScript in objects)
@@ -208,4 +153,19 @@ public static class StatUtils
         globalStats.currentMoneyInBank -= card.actionCost;
         globalStats.currentEnergyInStock -= card.actionEnergyCost;
     }
+    
+    public static TransportMode GetTransportModeByName(List<TransportMode> transportModes, string name)
+    {
+        foreach (TransportMode transportMode in transportModes)
+        {
+            if (transportMode.name == name)
+            {
+                return transportMode;
+            }
+        }
+        Debug.LogError("Transport mode " + name + " not found");
+        return new TransportMode();
+    }
+    
+    
 }

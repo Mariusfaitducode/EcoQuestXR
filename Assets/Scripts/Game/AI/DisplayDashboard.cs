@@ -57,9 +57,9 @@ public class DisplayDashboard : MonoBehaviour
         airQualityText.text = StatUtils.ConvertNumberToText(objectsStats.airQuality);
         groundQualityText.text = StatUtils.ConvertNumberToText(objectsStats.groundQuality);
         
-        populationSensibilisationText.text = StatUtils.ConvertNumberToText(objectsStats.sensibilisation);
+        populationSensibilisationText.text = objectsStats.sensibilisation.ToString();
         populationSizeText.text = StatUtils.ConvertNumberToText(objectsStats.size);
-        populationHealthText.text = StatUtils.ConvertNumberToText(objectsStats.health);
-        populationHappinessText.text = StatUtils.ConvertNumberToText(objectsStats.happiness);
+        populationHealthText.text = objectsStats.health.ToString();
+        populationHappinessText.text = objectsStats.happiness.ToString();
     }
 }

@@ -31,9 +31,9 @@ public class Stat
     public int groundQuality { get; set; }
     public int biodiversity { get; set; }
     public int size { get; set; }
-    public int health { get; set; }
-    public int happiness { get; set; }
-    public int sensibilisation { get; set; }
+    public float health { get; set; }
+    public float happiness { get; set; }
+    public float sensibilisation { get; set; }
     public int energyConstructionCost { get; set; }
     public int energyDestructionCost { get; set; }
     public int energyProduction { get; set; }

@@ -9,6 +9,28 @@ public struct Probability
     public float stddev;
 }
 
+public class TransportMode
+{
+    public int id;
+    public string name { get; set; }
+    public bool isAvailable = false;
+    public float qualityRate = 0.5f;
+    public Ponderation ponderation;
+    public Stat stats;
+    public int dailyUsers = 0;
+}
+
+public struct Ponderation
+{
+    public float health { get; set; }
+    public float happiness { get; set; }
+    public float sensibilisation { get; set; }
+    public float meanDistance { get; set; }
+    public float stddevDistance { get; set; }
+    public float meanSalary { get; set; }
+    public float stddevSalary { get; set; }
+}
+
 public class CitizensGestion
 {
     internal List<Citizen> citizens = new List<Citizen>();
@@ -18,49 +40,51 @@ public class CitizensGestion
     internal int maxPopSize = 0;
     internal int totalCitizens = 0;
 
-    internal Probability healthProbs;
-    internal Probability happinessProbs;
-    internal Probability sensibilisationProbs;
-    internal int maxDistanceToWorkplace = 30;
-    internal int minDistanceToWorkplace = 0;
+    public string pathCSVPopulationStats = "Csv/initialPopStats";
+    public string pathCSVTransportPonderations = "Csv/transportPonderations";
+    public string pathCSVTransportStats = "Csv/transportStats";
+
+    internal Probability healthProbs = new Probability();
+    internal Probability happinessProbs = new Probability();
+    internal Probability sensibilisationProbs = new Probability();
+    internal Probability distanceToWorkplaceProbs = new Probability();
+    internal Probability salaryProbs = new Probability();
+    
+    List<TransportMode> transportModes = new List<TransportMode>();
+    
     
     public void CitizensGestionStartInitialization()
     {
-        ResetProbs();
+        StatInitialization.LoadPopulationStatsFromCsv(pathCSVPopulationStats, healthProbs, happinessProbs, sensibilisationProbs, distanceToWorkplaceProbs, salaryProbs);
+        
+        StatInitialization.LoadTransportPonderationsFromCsv(pathCSVTransportPonderations, transportModes);
+        StatInitialization.LoadTransportStatsFromCsv(pathCSVTransportStats, transportModes);
     }
     
-    public void ResetProbs()
+    private Citizen GenerateCitizen()
     {
-        healthProbs.mean = 0.5f;
-        healthProbs.stddev = 0.1f;
-        
-        happinessProbs.mean = 0.5f;
-        happinessProbs.stddev = 0.1f;
-        
-        sensibilisationProbs.mean = 0.5f;
-        sensibilisationProbs.stddev = 0.1f;
+        return new Citizen(GenerateCitizenStats());
     }
     
-    private Citizen GenerateCitizen() {
-        float healthy = GenerateGaussian(healthProbs.mean, healthProbs.stddev);
-        float happiness = GenerateGaussian(happinessProbs.mean, happinessProbs.stddev);
-        float environment = GenerateGaussian(sensibilisationProbs.mean, sensibilisationProbs.stddev);
-        int distance = Random.Range(minDistanceToWorkplace, maxDistanceToWorkplace);
-
-        // Clamp values to be within the range [0, 1]
-        healthy = Mathf.Clamp(healthy, 0f, 1f);
-        happiness = Mathf.Clamp(happiness, 0f, 1f);
-        environment = Mathf.Clamp(environment, 0f, 1f);
-
-        return new Citizen(healthy, happiness, environment, distance);
+    private CitizenStats GenerateCitizenStats()
+    {
+        CitizenStats citizenStats = new CitizenStats();
+        
+        citizenStats.health = Mathf.Clamp(GenerateGaussian(healthProbs), 0f, 1f);
+        citizenStats.happiness = Mathf.Clamp(GenerateGaussian(happinessProbs), 0f, 1f);
+        citizenStats.sensibilisation = Mathf.Clamp(GenerateGaussian(sensibilisationProbs), 0f, 1f);
+        citizenStats.distance_to_workplace = Mathf.Clamp(GenerateGaussian(distanceToWorkplaceProbs), 0f, 1f);
+        citizenStats.salary = Mathf.Clamp(GenerateGaussian(salaryProbs), 0f, 1f);
+        
+        return citizenStats;
     }
 
-    private float GenerateGaussian(float mean, float stddev) {
+    private float GenerateGaussian(Probability prob) {
         float u1 = Random.value;
         float u2 = Random.value;
 
         float randStdNormal = Mathf.Sqrt(-2.0f * Mathf.Log(u1)) * Mathf.Sin(2.0f * Mathf.PI * u2);
-        float randNormal = mean + stddev * randStdNormal;
+        float randNormal = prob.mean + prob.stddev * randStdNormal;
 
         return randNormal;
     }
@@ -98,46 +122,42 @@ public class CitizensGestion
 
     public Stat GetCitizensStats()
     {
-        float totalHealth = 0f;
-        float totalHappiness = 0f;
-        float totalSensibilisation = 0f;
-        float totalAcceptation = 0f;
-
-        foreach (Citizen citizen in citizens) {
-            totalHealth += citizen.health;
-            totalHappiness += citizen.happiness;
-            totalSensibilisation += citizen.sensibilisation;
-            totalAcceptation += citizen.acceptation;
-        }
-        
-        totalHealth /= citizens.Count;
-        totalHappiness /= citizens.Count;
-        totalSensibilisation /= citizens.Count;
-        
         Stat stats = new Stat();
         stats.Reset();
-        stats.health = (int)(totalHealth*1000);
-        stats.happiness = (int)(totalHappiness*1000);
-        stats.sensibilisation = (int)(totalSensibilisation*1000);
-        stats.DisplayStats();
+
+        foreach (Citizen citizen in citizens) {
+            stats.health += citizen.citizenStats.health;
+            stats.happiness += citizen.citizenStats.happiness;
+            stats.sensibilisation += citizen.citizenStats.sensibilisation;
+        }
+        
         return stats;
+    }
+    
+    public void ResetDailyUsers()
+    {
+        foreach (TransportMode transportMode in transportModes)
+        {
+            transportMode.dailyUsers = 0;
+        }
     }
     
     public Stat ComputeInfluenceOnGlobalStats()
     {
         Stat totalCitizensStat = new Stat();
+        totalCitizensStat.Reset();
+        
+        ResetDailyUsers();
         
         foreach (Citizen citizen in citizens)
         {
-            totalCitizensStat.Add(citizen.GetStatsFromTransportMode());
+            TransportMode transportMode = citizen.GetTransportMode(transportModes);
+            transportMode.dailyUsers++;
+            totalCitizensStat.Add(transportMode.stats);
         }
         
         totalCitizensStat.ResetPopulationStats();
         
-        // totalCitizensStat.DisplayStats();
-        
         return totalCitizensStat;
     }
-
-    
 }

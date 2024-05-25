@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameInitialisation
+public static class GameInitialization
 {
     public static void InitializeGame(
         Timer timer,
