@@ -6,7 +6,8 @@ public enum CellType { Empty, Road, Object };
 
 public class AreaCell
 {
-    public Vector3 position;
+    public GameObject cellPosition;
+    
     public Vector2Int gridPosition;
 
     public float size;

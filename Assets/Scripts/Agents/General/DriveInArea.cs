@@ -34,7 +34,7 @@ public class DriveInArea : MonoBehaviour
             
             foreach (AreaCell cell in areaGrid)
             {
-                float distance = Vector3.Distance(this.transform.position, cell.position * agentManager.mapScale);
+                float distance = Vector3.Distance(this.transform.position, cell.cellPosition.transform.position * agentManager.mapScale);
                 
                 if (cell.type == CellType.Road && distance < minDistance)
                 {
@@ -43,7 +43,7 @@ public class DriveInArea : MonoBehaviour
                 }
             }
 
-            this.transform.position = actualCell.position * agentManager.mapScale;
+            this.transform.position = actualCell.cellPosition.transform.position * agentManager.mapScale;
 
             SearchNeighbour();
         }
@@ -57,11 +57,11 @@ public class DriveInArea : MonoBehaviour
 
         if (!agentManager.timer.isTimePaused)
         {
-            Vector3 direction = (nextCell.position * agentManager.mapScale) - (actualCell.position * agentManager.mapScale);
+            Vector3 direction = (nextCell.cellPosition.transform.position * agentManager.mapScale) - (actualCell.cellPosition.transform.position * agentManager.mapScale);
         
             this.transform.Translate(direction * speed * Time.deltaTime);
 
-            if (Vector3.Distance(this.transform.position, (nextCell.position * agentManager.mapScale)) < treshold)
+            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position * agentManager.mapScale)) < treshold)
             {
                 ChangeTarget();
             }

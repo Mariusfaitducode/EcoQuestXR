@@ -200,7 +200,10 @@ public class FillMapManager : MonoBehaviour
     {
         foreach (Area area in areas)
         {
-            FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            // FillArea.SetAreaShader(area, meshTerrain, uniformScale);
+            
+            mapGenerator.updateTerrainRenderer.SetAreaShader(area);
+            
             FillArea.SetAreaVerticesInformation(area, meshData, uniformScale);
             
             Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
@@ -215,22 +218,6 @@ public class FillMapManager : MonoBehaviour
     public void GenerateRoadOnMap(MeshData meshData)
     {
         
-        //Destroy Children
-        // while (roadParent.transform.childCount > 0)
-        // {
-        //     Transform child = roadParent.transform.GetChild(0);
-        //     DestroyImmediate(child.gameObject);
-        // }
-        
-        // foreach (Area area in areas)
-        // {
-        //     while (area.roadParent.transform.childCount > 0)
-        //     {
-        //         Transform child = area.roadParent.transform.GetChild(0);
-        //         DestroyImmediate(child.gameObject);
-        //     }
-        // }
-        
         // Trace Roads
         Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
 
@@ -241,7 +228,7 @@ public class FillMapManager : MonoBehaviour
             Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
                 testCube, roadParent);
             
-            Debug.Log(validExtremityPoints);
+            // Debug.Log(validExtremityPoints);
             
             bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent);
         }
@@ -324,14 +311,14 @@ public class FillMapManager : MonoBehaviour
             DestroyImmediate(child.gameObject);
         }
         
-        foreach (NatureGenerator.ForestData forest in natureData.forestDatas)
-        {
-            while (forest.forestParent.transform.childCount > 0)
-            {
-                Transform child = forest.forestParent.transform.GetChild(0);
-                DestroyImmediate(child.gameObject);
-            }
-        }
+        // foreach (NatureGenerator.ForestData forest in natureData.forestDatas)
+        // {
+        //     while (forest.forestParent.transform.childCount > 0)
+        //     {
+        //         Transform child = forest.forestParent.transform.GetChild(0);
+        //         DestroyImmediate(child.gameObject);
+        //     }
+        // }
         NatureGenerator.GenerateNature(areas, natureData, mapGenerator, mapDisplay, minHeight, prefabScale, roadVertices);
         
         Debug.Log("Nature Generated Successfully");
