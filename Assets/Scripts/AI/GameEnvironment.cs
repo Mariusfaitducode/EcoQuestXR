@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public sealed class GameEnvironment
@@ -16,7 +17,7 @@ public sealed class GameEnvironment
             if(instance == null)
             {
                 instance = new GameEnvironment();
-                instance.Waypoints.AddRange(GameObject.FindGameObjectsWithTag("waypoint"));
+                instance.Waypoints.AddRange(GameObject.FindGameObjectsWithTag("waypoint").OrderBy(waypoint => waypoint.name));
             }
             return instance;
         }

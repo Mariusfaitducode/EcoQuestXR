@@ -9,11 +9,13 @@ public class AI : MonoBehaviour
 
     NavMeshAgent agent;
     State currentState;
+    private Animator animator;
 
     private void Start()
     {
        agent = this.GetComponent<NavMeshAgent>();
-       currentState = new Idle(this.gameObject, agent);
+       animator = this.GetComponent<Animator>();
+       currentState = new Idle(this.gameObject, agent, animator);
     }
     private void Update()
     {

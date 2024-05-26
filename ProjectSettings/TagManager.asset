@@ -18,6 +18,7 @@ TagManager:
   - LogoActionRawImage
   - ImageRawImage
   - BackgroundRawImage
+  - waypoint
   layers:
   - Default
   - TransparentFX
