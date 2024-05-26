@@ -93,12 +93,11 @@ public class MapController : MonoBehaviour
                 updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
 
             }
-            else
+            else if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.5f)
             {
                 updateTerrainRenderer.UpdateMapInformations(true);
                 updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
                 updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
-
             }
         }
     }

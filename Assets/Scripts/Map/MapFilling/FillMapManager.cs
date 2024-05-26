@@ -73,7 +73,7 @@ public class FillMapManager : MonoBehaviour
         SetAreaInEditor();
         FillAreaInEditor();
         GenerateRoadOnMapInEditor();
-        GenerateNatureInEditor();
+        // GenerateNatureInEditor();
     }
     
 
