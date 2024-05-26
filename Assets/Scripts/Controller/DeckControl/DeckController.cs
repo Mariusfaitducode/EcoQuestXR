@@ -1,10 +1,14 @@
+using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DeckController : MonoBehaviour
 {
-    private Canvas _lightCanvas;
+    private Canvas canva;
+    
+    public List<GameObject> list_cards;
     
     public Transform leftControllerAnchor;
     public Transform centerEyeAnchor;
@@ -13,7 +17,7 @@ public class DeckController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _lightCanvas = GetComponentInChildren<Canvas>();
+        canva = GetComponentInChildren<Canvas>();
     }
 
     // Update is called once per frame
@@ -21,9 +25,17 @@ public class DeckController : MonoBehaviour
     {
         Debug.Log("pos : " + leftControllerAnchor.position + ", rot : " + leftControllerAnchor.rotation);
         
-        if (leftControllerAnchor.rotation.z < -0.35 || leftControllerAnchor.rotation.z > 0.3)
+        if (leftControllerAnchor.rotation.z < -0.5 || leftControllerAnchor.rotation.z > 0.5)
         {
-            _lightCanvas.enabled = true;
+
+            canva.enabled = true;
+            
+            foreach (GameObject card in list_cards)
+            {
+                card.GetComponentInChildren<Canvas>().enabled = true;
+                card.GetComponent<Renderer>().enabled = true;
+            }
+
 
             this.transform.position = new Vector3(
                 leftControllerAnchor.position.x,
@@ -45,9 +57,24 @@ public class DeckController : MonoBehaviour
         }
         else
         {
-            _lightCanvas.enabled = false;
-        }
-        
+            canva.enabled = false;
+            foreach (GameObject card in list_cards)
+            {
+                if (!card.GetComponent<Grabbable>().isGrabbed)
+                {
+                    card.GetComponentInChildren<Canvas>().enabled = false;
+                    card.GetComponent<Renderer>().enabled = false;
+                }
+            }
 
+        }
+
+
+    }
+
+
+    public void RemoveCard(GameObject card)
+    {
+        list_cards.Remove(card);
     }
 }
