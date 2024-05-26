@@ -18,4 +18,7 @@ public class ObjectProperties
     public int weight { get; set; }
 
     public Stat stats;
+    
+    public List<int> subObjectsIds = new List<int>();
+    public List<SubObjects> subObjects = new List<SubObjects>();
 }

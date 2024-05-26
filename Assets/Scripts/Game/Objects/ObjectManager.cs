@@ -18,8 +18,12 @@ public class ObjectManager : MonoBehaviour
     {
         listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         
-        // TODO : initialize objects already on map
+        List<ObjectProperties> subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/subObjects");
         
+        List<SubObjects> subObjects = ObjectsInitialization.ObjectsPropertiesToSubObjects(subObjectsProperties);
+        
+        ObjectsInitialization.LinkSubObjectsToObjects(listObjectsProperties, subObjects);
+
     }
 
     public void SetMapInformations(FillMapManager fillMapManager)

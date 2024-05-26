@@ -40,6 +40,22 @@ Material:
         m_Texture: {fileID: 2800000, guid: d3ee146295b8dd74ca1dfb5ff0529e49, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Agriculture_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _City_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Energy_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Industry_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -58,9 +74,25 @@ Material:
     - Vector1_65D18AD4: 0.8
     - Vector1_6F228B9F: 0.087
     - Vector1_A956083A: 1
-    - _City_Radius: 10.2
+    - _Agriculture_Radius: 30
+    - _Agriculture_Start_Radius: 25
+    - _Agriculture_Tile: 0
+    - _Agriculture_Tint_Strength: 0
+    - _Blend_Limit: 0
+    - _City_Radius: 40
+    - _City_Start_Radius: 28
+    - _City_Tile: 0
+    - _City_Tint_Strength: 0
+    - _Energy_Radius: 20
+    - _Energy_Start_Radius: 12
+    - _Energy_Tile: 0
+    - _Energy_Tint_Strength: 0
     - _Grass_Tile: 0.123
     - _Grass_Tint_Strength: 0.065
+    - _Industry_Radius: 22
+    - _Industry_Start_Radius: 18
+    - _Industry_Tint_Strength: 0
+    - _Inustry_Tile: 0
     - _Limit_Terrain: 158.66
     - _Map_Scale: 12.82
     - _QueueControl: 0
@@ -78,9 +110,17 @@ Material:
     - _Snow_Tile: 0.065
     - _Snow_Tint_Strength: 0.302
     - _TransparentDegree: 0
+    - _Uniform_Scale: 0.8
     m_Colors:
-    - _City_Center: {r: 30.4, g: -43.99, b: 0, a: 0}
+    - _Agriculture_Center: {r: 17.599997, g: -32.8, b: 0, a: 0}
+    - _Agriculture_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _City_Center: {r: 6.400004, g: 25.599998, b: 0, a: 0}
+    - _City_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Energy_Center: {r: 61.600002, g: -38.4, b: 0, a: 0}
+    - _Energy_Tint: {r: 0, g: 0, b: 0, a: 0}
     - _Grass_Tint: {r: 0.18039216, g: 0.86666673, b: 0, a: 0}
+    - _Industry_Center: {r: -65.6, g: -34.399998, b: 0, a: 0}
+    - _Industry_Tint: {r: 0, g: 0, b: 0, a: 0}
     - _Map_Center: {r: 0, g: 0, b: 0, a: 0}
     - _River_Color: {r: 0.22761655, g: 0.57374185, b: 0.8773585, a: 1}
     - _River_Flow_Direction: {r: 0.1, g: 1, b: 0, a: 0}

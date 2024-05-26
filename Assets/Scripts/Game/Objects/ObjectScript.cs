@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class ObjectScript : MonoBehaviour
 {
-    
+    // All datas from CSV
     internal ObjectProperties objectProperties;
+    
+    // All datas from Game
     internal GameManager gameManager;
     
     // Init on Place building

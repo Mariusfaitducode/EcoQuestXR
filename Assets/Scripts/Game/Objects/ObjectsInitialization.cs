@@ -36,6 +36,30 @@ public class ObjectsInitialization
             {
                 data.header[i] = data.header[i].Trim();
                 
+                // Find SubObjectsIds
+                if (data.header[i] == "subObjectsIds")
+                {
+                    row[i] = row[i].Trim();
+                    
+                    if (row[i] == "")
+                    {
+                        continue;
+                    }
+                    
+                    string[] subObjectsIds = row[i].Split(';');
+                    foreach (string subObjectId in subObjectsIds)
+                    {
+                        int id = int.Parse(subObjectId);
+                        
+                        if (id != null && id != -1)
+                        {
+                            objProps.subObjectsIds.Add(id);
+                        }
+                    }
+                    continue;
+                }
+
+
                 // Match Card class to Csv header
                 PropertyInfo propertyInfo = typeof(ObjectProperties).GetProperty(data.header[i], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
                 
@@ -105,6 +129,45 @@ public class ObjectsInitialization
             Debug.LogWarning("No prefab found at : " + path);
         }
         return prefab;
+    }
+    
+    
+    public static List<SubObjects> ObjectsPropertiesToSubObjects(List<ObjectProperties> objectsProperties)
+    {
+        List<SubObjects> subObjectsProperties = new List<SubObjects>();
+        
+        foreach (ObjectProperties objProps in objectsProperties)
+        {
+            SubObjects subObject = new SubObjects();
+            
+            subObject.id = objProps.id;
+            subObject.name = objProps.name;
+            subObject.prefabName = objProps.prefabName;
+            subObject.stats = objProps.stats;
+            
+            subObjectsProperties.Add(subObject);
+        }
+        
+        return subObjectsProperties;
+    }
+    
+    
+    public static void LinkSubObjectsToObjects(List<ObjectProperties> objectsProperties, List<SubObjects> subObjectsProperties)
+    {
+        foreach (ObjectProperties objProps in objectsProperties)
+        {
+            foreach (int subObjectId in objProps.subObjectsIds)
+            {
+                SubObjects subObject = subObjectsProperties.Find(s => s.id == subObjectId);
+                
+                if (subObject == null)
+                {
+                    Debug.LogWarning("No subObject found for id : " + subObjectId);
+                    continue;
+                }
+                objProps.subObjects.Add(subObject);
+            }
+        }
     }
     
 }

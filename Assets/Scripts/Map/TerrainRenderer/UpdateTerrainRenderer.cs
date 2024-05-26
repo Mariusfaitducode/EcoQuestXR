@@ -8,7 +8,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
     private new Renderer renderer;
     private Material material;
     
-    public GameObject shaderCenter;
+    // public GameObject shaderCenter;
     
     public GameObject citySphere;
     public GameObject agricultureSphere;
@@ -62,7 +62,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
         Vector2 center = material.GetVector("_Map_Center");
         
         material.SetVector("_Map_Center", new Vector2(center.x + translation.x, center.y + translation.z));
-        this.shaderCenter.transform.position = new Vector3(center.x + translation.x, 0, center.y + translation.z);
+        // this.shaderCenter.transform.position = new Vector3(center.x + translation.x, 0, center.y + translation.z);
         
         material.SetFloat("_Limit_Terrain", material.GetFloat("_Limit_Terrain") * scale);
         

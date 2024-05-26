@@ -22,8 +22,11 @@ public static class GameInitialization
         fillMapManager.GenerateMap();
         
         // Scripts
+        
+        // CSV
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
+        
         statManager.StatsStartInitialization();
         
         // Transfer informations to other scripts
