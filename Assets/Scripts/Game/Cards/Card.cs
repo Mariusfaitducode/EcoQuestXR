@@ -25,7 +25,11 @@ public class Card
     public int quantityObject2 { get; set; }
     public ObjectProperties objectProperties1;
     public ObjectProperties objectProperties2;
-    
+
+    public int actionCost;
+    public int actionEnergyCost;
+    public int ecologyRate;
+    public int acceptationRate;
     public Stat stats = new Stat();
     
     public GameObject cardObject;

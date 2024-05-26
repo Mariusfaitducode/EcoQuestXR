@@ -76,34 +76,16 @@ public class CardsInitialization
             card.areaType = card.objectProperties1.areaType;
         }
 
-        // Calculate CardProperties
-        // TODO :  Improve card stats calculation
+        // Calculate objects stats of the card
         foreach (Card card in cards)
         {
-            if (card.cardType == CardType.Construction)
-            {
-                card.stats = StatUtils.GetStatFromConstruction(card.objectProperties1.stats, card.quantityObject1);
-            }
-            else if (card.cardType == CardType.Destruction)
-            {
-                card.stats = StatUtils.GetStatFromDestruction(card.objectProperties1.stats, card.quantityObject1);
-            }
-            else if (card.cardType == CardType.Upgrade)
-            {
-                card.stats = StatUtils.GetStatFromUpgrade(card.objectProperties1.stats, card.objectProperties2.stats, card.quantityObject1, card.quantityObject2);
-            }
-            else
-            {
-                Debug.LogError("Card type " + card.cardType + " not implemented");
-            }
+            StatUtils.GetObjectStat(card);
         }
-    }
-    
-    public static void PrintCards(List<Card> cards)
-    {
+        
+        // Calculate card stats
         foreach (Card card in cards)
         {
-            Debug.Log(card.areaType);
+            CardUtils.GetCardStat(card);
         }
     }
 }

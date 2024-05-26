@@ -68,7 +68,7 @@ public class CardManager : MonoBehaviour
     
     
     // Tirage au sort de cartes dans la pile
-    public void Draft()
+    public void DraftEvent()
     {
         // TODO : Pile manager give only valid cards
         
@@ -83,6 +83,8 @@ public class CardManager : MonoBehaviour
         DisplayCanvas.DeleteCards(cardsLocationDraftPanels);
         
         DisplayCanvas.DrawCards(pileCards, cardsLocationDraftPanels, cardPrefab, this, draftCanvas);
+        
+        gameManager.timer.PauseTime();
     }
     
     
@@ -124,10 +126,8 @@ public class CardManager : MonoBehaviour
         nbrSelectedCards = 0;
         DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         
-        
-        Debug.Log("Draft Finished");
-        gameManager.DraftFinished();
-        draftTime = false;
+        gameManager.timer.ResumeTime();
+        gameManager.eventsGestion.GetEventByName("DraftEvent").EndEvent(gameManager.timer.currentTime);
         
         
     }

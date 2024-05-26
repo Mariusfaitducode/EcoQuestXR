@@ -31,9 +31,9 @@ public class Stat
     public int groundQuality { get; set; }
     public int biodiversity { get; set; }
     public int size { get; set; }
-    public int health { get; set; }
-    public int happiness { get; set; }
-    public int sensibilisation { get; set; }
+    public float health { get; set; }
+    public float happiness { get; set; }
+    public float sensibilisation { get; set; }
     public int energyConstructionCost { get; set; }
     public int energyDestructionCost { get; set; }
     public int energyProduction { get; set; }
@@ -75,43 +75,70 @@ public class Stat
         energyProduction += stat.energyProduction;
         energyConsumption += stat.energyConsumption;
     }
-    public string GetStatString(statType statType)
+    
+    public Stat Devide(int value)
     {
-        switch (statType)
-        {
-            case statType.constructionCost:
-                return StatUtils.ConvertNumberToText(constructionCost);
-            case statType.destructionCost:
-                return StatUtils.ConvertNumberToText(destructionCost);
-            case statType.profits:
-                return StatUtils.ConvertNumberToText(profits);
-            case statType.losses:
-                return StatUtils.ConvertNumberToText(losses);
-            case statType.airQuality:
-                return StatUtils.ConvertNumberToText(airQuality);
-            case statType.groundQuality:
-                return StatUtils.ConvertNumberToText(groundQuality);
-            case statType.biodiversity:
-                return StatUtils.ConvertNumberToText(biodiversity);
-            case statType.size:
-                return StatUtils.ConvertNumberToText(size);
-            case statType.health:
-                return StatUtils.ConvertNumberToText(health);
-            case statType.happiness:
-                return StatUtils.ConvertNumberToText(happiness);
-            case statType.sensibilisation:
-                return StatUtils.ConvertNumberToText(sensibilisation);
-            case statType.energyConstructionCost:
-                return StatUtils.ConvertNumberToText(energyConstructionCost);
-            case statType.energyDestructionCost:
-                return StatUtils.ConvertNumberToText(energyDestructionCost);
-            case statType.energyProduction:
-                return StatUtils.ConvertNumberToText(energyProduction);
-            case statType.energyConsumption:
-                return StatUtils.ConvertNumberToText(energyConsumption);
-            default:
-                return "Error: statType not found";
-        }
+        Stat stat = new Stat();
+        stat.constructionCost = constructionCost / value;
+        stat.destructionCost = destructionCost / value;
+        stat.profits = profits / value;
+        stat.losses = losses / value;
+        stat.airQuality = airQuality / value;
+        stat.groundQuality = groundQuality / value;
+        stat.biodiversity = biodiversity / value;
+        stat.size = size / value;
+        stat.health = health / value;
+        stat.happiness = happiness / value;
+        stat.sensibilisation = sensibilisation / value;
+        stat.energyConstructionCost = energyConstructionCost / value;
+        stat.energyDestructionCost = energyDestructionCost / value;
+        stat.energyProduction = energyProduction / value;
+        stat.energyConsumption = energyConsumption / value;
+        return stat;
     }
     
+    public void ResetPopulationStats()
+    {
+        health = 0;
+        happiness = 0;
+        sensibilisation = 0;
+    }
+    public void Overwrite(Stat stat)
+    {
+        // For each stat, if the value of stat is not 0, overwrite the value of the current stat
+        if (stat.constructionCost != 0) constructionCost = stat.constructionCost;
+        if (stat.destructionCost != 0) destructionCost = stat.destructionCost;
+        if (stat.profits != 0) profits = stat.profits;
+        if (stat.losses != 0) losses = stat.losses;
+        if (stat.airQuality != 0) airQuality = stat.airQuality;
+        if (stat.groundQuality != 0) groundQuality = stat.groundQuality;
+        if (stat.biodiversity != 0) biodiversity = stat.biodiversity;
+        if (stat.size != 0) size = stat.size;
+        if (stat.health != 0) health = stat.health;
+        if (stat.happiness != 0) happiness = stat.happiness;
+        if (stat.sensibilisation != 0) sensibilisation = stat.sensibilisation;
+        if (stat.energyConstructionCost != 0) energyConstructionCost = stat.energyConstructionCost;
+        if (stat.energyDestructionCost != 0) energyDestructionCost = stat.energyDestructionCost;
+        if (stat.energyProduction != 0) energyProduction = stat.energyProduction;
+        if (stat.energyConsumption != 0) energyConsumption = stat.energyConsumption;
+    }
+    
+    public void DisplayStats()
+    {
+        Debug.Log("Construction cost : " + constructionCost);
+        Debug.Log("Destruction cost : " + destructionCost);
+        Debug.Log("Profits : " + profits);
+        Debug.Log("Losses : " + losses);
+        Debug.Log("Air quality : " + airQuality);
+        Debug.Log("Ground quality : " + groundQuality);
+        Debug.Log("Biodiversity : " + biodiversity);
+        Debug.Log("Size : " + size);
+        Debug.Log("Health : " + health);
+        Debug.Log("Happiness : " + happiness);
+        Debug.Log("Sensibilisation : " + sensibilisation);
+        Debug.Log("Energy construction cost : " + energyConstructionCost);
+        Debug.Log("Energy destruction cost : " + energyDestructionCost);
+        Debug.Log("Energy production : " + energyProduction);
+        Debug.Log("Energy consumption : " + energyConsumption);
+    }
 }

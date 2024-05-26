@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,23 +13,20 @@ public class ObjectScript : MonoBehaviour
     internal AreaPrefab areaPrefab;
     internal List<AreaCell> areaCells;
     
+    public DateTime constructionTime;
+    
     
     
     public void InitObjectScript(ObjectProperties objectProperties, GameManager gameManager)
     {
         this.objectProperties = objectProperties;
         this.gameManager = gameManager;
-        // this.areaPrefab = areaPrefab;
+        this.constructionTime = gameManager.timer.currentTime;
     }
     
-    
-    void Start()
+    public int GetMonthsSinceConstruction()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        TimeSpan timeSpan = gameManager.timer.currentTime - constructionTime;
+        return (int)(timeSpan.Days / 30);
     }
 }

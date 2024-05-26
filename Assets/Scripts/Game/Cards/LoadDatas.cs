@@ -75,7 +75,5 @@ public class LoadDatas
         }
         // propertyInfo.SetValue(newCard, value, null);
         return value;
-        
-
     }
 }

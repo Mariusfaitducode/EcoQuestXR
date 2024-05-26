@@ -7,42 +7,41 @@ using System;
 public class EventsGestion 
 {
 
-    public Interval draftInterval;
-    private DateTime nextEventTime;
-    
-    public bool isDraftEvent = false;
-
-
-    public void DraftEvent(CardManager cardManager)
+    public List<PeriodicEvent> periodicEvents = new List<PeriodicEvent>();
+    public void EventsGestionStartInitialization()
     {
-        // Gestion coroutine time stop etc...
-        
-        cardManager.Draft();
+        //
     }
 
-
-    public void CheckDraftEvent(Timer timer)
+    public void AddEvent(PeriodicEvent periodicEvent)
     {
-        if (timer.currentTime >= nextEventTime)
+        periodicEvents.Add(periodicEvent);
+    }
+    
+    public PeriodicEvent GetEventByName(string eventName)
+    {
+        foreach (PeriodicEvent periodicEvent in periodicEvents)
         {
-            Debug.Log("Événement déclenché le : " + timer.currentTime.ToString("yyyy-MM-dd-HH"));
-
-            isDraftEvent = true;
-            timer.stopTime = true;
-
-            SetNextEventTime(timer.currentTime);
-            
+            if (periodicEvent.eventName == eventName)
+            {
+                return periodicEvent;
+            }
         }
-        else
+        Debug.LogError("No event found with the name: " + eventName);
+        return null;
+    }
+    
+    public void CheckEvents(DateTime currentTime)
+    {
+        foreach (PeriodicEvent periodicEvent in periodicEvents)
         {
-            isDraftEvent = false;
+            periodicEvent.CheckToStartEvent(currentTime);
         }
     }
     
-    
-    public void SetNextEventTime(DateTime currentTime)
+    public void SetNextDraftEventTime(DateTime currentTime)
     {
-        nextEventTime = currentTime.AddDays(draftInterval.days).AddMonths(draftInterval.months).AddYears(draftInterval.years);
-        Debug.Log("Prochain événement prévu pour : " + nextEventTime.ToString("yyyy-MM-dd-HH"));
+        PeriodicEvent draftEvent = GetEventByName("Draft");
+        draftEvent.SetNextEventDateTime(currentTime);
     }
 }

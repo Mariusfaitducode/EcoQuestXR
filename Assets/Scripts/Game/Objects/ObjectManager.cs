@@ -64,4 +64,16 @@ public class ObjectManager : MonoBehaviour
         Debug.Log("Number of objects found on the map : " + objectScripts.Count);
         return objectScripts;
     }
+
+    public int GetMaxPopSize()
+    {
+        int maxPopSize = 0;
+
+        foreach (ObjectScript objectScript in GetAllObjectScripts())
+        {
+            maxPopSize += objectScript.objectProperties.stats.size;
+        }
+        Debug.Log("Max population size : " + maxPopSize);
+        return maxPopSize;
+    }
 }
