@@ -15,7 +15,7 @@ public static class ObjectGestion
         
         AreaPrefab areaPrefab = new AreaPrefab();
         areaPrefab.prefabLow = objectPrefab;
-        areaPrefab.prefabHigh = objectPrefab; // TODO : Load prefabHigh
+        // areaPrefab.prefabHigh = objectPrefab; // TODO : Load prefabHigh
         areaPrefab.size = new Vector2Int(objectProperties.sizeX, objectProperties.sizeY);
         areaPrefab.weight = objectProperties.weight;
         

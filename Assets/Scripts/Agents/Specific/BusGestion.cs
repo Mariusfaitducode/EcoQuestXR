@@ -67,17 +67,17 @@ public class BusGestion : MonoBehaviour
                 buses.Add(newBus);
             }
         }
-        else if ((currentTime.Hour < busStartHour || currentTime.Hour >= busEndHour) && busOut)
-        {
-            Debug.Log("BusGestion Destroy buses");
-            
-            
-            // Destroy buses
-            foreach (GameObject bus in buses)
-            {
-                Destroy(bus);
-            }
-            busOut = false;
-        }
+        // else if ((currentTime.Hour < busStartHour || currentTime.Hour >= busEndHour) && busOut)
+        // {
+        //     Debug.Log("BusGestion Destroy buses");
+        //     
+        //     
+        //     // Destroy buses
+        //     foreach (GameObject bus in buses)
+        //     {
+        //         Destroy(bus);
+        //     }
+        //     busOut = false;
+        // }
     }
 }

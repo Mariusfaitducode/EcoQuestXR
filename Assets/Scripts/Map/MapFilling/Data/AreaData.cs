@@ -37,7 +37,7 @@ public class AreaData : UpdatableData
 public struct AreaPrefab
 {
     public GameObject prefabLow;
-    public GameObject prefabHigh;
+    // public GameObject prefabHigh;
     
     public Vector2Int size;
 

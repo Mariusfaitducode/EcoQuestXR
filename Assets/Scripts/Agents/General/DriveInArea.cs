@@ -20,54 +20,65 @@ public class DriveInArea : MonoBehaviour
 
     public bool stopped;
 
+    internal bool initialized = false;
+
     
     // Start is called before the first frame update
     void Start()
     {
         agentManager = FindObjectOfType<AgentManager>();
-
-        if (agentManager != null)
-        {
-            areaGrid = agentManager.areas.Find(a => a.data.type == areaType).areaGrid;
-
-            float minDistance = float.MaxValue;
-            
-            foreach (AreaCell cell in areaGrid)
-            {
-                float distance = Vector3.Distance(this.transform.position, cell.cellPosition.transform.position * agentManager.mapScale);
-                
-                if (cell.type == CellType.Road && distance < minDistance)
-                {
-                    minDistance = distance;
-                    actualCell = cell;
-                }
-            }
-
-            this.transform.position = actualCell.cellPosition.transform.position * agentManager.mapScale;
-
-            SearchNeighbour();
-        }
-
         
+        Initialize();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        // if (agentManager != null && agentManager.areas != null && agentManager.areas.Count > 0 && !initialized)
+        // {
+        //     initialized = true;
+        // }
+
+
         if (!agentManager.timer.isTimePaused)
         {
-            Vector3 direction = (nextCell.cellPosition.transform.position * agentManager.mapScale) - (actualCell.cellPosition.transform.position * agentManager.mapScale);
+            Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
         
-            this.transform.Translate(direction * speed * Time.deltaTime);
+            this.transform.Translate(direction * (speed * Time.deltaTime));
+            // this.transform.position = new Vector3(this.transform.position.x, 1f, this.transform.position.z);
 
-            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position * agentManager.mapScale)) < treshold)
+            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position)) < treshold)
             {
                 ChangeTarget();
             }
         }
     }
 
+    
+    void Initialize()
+    {
+        areaGrid = agentManager.areas.Find(a => a.data.type == areaType).areaGrid;
+
+        float minDistance = float.MaxValue;
+        
+        foreach (AreaCell cell in areaGrid)
+        {
+            float distance = Vector3.Distance(this.transform.position, cell.cellPosition.transform.position);
+            
+            if (cell.type == CellType.Road && distance < minDistance)
+            {
+                minDistance = distance;
+                actualCell = cell;
+            }
+        }
+
+        this.transform.position = actualCell.cellPosition.transform.position;
+        
+        // this.transform.position = new Vector3(this.transform.position.x, 0f, this.transform.position.z);
+
+        SearchNeighbour();
+    }
 
     void ChangeTarget()
     {

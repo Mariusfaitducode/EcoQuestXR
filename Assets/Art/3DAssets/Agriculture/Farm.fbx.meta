@@ -3,22 +3,7 @@ guid: 1873dd8ff87108b49a006af323754ce2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: ble
-    second: {fileID: 2800000, guid: 5917e7576e8507945932d22c27e19308, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: cow
-    second: {fileID: 2800000, guid: 7eb222ca6f26ff84780b8aa5f9220d59, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: imphezia_gradient
-    second: {fileID: 2800000, guid: 7febf6463d947d54ab040233d8275b9f, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
