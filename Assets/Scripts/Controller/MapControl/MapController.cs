@@ -14,6 +14,8 @@ public class MapController : MonoBehaviour
         public float movingSpeed;
         public float scalingSpeed;
         public float scalingMin;
+        
+        public float angleAdapter;
 
     }
     
@@ -22,14 +24,16 @@ public class MapController : MonoBehaviour
     // Move
     private GameObject table;
 
-    private bool playerHasMoved = false;
-    private bool tableFound = false;
+    // private bool playerHasMoved = false;
+    // private bool tableFound = false;
     
     private new Renderer renderer;
     
     public GameObject ovrPlayer;
     
     public UpdateTerrainRenderer updateTerrainRenderer;
+    
+    public GameManager gameManager;
 
     public bool useKeyboard = true;
     
@@ -54,53 +58,48 @@ public class MapController : MonoBehaviour
 
         if (useKeyboard)
         {
-            KeyBoardMapInteraction.Controller(this.transform, Vector3.zero, renderer, mouvementSettings, originalSize);
+            bool moved = KeyBoardMapInteraction.Controller(this.transform, Vector3.zero, renderer, mouvementSettings, originalSize);
+
+
+            if (moved)
+            {
+                updateTerrainRenderer.UpdateMapInformations(false);
+                // updateTerrainRenderer.SetObjectsVisibility(gameManager);
+            }
         }
         else
         {
             
-            if (!tableFound)
+            if (table == null)
             {
-                FindTable();
+                table = GameObject.FindGameObjectWithTag("Table");
+
+                if (table != null)
+                {
+                    Vector3 initialPosition = table.transform.position;
+                    transform.position = initialPosition;
+                    updateTerrainRenderer.InitShaderCenter();
+                }
                 return;
             }
-            if (!playerHasMoved)
+
+
+            bool moved = OvrMapInteraction.Controller(this.transform, updateTerrainRenderer.GetMapCenter(), renderer, mouvementSettings, originalSize, ovrPlayer.transform);
+
+            if (moved)
             {
-                // GetTableLocation();
-                SetMapPosition();
+                updateTerrainRenderer.UpdateMapInformations(false);
+                updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
+                updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
+
             }
             else
             {
-                OvrMapInteraction.Controller(this.transform, table.transform.position, renderer, mouvementSettings, originalSize);
+                updateTerrainRenderer.UpdateMapInformations(true);
+                updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
+                updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
+
             }
-            // Use OVR controller
-        }
-        
-    }
-    
-    
-
-    void FindTable()
-    {
-        table = GameObject.FindGameObjectWithTag("Table");
-        if (table != null)
-        {
-            tableFound = true;
-            Debug.Log("Table found");
-        }
-    }
-
-    // While the player has not interacted with map, we continue checking for the table position.
-    void SetMapPosition()
-    {
-        Vector3 initialPosition = table.transform.position;
-        transform.position = initialPosition;
-        
-        updateTerrainRenderer.UpdateCenter();
-        
-        if (OVRInput.Get(OVRInput.RawAxis2D.RThumbstick) != Vector2.zero || OVRInput.Get(OVRInput.RawAxis2D.LThumbstick) != Vector2.zero)
-        {
-            playerHasMoved = true;
         }
     }
     
