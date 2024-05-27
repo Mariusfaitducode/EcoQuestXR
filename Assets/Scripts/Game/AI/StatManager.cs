@@ -8,7 +8,13 @@ using UnityEngine;
 public class GlobalStats
 {
     internal int currentMoneyInBank;
+    
     internal int currentEnergyInStock;
+    
+    internal int currentEmittedCo2;
+    internal int currentWasteProduced;
+    
+    
     internal int overallEcologyRate;
     internal int overallPopulationAcceptationRate;
 }
@@ -17,8 +23,11 @@ public class StatManager : MonoBehaviour
 {
     public GameManager gameManager;
     public DisplayDashboard displayDashboard;
+    
     public int initialMoneyInBank = 0;
     public int initialEnergyInStock = 0;
+    public int initialEmittedCo2 = 0;
+    public int initialWasteProduced = 0;
     
     internal Stat objectsStats = new Stat();
     internal GlobalStats globalStats = new GlobalStats();
@@ -29,8 +38,11 @@ public class StatManager : MonoBehaviour
     {
         // Initialize the global stats and objects stats
         objectsStats.Reset();
+        
         globalStats.currentMoneyInBank = initialMoneyInBank;
         globalStats.currentEnergyInStock = initialEnergyInStock;
+        globalStats.currentEmittedCo2 = initialEmittedCo2;
+        globalStats.currentWasteProduced = initialWasteProduced;
         
         // Initialize the citizens gestion
         citizensGestion.CitizensGestionStartInitialization();

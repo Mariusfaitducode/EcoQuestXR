@@ -6,139 +6,222 @@ public enum statType
 {
     constructionCost,
     destructionCost,
-    profits,
-    losses,
-    airQuality,
-    groundQuality,
-    biodiversity,
-    size,
+    profitsPerMonth,
+    lossesPerMonth,
+    constructionCo2Emission,
+    destructionCo2Emission,
+    co2EmissionPerMonth,
+    co2AbsorptionPerMonth,
+    constructionWasteProduction,
+    destructionWasteProduction,
+    wasteProductionPerMonth,
+    wasteDestructionPerMonth,
+    greenSpaces,
+    PopulationSize,
     health,
     happiness,
     sensibilisation,
     energyConstructionCost,
     energyDestructionCost,
-    energyProduction,
-    energyConsumption
+    energyProductionPerMonth,
+    energyConsumptionPerMonth
 }
 
 public class Stat
 {
     public int constructionCost { get; set; }
     public int destructionCost { get; set; }
-    public int profits { get; set; }
-    public int losses { get; set; }
-    public int airQuality { get; set; }
-    public int groundQuality { get; set; }
-    public int biodiversity { get; set; }
-    public int size { get; set; }
+    public int profitsPerMonth { get; set; }
+    public int lossesPerMonth { get; set; }
+    public int constructionCo2Emission { get; set; }
+    public int destructionCo2Emission { get; set; }
+    public int co2EmissionPerMonth { get; set; }
+    public int co2AbsorptionPerMonth { get; set; }
+    public int constructionWasteProduction { get; set; }
+    public int destructionWasteProduction { get; set; }
+    public int wasteProductionPerMonth { get; set; }
+    public int wasteDestructionPerMonth { get; set; }
+    public int greenSpaces { get; set; }
+    public int populationSize { get; set; }
     public float health { get; set; }
     public float happiness { get; set; }
     public float sensibilisation { get; set; }
     public int energyConstructionCost { get; set; }
     public int energyDestructionCost { get; set; }
-    public int energyProduction { get; set; }
-    public int energyConsumption { get; set; }
+    public int energyProductionPerMonth { get; set; }
+    public int energyConsumptionPerMonth { get; set; }
 
     public void Reset()
     {
         constructionCost = 0;
         destructionCost = 0;
-        profits = 0;
-        losses = 0;
-        airQuality = 0;
-        groundQuality = 0;
-        biodiversity = 0;
-        size = 0;
+        profitsPerMonth = 0;
+        lossesPerMonth = 0;
+        constructionCo2Emission = 0;
+        destructionCo2Emission = 0;
+        co2EmissionPerMonth = 0;
+        co2AbsorptionPerMonth = 0;
+        constructionWasteProduction = 0;
+        destructionWasteProduction = 0;
+        wasteProductionPerMonth = 0;
+        wasteDestructionPerMonth = 0;
+        greenSpaces = 0;
+        populationSize = 0;
         health = 0;
         happiness = 0;
         sensibilisation = 0;
         energyConstructionCost = 0;
         energyDestructionCost = 0;
-        energyProduction = 0;
-        energyConsumption = 0;
+        energyProductionPerMonth = 0;
+        energyConsumptionPerMonth = 0;
     }
+
     public void Add(Stat stat)
     {
         constructionCost += stat.constructionCost;
         destructionCost += stat.destructionCost;
-        profits += stat.profits;
-        losses += stat.losses;
-        airQuality += stat.airQuality;
-        groundQuality += stat.groundQuality;
-        biodiversity += stat.biodiversity;
-        size += stat.size;
+        profitsPerMonth += stat.profitsPerMonth;
+        lossesPerMonth += stat.lossesPerMonth;
+        constructionCo2Emission += stat.constructionCo2Emission;
+        destructionCo2Emission += stat.destructionCo2Emission;
+        co2EmissionPerMonth += stat.co2EmissionPerMonth;
+        co2AbsorptionPerMonth += stat.co2AbsorptionPerMonth;
+        constructionWasteProduction += stat.constructionWasteProduction;
+        destructionWasteProduction += stat.destructionWasteProduction;
+        wasteProductionPerMonth += stat.wasteProductionPerMonth;
+        wasteDestructionPerMonth += stat.wasteDestructionPerMonth;
+        greenSpaces += stat.greenSpaces;
+        populationSize += stat.populationSize;
         health += stat.health;
         happiness += stat.happiness;
         sensibilisation += stat.sensibilisation;
         energyConstructionCost += stat.energyConstructionCost;
         energyDestructionCost += stat.energyDestructionCost;
-        energyProduction += stat.energyProduction;
-        energyConsumption += stat.energyConsumption;
+        energyProductionPerMonth += stat.energyProductionPerMonth;
+        energyConsumptionPerMonth += stat.energyConsumptionPerMonth;
     }
     
+    public Stat Multiply(int value)
+    {
+        Stat stat = new Stat();
+        stat.constructionCost = constructionCost * value;
+        stat.destructionCost = destructionCost * value;
+        stat.profitsPerMonth = profitsPerMonth * value;
+        stat.lossesPerMonth = lossesPerMonth * value;
+        stat.constructionCo2Emission = constructionCo2Emission * value;
+        stat.destructionCo2Emission = destructionCo2Emission * value;
+        stat.co2EmissionPerMonth = co2EmissionPerMonth * value;
+        stat.co2AbsorptionPerMonth = co2AbsorptionPerMonth * value;
+        stat.constructionWasteProduction = constructionWasteProduction * value;
+        stat.destructionWasteProduction = destructionWasteProduction * value;
+        stat.wasteProductionPerMonth = wasteProductionPerMonth * value;
+        stat.wasteDestructionPerMonth = wasteDestructionPerMonth * value;
+        stat.greenSpaces = greenSpaces * value;
+        stat.populationSize = populationSize * value;
+        stat.health = health * value;
+        stat.happiness = happiness * value;
+        stat.sensibilisation = sensibilisation * value;
+        stat.energyConstructionCost = energyConstructionCost * value;
+        stat.energyDestructionCost = energyDestructionCost * value;
+        stat.energyProductionPerMonth = energyProductionPerMonth * value;
+        stat.energyConsumptionPerMonth = energyConsumptionPerMonth * value;
+        return stat;
+    }
+
     public Stat Devide(int value)
     {
         Stat stat = new Stat();
         stat.constructionCost = constructionCost / value;
         stat.destructionCost = destructionCost / value;
-        stat.profits = profits / value;
-        stat.losses = losses / value;
-        stat.airQuality = airQuality / value;
-        stat.groundQuality = groundQuality / value;
-        stat.biodiversity = biodiversity / value;
-        stat.size = size / value;
+        stat.profitsPerMonth = profitsPerMonth / value;
+        stat.lossesPerMonth = lossesPerMonth / value;
+        stat.constructionCo2Emission = constructionCo2Emission / value;
+        stat.destructionCo2Emission = destructionCo2Emission / value;
+        stat.co2EmissionPerMonth = co2EmissionPerMonth / value;
+        stat.co2AbsorptionPerMonth = co2AbsorptionPerMonth / value;
+        stat.constructionWasteProduction = constructionWasteProduction / value;
+        stat.destructionWasteProduction = destructionWasteProduction / value;
+        stat.wasteProductionPerMonth = wasteProductionPerMonth / value;
+        stat.wasteDestructionPerMonth = wasteDestructionPerMonth / value;
+        stat.greenSpaces = greenSpaces / value;
+        stat.populationSize = populationSize / value;
         stat.health = health / value;
         stat.happiness = happiness / value;
         stat.sensibilisation = sensibilisation / value;
         stat.energyConstructionCost = energyConstructionCost / value;
         stat.energyDestructionCost = energyDestructionCost / value;
-        stat.energyProduction = energyProduction / value;
-        stat.energyConsumption = energyConsumption / value;
+        stat.energyProductionPerMonth = energyProductionPerMonth / value;
+        stat.energyConsumptionPerMonth = energyConsumptionPerMonth / value;
         return stat;
     }
-    
+
     public void ResetPopulationStats()
     {
         health = 0;
         happiness = 0;
         sensibilisation = 0;
     }
+    
+    public void ResetConstructionDestructionStats()
+    {
+        constructionCost = 0;
+        destructionCost = 0;
+        constructionCo2Emission = 0;
+        destructionCo2Emission = 0;
+        constructionWasteProduction = 0;
+        destructionWasteProduction = 0;
+        energyConstructionCost = 0;
+        energyDestructionCost = 0;
+    }
+
     public void Overwrite(Stat stat)
     {
         // For each stat, if the value of stat is not 0, overwrite the value of the current stat
         if (stat.constructionCost != 0) constructionCost = stat.constructionCost;
         if (stat.destructionCost != 0) destructionCost = stat.destructionCost;
-        if (stat.profits != 0) profits = stat.profits;
-        if (stat.losses != 0) losses = stat.losses;
-        if (stat.airQuality != 0) airQuality = stat.airQuality;
-        if (stat.groundQuality != 0) groundQuality = stat.groundQuality;
-        if (stat.biodiversity != 0) biodiversity = stat.biodiversity;
-        if (stat.size != 0) size = stat.size;
+        if (stat.profitsPerMonth != 0) profitsPerMonth = stat.profitsPerMonth;
+        if (stat.lossesPerMonth != 0) lossesPerMonth = stat.lossesPerMonth;
+        if (stat.constructionCo2Emission != 0) constructionCo2Emission = stat.constructionCo2Emission;
+        if (stat.destructionCo2Emission != 0) destructionCo2Emission = stat.destructionCo2Emission;
+        if (stat.co2EmissionPerMonth != 0) co2EmissionPerMonth = stat.co2EmissionPerMonth;
+        if (stat.co2AbsorptionPerMonth != 0) co2AbsorptionPerMonth = stat.co2AbsorptionPerMonth;
+        if (stat.constructionWasteProduction != 0) constructionWasteProduction = stat.constructionWasteProduction;
+        if (stat.destructionWasteProduction != 0) destructionWasteProduction = stat.destructionWasteProduction;
+        if (stat.wasteProductionPerMonth != 0) wasteProductionPerMonth = stat.wasteProductionPerMonth;
+        if (stat.wasteDestructionPerMonth != 0) wasteDestructionPerMonth = stat.wasteDestructionPerMonth;
+        if (stat.greenSpaces != 0) greenSpaces = stat.greenSpaces;
+        if (stat.populationSize != 0) populationSize = stat.populationSize;
         if (stat.health != 0) health = stat.health;
         if (stat.happiness != 0) happiness = stat.happiness;
         if (stat.sensibilisation != 0) sensibilisation = stat.sensibilisation;
         if (stat.energyConstructionCost != 0) energyConstructionCost = stat.energyConstructionCost;
         if (stat.energyDestructionCost != 0) energyDestructionCost = stat.energyDestructionCost;
-        if (stat.energyProduction != 0) energyProduction = stat.energyProduction;
-        if (stat.energyConsumption != 0) energyConsumption = stat.energyConsumption;
+        if (stat.energyProductionPerMonth != 0) energyProductionPerMonth = stat.energyProductionPerMonth;
+        if (stat.energyConsumptionPerMonth != 0) energyConsumptionPerMonth = stat.energyConsumptionPerMonth;
     }
-    
+
     public void DisplayStats()
     {
         Debug.Log("Construction cost : " + constructionCost);
         Debug.Log("Destruction cost : " + destructionCost);
-        Debug.Log("Profits : " + profits);
-        Debug.Log("Losses : " + losses);
-        Debug.Log("Air quality : " + airQuality);
-        Debug.Log("Ground quality : " + groundQuality);
-        Debug.Log("Biodiversity : " + biodiversity);
-        Debug.Log("Size : " + size);
+        Debug.Log("Profits per month : " + profitsPerMonth);
+        Debug.Log("Losses per month : " + lossesPerMonth);
+        Debug.Log("Construction CO2 emission : " + constructionCo2Emission);
+        Debug.Log("Destruction CO2 emission : " + destructionCo2Emission);
+        Debug.Log("CO2 emission per month : " + co2EmissionPerMonth);
+        Debug.Log("CO2 absorption per month : " + co2AbsorptionPerMonth);
+        Debug.Log("Construction waste production : " + constructionWasteProduction);
+        Debug.Log("Destruction waste production : " + destructionWasteProduction);
+        Debug.Log("Waste production per month : " + wasteProductionPerMonth);
+        Debug.Log("Waste destruction per month : " + wasteDestructionPerMonth);
+        Debug.Log("Green spaces : " + greenSpaces);
+        Debug.Log("Population size : " + populationSize);
         Debug.Log("Health : " + health);
         Debug.Log("Happiness : " + happiness);
         Debug.Log("Sensibilisation : " + sensibilisation);
         Debug.Log("Energy construction cost : " + energyConstructionCost);
         Debug.Log("Energy destruction cost : " + energyDestructionCost);
-        Debug.Log("Energy production : " + energyProduction);
-        Debug.Log("Energy consumption : " + energyConsumption);
+        Debug.Log("Energy production per month : " + energyProductionPerMonth);
+        Debug.Log("Energy consumption per month : " + energyConsumptionPerMonth);
     }
 }
