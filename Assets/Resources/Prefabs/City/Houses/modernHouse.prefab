@@ -468,7 +468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 593100141741817809}
   m_Layer: 0
-  m_Name: solar_panels
+  m_Name: solarPanels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,9 +556,12 @@ MonoBehaviour:
     - {fileID: 4875329586141879171, guid: ea6cf2bc6d82c794293251d28f406302, type: 3}
     - {fileID: 627471466522317315, guid: ea6cf2bc6d82c794293251d28f406302, type: 3}
   subObjects:
-  - {fileID: 3961415677116178525}
-  - {fileID: 6461659097631237167}
-  - {fileID: 962793722894391251}
+  - gameObject: {fileID: 6461659097631237167}
+    initiationProbability: 0.17
+  - gameObject: {fileID: 3961415677116178525}
+    initiationProbability: 0.082
+  - gameObject: {fileID: 962793722894391251}
+    initiationProbability: 0.434
 --- !u!1 &4569163535417847844
 GameObject:
   m_ObjectHideFlags: 0

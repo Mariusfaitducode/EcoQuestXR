@@ -53,7 +53,11 @@ public static class GameInitialization
        PeriodicEvent draftEvent = new PeriodicEvent(
             "DraftEvent",
             currentTime,
+
+            // new Interval { days = 50, months = 0, years = 0 }, 
+
             new Interval { days = 0, months = 2, years = 0 }, 
+
             () => cardManager.DraftEvent(),
             false);
         

@@ -599,8 +599,10 @@ MonoBehaviour:
     materials:
     - {fileID: 5313096204258746848, guid: 1592d99ff6943834cbf21e0aaee48b0d, type: 3}
   subObjects:
-  - {fileID: 155048596141951751}
-  - {fileID: 3036526744819938229}
+  - gameObject: {fileID: 155048596141951751}
+    initiationProbability: 0.121
+  - gameObject: {fileID: 3036526744819938229}
+    initiationProbability: 0.016
 --- !u!1 &4699888830983770202
 GameObject:
   m_ObjectHideFlags: 0

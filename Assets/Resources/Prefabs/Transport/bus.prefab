@@ -93,4 +93,5 @@ MonoBehaviour:
   areaType: 0
   speed: 1
   treshold: 1
+  roadStep: 0.5
   stopped: 0

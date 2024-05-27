@@ -680,8 +680,10 @@ MonoBehaviour:
     materials:
     - {fileID: 4156002973242278026, guid: 60e22f6fa19e9b346976d43ae80e6a83, type: 3}
   subObjects:
-  - {fileID: 1465882506035723850}
-  - {fileID: 2573400172270257069}
+  - gameObject: {fileID: 1465882506035723850}
+    initiationProbability: 0.077
+  - gameObject: {fileID: 2573400172270257069}
+    initiationProbability: 0.264
 --- !u!1 &6066786154168470211
 GameObject:
   m_ObjectHideFlags: 0

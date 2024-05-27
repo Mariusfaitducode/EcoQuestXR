@@ -69,8 +69,20 @@ public class LoadDatas
                 Debug.LogError($"Failed to parse '{row[index]}' as int for property '{header[index]}'");
             }
         }
+        else if (propertyInfo.PropertyType == typeof(float))
+        {
+            if (float.TryParse(row[index].Replace('.',','), out float parsedValue))
+            {
+                value = parsedValue;
+            }
+            else
+            {
+                Debug.LogError($"Failed to parse '{row[index]}' as float for property '{header[index]}'");
+            }
+        }
         else
         {
+            Debug.Log(" TEST : " + row[index]);
             value = Convert.ChangeType(row[index], propertyInfo.PropertyType);
         }
         // propertyInfo.SetValue(newCard, value, null);
