@@ -31,9 +31,9 @@ public class TransportMode
                          "Happiness: " + ponderation.happiness + "\n" +
                          "Sensibilisation: " + ponderation.sensibilisation + "\n" +
                          " - Stats: \n" +
-                         "airQuality: " + stats.airQuality + "\n" +
-                         "groundQuality: " + stats.groundQuality + "\n" +
-                         "biodiversity: " + stats.biodiversity + "\n" +
+                         "co2EmissionPerMonth: " + stats.co2EmissionPerMonth + "\n" +
+                         "wasteProductionPerMonth: " + stats.wasteProductionPerMonth + "\n" +
+                         "energyConsumptionPerMonth: " + stats.energyConsumptionPerMonth + "\n" +
                          "health: " + stats.health + "\n";
 
         Debug.Log(message);
@@ -86,7 +86,7 @@ public class CitizensGestion
         foreach (TransportMode transportMode in transportModes)
         {
             // Active Initial Transport Modes
-            if (transportMode.name == "walk" || transportMode.name == "bike" || transportMode.name == "car" || transportMode.name == "bus" || transportMode.name == "electricScooter")
+            if (transportMode.name == "walk" || transportMode.name == "bike" || transportMode.name == "car" || transportMode.name == "electricScooter")
             {
                 transportMode.isAvailable = true;
             }

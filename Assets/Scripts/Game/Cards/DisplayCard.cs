@@ -80,11 +80,11 @@ public class DisplayCard : MonoBehaviour
             _logoAction.texture = GetTexture(folderActionLogo, _card.cardType.ToString());
 
             //TODO : Change card stats
-            _price.text = StatUtils.ConvertNumberToText(_card.actionCost);
-            _energy.text = StatUtils.ConvertNumberToText(_card.actionEnergyCost);
-            _ecology.text = StatUtils.ConvertNumberToText(_card.ecologyRate);
-            _population.text = StatUtils.ConvertNumberToText(_card.stats.size);
-            _pollution.text = StatUtils.ConvertNumberToText(_card.stats.airQuality);
+            _price.text = StatUtils.ConvertNumberToText(_card.cardStats.actionCost);
+            _energy.text = StatUtils.ConvertNumberToText(_card.cardStats.actionEnergyCost);
+            _ecology.text = StatUtils.ConvertNumberToText(_card.cardStats.ecologyRate);
+            _population.text = StatUtils.ConvertNumberToText(_card.stats.populationSize);
+            _pollution.text = StatUtils.ConvertNumberToText(_card.stats.co2EmissionPerMonth);
         }
     }
     public void SetCard(Card card)
