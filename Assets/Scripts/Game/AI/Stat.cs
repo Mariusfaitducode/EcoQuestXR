@@ -17,7 +17,7 @@ public enum statType
     wasteProductionPerMonth,
     wasteDestructionPerMonth,
     greenSpaces,
-    PopulationSize,
+    populationSize,
     health,
     happiness,
     sensibilisation,

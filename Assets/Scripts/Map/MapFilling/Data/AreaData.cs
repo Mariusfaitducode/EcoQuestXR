@@ -27,8 +27,8 @@ public class AreaData : UpdatableData
     [Range(0,1)]
     public float fillPercent;
     
-        
-    public List<AreaPrefab> prefabs;
+    public List<AreaPrefab> aloneNecessaryPrefabs;
+    [FormerlySerializedAs("prefabs")] public List<AreaPrefab> randomPrefabs;
 
     // internal List<Vector3> vertices;
 }
@@ -42,6 +42,11 @@ public struct AreaPrefab
     public Vector2Int size;
 
     public float weight;
+
+    [Range(0,1)]
+    public float rotation;
+
+    // public bool oneToPlace;
 
     // public Vector3 position;
     // public Vector3 scale;

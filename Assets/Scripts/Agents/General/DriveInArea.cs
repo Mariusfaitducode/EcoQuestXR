@@ -10,6 +10,8 @@ public class DriveInArea : MonoBehaviour
     public float speed = 5f;
     public float treshold = 0.05f;
     
+    public float roadStep = 0.5f;
+    
     internal AreaCell[,] areaGrid;
     // internal float mapScale;
     
@@ -23,30 +25,30 @@ public class DriveInArea : MonoBehaviour
     internal bool initialized = false;
 
     
-    // Start is called before the first frame update
     void Start()
     {
         agentManager = FindObjectOfType<AgentManager>();
         
-        Initialize();
+        // Initialize();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
 
-        // if (agentManager != null && agentManager.areas != null && agentManager.areas.Count > 0 && !initialized)
-        // {
-        //     initialized = true;
-        // }
-
-
-        if (!agentManager.timer.isTimePaused)
+        if (agentManager != null && agentManager.areas != null && agentManager.areas.Count > 0 && !initialized)
         {
-            Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
+            Initialize();
+            initialized = true; 
+        }
+
+
+        if (initialized && !agentManager.timer.isTimePaused)
+        {
+            
         
-            this.transform.Translate(direction * (speed * Time.deltaTime));
-            // this.transform.position = new Vector3(this.transform.position.x, 1f, this.transform.position.z);
+            this.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+            
 
             if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position)) < treshold)
             {
@@ -74,18 +76,35 @@ public class DriveInArea : MonoBehaviour
         }
 
         this.transform.position = actualCell.cellPosition.transform.position;
-        
-        // this.transform.position = new Vector3(this.transform.position.x, 0f, this.transform.position.z);
+
 
         SearchNeighbour();
+        
+        Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
+        
+        Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
+        
+        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight * roadStep);
+
+        
     }
 
     void ChangeTarget()
     {
+        
         lastCell = actualCell;
         actualCell = nextCell;
         
         SearchNeighbour();
+        
+        Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
+        
+        Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
+        
+        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight.normalized * roadStep);
+
+        // this.transform.position = actualCell.cellPosition.transform.position ;
+        
     }
 
     void SearchNeighbour()
@@ -133,6 +152,7 @@ public class DriveInArea : MonoBehaviour
         {
             nextCell = validCells[Random.Range(0, validCells.Count)];
         }
+        
         
     }
 }

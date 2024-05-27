@@ -18,11 +18,11 @@ public class ObjectManager : MonoBehaviour
     {
         listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
         
-        List<ObjectProperties> subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/subObjects");
+        // List<ObjectProperties> subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/subObjects");
         
-        List<SubObjects> subObjects = ObjectsInitialization.ObjectsPropertiesToSubObjects(subObjectsProperties);
+        // List<SubObjects> subObjects = ObjectsInitialization.ObjectsPropertiesToSubObjects(subObjectsProperties);
         
-        ObjectsInitialization.LinkSubObjectsToObjects(listObjectsProperties, subObjects);
+        // ObjectsInitialization.LinkSubObjectsToObjects(listObjectsProperties, subObjects);
 
     }
 

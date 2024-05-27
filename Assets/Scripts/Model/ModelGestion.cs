@@ -76,7 +76,7 @@ public class ModelGestion : MonoBehaviour
                     
                         if (material.name == renderer.sharedMaterials[i].name)
                         {
-                            Debug.Log("Material found : " + material.name);
+                            // Debug.Log("Material found : " + material.name);
                             finalMaterials[i] = new Material(material);
                             break;
                         }
