@@ -674,4 +674,5 @@ MonoBehaviour:
     - {fileID: -4942384121632417884, guid: e607674ddad55094aba7affe0174e946, type: 3}
     - {fileID: 3734147955174080316, guid: e607674ddad55094aba7affe0174e946, type: 3}
   subObjects:
-  - {fileID: 810350244725834597}
+  - gameObject: {fileID: 810350244725834597}
+    initiationProbability: 0.357

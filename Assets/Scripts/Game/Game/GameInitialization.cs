@@ -27,7 +27,7 @@ public static class GameInitialization
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
         
-        // statManager.StatsStartInitialization();
+        statManager.StatsStartInitialization();
         
         // Transfer informations to other scripts
         objectManager.SetMapInformations(fillMapManager);
@@ -37,7 +37,7 @@ public static class GameInitialization
         agentManager.SetTimerInformations(timer);
         
         // Citizens and Dashboard
-        // statManager.InitDashboardEvent(objectManager);
+        statManager.InitDashboardEvent(objectManager);
         
         // Events
         InstantiatePeriodicEvents(eventsGestion, timer.currentTime, cardManager, statManager, objectManager);

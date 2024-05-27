@@ -11,11 +11,14 @@ public struct RendererMaterials
     public List<Material> materials;
 }
 
-
-public struct SubObject
+[Serializable]
+public struct SubModel
 {
     public GameObject gameObject;
     
+    [Range(0,1)]
+    public float initiationProbability;
+
 }
 
 
@@ -28,7 +31,7 @@ public class ModelGestion : MonoBehaviour
     // Apparence
     
     public List<RendererMaterials> rendererSettings = new List<RendererMaterials>();
-    public List<GameObject> subObjects = new List<GameObject>();
+    public List<SubModel> subObjects = new List<SubModel>();
     // public List<Animation> animations = new List<Animation>();
     // public List<ParticleSystem> particleSystems = new List<ParticleSystem>();
     // public List<AudioClip> audioClips = new List<AudioClip>();
@@ -89,6 +92,21 @@ public class ModelGestion : MonoBehaviour
             }
         }
     }
+    
+    
+    // public SubModel FindSubModelWithName(string name)
+    // {
+    //     foreach (SubModel subModel in subObjects)
+    //     {
+    //         if (subModel.gameObject.name == name)
+    //         {
+    //             return subModel;
+    //         }
+    //     }
+    //
+    //     Debug.LogError("SubModel not found with name : " + name);
+    //     return new SubModel();
+    // }
 
     public void InitialisationModel()
     {
