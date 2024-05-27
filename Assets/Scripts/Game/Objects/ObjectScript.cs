@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ObjectScript : MonoBehaviour
 {
@@ -40,20 +41,21 @@ public class ObjectScript : MonoBehaviour
         {
             foreach (SubObjects subObject in objectProperties.subObjects)
             {
-                SubModel subModel = modelGestion.subObjects.Find(x => x.gameObject.name == subObject.prefabName);
+                SubModel subModel = modelGestion.FindSubModelWithName(subObject.prefabName);
                 
-                // if (subModel)
-                // {
-                //     if (UnityEngine.Random.value < subModel.initiationProbability)
-                //     {
-                //         GameObject subObjectInstance = Instantiate(subModel.gameObject, transform);
-                //         subObjectInstance.transform.localPosition = Vector3.zero;
-                //     }
-                // }
-                // else
-                // {
-                //     Debug.LogError("");
-                // }
+                if (subModel.gameObject!= null)
+                {
+                    if (Random.Range(0f, 1f) < subModel.initiationProbability)
+                    {
+                        objectProperties.stats.Add(subObject.stats);
+                        
+                        subModel.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        subModel.gameObject.SetActive(false);
+                    }
+                }
             }
         }
     }
