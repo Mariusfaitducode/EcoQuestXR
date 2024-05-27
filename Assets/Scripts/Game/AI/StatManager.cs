@@ -8,15 +8,12 @@ using UnityEngine;
 public class GlobalStats
 {
     internal float currentMoneyInBank;
-    
     internal float currentEnergyInStock;
-    
     internal float currentEmittedCo2;
     internal float currentWasteProduced;
     
-    
     internal float overallEcologyRate;
-    internal float overallPopulationAcceptationRate;
+    internal float overallSocietyRate;
 }
 
 public class StatManager : MonoBehaviour
@@ -28,6 +25,10 @@ public class StatManager : MonoBehaviour
     public float initialEnergyInStock = 0;
     public float initialEmittedCo2 = 0;
     public float initialWasteProduced = 0;
+    
+    public float maxCo2Emitted = 1000000f;
+    public float maxWasteProduced = 1000000f;
+    public float maxGreenSpaces = 1000000f;
     
     internal Stat objectsStats = new Stat();
     internal GlobalStats globalStats = new GlobalStats();
@@ -56,6 +57,7 @@ public class StatManager : MonoBehaviour
     public void UpdateGlobalStatsFromCardEvent(Card card)
     {
         StatUtils.UpdateGlobalStatsFromCard(globalStats, card);
+        
     }
 
     public void UpdateObjectStatsFromObjectsAndCitizensEvent(ObjectManager objectManager)
@@ -80,6 +82,7 @@ public class StatManager : MonoBehaviour
     
     private void UpdateDashboard()
     {
-        displayDashboard.UpdateFromStats(globalStats, objectsStats);
+        StatUtils.ComputeRates(globalStats, objectsStats, maxWasteProduced, maxCo2Emitted, maxGreenSpaces);
+        displayDashboard.UpdateFromStats(globalStats, objectsStats, citizensGestion.maxPopSize, citizensGestion.citizens.Count, 0.5f, citizensGestion.GetDailyTransportModeUsers());
     }
 }

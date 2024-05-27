@@ -8,58 +8,76 @@ public class DisplayDashboard : MonoBehaviour
 {
     public TextMeshProUGUI TimeText;
     
-    public TextMeshProUGUI totalMoneyText;
-    public TextMeshProUGUI profitsText;
-    public TextMeshProUGUI lossesText;
-    public TextMeshProUGUI constructionCostText;
-    public TextMeshProUGUI destructionCostText;
+    public TextMeshProUGUI overallEcologyRateTextText;
+    public TextMeshProUGUI overallSocietyRateText;
     
-    public TextMeshProUGUI totalEnergyText;
-    public TextMeshProUGUI energyProductionText;
-    public TextMeshProUGUI energyConsumptionText;
-    public TextMeshProUGUI energyConstructionCostText;
-    public TextMeshProUGUI energyDestructionCostText;
+    public TextMeshProUGUI currentMoneyInBankText;
+    public TextMeshProUGUI currentEnergyInStockText;
+    public TextMeshProUGUI currentEmittedCo2Text;
+    public TextMeshProUGUI currentWasteProducedText;
+    public TextMeshProUGUI currentGreenSpacesText;
     
-    public TextMeshProUGUI ecologyText;
-    public TextMeshProUGUI biodiversityText;
-    public TextMeshProUGUI airQualityText;
-    public TextMeshProUGUI groundQualityText;
+    public TextMeshProUGUI maxPopSizeText;
+    public TextMeshProUGUI totalCitizensText;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI happinessText;
+    public TextMeshProUGUI sensibilisationText;
+    public TextMeshProUGUI acceptationText;
+    public TextMeshProUGUI dailyTransportsUsersText;
     
-    public TextMeshProUGUI populationSensibilisationText;
-    public TextMeshProUGUI populationSizeText;
-    public TextMeshProUGUI populationHealthText;
-    public TextMeshProUGUI populationHappinessText;
-    public TextMeshProUGUI populationAcceptationText;
+    public TextMeshProUGUI profitsPerMonthText;
+    public TextMeshProUGUI lossesPerMonthText;
+    public TextMeshProUGUI energyProductionPerMonthText;
+    public TextMeshProUGUI energyConsumptionPerMonthText;
+    public TextMeshProUGUI co2EmissionPerMonthText;
+    public TextMeshProUGUI co2AbsorptionPerMonthText;
+    public TextMeshProUGUI wasteProductionPerMonthText;
+    public TextMeshProUGUI wasteDestructionPerMonthText;
+    
+    public string euros = " €";
+    public string energyUnit = " kWh";
+    public string co2Unit = " kg";
+    public string wasteUnit = " tonnes";
+    public string greenSpacesUnit = " m²";
+    public string percentUnit = " %";
+    public string eurosPerMonth = " €/month";
+    public string energyUnitPerMonth = " kWh/month";
+    public string co2UnitPerMonth = " kg/month";
+    public string wasteUnitPerMonth = " tonnes/month";
     
     public void UpdateTime(DateTime currentTime)
     {
         TimeText.text = currentTime.ToString("yyyy-MM-dd-HH:mm:ss");
     }
     
-    public void UpdateFromStats(GlobalStats globalStats, Stat objectsStats)
+    public void UpdateFromStats(GlobalStats globalStats, Stat objectsStats, int maxPopSize, int totalCitizens, float acceptation, string dailyTransportsUsers)
     {
-        // totalMoneyText.text = StatUtils.ConvertNumberToText(globalStats.currentMoneyInBank);
-        // totalEnergyText.text = StatUtils.ConvertNumberToText(globalStats.currentEnergyInStock);
-        // ecologyText.text = StatUtils.ConvertNumberToText(globalStats.overallEcologyRate);
-        // populationAcceptationText.text = StatUtils.ConvertNumberToText(globalStats.overallPopulationAcceptationRate);
-        //
-        // profitsText.text = StatUtils.ConvertNumberToText(objectsStats.profits);
-        // lossesText.text = StatUtils.ConvertNumberToText(objectsStats.losses);
-        // constructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.constructionCost);
-        // destructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.destructionCost);
-        //
-        // energyProductionText.text = StatUtils.ConvertNumberToText(objectsStats.energyProduction);
-        // energyConsumptionText.text = StatUtils.ConvertNumberToText(objectsStats.energyConsumption);
-        // energyConstructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.energyConstructionCost);
-        // energyDestructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.energyDestructionCost);
-        //
-        // biodiversityText.text = StatUtils.ConvertNumberToText(objectsStats.biodiversity);
-        // airQualityText.text = StatUtils.ConvertNumberToText(objectsStats.airQuality);
-        // groundQualityText.text = StatUtils.ConvertNumberToText(objectsStats.groundQuality);
-        //
-        // populationSensibilisationText.text = StatUtils.ConvertPercentToText(objectsStats.sensibilisation);
-        // populationSizeText.text = StatUtils.ConvertNumberToText(objectsStats.size);
-        // populationHealthText.text = StatUtils.ConvertPercentToText(objectsStats.health);
-        // populationHappinessText.text = StatUtils.ConvertPercentToText(objectsStats.happiness);
+        overallEcologyRateTextText.text = StatUtils.ConvertPercentToText(globalStats.overallEcologyRate) + percentUnit;
+        overallSocietyRateText.text = StatUtils.ConvertPercentToText(globalStats.overallSocietyRate) + percentUnit;
+        
+        currentMoneyInBankText.text = StatUtils.ConvertFloatToText(globalStats.currentMoneyInBank) + euros;
+        currentEnergyInStockText.text = StatUtils.ConvertFloatToText(globalStats.currentEnergyInStock) + energyUnit;
+        currentEmittedCo2Text.text = StatUtils.ConvertFloatToText(globalStats.currentEmittedCo2) + co2Unit;
+        currentWasteProducedText.text = StatUtils.ConvertFloatToText(globalStats.currentWasteProduced) + wasteUnit;
+        currentGreenSpacesText.text = StatUtils.ConvertNumberToText(objectsStats.greenSpaces) + greenSpacesUnit;
+        
+        maxPopSizeText.text = StatUtils.ConvertNumberToText(maxPopSize);
+        totalCitizensText.text = StatUtils.ConvertNumberToText(totalCitizens);
+        
+        healthText.text = StatUtils.ConvertPercentToText(objectsStats.health) + percentUnit;
+        happinessText.text = StatUtils.ConvertPercentToText(objectsStats.happiness) + percentUnit;
+        sensibilisationText.text = StatUtils.ConvertPercentToText(objectsStats.sensibilisation) + percentUnit;
+        acceptationText.text = StatUtils.ConvertPercentToText(acceptation) + percentUnit;
+        
+        dailyTransportsUsersText.text = dailyTransportsUsers;
+        
+        profitsPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.profitsPerMonth) + eurosPerMonth;
+        lossesPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.lossesPerMonth) + eurosPerMonth;
+        energyProductionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.energyProductionPerMonth) + energyUnitPerMonth;
+        energyConsumptionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.energyConsumptionPerMonth) + energyUnitPerMonth;
+        co2EmissionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.co2EmissionPerMonth) + co2UnitPerMonth;
+        co2AbsorptionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.co2AbsorptionPerMonth) + co2UnitPerMonth;
+        wasteProductionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.wasteProductionPerMonth) + wasteUnitPerMonth;
+        wasteDestructionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.wasteDestructionPerMonth) + wasteUnitPerMonth;
     }
 }

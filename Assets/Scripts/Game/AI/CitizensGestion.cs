@@ -217,13 +217,19 @@ public class CitizensGestion
         }
     }
     
-    private void DisplayDailyUsers(List<TransportMode> ttransportModes)
+    public string GetDailyTransportModeUsers()
     {
         string message = " - Daily Users: \n";
-        foreach (TransportMode transportMode in ttransportModes)
+        foreach (TransportMode transportMode in availableTransportModes)
         {
             message += transportMode.name + ": " + transportMode.dailyUsers + "\n";
         }
+        return message;
+    }
+    
+    private void DisplayDailyUsers()
+    {
+        string message = GetDailyTransportModeUsers();
         Debug.Log(message);
     }
     
@@ -244,7 +250,7 @@ public class CitizensGestion
         
         
         totalCitizensStat.ResetPopulationStats();
-        DisplayDailyUsers(availableTransportModes);
+        DisplayDailyUsers();
         
         return totalCitizensStat;
     }

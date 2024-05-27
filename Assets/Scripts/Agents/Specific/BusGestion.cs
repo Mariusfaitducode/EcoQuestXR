@@ -52,7 +52,7 @@ public class BusGestion : MonoBehaviour
         {
             busOut = true;
             
-            Debug.Log("BusGestion Instantiate buses");
+            // Debug.Log("BusGestion Instantiate buses");
             
             // Instantiate buses
             for (int i = 0; i< busQuantity; i++)

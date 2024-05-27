@@ -41,7 +41,7 @@ public class Stat
     public float destructionWasteProduction { get; set; }
     public float wasteProductionPerMonth { get; set; }
     public float wasteDestructionPerMonth { get; set; }
-    public float greenSpaces { get; set; }
+    public int greenSpaces { get; set; }
     public int populationSize { get; set; }
     public float health { get; set; }
     public float happiness { get; set; }

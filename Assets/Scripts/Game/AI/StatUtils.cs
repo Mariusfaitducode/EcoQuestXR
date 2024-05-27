@@ -31,7 +31,12 @@ public static class StatUtils
     public static string ConvertPercentToText(float number)
     {
         // Display 2 decimal after the comma( ex: 0.12789456 -> 12.79%)
-        return (number * 100).ToString("F2") + "%";
+        return (number * 100).ToString("F2");
+    }
+    
+    public static string ConvertFloatToText(float number)
+    {
+        return number.ToString("F1");
     }
     
     // Fonction de transformation de la distance
@@ -86,6 +91,12 @@ public static class StatUtils
 
         // Get the stats from the citizens (health, happiness, sensibilisation)
         objectsStats.Overwrite(citizensGestion.GetCitizensStats());
+    }
+
+    public static void ComputeRates(GlobalStats globalStats, Stat stats, float maxWasteProduced, float maxCo2Emission, float maxGreenSpaces)
+    {
+        globalStats.overallSocietyRate = (stats.health + stats.happiness + stats.sensibilisation) / 3;
+        globalStats.overallEcologyRate = (stats.greenSpaces / maxGreenSpaces) + 1 - (globalStats.currentWasteProduced / maxWasteProduced + globalStats.currentEmittedCo2 / maxCo2Emission);
     }
     
     public static void UpdateGlobalStatsFromCard(GlobalStats globalStats, Card card)

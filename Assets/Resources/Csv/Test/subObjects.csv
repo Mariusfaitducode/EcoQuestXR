@@ -1,0 +1,4 @@
+id,name,prefabName,constructionCost,destructionCost,profits,losses,airQuality,groundQuality,biodiversity,size,health,happiness,sensibilisation,energyConstructionCost,energyDestructionCost,energyProduction,energyConsuption
+0,garden,garden1,25000,1000,0,0,-100,-50,50,0,100,100,100,8000,7000,0,1600
+1,solarPanel,solarPanel1,20000,1000,0,0,-90,-45,45,0,0,0,0,7500,6500,0,1500
+2,chimney,chimney1,10000,5000,0,0,-110,-60,55,0,0,0,0,8500,7000,0,1700
