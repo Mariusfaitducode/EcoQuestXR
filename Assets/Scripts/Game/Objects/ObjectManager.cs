@@ -9,6 +9,9 @@ public class ObjectManager : MonoBehaviour
     internal List<Area> areas;
     internal List<ObjectProperties> listObjectsProperties;
     
+    public string objectsPath = "Csv/objects";
+    public string subObjectsPath = "Csv/subObjects";
+    
     public float prefabScale = 1f;
     // public float mapScale = 1f;
 
@@ -16,9 +19,9 @@ public class ObjectManager : MonoBehaviour
     
     public void ObjectsStartInitialization()
     {
-        listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/objects");
+        listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(objectsPath);
         
-        List<ObjectProperties> subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties("Csv/subObjects");
+        List<ObjectProperties> subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(subObjectsPath);
         
         List<SubObjects> subObjects = ObjectsInitialization.ObjectsPropertiesToSubObjects(subObjectsProperties);
         
@@ -75,7 +78,7 @@ public class ObjectManager : MonoBehaviour
 
         foreach (ObjectScript objectScript in GetAllObjectScripts())
         {
-            maxPopSize += objectScript.objectProperties.stats.size;
+            maxPopSize += objectScript.objectProperties.stats.populationSize;
         }
         Debug.Log("Max population size : " + maxPopSize);
         return maxPopSize;

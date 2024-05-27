@@ -10,6 +10,17 @@ public enum CardType {
     Event
 }
 
+public class CardStat
+{
+    public float actionCost;
+    public float actionEnergyCost;
+    public float actionCo2Emission;
+    public float actionWasteProduction;
+    
+    public float ecologyRate;
+    public float acceptationRate;
+}
+
 public class Card
 {
     public int id { get; set; }
@@ -26,10 +37,7 @@ public class Card
     public ObjectProperties objectProperties1;
     public ObjectProperties objectProperties2;
 
-    public int actionCost;
-    public int actionEnergyCost;
-    public int ecologyRate;
-    public int acceptationRate;
+    public CardStat cardStats = new CardStat();
     public Stat stats = new Stat();
     
     public GameObject cardObject;

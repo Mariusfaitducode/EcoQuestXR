@@ -7,18 +7,26 @@ using UnityEngine;
 
 public class GlobalStats
 {
-    internal int currentMoneyInBank;
-    internal int currentEnergyInStock;
-    internal int overallEcologyRate;
-    internal int overallPopulationAcceptationRate;
+    internal float currentMoneyInBank;
+    internal float currentEnergyInStock;
+    internal float currentEmittedCo2;
+    internal float currentWasteProduced;
+    
+    internal float overallEcologyRate;
+    internal float overallSocietyRate;
 }
 
 public class StatManager : MonoBehaviour
 {
     public GameManager gameManager;
     public DisplayDashboard displayDashboard;
-    public int initialMoneyInBank = 0;
-    public int initialEnergyInStock = 0;
+    
+    public float initialMoneyInBank = 0;
+    public float initialEnergyInStock = 0;
+    public float initialEmittedCo2 = 0;
+    public float initialWasteProduced = 0;
+    
+    public float maxGreenSpaces = 100000f;
     
     internal Stat objectsStats = new Stat();
     internal GlobalStats globalStats = new GlobalStats();
@@ -29,8 +37,11 @@ public class StatManager : MonoBehaviour
     {
         // Initialize the global stats and objects stats
         objectsStats.Reset();
+        
         globalStats.currentMoneyInBank = initialMoneyInBank;
         globalStats.currentEnergyInStock = initialEnergyInStock;
+        globalStats.currentEmittedCo2 = initialEmittedCo2;
+        globalStats.currentWasteProduced = initialWasteProduced;
         
         // Initialize the citizens gestion
         citizensGestion.CitizensGestionStartInitialization();
@@ -44,6 +55,7 @@ public class StatManager : MonoBehaviour
     public void UpdateGlobalStatsFromCardEvent(Card card)
     {
         StatUtils.UpdateGlobalStatsFromCard(globalStats, card);
+        
     }
 
     public void UpdateObjectStatsFromObjectsAndCitizensEvent(ObjectManager objectManager)
@@ -68,6 +80,7 @@ public class StatManager : MonoBehaviour
     
     private void UpdateDashboard()
     {
-        displayDashboard.UpdateFromStats(globalStats, objectsStats);
+        StatUtils.ComputeRates(globalStats, objectsStats, maxGreenSpaces);
+        displayDashboard.UpdateFromStats(globalStats, objectsStats, citizensGestion.maxPopSize, citizensGestion.citizens.Count, 0.5f, citizensGestion.GetDailyTransportModeUsers());
     }
 }

@@ -79,7 +79,7 @@ public class CardsInitialization
         // Calculate objects stats of the card
         foreach (Card card in cards)
         {
-            StatUtils.GetObjectStat(card);
+            CardUtils.GetObjectStat(card);
         }
         
         // Calculate card stats

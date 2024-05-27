@@ -10,6 +10,8 @@ public class DriveInArea : MonoBehaviour
     public float speed = 5f;
     public float treshold = 0.05f;
     
+    public float roadStep = 0.5f;
+    
     internal AreaCell[,] areaGrid;
     // internal float mapScale;
     
@@ -20,61 +22,89 @@ public class DriveInArea : MonoBehaviour
 
     public bool stopped;
 
+    internal bool initialized = false;
+
     
-    // Start is called before the first frame update
     void Start()
     {
         agentManager = FindObjectOfType<AgentManager>();
-
-        if (agentManager != null)
-        {
-            areaGrid = agentManager.areas.Find(a => a.data.type == areaType).areaGrid;
-
-            float minDistance = float.MaxValue;
-            
-            foreach (AreaCell cell in areaGrid)
-            {
-                float distance = Vector3.Distance(this.transform.position, cell.cellPosition.transform.position * agentManager.mapScale);
-                
-                if (cell.type == CellType.Road && distance < minDistance)
-                {
-                    minDistance = distance;
-                    actualCell = cell;
-                }
-            }
-
-            this.transform.position = actualCell.cellPosition.transform.position * agentManager.mapScale;
-
-            SearchNeighbour();
-        }
-
         
+        // Initialize();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
 
-        if (!agentManager.timer.isTimePaused)
+        if (agentManager != null && agentManager.areas != null && agentManager.areas.Count > 0 && !initialized)
         {
-            Vector3 direction = (nextCell.cellPosition.transform.position * agentManager.mapScale) - (actualCell.cellPosition.transform.position * agentManager.mapScale);
-        
-            this.transform.Translate(direction * speed * Time.deltaTime);
+            Initialize();
+            initialized = true; 
+        }
 
-            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position * agentManager.mapScale)) < treshold)
+
+        if (initialized && !agentManager.timer.isTimePaused)
+        {
+            
+        
+            this.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+            
+
+            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position)) < treshold)
             {
                 ChangeTarget();
             }
         }
     }
 
+    
+    void Initialize()
+    {
+        areaGrid = agentManager.areas.Find(a => a.data.type == areaType).areaGrid;
+
+        float minDistance = float.MaxValue;
+        
+        foreach (AreaCell cell in areaGrid)
+        {
+            float distance = Vector3.Distance(this.transform.position, cell.cellPosition.transform.position);
+            
+            if (cell.type == CellType.Road && distance < minDistance)
+            {
+                minDistance = distance;
+                actualCell = cell;
+            }
+        }
+
+        this.transform.position = actualCell.cellPosition.transform.position;
+
+
+        SearchNeighbour();
+        
+        Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
+        
+        Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
+        
+        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight * roadStep);
+
+        
+    }
 
     void ChangeTarget()
     {
+        
         lastCell = actualCell;
         actualCell = nextCell;
         
         SearchNeighbour();
+        
+        Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
+        
+        Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
+        
+        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight.normalized * roadStep);
+
+        // this.transform.position = actualCell.cellPosition.transform.position ;
+        
     }
 
     void SearchNeighbour()
@@ -122,6 +152,7 @@ public class DriveInArea : MonoBehaviour
         {
             nextCell = validCells[Random.Range(0, validCells.Count)];
         }
+        
         
     }
 }

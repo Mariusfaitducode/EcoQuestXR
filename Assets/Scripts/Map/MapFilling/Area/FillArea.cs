@@ -14,6 +14,50 @@ public static class FillArea
 
         // mapDisplay.DrawTexture(TextureGenerator.TextureFromHeightMap(areaNoiseMap), area.noiseRenderer);
         
+        
+        // Instantiate first objects
+
+        foreach (AreaPrefab areaPrefab in area.data.aloneNecessaryPrefabs)
+        {
+            if (areaPrefab.prefabLow == null)
+            {
+                Debug.LogError("Prefab is null");
+                continue;
+            }
+            
+            bool placed = false;
+            int maxIterations = 1000;
+
+            while (!placed)
+            {
+                
+                int x = Random.Range(0, size);
+                int y = Random.Range(0, size);
+
+                Vector3 testPosition = area.areaGrid[x, y].cellPosition.transform.position;
+
+                if (FillMapUtils.IsVertexInsideCircle(testPosition, area.sphere.transform.position,
+                        area.data.startRadius))
+                {
+                    if (ObjectUtils.CanPlaceBuilding(new Vector2Int(x, y), areaPrefab.size, area.areaGrid))
+                    {
+                        ObjectUtils.PlaceBuilding(areaPrefab, area, new Vector2Int(x, y), false, prefabScale);
+                        placed = true;
+
+                    }
+                }
+                maxIterations--;
+                if (maxIterations <= 0)
+                {
+                    Debug.LogError("No place possible for the prefab: " + areaPrefab.prefabLow.name);
+                    break;
+                }
+            }
+            
+        }
+        
+        
+        
         for (int x = 0; x < size; x++)
         {
             for (int y = 0; y < size; y++)
@@ -44,23 +88,24 @@ public static class FillArea
                     }
                 }
                 // Generate buildings 
-                else if (area.data.prefabs.Count > 0 && area.areaGrid[x, y].type == CellType.Empty)
+                else if (area.data.randomPrefabs.Count > 0 && area.areaGrid[x, y].type == CellType.Empty)
                 {
                     if (FillMapUtils.IsVertexInsideCircle(newPosition, area.sphere.transform.position,
                         area.data.startRadius))
                     {
-                        AreaPrefab areaPrefab = ChooseRandomPrefab(area.data.prefabs, areaNoiseMap[x, y]);
+                        AreaPrefab areaPrefab = ChooseRandomPrefab(area.data.randomPrefabs, areaNoiseMap[x, y]);
                         
                         if (areaPrefab.prefabLow == null)
                         {
                             continue;
                         }
-                        
-                        bool rotate = Random.Range(0, 100) < 30;
+
+                        bool rotate = false;
                         
                         // Rotate randomly the prefab
-                        if (rotate)
+                        if (Random.Range(0, 100) < areaPrefab.rotation * 100)
                         {
+                            rotate = true;
                             areaPrefab.size = new Vector2Int(areaPrefab.size.y, areaPrefab.size.x);
                             // areaPrefab.prefabLow.transform.Rotate(Vector3.up, 90);
                         }

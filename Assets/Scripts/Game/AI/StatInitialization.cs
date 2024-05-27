@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using System.Reflection;
 using System.IO;
@@ -19,38 +20,39 @@ public static class StatInitialization
         var lines = csvFile.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var line in lines)
         {
+            // TODO : change index column to variable name
             var parts = line.Split(',');
             switch (parts[0])
             {
                 case "meanHealth":
-                    healthProbs.mean = float.Parse(parts[1]);
+                    healthProbs.mean =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "stddevHealth":
-                    healthProbs.stddev = float.Parse(parts[1]);
+                    healthProbs.stddev =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "meanHappiness":
-                    happinessProbs.mean = float.Parse(parts[1]);
+                    happinessProbs.mean =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "stddevHappiness":
-                    happinessProbs.stddev = float.Parse(parts[1]);
+                    happinessProbs.stddev =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "meanSensibilisation":
-                    sensibilisationProbs.mean = float.Parse(parts[1]);
+                    sensibilisationProbs.mean =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "stddevSensibilisation":
-                    sensibilisationProbs.stddev = float.Parse(parts[1]);
+                    sensibilisationProbs.stddev =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "meanDistanceToWorkplace":
-                    distanceProbs.mean = float.Parse(parts[1]);
+                    distanceProbs.mean =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "stddevDistanceToWorkplace":
-                    distanceProbs.stddev = float.Parse(parts[1]);
+                    distanceProbs.stddev =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "meanSalary":
-                    salaryProbs.mean = float.Parse(parts[1]);
+                    salaryProbs.mean =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 case "stddevSalary":
-                    salaryProbs.stddev = float.Parse(parts[1]);
+                    salaryProbs.stddev =float.Parse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture);
                     break;
                 default:
                     Debug.LogError("Unknown probability type: " + parts[0]);

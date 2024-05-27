@@ -17,6 +17,13 @@ MonoBehaviour:
   areaId: 5
   radius: 22
   startRadius: 18
-  pavilionWidth: 2
+  pavilionWidth: 4
   pavilionHeightMean: 7
-  prefabs: []
+  fillPercent: 0
+  aloneNecessaryPrefabs: []
+  randomPrefabs:
+  - prefabLow: {fileID: 4100688790574372206, guid: 33dd08738778be7448ff988a774ec052,
+      type: 3}
+    size: {x: 4, y: 4}
+    weight: 20
+    rotation: 0

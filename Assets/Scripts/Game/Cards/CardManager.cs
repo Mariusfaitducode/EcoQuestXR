@@ -104,8 +104,6 @@ public class CardManager : MonoBehaviour
         {
             Debug.LogError("Parent Canvas not found");
         }
-        
-        
     }
     
     public void ValidateEvent()

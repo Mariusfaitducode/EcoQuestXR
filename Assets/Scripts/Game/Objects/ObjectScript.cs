@@ -17,6 +17,8 @@ public class ObjectScript : MonoBehaviour
     
     public DateTime constructionTime;
     
+    internal ModelGestion modelGestion;
+    
     
     
     public void InitObjectScript(ObjectProperties objectProperties, GameManager gameManager)
@@ -24,6 +26,36 @@ public class ObjectScript : MonoBehaviour
         this.objectProperties = objectProperties;
         this.gameManager = gameManager;
         this.constructionTime = gameManager.timer.currentTime;
+        
+        // Init modelGestion
+        
+        modelGestion = GetComponent<ModelGestion>();
+        
+        
+        
+        
+        // Init subModels
+        
+        if (modelGestion != null && objectProperties.subObjects.Count > 0)
+        {
+            foreach (SubObjects subObject in objectProperties.subObjects)
+            {
+                SubModel subModel = modelGestion.subObjects.Find(x => x.gameObject.name == subObject.prefabName);
+                
+                // if (subModel)
+                // {
+                //     if (UnityEngine.Random.value < subModel.initiationProbability)
+                //     {
+                //         GameObject subObjectInstance = Instantiate(subModel.gameObject, transform);
+                //         subObjectInstance.transform.localPosition = Vector3.zero;
+                //     }
+                // }
+                // else
+                // {
+                //     Debug.LogError("");
+                // }
+            }
+        }
     }
     
     public int GetMonthsSinceConstruction()
@@ -31,4 +63,32 @@ public class ObjectScript : MonoBehaviour
         TimeSpan timeSpan = gameManager.timer.currentTime - constructionTime;
         return (int)(timeSpan.Days / 30);
     }
+
+    public void upgradeStats(int idSubObject)
+    {
+        foreach (SubObjects subObject in objectProperties.subObjects)
+        {
+             if (subObject.id == idSubObject)
+             {
+                 objectProperties.stats.Add(subObject.stats);
+                 return;
+             }
+        }
+        Debug.LogError("SubObject not found");
+    }
+    
+    public void downgradeStats(int idSubObject)
+    {
+        foreach (SubObjects subObject in objectProperties.subObjects)
+        {
+             if (subObject.id == idSubObject)
+             {
+                 objectProperties.stats.Substract(subObject.stats);
+                 return;
+             }
+        }
+        Debug.LogError("SubObject not found");
+    }
+    
+    
 }

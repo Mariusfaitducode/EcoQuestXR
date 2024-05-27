@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using System.IO;
 using System.Reflection;
@@ -67,6 +68,17 @@ public class LoadDatas
             else
             {
                 Debug.LogError($"Failed to parse '{row[index]}' as int for property '{header[index]}'");
+            }
+        }
+        else if (propertyInfo.PropertyType == typeof(float))
+        {
+            if (float.TryParse(row[index], NumberStyles.Float, CultureInfo.InvariantCulture, out float parsedValue))
+            {
+                value = parsedValue;
+            }
+            else
+            {
+                Debug.LogError($"Failed to parse '{row[index]}' as float for property '{header[index]}'");
             }
         }
         else

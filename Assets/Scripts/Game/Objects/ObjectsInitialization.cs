@@ -46,7 +46,7 @@ public class ObjectsInitialization
                         continue;
                     }
                     
-                    string[] subObjectsIds = row[i].Split(';');
+                    string[] subObjectsIds = row[i].Split('&');
                     foreach (string subObjectId in subObjectsIds)
                     {
                         int id = int.Parse(subObjectId);

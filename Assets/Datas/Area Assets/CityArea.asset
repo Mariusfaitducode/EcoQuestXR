@@ -20,50 +20,59 @@ MonoBehaviour:
   pavilionWidth: 2
   pavilionHeightMean: 5
   fillPercent: 0.485
-  prefabs:
+  aloneNecessaryPrefabs:
+  - prefabLow: {fileID: 7262053376970419587, guid: 5a32d2d4431c232429cb83101fe7093e,
+      type: 3}
+    size: {x: 2, y: 2}
+    weight: 0
+    rotation: 0
+  randomPrefabs:
   - prefabLow: {fileID: 0}
-    prefabHigh: {fileID: 0}
     size: {x: 2, y: 1}
-    weight: 20
+    weight: 50
+    rotation: 0
   - prefabLow: {fileID: 4612296548124279640, guid: cbf99d19c6ba6974fa4cf5d705b1f78a,
       type: 3}
-    prefabHigh: {fileID: 4612296548124279640, guid: cbf99d19c6ba6974fa4cf5d705b1f78a,
-      type: 3}
     size: {x: 1, y: 1}
-    weight: 50
-  - prefabLow: {fileID: 2017494421900197311, guid: e9cccf310de149d4093ed7a6f655fce6,
-      type: 3}
-    prefabHigh: {fileID: 2017494421900197311, guid: e9cccf310de149d4093ed7a6f655fce6,
-      type: 3}
-    size: {x: 2, y: 2}
-    weight: 1
+    weight: 10
+    rotation: 0
   - prefabLow: {fileID: 3860872942591694430, guid: f18580293fde27d4580b9f2f77d6118a,
       type: 3}
-    prefabHigh: {fileID: 3860872942591694430, guid: f18580293fde27d4580b9f2f77d6118a,
-      type: 3}
     size: {x: 2, y: 2}
     weight: 1
+    rotation: 0
   - prefabLow: {fileID: 8034318272881383517, guid: d0a04bf70d63402488e4d6e7403daa7e,
       type: 3}
-    prefabHigh: {fileID: 8034318272881383517, guid: d0a04bf70d63402488e4d6e7403daa7e,
-      type: 3}
     size: {x: 2, y: 2}
     weight: 10
-  - prefabLow: {fileID: 281201471332564665, guid: b3b89a3d31ec9024f9eb06212a388cf6,
-      type: 3}
-    prefabHigh: {fileID: 281201471332564665, guid: b3b89a3d31ec9024f9eb06212a388cf6,
+    rotation: 0
+  - prefabLow: {fileID: 4131531963342976478, guid: 51ab39ca52d80804e9fdaa55194d20af,
       type: 3}
     size: {x: 2, y: 2}
-    weight: 10
+    weight: 20
+    rotation: 0
   - prefabLow: {fileID: 5378830747987659341, guid: 9622728ce307cb94e824e88c1de3ee38,
       type: 3}
-    prefabHigh: {fileID: 5378830747987659341, guid: 9622728ce307cb94e824e88c1de3ee38,
-      type: 3}
     size: {x: 2, y: 2}
-    weight: 20
+    weight: 5
+    rotation: 0
   - prefabLow: {fileID: 8895362074246040232, guid: e8b5017f588f18b429bdf90751c04bd9,
       type: 3}
-    prefabHigh: {fileID: 8895362074246040232, guid: e8b5017f588f18b429bdf90751c04bd9,
-      type: 3}
     size: {x: 2, y: 1}
-    weight: 20
+    weight: 5
+    rotation: 0
+  - prefabLow: {fileID: 4954307939424930930, guid: 9af6e83a2caef8b4597a94ee3c521a50,
+      type: 3}
+    size: {x: 2, y: 2}
+    weight: 5
+    rotation: 0
+  - prefabLow: {fileID: 3579080388034519101, guid: bb89afd56fd25af4c9f5c524f0f6e717,
+      type: 3}
+    size: {x: 2, y: 2}
+    weight: 10
+    rotation: 0
+  - prefabLow: {fileID: 7251580807725887293, guid: 5c2484bc1f97287469544f8bff4a44e4,
+      type: 3}
+    size: {x: 2, y: 2}
+    weight: 5
+    rotation: 0
