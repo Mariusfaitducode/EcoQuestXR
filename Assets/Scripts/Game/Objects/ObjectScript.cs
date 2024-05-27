@@ -31,4 +31,32 @@ public class ObjectScript : MonoBehaviour
         TimeSpan timeSpan = gameManager.timer.currentTime - constructionTime;
         return (int)(timeSpan.Days / 30);
     }
+
+    public void upgradeStats(int idSubObject)
+    {
+        foreach (SubObjects subObject in objectProperties.subObjects)
+        {
+             if (subObject.id == idSubObject)
+             {
+                 objectProperties.stats.Add(subObject.stats);
+                 return;
+             }
+        }
+        Debug.LogError("SubObject not found");
+    }
+    
+    public void downgradeStats(int idSubObject)
+    {
+        foreach (SubObjects subObject in objectProperties.subObjects)
+        {
+             if (subObject.id == idSubObject)
+             {
+                 objectProperties.stats.Substract(subObject.stats);
+                 return;
+             }
+        }
+        Debug.LogError("SubObject not found");
+    }
+    
+    
 }
