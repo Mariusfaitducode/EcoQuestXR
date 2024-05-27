@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 5731653505985435336}
   - component: {fileID: 9100326668761202678}
   m_Layer: 0
-  m_Name: building_4_etages
+  m_Name: hlm4Floors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

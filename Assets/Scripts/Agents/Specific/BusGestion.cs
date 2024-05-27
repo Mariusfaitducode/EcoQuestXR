@@ -40,7 +40,7 @@ public class BusGestion : MonoBehaviour
     {
         // Instantiate / Destroy buses with GameManager informations
         
-        Debug.Log("CurrentTime :"+currentTime);
+        // Debug.Log("CurrentTime :"+currentTime);
         
         if (gameManager != null)
         {
@@ -52,7 +52,7 @@ public class BusGestion : MonoBehaviour
         {
             busOut = true;
             
-            Debug.Log("BusGestion Instantiate buses");
+            // Debug.Log("BusGestion Instantiate buses");
             
             // Instantiate buses
             for (int i = 0; i< busQuantity; i++)
