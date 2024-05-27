@@ -101,6 +101,31 @@ public class Stat
         energyConsumptionPerMonth += stat.energyConsumptionPerMonth;
     }
     
+    public void Substract(Stat stat)
+    {
+        constructionCost -= stat.constructionCost;
+        destructionCost -= stat.destructionCost;
+        profitsPerMonth -= stat.profitsPerMonth;
+        lossesPerMonth -= stat.lossesPerMonth;
+        constructionCo2Emission -= stat.constructionCo2Emission;
+        destructionCo2Emission -= stat.destructionCo2Emission;
+        co2EmissionPerMonth -= stat.co2EmissionPerMonth;
+        co2AbsorptionPerMonth -= stat.co2AbsorptionPerMonth;
+        constructionWasteProduction -= stat.constructionWasteProduction;
+        destructionWasteProduction -= stat.destructionWasteProduction;
+        wasteProductionPerMonth -= stat.wasteProductionPerMonth;
+        wasteDestructionPerMonth -= stat.wasteDestructionPerMonth;
+        greenSpaces -= stat.greenSpaces;
+        populationSize -= stat.populationSize;
+        health -= stat.health;
+        happiness -= stat.happiness;
+        sensibilisation -= stat.sensibilisation;
+        energyConstructionCost -= stat.energyConstructionCost;
+        energyDestructionCost -= stat.energyDestructionCost;
+        energyProductionPerMonth -= stat.energyProductionPerMonth;
+        energyConsumptionPerMonth -= stat.energyConsumptionPerMonth;
+    }
+    
     public Stat Multiply(int value)
     {
         Stat stat = new Stat();
