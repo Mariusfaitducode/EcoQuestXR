@@ -21,12 +21,6 @@ public static class GameUtils
         }
         
         // Update global stats
-        statManager.UpdateGlobalStatsFromCardEvent(card);
-        
-        // Update populations stats
-        statManager.citizensGestion.ImpactPopulationStats(card.stats);
-        
-        // Update objects stats
-        statManager.UpdateObjectStatsFromObjectsAndCitizensEvent(objectManager);
+        statManager.UpdateStatsFromCardEvent(card);
     }
 }
