@@ -31,7 +31,7 @@ public static class StatUtils
     public static string ConvertPercentToText(float number)
     {
         // Display 2 decimal after the comma( ex: 0.12789456 -> 12.79%)
-        return (number).ToString("F1");
+        return (100 * number).ToString("F2");
     }
     
     public static string ConvertFloatToText(float number)
@@ -51,12 +51,12 @@ public static class StatUtils
             if (objScript.objectProperties != null && objScript.objectProperties.stats != null)
             {
                 globalStats.currentMoneyInBank += objScript.objectProperties.stats.profitsPerMonth;
-                globalStats.currentEnergyInStock += objScript.objectProperties.stats.energyConsumptionPerMonth;
+                globalStats.currentEnergyInStock += objScript.objectProperties.stats.energyProductionPerMonth;
                 globalStats.currentEmittedCo2 += objScript.objectProperties.stats.co2EmissionPerMonth;
                 globalStats.currentWasteProduced += objScript.objectProperties.stats.wasteProductionPerMonth;
                 
                 globalStats.currentMoneyInBank -= objScript.objectProperties.stats.lossesPerMonth;
-                globalStats.currentEnergyInStock -= objScript.objectProperties.stats.energyProductionPerMonth;
+                globalStats.currentEnergyInStock -= objScript.objectProperties.stats.energyConsumptionPerMonth;
                 globalStats.currentEmittedCo2 -= objScript.objectProperties.stats.co2AbsorptionPerMonth;
                 globalStats.currentWasteProduced -= objScript.objectProperties.stats.wasteDestructionPerMonth;
             }
@@ -93,10 +93,15 @@ public static class StatUtils
         objectsStats.Overwrite(citizensGestion.GetCitizensStats());
     }
 
-    public static void ComputeRates(GlobalStats globalStats, Stat stats, float maxWasteProduced, float maxCo2Emission, float maxGreenSpaces)
+    public static void ComputeRates(GlobalStats globalStats, Stat stats, float maxGreenSpaces)
     {
         globalStats.overallSocietyRate = (stats.health + stats.happiness + stats.sensibilisation) / 3;
-        globalStats.overallEcologyRate = (stats.greenSpaces / maxGreenSpaces) + 1 - (globalStats.currentWasteProduced / maxWasteProduced + globalStats.currentEmittedCo2 / maxCo2Emission);
+        
+        float netCo2Emitted = (stats.co2EmissionPerMonth - stats.co2AbsorptionPerMonth) / globalStats.currentEmittedCo2;
+        float netWasteProduced = (stats.wasteProductionPerMonth - stats.wasteDestructionPerMonth) / globalStats.currentWasteProduced;
+        float netGreenSpaces = stats.greenSpaces / maxGreenSpaces;
+        
+        globalStats.overallEcologyRate = 1 - (netCo2Emitted + netWasteProduced) / 2 + netGreenSpaces;
     }
     
     public static void UpdateGlobalStatsFromCard(GlobalStats globalStats, Card card)

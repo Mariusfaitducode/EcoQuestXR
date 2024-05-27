@@ -26,9 +26,7 @@ public class StatManager : MonoBehaviour
     public float initialEmittedCo2 = 0;
     public float initialWasteProduced = 0;
     
-    public float maxCo2Emitted = 1000000f;
-    public float maxWasteProduced = 1000000f;
-    public float maxGreenSpaces = 1000000f;
+    public float maxGreenSpaces = 100000f;
     
     internal Stat objectsStats = new Stat();
     internal GlobalStats globalStats = new GlobalStats();
@@ -82,7 +80,7 @@ public class StatManager : MonoBehaviour
     
     private void UpdateDashboard()
     {
-        StatUtils.ComputeRates(globalStats, objectsStats, maxWasteProduced, maxCo2Emitted, maxGreenSpaces);
+        StatUtils.ComputeRates(globalStats, objectsStats, maxGreenSpaces);
         displayDashboard.UpdateFromStats(globalStats, objectsStats, citizensGestion.maxPopSize, citizensGestion.citizens.Count, 0.5f, citizensGestion.GetDailyTransportModeUsers());
     }
 }
