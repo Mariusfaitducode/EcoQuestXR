@@ -38,28 +38,28 @@ public class DisplayDashboard : MonoBehaviour
     
     public void UpdateFromStats(GlobalStats globalStats, Stat objectsStats)
     {
-        totalMoneyText.text = StatUtils.ConvertNumberToText(globalStats.currentMoneyInBank);
-        totalEnergyText.text = StatUtils.ConvertNumberToText(globalStats.currentEnergyInStock);
-        ecologyText.text = StatUtils.ConvertNumberToText(globalStats.overallEcologyRate);
-        populationAcceptationText.text = StatUtils.ConvertNumberToText(globalStats.overallPopulationAcceptationRate);
-        
-        profitsText.text = StatUtils.ConvertNumberToText(objectsStats.profits);
-        lossesText.text = StatUtils.ConvertNumberToText(objectsStats.losses);
-        constructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.constructionCost);
-        destructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.destructionCost);
-        
-        energyProductionText.text = StatUtils.ConvertNumberToText(objectsStats.energyProduction);
-        energyConsumptionText.text = StatUtils.ConvertNumberToText(objectsStats.energyConsumption);
-        energyConstructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.energyConstructionCost);
-        energyDestructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.energyDestructionCost);
-        
-        biodiversityText.text = StatUtils.ConvertNumberToText(objectsStats.biodiversity);
-        airQualityText.text = StatUtils.ConvertNumberToText(objectsStats.airQuality);
-        groundQualityText.text = StatUtils.ConvertNumberToText(objectsStats.groundQuality);
-        
-        populationSensibilisationText.text = StatUtils.ConvertPercentToText(objectsStats.sensibilisation);
-        populationSizeText.text = StatUtils.ConvertNumberToText(objectsStats.size);
-        populationHealthText.text = StatUtils.ConvertPercentToText(objectsStats.health);
-        populationHappinessText.text = StatUtils.ConvertPercentToText(objectsStats.happiness);
+        // totalMoneyText.text = StatUtils.ConvertNumberToText(globalStats.currentMoneyInBank);
+        // totalEnergyText.text = StatUtils.ConvertNumberToText(globalStats.currentEnergyInStock);
+        // ecologyText.text = StatUtils.ConvertNumberToText(globalStats.overallEcologyRate);
+        // populationAcceptationText.text = StatUtils.ConvertNumberToText(globalStats.overallPopulationAcceptationRate);
+        //
+        // profitsText.text = StatUtils.ConvertNumberToText(objectsStats.profits);
+        // lossesText.text = StatUtils.ConvertNumberToText(objectsStats.losses);
+        // constructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.constructionCost);
+        // destructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.destructionCost);
+        //
+        // energyProductionText.text = StatUtils.ConvertNumberToText(objectsStats.energyProduction);
+        // energyConsumptionText.text = StatUtils.ConvertNumberToText(objectsStats.energyConsumption);
+        // energyConstructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.energyConstructionCost);
+        // energyDestructionCostText.text = StatUtils.ConvertNumberToText(objectsStats.energyDestructionCost);
+        //
+        // biodiversityText.text = StatUtils.ConvertNumberToText(objectsStats.biodiversity);
+        // airQualityText.text = StatUtils.ConvertNumberToText(objectsStats.airQuality);
+        // groundQualityText.text = StatUtils.ConvertNumberToText(objectsStats.groundQuality);
+        //
+        // populationSensibilisationText.text = StatUtils.ConvertPercentToText(objectsStats.sensibilisation);
+        // populationSizeText.text = StatUtils.ConvertNumberToText(objectsStats.size);
+        // populationHealthText.text = StatUtils.ConvertPercentToText(objectsStats.health);
+        // populationHappinessText.text = StatUtils.ConvertPercentToText(objectsStats.happiness);
     }
 }
