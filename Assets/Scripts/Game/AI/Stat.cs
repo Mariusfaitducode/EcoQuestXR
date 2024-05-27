@@ -29,27 +29,27 @@ public enum statType
 
 public class Stat
 {
-    public int constructionCost { get; set; }
-    public int destructionCost { get; set; }
-    public int profitsPerMonth { get; set; }
-    public int lossesPerMonth { get; set; }
-    public int constructionCo2Emission { get; set; }
-    public int destructionCo2Emission { get; set; }
-    public int co2EmissionPerMonth { get; set; }
-    public int co2AbsorptionPerMonth { get; set; }
-    public int constructionWasteProduction { get; set; }
-    public int destructionWasteProduction { get; set; }
-    public int wasteProductionPerMonth { get; set; }
-    public int wasteDestructionPerMonth { get; set; }
-    public int greenSpaces { get; set; }
+    public float constructionCost { get; set; }
+    public float destructionCost { get; set; }
+    public float profitsPerMonth { get; set; }
+    public float lossesPerMonth { get; set; }
+    public float constructionCo2Emission { get; set; }
+    public float destructionCo2Emission { get; set; }
+    public float co2EmissionPerMonth { get; set; }
+    public float co2AbsorptionPerMonth { get; set; }
+    public float constructionWasteProduction { get; set; }
+    public float destructionWasteProduction { get; set; }
+    public float wasteProductionPerMonth { get; set; }
+    public float wasteDestructionPerMonth { get; set; }
+    public float greenSpaces { get; set; }
     public int populationSize { get; set; }
     public float health { get; set; }
     public float happiness { get; set; }
     public float sensibilisation { get; set; }
-    public int energyConstructionCost { get; set; }
-    public int energyDestructionCost { get; set; }
-    public int energyProductionPerMonth { get; set; }
-    public int energyConsumptionPerMonth { get; set; }
+    public float energyConstructionCost { get; set; }
+    public float energyDestructionCost { get; set; }
+    public float energyProductionPerMonth { get; set; }
+    public float energyConsumptionPerMonth { get; set; }
 
     public void Reset()
     {

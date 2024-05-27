@@ -7,16 +7,16 @@ using UnityEngine;
 
 public class GlobalStats
 {
-    internal int currentMoneyInBank;
+    internal float currentMoneyInBank;
     
-    internal int currentEnergyInStock;
+    internal float currentEnergyInStock;
     
-    internal int currentEmittedCo2;
-    internal int currentWasteProduced;
+    internal float currentEmittedCo2;
+    internal float currentWasteProduced;
     
     
-    internal int overallEcologyRate;
-    internal int overallPopulationAcceptationRate;
+    internal float overallEcologyRate;
+    internal float overallPopulationAcceptationRate;
 }
 
 public class StatManager : MonoBehaviour
@@ -24,10 +24,10 @@ public class StatManager : MonoBehaviour
     public GameManager gameManager;
     public DisplayDashboard displayDashboard;
     
-    public int initialMoneyInBank = 0;
-    public int initialEnergyInStock = 0;
-    public int initialEmittedCo2 = 0;
-    public int initialWasteProduced = 0;
+    public float initialMoneyInBank = 0;
+    public float initialEnergyInStock = 0;
+    public float initialEmittedCo2 = 0;
+    public float initialWasteProduced = 0;
     
     internal Stat objectsStats = new Stat();
     internal GlobalStats globalStats = new GlobalStats();

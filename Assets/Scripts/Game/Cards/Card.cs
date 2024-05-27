@@ -12,13 +12,13 @@ public enum CardType {
 
 public class CardStat
 {
-    public int actionCost;
-    public int actionEnergyCost;
-    public int actionCo2Emission;
-    public int actionWasteProduction;
+    public float actionCost;
+    public float actionEnergyCost;
+    public float actionCo2Emission;
+    public float actionWasteProduction;
     
-    public int ecologyRate;
-    public int acceptationRate;
+    public float ecologyRate;
+    public float acceptationRate;
 }
 
 public class Card
