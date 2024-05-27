@@ -31,7 +31,7 @@ public static class StatUtils
     public static string ConvertPercentToText(float number)
     {
         // Display 2 decimal after the comma( ex: 0.12789456 -> 12.79%)
-        return (number * 100).ToString("F2");
+        return (number).ToString("F1");
     }
     
     public static string ConvertFloatToText(float number)

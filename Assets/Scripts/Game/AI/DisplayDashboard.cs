@@ -59,10 +59,10 @@ public class DisplayDashboard : MonoBehaviour
         currentEnergyInStockText.text = StatUtils.ConvertFloatToText(globalStats.currentEnergyInStock) + energyUnit;
         currentEmittedCo2Text.text = StatUtils.ConvertFloatToText(globalStats.currentEmittedCo2) + co2Unit;
         currentWasteProducedText.text = StatUtils.ConvertFloatToText(globalStats.currentWasteProduced) + wasteUnit;
-        currentGreenSpacesText.text = StatUtils.ConvertNumberToText(objectsStats.greenSpaces) + greenSpacesUnit;
+        currentGreenSpacesText.text = objectsStats.greenSpaces.ToString() + greenSpacesUnit;
         
-        maxPopSizeText.text = StatUtils.ConvertNumberToText(maxPopSize);
-        totalCitizensText.text = StatUtils.ConvertNumberToText(totalCitizens);
+        maxPopSizeText.text = maxPopSize.ToString();
+        totalCitizensText.text = totalCitizens.ToString();
         
         healthText.text = StatUtils.ConvertPercentToText(objectsStats.health) + percentUnit;
         happinessText.text = StatUtils.ConvertPercentToText(objectsStats.happiness) + percentUnit;
