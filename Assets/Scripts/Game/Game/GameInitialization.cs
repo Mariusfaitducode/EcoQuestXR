@@ -37,7 +37,8 @@ public static class GameInitialization
         agentManager.SetTimerInformations(timer);
         
         // Citizens and Dashboard
-        statManager.InitDashboardEvent(objectManager);
+        statManager.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
+        statManager.InitDashboard(objectManager);
         
         // Events
         InstantiatePeriodicEvents(eventsGestion, timer.currentTime, cardManager, statManager, objectManager);
@@ -71,7 +72,7 @@ public static class GameInitialization
             "UpdateObjectStatsFromObjectsAndCitizensEvent",
             currentTime,
             new Interval { days = 1, months = 0, years = 0 }, 
-            () => statManager.UpdateObjectStatsFromObjectsAndCitizensEvent(objectManager));
+            () => statManager.DailyUpdateDashboardEvent());
         
         eventsGestion.periodicEvents.Add(draftEvent);
         eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);

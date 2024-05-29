@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using System.IO;
 using System.Reflection;
@@ -71,7 +72,7 @@ public class LoadDatas
         }
         else if (propertyInfo.PropertyType == typeof(float))
         {
-            if (float.TryParse(row[index].Replace('.',','), out float parsedValue))
+            if (float.TryParse(row[index], NumberStyles.Float, CultureInfo.InvariantCulture, out float parsedValue))
             {
                 value = parsedValue;
             }
@@ -82,7 +83,6 @@ public class LoadDatas
         }
         else
         {
-            Debug.Log(" TEST : " + row[index]);
             value = Convert.ChangeType(row[index], propertyInfo.PropertyType);
         }
         // propertyInfo.SetValue(newCard, value, null);

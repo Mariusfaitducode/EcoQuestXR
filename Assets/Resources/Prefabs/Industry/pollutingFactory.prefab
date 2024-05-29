@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3359571835714421925}
   - component: {fileID: 8658582045821384444}
   m_Layer: 0
-  m_Name: polluantFactory
+  m_Name: pollutingFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

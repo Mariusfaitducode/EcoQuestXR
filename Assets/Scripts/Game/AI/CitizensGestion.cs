@@ -9,6 +9,22 @@ public class Probability
     public float stddev;
 }
 
+public class CitizensStats
+{
+    internal float happiness = 0;
+    internal float health = 0;
+    internal float sensibilisation = 0;
+    internal float acceptation = 0;
+    
+    public void Reset()
+    {
+        happiness = 0;
+        health = 0;
+        sensibilisation = 0;
+        acceptation = 0;
+    }
+}
+
 public class TransportMode
 {
     public int id { get; set; }
@@ -55,9 +71,16 @@ public class CitizensGestion
 {
     internal List<Citizen> citizens = new List<Citizen>();
     
-    internal float initialPercentageOfCitizens = 0.8f;
+    internal CitizensStats citizensStats = new CitizensStats();
+    internal string dailyTransportsUsers = "";
+    internal Stat dailyTransportsStats = new Stat();
     
-    internal int maxPopSize = 0;
+    internal float initialPercentageOfCitizens = 0.8f;
+    internal float percentageOfCitizens = 0.8f;
+    internal Vector2 factorOfStatsChagement = new Vector2(0.9f, 0.1f);
+    
+    public int maxPopSize = 1000;
+    internal int totalHouseholds = 0;
     internal int totalCitizens = 0;
 
     public string pathCSVPopulationStats = "Csv/initialPopStats";
@@ -101,17 +124,17 @@ public class CitizensGestion
         return new Citizen(GenerateCitizenStats());
     }
     
-    public void ImpactPopulationStats(Stat stats, float percentage = 0.1f)
+    public void UpdatePopulationStatsFromCard(Stat cardStats, float percentOfPopulation = 0.1f)
     {
         // Update the mean of the population stats
-        healthProbs.mean += stats.health;
-        happinessProbs.mean += stats.happiness;
-        sensibilisationProbs.mean += stats.sensibilisation;
+        healthProbs.mean = (healthProbs.mean * factorOfStatsChagement.x) + (cardStats.health * factorOfStatsChagement.y);
+        happinessProbs.mean += (happinessProbs.mean * factorOfStatsChagement.x) + (cardStats.happiness * factorOfStatsChagement.y);
+        sensibilisationProbs.mean += (sensibilisationProbs.mean * factorOfStatsChagement.x) + (cardStats.sensibilisation * factorOfStatsChagement.y);
         
         DisplayInitialProbs();
         
         // Replace a part of the population
-        int number = (int)(percentage * maxPopSize);
+        int number = (int)(percentOfPopulation * totalCitizens);
         RemoveCitizens(number);
         GenerateCitizens(number);
     }
@@ -166,16 +189,15 @@ public class CitizensGestion
     
     public void GenerateInitialsCitizens(int maxPopSize)
     {
-        this.maxPopSize = maxPopSize;
+        totalHouseholds = maxPopSize;
+        totalCitizens = (int)(initialPercentageOfCitizens * maxPopSize);
         
-        int numberOfCitizens = (int)(initialPercentageOfCitizens * maxPopSize);
-        
-        for (int i = 0; i < numberOfCitizens; i++)
+        for (int i = 0; i < totalCitizens; i++)
         {
             citizens.Add(GenerateCitizen());
         }
         
-        Debug.Log("Generated " + numberOfCitizens + " citizens.");
+        Debug.Log("Generated " + totalCitizens + " citizens.");
     }
     
     public void GenerateCitizens(int number)
@@ -195,18 +217,16 @@ public class CitizensGestion
         }
     }
 
-    public Stat GetCitizensStats()
+    public void UpdateCitizensStats()
     {
-        Stat stats = new Stat();
-        stats.Reset();
+        citizensStats.Reset();
 
         foreach (Citizen citizen in citizens) {
-            stats.health += citizen.citizenStats.health / citizens.Count;
-            stats.happiness += citizen.citizenStats.happiness / citizens.Count;
-            stats.sensibilisation += citizen.citizenStats.sensibilisation / citizens.Count;
+            citizensStats.health += citizen.citizenStats.health / citizens.Count;
+            citizensStats.happiness += citizen.citizenStats.happiness / citizens.Count;
+            citizensStats.sensibilisation += citizen.citizenStats.sensibilisation / citizens.Count;
+            citizensStats.acceptation += citizen.citizenStats.acceptation / citizens.Count;
         }
-        
-        return stats;
     }
     
     private void ResetDailyUsers()
@@ -217,41 +237,43 @@ public class CitizensGestion
         }
     }
     
-    public string GetDailyTransportModeUsers()
+    public void UpdatePopulationSize(int newHouseholds)
     {
-        string message = " - Daily Users: \n";
+        int newCitizens = (int)(newHouseholds * percentageOfCitizens);
+        
+        if (newCitizens > 0)
+        {
+            GenerateCitizens(newCitizens);
+            totalCitizens += newCitizens;
+        }
+        else if (newCitizens < 0)
+        {
+            RemoveCitizens(-newCitizens);
+            totalCitizens -= newCitizens;
+        }
+    }
+    
+    private void UpdateDailyTransportModeUsers()
+    {
+        dailyTransportsUsers = "";
         foreach (TransportMode transportMode in availableTransportModes)
         {
-            message += transportMode.name + ": " + transportMode.dailyUsers + "\n";
+            dailyTransportsUsers += transportMode.name + ": " + transportMode.dailyUsers + "\n";
         }
-        return message;
     }
     
-    private void DisplayDailyUsers()
+    public void UpdateDailyTransportsStats()
     {
-        string message = GetDailyTransportModeUsers();
-        Debug.Log(message);
-    }
-    
-    public Stat ComputeInfluenceOnGlobalStats()
-    {
-        Stat totalCitizensStat = new Stat();
-        totalCitizensStat.Reset();
-        
+        dailyTransportsStats.Reset();
         ResetDailyUsers();
         
         foreach (Citizen citizen in citizens)
         {
             TransportMode transportMode = citizen.GetTransportMode(availableTransportModes);
             transportMode.dailyUsers++;
-            totalCitizensStat.Add(transportMode.stats);
+            dailyTransportsStats.Add(transportMode.stats);
         }
-        
-        
-        
-        totalCitizensStat.ResetPopulationStats();
-        DisplayDailyUsers();
-        
-        return totalCitizensStat;
+
+        UpdateDailyTransportModeUsers();
     }
 }

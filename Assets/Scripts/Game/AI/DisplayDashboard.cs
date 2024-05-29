@@ -50,34 +50,37 @@ public class DisplayDashboard : MonoBehaviour
         TimeText.text = currentTime.ToString("yyyy-MM-dd-HH:mm:ss");
     }
     
-    public void UpdateFromStats(GlobalStats globalStats, Stat objectsStats, int maxPopSize, int totalCitizens, float acceptation, string dailyTransportsUsers)
+    public void UpdateFromStats(StatManager statManager)
     {
-        overallEcologyRateTextText.text = StatUtils.ConvertPercentToText(globalStats.overallEcologyRate) + percentUnit;
-        overallSocietyRateText.text = StatUtils.ConvertPercentToText(globalStats.overallSocietyRate) + percentUnit;
+        // Global stats
+        overallEcologyRateTextText.text = StatUtils.ConvertPercentToText(statManager.globalStats.overallEcologyRate) + percentUnit;
+        overallSocietyRateText.text = StatUtils.ConvertPercentToText(statManager.globalStats.overallSocietyRate) + percentUnit;
+        currentMoneyInBankText.text = StatUtils.ConvertFloatToText(statManager.globalStats.currentMoneyInBank) + euros;
+        currentEnergyInStockText.text = StatUtils.ConvertFloatToText(statManager.globalStats.currentEnergyInStock) + energyUnit;
+        currentEmittedCo2Text.text = StatUtils.ConvertFloatToText(statManager.globalStats.currentEmittedCo2) + co2Unit;
+        currentWasteProducedText.text = StatUtils.ConvertFloatToText(statManager.globalStats.currentWasteProduced) + wasteUnit;
         
-        currentMoneyInBankText.text = StatUtils.ConvertFloatToText(globalStats.currentMoneyInBank) + euros;
-        currentEnergyInStockText.text = StatUtils.ConvertFloatToText(globalStats.currentEnergyInStock) + energyUnit;
-        currentEmittedCo2Text.text = StatUtils.ConvertFloatToText(globalStats.currentEmittedCo2) + co2Unit;
-        currentWasteProducedText.text = StatUtils.ConvertFloatToText(globalStats.currentWasteProduced) + wasteUnit;
-        currentGreenSpacesText.text = objectsStats.greenSpaces.ToString() + greenSpacesUnit;
+        // Citizens stats
+        maxPopSizeText.text = statManager.citizensGestion.totalHouseholds.ToString();
+        totalCitizensText.text = statManager.citizensGestion.totalCitizens.ToString();
         
-        maxPopSizeText.text = maxPopSize.ToString();
-        totalCitizensText.text = totalCitizens.ToString();
+        healthText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.health) + percentUnit;
+        happinessText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.happiness) + percentUnit;
+        sensibilisationText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.sensibilisation) + percentUnit;
+        acceptationText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.acceptation) + percentUnit;
         
-        healthText.text = StatUtils.ConvertPercentToText(objectsStats.health) + percentUnit;
-        happinessText.text = StatUtils.ConvertPercentToText(objectsStats.happiness) + percentUnit;
-        sensibilisationText.text = StatUtils.ConvertPercentToText(objectsStats.sensibilisation) + percentUnit;
-        acceptationText.text = StatUtils.ConvertPercentToText(acceptation) + percentUnit;
+        dailyTransportsUsersText.text = statManager.citizensGestion.dailyTransportsUsers;
         
-        dailyTransportsUsersText.text = dailyTransportsUsers;
+        // Objects stats
+        currentGreenSpacesText.text = statManager.objectsStats.greenSpaces.ToString() + greenSpacesUnit;
         
-        profitsPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.profitsPerMonth) + eurosPerMonth;
-        lossesPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.lossesPerMonth) + eurosPerMonth;
-        energyProductionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.energyProductionPerMonth) + energyUnitPerMonth;
-        energyConsumptionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.energyConsumptionPerMonth) + energyUnitPerMonth;
-        co2EmissionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.co2EmissionPerMonth) + co2UnitPerMonth;
-        co2AbsorptionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.co2AbsorptionPerMonth) + co2UnitPerMonth;
-        wasteProductionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.wasteProductionPerMonth) + wasteUnitPerMonth;
-        wasteDestructionPerMonthText.text = StatUtils.ConvertFloatToText(objectsStats.wasteDestructionPerMonth) + wasteUnitPerMonth;
+        profitsPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.profitsPerMonth) + eurosPerMonth;
+        lossesPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.lossesPerMonth) + eurosPerMonth;
+        energyProductionPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.energyProductionPerMonth) + energyUnitPerMonth;
+        energyConsumptionPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.energyConsumptionPerMonth) + energyUnitPerMonth;
+        co2EmissionPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.co2EmissionPerMonth) + co2UnitPerMonth;
+        co2AbsorptionPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.co2AbsorptionPerMonth) + co2UnitPerMonth;
+        wasteProductionPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.wasteProductionPerMonth) + wasteUnitPerMonth;
+        wasteDestructionPerMonthText.text = StatUtils.ConvertFloatToText(statManager.dashboardStats.wasteDestructionPerMonth) + wasteUnitPerMonth;
     }
 }

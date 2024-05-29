@@ -53,11 +53,17 @@ public class Citizen
             sum += probabilities[i];
             if (randomValue < sum)
             {
+                UpdateCitizenStatsFromTransportMode(transportModes[i]);
                 return transportModes[i];
             }
         }
         
         Debug.LogError("No transport mode found");
         return transportModes[0];
+    }
+    
+    private void UpdateCitizenStatsFromTransportMode(TransportMode transportMode)
+    {
+        citizenStats.health = (transportMode.stats.health * 0.05f) + (citizenStats.health * 0.95f);
     }
 }
