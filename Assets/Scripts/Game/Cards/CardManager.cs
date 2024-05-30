@@ -14,6 +14,8 @@ public class CardManager : MonoBehaviour
     public string cardsCSVPath = "Csv/cards";
 
     public GameObject cardPrefab;
+    public GameObject grabbableCard;
+
     public TextMeshProUGUI draftCounterSelectedCardsText;
 
     internal List<Card> cards;
@@ -23,7 +25,9 @@ public class CardManager : MonoBehaviour
     internal Card selectedDeckCard;
     
     public Canvas deckCanvas;
+    public GameObject deck;
     public Canvas draftCanvas;
+    public GameObject depot_zone; 
     
     internal List<GameObject> cardsLocationDeckPanels;
     internal List<GameObject> cardsLocationDraftPanels;
@@ -50,7 +54,7 @@ public class CardManager : MonoBehaviour
         
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
-        cardsLocationDeckPanels = DisplayCanvas.GetPanels(deckCanvas);
+        cardsLocationDeckPanels = DisplayCanvas.GetPanels(deck);
         DisplayCanvas.HideCanvas(draftCanvas);
 
         nbrDraftCards = cardsLocationDraftPanels.Count;
@@ -90,16 +94,17 @@ public class CardManager : MonoBehaviour
     
     public void SelectUnselectEvent(DisplayCard displayCard)
     {
+
         if (displayCard.GetParentCanvas() == draftCanvas)
         {
             nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards, selectedPileCards);
             DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         }
         // else if (displayCard.GetParentCanvas() == deckCanvas && !draftTime)
-        else if (displayCard.GetParentCanvas() == deckCanvas)
-        {
-            selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
-        }
+        //else if (displayCard.GetParentCanvas() == deckCanvas)
+        //{
+        //    selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
+        //}
         else
         {
             Debug.LogError("Parent Canvas not found");
@@ -114,8 +119,10 @@ public class CardManager : MonoBehaviour
         PileManager.TransferDraftedCards(selectedPileCards, deckCards);
         
         // Update Deck
-        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
-        
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCard, this, deckCanvas);
+        //deck.GetComponent<DeckController>().list_cards = cardsLocationDeckPanels;
+
+
         // Hide Canvas
         DisplayCanvas.HideCanvas(draftCanvas);
         
@@ -130,17 +137,22 @@ public class CardManager : MonoBehaviour
         
     }
 
-    public void PlayEvent()
+    public void PlayEvent(GameObject GrabbableCard)
     {
+
+        selectedDeckCard = GrabbableCard.GetComponentInChildren<DisplayCard>().GetCard();
+
         // Remove Selected Card
         PileManager.RemoveSelectedCard(deckCards, selectedDeckCard);
         
         // Update Deck
-        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, cardPrefab, this, deckCanvas);
-        
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCard, this, deckCanvas);
+        //deck.GetComponent<DeckController>().list_cards = cardsLocationDeckPanels;
+
+
         // TODO : Implement action on map
-        gameManager.ExecuteCardEvent(selectedDeckCard);
-        
+        //gameManager.ExecuteCardEvent(selectedDeckCard);
+        Debug.LogWarning("Card play");
         
         
         // Update Counter

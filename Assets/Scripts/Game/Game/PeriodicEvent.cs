@@ -31,6 +31,7 @@ public class PeriodicEvent
     {
         if (currentTime >= nextEventDateTime)
         {
+            Debug.Log(this.eventName);
             eventAction.Invoke();
             isEventActive = true;
 

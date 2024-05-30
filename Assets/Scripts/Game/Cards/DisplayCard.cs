@@ -39,7 +39,7 @@ public class DisplayCard : MonoBehaviour
     public void Select()
     {
         isSelected = true;
-        _shadowBackground.enabled = true;
+        //_shadowBackground.enabled = true;
         _scaleBackground.localScale = new Vector3(1.12f, 1.12f, 1.12f);
     }
 
@@ -54,7 +54,7 @@ public class DisplayCard : MonoBehaviour
     public void Unselect()
     {
         isSelected = false;
-        _shadowBackground.enabled = false;
+        //_shadowBackground.enabled = true;
         _scaleBackground.localScale = new Vector3(1f, 1f, 1f);
     }
 

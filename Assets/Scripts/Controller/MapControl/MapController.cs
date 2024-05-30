@@ -73,6 +73,7 @@ public class MapController : MonoBehaviour
             if (table == null)
             {
                 table = GameObject.FindGameObjectWithTag("Table");
+                Debug.LogError("hi mom");
 
                 if (table != null)
                 {
