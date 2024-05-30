@@ -7,7 +7,7 @@ public class InteractionCardController : MonoBehaviour
 {
     // initialement dans le prefab 
     public CardManager CardManager;
-    public GameObject deck;
+    //public GameObject deck;
     public float depotThreshold = 0.1f;
     public float returnSpeed = 2.0f; // Vitesse de retour
 
