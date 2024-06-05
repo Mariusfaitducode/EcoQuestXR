@@ -65,10 +65,6 @@ public class DisplayCardController : MonoBehaviour
 
             // Instancie le pr�fabriqu� de la carte � la position calcul�e
             GameObject newCard = Instantiate(cardPrefab, cardPosition, Quaternion.identity, this.transform);
-
-            // Nommez l'objet de la carte avec l'ID de la carte
-            newCard.name = "card_" + cards[i].id;
-
             newCard.transform.Rotate(0f, 90f, 0f); // Tourne la carte d'un quart de tour autour de son axe Y
 
             CardController carteComponent = newCard.GetComponent<CardController>(); // Obtenez le composant de carte attach� � l'objet instanci�
@@ -164,19 +160,16 @@ public class DisplayCardController : MonoBehaviour
 
             discard.GetComponent<DiscardController>().AddCardToDiscard(cardsDiscard);
 
-            foreach (GameObject card in cardsDiscard)
+            foreach (GameObject card in cardsDisplay)
             {
 
-                Destroy(card);
-
+                card.SetActive(false);
+            
             }
 
             this.transform.Find("validate_canva").gameObject.SetActive(false);
 
         }
-
-        cardChoose.Clear();
-        cardsDisplay.Clear();
 
     }
 
