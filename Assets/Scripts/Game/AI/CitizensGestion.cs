@@ -93,8 +93,8 @@ public class CitizensGestion
     internal Probability distanceToWorkplaceProbs = new Probability();
     internal Probability salaryProbs = new Probability();
     
-    List<TransportMode> transportModes = new List<TransportMode>();
-    List<TransportMode> availableTransportModes = new List<TransportMode>();
+    internal List<TransportMode> transportModes = new List<TransportMode>();
+    internal List<TransportMode> availableTransportModes = new List<TransportMode>();
     
     
     public void CitizensGestionStartInitialization()

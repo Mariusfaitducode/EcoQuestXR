@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/objects.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/objects.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Csv/transportStats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Csv/transportStats.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Victor/Keyboard.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Citizen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/Citizen.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/CitizensGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/CitizensGestion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/DisplayDashboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/DisplayDashboard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/StatUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameInitialization.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameUtils.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +140,8 @@
       <workItem from="1716624314337" duration="150000" />
       <workItem from="1716624694280" duration="4366000" />
       <workItem from="1716635405872" duration="16091000" />
-      <workItem from="1716831845676" duration="15764000" />
+      <workItem from="1716831845676" duration="16132000" />
+      <workItem from="1717317544757" duration="10832000" />
     </task>
     <servers />
   </component>
