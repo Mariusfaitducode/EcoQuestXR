@@ -27,3 +27,8 @@ MonoBehaviour:
     size: {x: 4, y: 4}
     weight: 20
     rotation: 0
+  - prefabLow: {fileID: 5390889781842583472, guid: 888da2379ba9ef640acaaf1b3a76452f,
+      type: 3}
+    size: {x: 4, y: 4}
+    weight: 20
+    rotation: 0

@@ -94,19 +94,19 @@ public class ModelGestion : MonoBehaviour
     }
     
     
-    // public SubModel FindSubModelWithName(string name)
-    // {
-    //     foreach (SubModel subModel in subObjects)
-    //     {
-    //         if (subModel.gameObject.name == name)
-    //         {
-    //             return subModel;
-    //         }
-    //     }
-    //
-    //     Debug.LogError("SubModel not found with name : " + name);
-    //     return new SubModel();
-    // }
+    public SubModel FindSubModelWithName(string name)
+    {
+        foreach (SubModel subModel in subObjects)
+        {
+            if (subModel.gameObject.name == name)
+            {
+                return subModel;
+            }
+        }
+    
+        Debug.LogError("SubModel not found with name : " + name);
+        return new SubModel();
+    }
 
     public void InitialisationModel()
     {

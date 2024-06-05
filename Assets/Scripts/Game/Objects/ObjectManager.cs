@@ -78,7 +78,15 @@ public class ObjectManager : MonoBehaviour
 
         foreach (ObjectScript objectScript in GetAllObjectScripts())
         {
-            maxPopSize += objectScript.objectProperties.stats.populationSize;
+            if (objectScript.objectProperties != null)
+            {
+                maxPopSize += objectScript.objectProperties.stats.populationSize;
+            }
+            else
+            {
+                Debug.LogError("ObjectScript without objectProperties");
+            }
+            
         }
         Debug.Log("Max population size : " + maxPopSize);
         return maxPopSize;
