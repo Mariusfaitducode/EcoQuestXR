@@ -16,6 +16,11 @@ public class DiscardController : MonoBehaviour
             cards.Add(new_card.GetComponent<CardController>().Card);
         }
 
+    }    
+    
+    public void AddCardToDiscard(GameObject new_card)
+    {
+        cards.Add(new_card.GetComponent<CardController>().cardClass);
     }
 
 

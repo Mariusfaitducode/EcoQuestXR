@@ -1,6 +1,8 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Xml;
 using UnityEngine;
 using System.IO;
 using TMPro;
@@ -14,19 +16,24 @@ public class CardController : MonoBehaviour
 
     private void OnMouseOver()
     {
-        // Vérifie si le bouton droit de la souris est enfoncé
-        if (Input.GetMouseButtonDown(0))
+
+        // V�rifie si le bouton droit de la souris est enfonc�
+        if (Input.GetMouseButtonDown(0) && this.transform.parent.name == "DisplayCard")
         {
             gameObject.GetComponentInParent<DisplayCardController>().SelectCard(gameObject);
         }
+        else if (Input.GetMouseButtonDown(0) && this.transform.parent.name == "HandCard")
+        {
+            Action();
+            gameObject.GetComponentInParent<HandCardController>().RemoveCardFromHand(gameObject);
+        }
+
     }
 
-    public void DisplayCard()
+
+    private void Action()
     {
-        
-        this.transform.Find("Canvas").Find("choose_img").GetComponent<Image>().enabled = false;
-        this.transform.Find("Canvas").Find("desactive_img").GetComponent<Image>().enabled = false;
-        
+        Debug.Log("card " + cardClass.id + " has been played");
     }
 
 
