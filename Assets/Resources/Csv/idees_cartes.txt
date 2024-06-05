@@ -1,0 +1,86 @@
+
+
+
+vege
+
+
+Agriculture : 
+
+	- aide de la ville pour favoriser l'agroforesterie (+biodiversité, -argent, +nourriture) 
+
+	- aide sur fruits / légumes durant 2 mois (+/-santé, +/-écologie air, -argent) 
+		Carotte
+		Orange
+		Pomme de terre 
+		Pomme
+		Chou fleur 
+		Endive 
+		Tomates 
+		Haricots 
+		Fraise
+
+
+	- aide pour stopper les pesticides (-argent, +écologie air) 
+	- aide pour stopper les engrais (-argent, +écologie sol) 
+
+
+Ville : 
+
+	chauffage (Fioul 324gCO2/kWh, Elec 147 gCO2/kWh, Bois 30 gCO2/kWh) 
+	
+	- passage de x maisons à l'électricité / aide pour encourager le chauffage électrique 
+
+	- passage de x maisons au bois / aide pour encourager le chauffage au bois 
+		-> dépends de si le bois est sec et humide 
+
+	- aide pour favoriser le bois sec 
+
+
+	- entretien des espaces verts (+écologie air, +biodiversité, -argent) 
+
+
+	- sensibilisation au tri des déchets (+écologie air/sol, -argent) 
+
+	- placement de poubelles dans la ville (+écologie sol, -argent) 
+
+	- aide pour une déchetterie plus verte (+écologie air, -argent) 
+
+	- création d'un centre de tri 
+
+
+Transports :  
+
+	- 
+
+
+Industrie : 
+
+	- différentes aides / formations sur les sujets écologiques (-argent, +écologie sol/air) 
+
+
+Production d'énergie 
+
+	- placer x éoliennes 
+
+	- placer 1 centrale nucléaire
+
+	- enlever 1 centrale nucléaire 
+
+	- placer x biogas 
+
+	- placer x ferme solaire 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

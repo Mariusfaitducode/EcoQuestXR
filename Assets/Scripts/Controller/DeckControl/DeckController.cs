@@ -1,39 +1,50 @@
+using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DeckController : MonoBehaviour
 {
-    private Canvas _lightCanvas;
     
+    // attribut depuis le prefab 
     public Transform leftControllerAnchor;
     public Transform centerEyeAnchor;
-    public float distToHand = (float)0.3;
+    public float distToHand = 0.3f;
+
     
-    // Start is called before the first frame update
+    private Canvas canva;
+
     void Start()
     {
-        _lightCanvas = GetComponentInChildren<Canvas>();
+        canva = GetComponentInChildren<Canvas>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log("pos : " + leftControllerAnchor.position + ", rot : " + leftControllerAnchor.rotation);
         
-        if (leftControllerAnchor.rotation.z < -0.35 || leftControllerAnchor.rotation.z > 0.3)
+        if (leftControllerAnchor.rotation.z < -0.5 || leftControllerAnchor.rotation.z > 0.5)
         {
-            _lightCanvas.enabled = true;
 
-            this.transform.position = new Vector3(
-                leftControllerAnchor.position.x,
-                leftControllerAnchor.position.y + distToHand,
-                leftControllerAnchor.position.z
-            );
+            canva.enabled = true;
+
+            foreach (Transform child in GetComponentsInChildren<Transform>())
+            {
+                Canvas canvas = child.GetComponent<Canvas>();
+                if (canvas != null) canvas.enabled = true;
+
+                Renderer renderer = child.GetComponent<Renderer>();
+                if (renderer != null) renderer.enabled = true;
+            }
+
+
+            this.transform.position = new Vector3(leftControllerAnchor.position.x, leftControllerAnchor.position.y + distToHand, leftControllerAnchor.position.z);
 
             Vector3 directionToPlayer = centerEyeAnchor.position - leftControllerAnchor.position;
             directionToPlayer.y = 0f;
-            // transform.LookAt(transform.position + directionToPlayer);
+
+            transform.LookAt(transform.position + directionToPlayer);
+            
             // Utiliser la fonction LookRotation pour obtenir la rotation vers le joueur
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
@@ -45,9 +56,20 @@ public class DeckController : MonoBehaviour
         }
         else
         {
-            _lightCanvas.enabled = false;
+
+            canva.enabled = false;
+            foreach (Transform child in GetComponentsInChildren<Transform>())
+            {
+                Canvas canvas = child.GetComponent<Canvas>();
+                if (canvas != null) canvas.enabled = false;
+
+                Renderer renderer = child.GetComponent<Renderer>();
+                if (renderer != null) renderer.enabled = false;
+            }
+
         }
-        
+
 
     }
+
 }

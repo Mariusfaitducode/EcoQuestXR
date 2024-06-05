@@ -10,11 +10,10 @@ public class CardsInitialization
     
     public static List<Card> InitializeCards(string pathCSV)
     {
-        List<Card> cards = new List<Card>();
-        
+       
         DataCsv data = LoadDatas.ReadDataCSV(pathCSV);
-        
-        cards = AffectDatasToCards(data);
+
+        List<Card> cards = AffectDatasToCards(data);
         
         // PrintCards(cards);
         
@@ -59,14 +58,9 @@ public class CardsInitialization
         {
             foreach (ObjectProperties objectProperties in objectsProperties)
             {
-                if (card.idObject1 == objectProperties.id)
-                {
-                    card.objectProperties1 = objectProperties;
-                }
-                if (card.idObject2 == objectProperties.id)
-                {
-                    card.objectProperties2 = objectProperties;
-                }
+                if (card.idObject1 == objectProperties.id) card.objectProperties1 = objectProperties; 
+
+                if (card.idObject2 == objectProperties.id) card.objectProperties2 = objectProperties; 
             }
         }
         

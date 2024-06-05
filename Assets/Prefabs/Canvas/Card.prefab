@@ -459,7 +459,7 @@ MonoBehaviour:
   m_fontSizeBase: 12.4
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
@@ -985,6 +985,7 @@ GameObject:
   - component: {fileID: 6532872707662842687}
   - component: {fileID: 8496834257690635571}
   - component: {fileID: 3919286924152531636}
+  - component: {fileID: 1815047922504344873}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -1117,6 +1118,25 @@ MonoBehaviour:
   _ecology: {fileID: 2610560435902977176}
   _population: {fileID: 2306648678830135073}
   _pollution: {fileID: 9082657313148549773}
+--- !u!114 &1815047922504344873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821870814718452588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aaf960227867044282d921171d2d7ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  pointer: {fileID: 1544287220467893700, guid: eba3a8f2eff73d144bc5be2e3c1cdd8d, type: 3}
+  sortOrder: 0
 --- !u!1 &5219234761242468645
 GameObject:
   m_ObjectHideFlags: 0

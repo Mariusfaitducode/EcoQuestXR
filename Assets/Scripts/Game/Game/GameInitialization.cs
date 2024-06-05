@@ -19,22 +19,22 @@ public static class GameInitialization
         timer.TimeInitialization();
         
         // Map
-        fillMapManager.GenerateMap();
+        //fillMapManager.GenerateMap();
         
         // Scripts
         
         // CSV
-        objectManager.ObjectsStartInitialization();
+        //objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
         
         statManager.StatsStartInitialization();
         
         // Transfer informations to other scripts
-        objectManager.SetMapInformations(fillMapManager);
-        cardManager.SetCardsProperties(objectManager.listObjectsProperties);
+        //objectManager.SetMapInformations(fillMapManager);
+        //cardManager.SetCardsProperties(objectManager.listObjectsProperties);
         
-        agentManager.SetMapInformations(fillMapManager);
-        agentManager.SetTimerInformations(timer);
+        //agentManager.SetMapInformations(fillMapManager);
+        //agentManager.SetTimerInformations(timer);
         
         // Citizens and Dashboard
         statManager.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
@@ -57,16 +57,16 @@ public static class GameInitialization
 
             // new Interval { days = 50, months = 0, years = 0 }, 
 
-            new Interval { days = 0, months = 2, years = 0 }, 
+            new Interval { days = 5, months = 0, years = 0 }, 
 
             () => cardManager.DraftEvent(),
             false);
         
-        PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
-            "UpdateGlobalStatsFromObjectsEvent",
-            currentTime,
-            new Interval { days = 5, months = 0, years = 0 }, 
-            () => statManager.UpdateGlobalStatsFromObjectsEvent(objectManager.GetAllObjectScripts()));
+        //PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
+        //    "UpdateGlobalStatsFromObjectsEvent",
+        //    currentTime,
+        //    new Interval { days = 5, months = 0, years = 0 }, 
+        //    () => statManager.UpdateGlobalStatsFromObjectsEvent(objectManager.GetAllObjectScripts()));
         
         PeriodicEvent updateObjectStatsFromObjectsAndCitizensEvent = new PeriodicEvent(
             "UpdateObjectStatsFromObjectsAndCitizensEvent",
@@ -75,7 +75,7 @@ public static class GameInitialization
             () => statManager.DailyUpdateDashboardEvent());
         
         eventsGestion.periodicEvents.Add(draftEvent);
-        eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);
-        eventsGestion.periodicEvents.Add(updateObjectStatsFromObjectsAndCitizensEvent);
+        //eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);
+        //eventsGestion.periodicEvents.Add(updateObjectStatsFromObjectsAndCitizensEvent);
     }
 }

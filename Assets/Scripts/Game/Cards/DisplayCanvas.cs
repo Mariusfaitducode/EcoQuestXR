@@ -21,6 +21,23 @@ public class DisplayCanvas
             Debug.LogError("No location cards found in draw pile : you need to set it up in the scene");
         }
         return cardLocationPanels;
+    }    
+    public static List<GameObject> GetPanels(GameObject parent)
+    {
+        // Get all panels
+        List<GameObject> cardLocationPanels = new List<GameObject>();
+        foreach (Transform child in parent.transform)
+        {
+            if (child.CompareTag("Location"))
+            {
+                cardLocationPanels.Add(child.gameObject);
+            }
+        }
+        if (cardLocationPanels.Count == 0)
+        {
+            Debug.LogError("No location cards found in draw pile : you need to set it up in the scene");
+        }
+        return cardLocationPanels;
     }
     public static void DeleteCards(List<GameObject> cardLocationPanels)
     {
@@ -32,29 +49,40 @@ public class DisplayCanvas
             }
         }
     }
-    public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas)
+    public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas, bool deck_mode = false) // par défault pour le draft, sinon en deck mode
     {
         int idx = 0;
+
         foreach (Card card in cardsDeck)
         {
             GameObject cardObject = GameObject.Instantiate(cardPrefab, cardLocationPanels[idx].transform);
             
             card.SetCardObject(cardObject);
             
-            DisplayCard displayCard =  cardObject.GetComponent<DisplayCard>();
-            
+            DisplayCard displayCard =  cardObject.GetComponentInChildren<DisplayCard>();
+
             displayCard.SetCard(card);
             displayCard.SetCanvas(canvas);
-            
-            displayCard._buttonBackground.onClick.AddListener(delegate { cardManager.SelectUnselectEvent(displayCard); });
+
+            if (deck_mode)
+            {
+                cardObject.GetComponent<InteractionCardController>().initialPlaceTransform = cardLocationPanels[idx].transform;
+                cardObject.GetComponent<InteractionCardController>().CardManager = cardManager;
+                cardObject.GetComponent<InteractionCardController>().depot_zone = cardManager.depot_zone;
+            }
+            else
+            {
+                displayCard._buttonBackground.enabled = true;
+                displayCard._buttonBackground.onClick.AddListener(delegate { cardManager.SelectUnselectEvent(displayCard); });
+            }
             
             idx++;
         }
     }
-    public static void UpdateCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas)
+    public static void UpdateCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject grabbableCard, CardManager cardManager, Canvas canvas)
     {
         DeleteCards(cardLocationPanels);
-        DrawCards(cardsDeck, cardLocationPanels, cardPrefab, cardManager, canvas);
+        DrawCards(cardsDeck, cardLocationPanels, grabbableCard, cardManager, canvas, true);
     }
     public static void HideCanvas(Canvas canvas)
     {
