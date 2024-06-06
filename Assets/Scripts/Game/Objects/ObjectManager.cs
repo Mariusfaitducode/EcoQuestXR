@@ -84,7 +84,7 @@ public class ObjectManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("ObjectScript without objectProperties");
+                Debug.LogWarning("ObjectScript without objectProperties");
             }
             
         }

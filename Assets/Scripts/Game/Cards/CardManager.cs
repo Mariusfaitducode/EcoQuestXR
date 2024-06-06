@@ -151,8 +151,8 @@ public class CardManager : MonoBehaviour
 
 
         // TODO : Implement action on map
-        //gameManager.ExecuteCardEvent(selectedDeckCard);
-        Debug.LogWarning("Card play");
+        gameManager.ExecuteCardEvent(selectedDeckCard);
+        Debug.LogError("Card play");
         
         
         // Update Counter

@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+
         if (!timer.isTimePaused && timer.IsCheckTime())
         {
             timer.TimeIncrement();
