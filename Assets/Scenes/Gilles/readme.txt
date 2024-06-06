@@ -38,3 +38,5 @@ IMPORTANT A RENSEIGNER
 AUTRE : 
 
 - le depot zone doit avoir un collider 
+
+- le validate button du draf doit avoir un appel à la fonction play event de card manager
