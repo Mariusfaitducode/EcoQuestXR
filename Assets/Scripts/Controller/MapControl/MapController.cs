@@ -22,7 +22,7 @@ public class MapController : MonoBehaviour
     public MouvementSettings mouvementSettings;
 
     // Move
-    private GameObject table;
+    //private GameObject table;
 
     // private bool playerHasMoved = false;
     // private bool tableFound = false;
@@ -30,6 +30,7 @@ public class MapController : MonoBehaviour
     private new Renderer renderer;
     
     public GameObject ovrPlayer;
+    public GameObject centerEyeAnchor;
     
     public UpdateTerrainRenderer updateTerrainRenderer;
     
@@ -51,6 +52,16 @@ public class MapController : MonoBehaviour
     {
         renderer = GetComponent<Renderer>();
         originalSize = GetComponent<MeshFilter>().mesh.bounds.size.x;
+
+
+        Vector3 initialPosition = centerEyeAnchor.transform.position + new Vector3(0.0f, 0.0f, 0.0f);
+        transform.position = initialPosition;
+        updateTerrainRenderer.InitShaderCenter();
+
+
+
+
+
     }
     
     void Update()
@@ -69,20 +80,20 @@ public class MapController : MonoBehaviour
         }
         else
         {
-            
-            if (table == null)
-            {
-                table = GameObject.FindGameObjectWithTag("Table");
-                Debug.LogError("hi mom");
 
-                if (table != null)
-                {
-                    Vector3 initialPosition = table.transform.position;
-                    transform.position = initialPosition;
-                    updateTerrainRenderer.InitShaderCenter();
-                }
-                return;
-            }
+            // if (table == null)
+            // {
+            //     table = GameObject.FindGameObjectWithTag("Table");
+
+            //     if (table != null)
+            //     {
+            //         Debug.Log("TableFound"); 
+            //         Vector3 initialPosition = table.transform.position;
+            //         transform.position = initialPosition;
+            //         updateTerrainRenderer.InitShaderCenter();
+            //     }
+            //     return;
+            // }
 
 
             bool moved = OvrMapInteraction.Controller(this.transform, updateTerrainRenderer.GetMapCenter(), renderer, mouvementSettings, originalSize, ovrPlayer.transform);
@@ -100,6 +111,7 @@ public class MapController : MonoBehaviour
                 updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
                 updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
             }
+
         }
     }
     
