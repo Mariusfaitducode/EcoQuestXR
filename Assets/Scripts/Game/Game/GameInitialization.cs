@@ -25,6 +25,9 @@ public static class GameInitialization
             
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = false;
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = true;
+            
+            // Remove play button
+            gameManager.keyboardObjects.play.SetActive(false);
         }
         else
         {
@@ -43,6 +46,9 @@ public static class GameInitialization
             
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = true;
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = false;
+            
+            // Set listener for the play button
+            gameManager.keyboardObjects.play.GetComponent<Button>().onClick.AddListener(() => gameManager.cardManager.PlayEvent(gameManager.cardObjects.grabbableCard));
             
         }
     }

@@ -22,6 +22,7 @@ public struct OvrObjects
 public struct KeyboardObjects
 {
     public GameObject camera;
+    public GameObject play;
 }
 
 [Serializable]

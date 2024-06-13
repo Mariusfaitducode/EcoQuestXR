@@ -22,6 +22,7 @@ public class CardManager : MonoBehaviour
     internal List<Card> deckCards = new List<Card>();
     internal List<Card> selectedPileCards = new List<Card>();
     internal Card selectedDeckCard;
+    internal GameObject selectedGrabbableCard;
     
     internal Canvas deckCanvas;
     public GameObject deck;
@@ -135,9 +136,13 @@ public class CardManager : MonoBehaviour
         
     }
 
-    public void PlayEvent(GameObject GrabbableCard)
+    public void PlayEvent(GameObject GrabbableCard = null)
     {
-
+        if (GrabbableCard == null)
+        {
+            GrabbableCard = selectedGrabbableCard;
+        }
+        
         selectedDeckCard = GrabbableCard.GetComponentInChildren<DisplayCard>().GetCard();
 
         // Remove Selected Card
