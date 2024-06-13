@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    public GameManager gameManager;
+    internal GameManager gameManager;
     [FormerlySerializedAs("isCardsInitialized")] public bool areCardsInitialized = false;
     public string cardsCSVPath = "Csv/cards";
 

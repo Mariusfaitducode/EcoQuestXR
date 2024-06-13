@@ -2,30 +2,38 @@ using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InteractionCardController : MonoBehaviour
 {
     // initialement dans le prefab 
-    public CardManager CardManager;
+    internal CardManager cardManager;
+    internal Transform initialPlaceTransform;
+    internal GameObject depotZone;
+
+    internal ControlMode controlMode;
+
+    
+    
     //public GameObject deck;
     public float depotThreshold = 0.1f;
     public float returnSpeed = 2.0f; // Vitesse de retour
 
 
-    // paramétrer par CardManager via Display Canva
-    public GameObject depot_zone;
-    public Transform initialPlaceTransform;
+    // paramÃ©trer par CardManager via Display Canva
 
 
-    // attributs privés 
+    // attributs privÃ©s 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     private Grabbable grabbable;
     private bool isNearDepot;
 
 
-    void Start()
+    public void InitializeInteraction()
     {
+        if (controlMode == ControlMode.keyboard) return;
+        
         grabbable = GetComponent<Grabbable>();
         if (grabbable == null)
         {
@@ -36,6 +44,8 @@ public class InteractionCardController : MonoBehaviour
 
     void Update()
     {
+        
+        if (controlMode == ControlMode.keyboard) return;
 
         // Enregistrer la position et la rotation initiales
         initialPosition = initialPlaceTransform.position;
@@ -68,7 +78,7 @@ public class InteractionCardController : MonoBehaviour
     private void PlayCard()
     {
 
-        CardManager.PlayEvent(this.gameObject);
+        cardManager.PlayEvent(this.gameObject);
 
         // Add little animation here
         Destroy(this);
@@ -78,7 +88,7 @@ public class InteractionCardController : MonoBehaviour
     #region collider
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == depot_zone)
+        if (other.gameObject == depotZone)
         {
             isNearDepot = true;
         }
@@ -86,7 +96,7 @@ public class InteractionCardController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == depot_zone)
+        if (other.gameObject == depotZone)
         {
             isNearDepot = false;
         }

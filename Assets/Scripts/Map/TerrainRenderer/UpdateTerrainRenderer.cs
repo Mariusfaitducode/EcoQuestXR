@@ -57,7 +57,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
         Vector3 translation = this.transform.position - lastMapPosition;
         float scale = this.transform.localScale.x / lastMapScale;
         
-        Debug.Log("SCALE : " + scale);
+        // Debug.Log("SCALE : " + scale);
         
         Vector2 center = material.GetVector("_Map_Center");
         
@@ -82,6 +82,12 @@ public class UpdateTerrainRenderer : MonoBehaviour
         //     this.transform.position.y,
         //     this.transform.position.z
         // );
+    }
+    
+    public void InitShaderLimitTerrain(float scale)
+    {
+        float limitTerrain = material.GetFloat("_Limit_Terrain");
+        material.SetFloat("_Limit_Terrain", limitTerrain * scale);
     }
 
     public void UpdateAreasCenter()
@@ -146,14 +152,8 @@ public class UpdateTerrainRenderer : MonoBehaviour
     {
         Vector2 center = material.GetVector("_Map_Center");
         
-        // shaderCenter.transform.position = new Vector3(center.x, 0, center.y);
-        
-        
         Vector3 mapCenter = new Vector3(center.x, 0, center.y);
         float limitTerrain = material.GetFloat("_Limit_Terrain");
-        
-
-        // FillMapManager fillMapManager = gameManager.fillMapManager;
 
         foreach (Area area in fillMapManager.areas)
         {

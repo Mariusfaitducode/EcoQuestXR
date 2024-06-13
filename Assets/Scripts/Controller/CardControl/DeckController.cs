@@ -4,24 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+
+// Control apparence of deck canvas when turning hand
+
 public class DeckController : MonoBehaviour
 {
     
     // attribut depuis le prefab 
-    public Transform leftControllerAnchor;
-    public Transform centerEyeAnchor;
+    internal Transform leftControllerAnchor;
+    internal Transform centerEyeAnchor;
+
+    internal ControlMode controlMode;
+    
+    
     public float distToHand = 0.3f;
 
     
     private Canvas canva;
 
-    void Start()
+    public void InitializeDeckController()
     {
         canva = GetComponentInChildren<Canvas>();
     }
 
     void Update()
     {
+        
+        if (controlMode == ControlMode.keyboard) return;
         
         if (leftControllerAnchor.rotation.z < -0.5 || leftControllerAnchor.rotation.z > 0.5)
         {
@@ -66,10 +76,7 @@ public class DeckController : MonoBehaviour
                 Renderer renderer = child.GetComponent<Renderer>();
                 if (renderer != null) renderer.enabled = false;
             }
-
         }
-
-
     }
 
 }

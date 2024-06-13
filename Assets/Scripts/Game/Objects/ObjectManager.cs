@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-    public GameManager gameManager;
+    internal GameManager gameManager;
     internal List<Area> areas;
     internal List<ObjectProperties> listObjectsProperties;
     
