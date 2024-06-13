@@ -18,6 +18,27 @@ public struct OvrObjects
     public GameObject centerEyeAnchor;
 }
 
+[Serializable]
+public struct KeyboardObjects
+{
+    public GameObject camera;
+}
+
+[Serializable]
+public struct CanvasObjects
+{
+    public Canvas deckCanvas;
+    public Canvas draftCanvas;
+    public Canvas dashboardCanvas;
+}
+
+[Serializable]
+public struct CardObjects
+{
+    public GameObject card;
+    public GameObject grabbableCard;
+}
+
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +53,15 @@ public class GameManager : MonoBehaviour
     
     // OVR
     public OvrObjects ovrObjects;
+    
+    // Keyboard
+    public KeyboardObjects keyboardObjects;
+    
+    // Canvas
+    public CanvasObjects canvasObjects;
+    
+    // Card
+    public CardObjects cardObjects;
     
     // Map Generator
 
@@ -55,17 +85,7 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        if (controlMode == ControlMode.ovr)
-        {
-            oculusParent.SetActive(true);
-            keyboardParent.SetActive(false);
-        }
-        else
-        {
-            oculusParent.SetActive(false);
-            keyboardParent.SetActive(true);
-        }
-        
+        GameInitialization.setupControlMode(this);
         GameInitialization.InitManager(this);
         GameInitialization.InitializeController(this);
         GameInitialization.InitializeMapGenerator(this);

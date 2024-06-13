@@ -10,11 +10,10 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     internal GameManager gameManager;
-    [FormerlySerializedAs("isCardsInitialized")] public bool areCardsInitialized = false;
     public string cardsCSVPath = "Csv/cards";
 
-    public GameObject cardPrefab;
-    public GameObject grabbableCard;
+    internal GameObject cardPrefab;
+    internal GameObject grabbableCard;
 
     public TextMeshProUGUI draftCounterSelectedCardsText;
 
@@ -24,9 +23,9 @@ public class CardManager : MonoBehaviour
     internal List<Card> selectedPileCards = new List<Card>();
     internal Card selectedDeckCard;
     
-    public Canvas deckCanvas;
+    internal Canvas deckCanvas;
     public GameObject deck;
-    public Canvas draftCanvas;
+    internal Canvas draftCanvas;
     public GameObject depot_zone; 
     
     internal List<GameObject> cardsLocationDeckPanels;
@@ -50,7 +49,6 @@ public class CardManager : MonoBehaviour
     {
         // Cards Initialization
         cards = CardsInitialization.InitializeCards(cardsCSVPath);
-        areCardsInitialized = true;
         
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
