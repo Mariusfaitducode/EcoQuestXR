@@ -1159,13 +1159,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1593623973}
         m_TargetAssemblyTypeName: MainCharacterController, Assembly-CSharp
         m_MethodName: ChangeText
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: win1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &376130567
@@ -1480,7 +1480,7 @@ Transform:
   m_GameObject: {fileID: 590604409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.43, y: 3.12, z: -3.8}
+  m_LocalPosition: {x: 13.36, y: 3.12, z: -3.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3089,13 +3089,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1593623973}
         m_TargetAssemblyTypeName: MainCharacterController, Assembly-CSharp
         m_MethodName: ChangeText
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: random2
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1489094499
@@ -3351,6 +3351,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3727159ed18bd7f41bc8a0747e1dfc31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clipList:
+  - {fileID: 8300000, guid: 6b4d040eef75b9945812ade6f0c48bec, type: 3}
+  - {fileID: 8300000, guid: aaafa7fdc2e16124a97e9d42396e53d2, type: 3}
+  - {fileID: 8300000, guid: 7f1063ffc1e421e48bd77cff6da4efa8, type: 3}
+  - {fileID: 8300000, guid: 784bf70121b15f644bdae0d2a3f282d1, type: 3}
+  - {fileID: 8300000, guid: 5f142a2335fb665489a5923d61c89931, type: 3}
+  - {fileID: 8300000, guid: cdd33b46412e7fd47a1695b5a98614f3, type: 3}
+  - {fileID: 8300000, guid: 503ee32ae98b06b45b435e71527e9d40, type: 3}
+  - {fileID: 8300000, guid: a861f97d60ae1a042bc9ded2fe349c5a, type: 3}
+  - {fileID: 8300000, guid: 6e048cb76f89c5c4c8b968052a1b4542, type: 3}
 --- !u!82 &1593623974
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3360,11 +3370,10 @@ AudioSource:
   m_GameObject: {fileID: 1593623971}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: 1dd706bb85d8aef4e83a6229dbd62c36,
-    type: 2}
-  m_audioClip: {fileID: 8300000, guid: 8926bf7a45f4f7e41855c29b404fd3f9, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.392
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5094,7 +5103,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1593623974}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: set_volume
         m_Mode: 0

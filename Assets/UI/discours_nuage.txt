@@ -1,0 +1,22 @@
+
+
+dicours nuage : 
+
+
+	- play card :   "Très bien je m'en occupe"
+			"Très bon choix !"
+			"Un pas de plus vers le bonheur !" 
+			
+
+
+	- aléatoire :   "N'hésite pas à aller voir le tutoriel" 
+			"Ca va ? Tu t'en sors ?"
+
+
+	- fin du jeu :  "Bravo ! Grâce à toi la ville est sauvée !"
+			"Je compte sur toi pour sauver ta vraie planète maintenant !"
+
+			"Oh non, j'ai l'impression que nous n'avons pas réussi à sauver la ville" 
+			"Je compte sur toi pour rééssayer très bientôt"
+
+			 
