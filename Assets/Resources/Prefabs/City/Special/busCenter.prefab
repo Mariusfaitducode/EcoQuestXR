@@ -179,6 +179,5 @@ MonoBehaviour:
   busStartHour: 6
   busEndHour: 22
   busPrefabs:
-  - {fileID: 5254434960440902134, guid: 74335be081957754e93f47a5052f76ef, type: 3}
-  gameManager: {fileID: 0}
+  - {fileID: 6767325861677034454, guid: 74335be081957754e93f47a5052f76ef, type: 3}
   busOut: 0
