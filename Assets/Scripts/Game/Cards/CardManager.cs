@@ -13,7 +13,7 @@ public class CardManager : MonoBehaviour
     public string cardsCSVPath = "Csv/cards";
 
     internal GameObject cardPrefab;
-    internal GameObject grabbableCard;
+    internal GameObject grabbableCardPrefab;
 
     public TextMeshProUGUI draftCounterSelectedCardsText;
 
@@ -99,11 +99,11 @@ public class CardManager : MonoBehaviour
             nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards, selectedPileCards);
             DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         }
-        // else if (displayCard.GetParentCanvas() == deckCanvas && !draftTime)
-        //else if (displayCard.GetParentCanvas() == deckCanvas)
-        //{
-        //    selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
-        //}
+        else if (displayCard.GetParentCanvas() == deckCanvas && gameManager.controlMode == ControlMode.keyboard)
+        {
+            selectedDeckCard = displayCard.GetCard();
+            Debug.Log("Keyboard : chosen card : " + selectedDeckCard.title);
+        }
         else
         {
             Debug.LogError("Parent Canvas not found");
@@ -118,7 +118,7 @@ public class CardManager : MonoBehaviour
         PileManager.TransferDraftedCards(selectedPileCards, deckCards);
         
         // Update Deck
-        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCard, this, deckCanvas);
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCardPrefab, this, deckCanvas);
         //deck.GetComponent<DeckController>().list_cards = cardsLocationDeckPanels;
 
 
@@ -136,20 +136,26 @@ public class CardManager : MonoBehaviour
         
     }
 
-    public void PlayEvent(GameObject GrabbableCard = null)
+    public void PlayEvent(GameObject selectedGrabbableCard = null)
     {
-        if (GrabbableCard == null)
+        if (selectedGrabbableCard != null)
         {
-            GrabbableCard = selectedGrabbableCard;
+            selectedDeckCard = selectedGrabbableCard.GetComponentInChildren<DisplayCard>().GetCard();
         }
         
-        selectedDeckCard = GrabbableCard.GetComponentInChildren<DisplayCard>().GetCard();
+        if (selectedDeckCard == null)
+        {
+            Debug.LogError("No card selected");
+            return;
+        }
+        
+        Debug.Log("Card played : " + selectedDeckCard.title);
 
         // Remove Selected Card
         PileManager.RemoveSelectedCard(deckCards, selectedDeckCard);
         
         // Update Deck
-        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCard, this, deckCanvas);
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCardPrefab, this, deckCanvas);
         //deck.GetComponent<DeckController>().list_cards = cardsLocationDeckPanels;
 
 

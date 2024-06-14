@@ -36,6 +36,7 @@ public struct CanvasObjects
 [Serializable]
 public struct CardObjects
 {
+    public GameObject leftArmDeck;
     public GameObject card;
     public GameObject grabbableCard;
 }

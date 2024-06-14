@@ -39,16 +39,20 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<Canvas>().worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             
-            // Enable OVR Raycaster for OVR
+            // Unable OVR Raycaster for OVR
             gameManager.cardObjects.card.GetComponent<GraphicRaycaster>().enabled = true;
             gameManager.cardObjects.card.GetComponent<OVRRaycaster>().enabled = false;
             
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = true;
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = false;
             
+            // Set listener for the grabbable card
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<Button>().onClick.AddListener(() => gameManager.cardManager.SelectUnselectEvent(gameManager.cardManager.grabbableCardPrefab.GetComponentInChildren<DisplayCard>()));
+            
             // Set listener for the play button
-            gameManager.keyboardObjects.play.GetComponent<Button>().onClick.AddListener(() => gameManager.cardManager.PlayEvent(gameManager.cardObjects.grabbableCard));
+            gameManager.keyboardObjects.play.GetComponent<Button>().onClick.AddListener(() => gameManager.cardManager.PlayEvent());
             
         }
     }
@@ -58,10 +62,11 @@ public static class GameInitialization
         
         gameManager.cardManager = GameObject.FindObjectOfType<CardManager>();
         gameManager.cardManager.gameManager = gameManager;
+        gameManager.cardManager.deck = gameManager.cardObjects.leftArmDeck;
         gameManager.cardManager.deckCanvas = gameManager.canvasObjects.deckCanvas;
         gameManager.cardManager.draftCanvas = gameManager.canvasObjects.draftCanvas;
         gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
-        gameManager.cardManager.grabbableCard = gameManager.cardObjects.grabbableCard;
+        gameManager.cardManager.grabbableCardPrefab = gameManager.cardObjects.grabbableCard;
         
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
