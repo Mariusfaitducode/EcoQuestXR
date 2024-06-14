@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Marius/OVR_Marius.unity
     guid: 6e4375ec2eaddd14d9dd657f83265b05
+  - enabled: 1
+    path: Assets/Scenes/MenuPrincipal.unity
+    guid: f544e48922c5b5045b2c002fe3feed31
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: c46355226e8bb5243b99af7d6c9b39e2
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d032ad1e55f905c4aa0ef87cb9a90a18,
       type: 2}
