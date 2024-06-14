@@ -20,20 +20,25 @@ MonoBehaviour:
   pavilionWidth: 6
   pavilionHeightMean: 8
   fillPercent: 0
-  prefabs:
+  aloneNecessaryPrefabs: []
+  randomPrefabs:
   - prefabLow: {fileID: 1741507749406875900, guid: 1816ef876c2d14f47984ca1134c27e0b,
       type: 3}
     size: {x: 4, y: 4}
     weight: 20
+    rotation: 0
   - prefabLow: {fileID: 1902510447799414756, guid: d42d72314fc01a24894e87f16f152646,
       type: 3}
     size: {x: 6, y: 6}
-    weight: 15
+    weight: 0
+    rotation: 0
   - prefabLow: {fileID: 3015866270603773894, guid: e0546d3d866b0de4f8100f3a960d6b6e,
       type: 3}
     size: {x: 6, y: 6}
     weight: 10
+    rotation: 0
   - prefabLow: {fileID: 3543652722131407738, guid: 732671d49d42f6549bcce90404415b86,
       type: 3}
     size: {x: 1, y: 1}
     weight: 40
+    rotation: 0

@@ -57,6 +57,11 @@ public class DisplayCanvas
 
         foreach (Card card in cardsDeck)
         {
+            if( cardPrefab == null)
+            {
+                Debug.LogError("No card prefab found in draw pile : you need to set it up in the scene");
+            }
+            
             GameObject cardObject = GameObject.Instantiate(cardPrefab, cardLocationPanels[idx].transform);
             
             card.SetCardObject(cardObject);

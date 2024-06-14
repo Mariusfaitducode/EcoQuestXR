@@ -2,15 +2,71 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class GameInitialization
 {
+    public static void setupControlMode(GameManager gameManager)
+    {
+        if (gameManager.controlMode == ControlMode.ovr)
+        {
+            // OVR activation
+            gameManager.oculusParent.SetActive(true);
+            gameManager.keyboardParent.SetActive(false);
+            
+            // Camera setup for canvas (UI detection)
+            gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+            gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+            gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+            
+            // Unable GraphicRaycaster for the keyboard
+            gameManager.cardObjects.card.GetComponent<GraphicRaycaster>().enabled = false;
+            gameManager.cardObjects.card.GetComponent<OVRRaycaster>().enabled = true;
+            
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = false;
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = true;
+            
+            // Remove play button
+            gameManager.keyboardObjects.play.SetActive(false);
+        }
+        else
+        {
+            // Keyboard activation
+            gameManager.oculusParent.SetActive(false);
+            gameManager.keyboardParent.SetActive(true);
+            
+            // Camera setup for canvas (UI detection)
+            gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<Canvas>().worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            
+            // Unable OVR Raycaster for OVR
+            gameManager.cardObjects.card.GetComponent<GraphicRaycaster>().enabled = true;
+            gameManager.cardObjects.card.GetComponent<OVRRaycaster>().enabled = false;
+            
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = true;
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = false;
+            
+            // Set listener for the grabbable card
+            gameManager.cardObjects.grabbableCard.GetComponentInChildren<Button>().onClick.AddListener(() => gameManager.cardManager.SelectUnselectEvent(gameManager.cardManager.grabbableCardPrefab.GetComponentInChildren<DisplayCard>()));
+            
+            // Set listener for the play button
+            gameManager.keyboardObjects.play.GetComponent<Button>().onClick.AddListener(() => gameManager.cardManager.PlayEvent());
+            
+        }
+    }
     
     public static void InitManager(GameManager gameManager)
     {
         
         gameManager.cardManager = GameObject.FindObjectOfType<CardManager>();
         gameManager.cardManager.gameManager = gameManager;
+        gameManager.cardManager.deck = gameManager.cardObjects.leftArmDeck;
+        gameManager.cardManager.deckCanvas = gameManager.canvasObjects.deckCanvas;
+        gameManager.cardManager.draftCanvas = gameManager.canvasObjects.draftCanvas;
+        gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
+        gameManager.cardManager.grabbableCardPrefab = gameManager.cardObjects.grabbableCard;
         
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
