@@ -30,7 +30,7 @@ MonoBehaviour:
   - prefabLow: {fileID: 1902510447799414756, guid: d42d72314fc01a24894e87f16f152646,
       type: 3}
     size: {x: 6, y: 6}
-    weight: 0
+    weight: 50
     rotation: 0
   - prefabLow: {fileID: 3015866270603773894, guid: e0546d3d866b0de4f8100f3a960d6b6e,
       type: 3}

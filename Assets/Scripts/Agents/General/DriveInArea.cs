@@ -90,15 +90,6 @@ public class DriveInArea : MonoBehaviour
         
         Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
         
-        Debug.Log("road direction : " + direction);
-        Debug.Log("1 road distance : " + direction.magnitude);
-        
-        
-        
-        
-        
-        
-        
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
         
         this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight * roadStep);
