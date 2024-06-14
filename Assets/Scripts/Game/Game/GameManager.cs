@@ -45,12 +45,13 @@ public struct OtherObjects
 {
     public GameObject leftArmDeck;
     public GameObject mesh;
+    public GameObject cloud;
 }
 
 public class GameManager : MonoBehaviour
 {
     
-    public ControlMode controlMode = ControlMode.ovr;
+    public ControlMode controlMode;
 
     public GameObject oculusParent;
     public GameObject keyboardParent;
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviour
     internal DeckController deckController;
     internal DraftController draftController;
     internal DashboardController dashboardController;
-    
+    internal CloudController cloudController;
     
     
     

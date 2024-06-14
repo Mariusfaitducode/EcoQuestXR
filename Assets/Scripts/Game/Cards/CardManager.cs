@@ -25,9 +25,9 @@ public class CardManager : MonoBehaviour
     internal GameObject selectedGrabbableCard;
     
     internal Canvas deckCanvas;
-    public GameObject deck;
+    internal GameObject deck;
     internal Canvas draftCanvas;
-    public GameObject depot_zone; 
+    internal GameObject depot_zone; 
     
     internal List<GameObject> cardsLocationDeckPanels;
     internal List<GameObject> cardsLocationDraftPanels;
@@ -37,8 +37,6 @@ public class CardManager : MonoBehaviour
     internal int nbrMaxSelectedCards = 3;
     internal int nbrMaxDeckCards = 5;
     internal int nbrDraftCards = 4;
-    
-    public float factorCostReductionDestruction = 0.2f;
     
     internal bool draftTime = false;
     
@@ -66,7 +64,7 @@ public class CardManager : MonoBehaviour
 
     public void SetCardsProperties(List<ObjectProperties> objectsProperties)
     {
-        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties, factorCostReductionDestruction);
+        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties);
     }
     
     

@@ -6,9 +6,9 @@ using UnityEngine;
 [Serializable]
 public struct ObjectPose
 {
-    public Vector3 Position;
-    public Quaternion Rotation;
-    public float Scale;
+    public Vector3 position;
+    public Quaternion rotation;
+    public float scale;
     
 }
 public class DashboardController : MonoBehaviour
@@ -19,6 +19,7 @@ public class DashboardController : MonoBehaviour
     public ObjectPose keyboardPose;
     
     internal Transform meshTransform;
+    internal UpdateTerrainRenderer updateTerrainRenderer;
     internal Transform centerEyeAnchorTransform;
     
 
@@ -26,9 +27,27 @@ public class DashboardController : MonoBehaviour
     {
         if (controlMode == ControlMode.keyboard)
         {
-            transform.position = keyboardPose.Position;
-            transform.rotation = keyboardPose.Rotation;
-            transform.localScale = new Vector3(keyboardPose.Scale, keyboardPose.Scale, keyboardPose.Scale);
+            transform.position = keyboardPose.position;
+            transform.rotation = keyboardPose.rotation;
+            transform.localScale = new Vector3(keyboardPose.scale, keyboardPose.scale, keyboardPose.scale);
+            
+        } else if (controlMode == ControlMode.ovr)
+        {
+            transform.rotation = ovrPose.rotation;
+            transform.localScale = new Vector3(ovrPose.scale, ovrPose.scale, ovrPose.scale);
         }
+    }
+    
+    void Update()
+    {
+        if (controlMode == ControlMode.keyboard) return;
+        
+        Vector3 shaderCenterMapPosition = updateTerrainRenderer.GetMapCenter();
+        Vector3 centerMapPosition = new Vector3(shaderCenterMapPosition.x, meshTransform.position.y, shaderCenterMapPosition.z);
+        transform.position = centerMapPosition + ovrPose.position;
+    
+        // TODO : use lookat
+        // transform.rotation = meshTransform.rotation;
+        
     }
 }

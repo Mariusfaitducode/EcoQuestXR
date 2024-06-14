@@ -50,7 +50,7 @@ public class CardsInitialization
     }
 
 
-    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties, float factorCostReductionDestruction)
+    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties)
     {
         
         // Set objectProperties to cards

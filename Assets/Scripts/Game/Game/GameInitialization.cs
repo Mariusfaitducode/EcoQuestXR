@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -67,6 +68,7 @@ public static class GameInitialization
         gameManager.cardManager.draftCanvas = gameManager.canvasObjects.draftCanvas;
         gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
         gameManager.cardManager.grabbableCardPrefab = gameManager.cardObjects.grabbableCard;
+        gameManager.cardManager.depot_zone = gameManager.otherObjects.cloud;
         
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
@@ -106,20 +108,40 @@ public static class GameInitialization
         // Dashboard controller
         gameManager.dashboardController = GameObject.FindObjectOfType<DashboardController>();
         
-        gameManager.dashboardController.meshTransform = gameManager.otherObjects.mesh.transform;
         gameManager.dashboardController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+        gameManager.dashboardController.meshTransform = gameManager.otherObjects.mesh.transform;
         
         gameManager.dashboardController.controlMode = gameManager.controlMode;
+        gameManager.dashboardController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
         gameManager.dashboardController.InitializeDashboardController();
         
         // Draft controller
         gameManager.draftController = GameObject.FindObjectOfType<DraftController>();
         
-        gameManager.draftController.meshTransform = gameManager.otherObjects.mesh.transform;
         gameManager.draftController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+        gameManager.draftController.meshTransform = gameManager.otherObjects.mesh.transform;
         
         gameManager.draftController.controlMode = gameManager.controlMode;
+        gameManager.draftController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
         gameManager.draftController.InitializeDraftController();
+        
+        // Cloud controller
+        gameManager.cloudController = GameObject.FindObjectOfType<CloudController>();
+
+        if (gameManager.controlMode == ControlMode.keyboard)
+        {
+            gameManager.cloudController.GameObject().SetActive(false);
+        }
+        else
+        {
+            gameManager.cloudController.GameObject().SetActive(true);
+            
+            gameManager.cloudController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+            gameManager.cloudController.meshTransform = gameManager.otherObjects.mesh.transform;
+        
+            gameManager.cloudController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
+            gameManager.cloudController.InitializeCloudController();
+        }
     }
 
 
