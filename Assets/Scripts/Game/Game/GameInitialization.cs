@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,7 +70,9 @@ public static class GameInitialization
         gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
         gameManager.cardManager.grabbableCardPrefab = gameManager.cardObjects.grabbableCard;
         gameManager.cardManager.depot_zone = gameManager.otherObjects.cloud;
-        
+        gameManager.cardManager.draftCounterSelectedCardsText = gameManager.otherObjects.draftCounter.GetComponent<TextMeshProUGUI>(); 
+
+
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
         

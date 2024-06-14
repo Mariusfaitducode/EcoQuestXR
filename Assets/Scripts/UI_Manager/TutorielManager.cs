@@ -12,7 +12,6 @@ public class TutorielManager : MonoBehaviour
 
     private Transform prev_button; 
     private Transform next_button;
-    private Transform end_button; 
     
     public List<Sprite> list_slides = new List<Sprite>();
 
@@ -24,10 +23,8 @@ public class TutorielManager : MonoBehaviour
         image = this.gameObject.transform.GetChild(0).GetComponent<Image>(); 
         prev_button = this.gameObject.transform.GetChild(2);
         next_button = this.gameObject.transform.GetChild(1);
-        end_button = this.gameObject.transform.GetChild(3);
 
         prev_button.gameObject.SetActive(false);
-        end_button.gameObject.SetActive(false);
 
         this.transform.position = Camera.main.transform.position + new Vector3(0, 0.3f, 3);
     }
@@ -50,7 +47,6 @@ public class TutorielManager : MonoBehaviour
         if (index_slide == list_slides.Count - 1)
         { 
             next_button.gameObject.SetActive(false);
-            end_button.gameObject.SetActive(true);
         }
         image.sprite = list_slides[index_slide];  
 
@@ -66,7 +62,6 @@ public class TutorielManager : MonoBehaviour
         if (index_slide == list_slides.Count - 2)
         {
             next_button.gameObject.SetActive(true);
-            end_button.gameObject.SetActive(false);
         }
 
         image.sprite = list_slides[index_slide];

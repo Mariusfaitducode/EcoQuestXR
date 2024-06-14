@@ -56,8 +56,8 @@ public class DeckController : MonoBehaviour
                 Canvas canvas = child.GetComponent<Canvas>();
                 if (canvas != null) canvas.enabled = true;
 
-                Renderer renderer = child.GetComponent<Renderer>();
-                if (renderer != null) renderer.enabled = true;
+                //Renderer renderer = child.GetComponent<Renderer>();
+                //if (renderer != null) renderer.enabled = true;
             }
 
 
@@ -86,8 +86,8 @@ public class DeckController : MonoBehaviour
                 Canvas canvas = child.GetComponent<Canvas>();
                 if (canvas != null) canvas.enabled = false;
 
-                Renderer renderer = child.GetComponent<Renderer>();
-                if (renderer != null) renderer.enabled = false;
+                //Renderer renderer = child.GetComponent<Renderer>();
+                //if (renderer != null) renderer.enabled = false;
             }
         }
     }

@@ -26,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void run_game()
     {
-        //SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("mainScene_copy");
     }
 
 

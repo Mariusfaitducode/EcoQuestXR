@@ -46,6 +46,7 @@ public struct OtherObjects
     public GameObject leftArmDeck;
     public GameObject mesh;
     public GameObject cloud;
+    public GameObject draftCounter;
 }
 
 public class GameManager : MonoBehaviour

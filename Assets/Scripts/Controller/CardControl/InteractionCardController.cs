@@ -1,12 +1,12 @@
 using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class InteractionCardController : MonoBehaviour
 {
-    // initialement dans le prefab 
     internal CardManager cardManager;
     internal Transform initialPlaceTransform;
     internal GameObject depotZone;
@@ -20,7 +20,6 @@ public class InteractionCardController : MonoBehaviour
     public float returnSpeed = 2.0f; // Vitesse de retour
 
 
-    // paramétrer par CardManager via Display Canva
 
 
     // attributs privés 
@@ -70,6 +69,13 @@ public class InteractionCardController : MonoBehaviour
             {
                 transform.position = initialPosition;
                 transform.rotation = initialRotation;
+            }
+        }
+        else
+        {
+            foreach (Canvas canva in GetComponentsInChildren<Canvas>())
+            {
+                canva.enabled = true;
             }
         }
 
