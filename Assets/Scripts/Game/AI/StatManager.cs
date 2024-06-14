@@ -18,7 +18,7 @@ public class GlobalStats
 
 public class StatManager : MonoBehaviour
 {
-    public GameManager gameManager;
+    internal GameManager gameManager;
     public DisplayDashboard displayDashboard;
     
     public float initialMoneyInBank = 0;

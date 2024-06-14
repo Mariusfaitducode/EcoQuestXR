@@ -31,7 +31,7 @@ public class FindPath
     
     
     
-    public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData, GameObject testCube,  GameObject roadParent, bool bigRoad = true)
+    public static List<PathPoint> FindPathWithAStar(List<Area> areas, Vector3 start, Vector3 end, RoadGenerator.RoadData roadData,  GameObject roadParent, bool bigRoad = true)
     {
         
         int count = 0;

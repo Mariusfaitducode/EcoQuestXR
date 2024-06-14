@@ -6,8 +6,11 @@ using Quaternion = System.Numerics.Quaternion;
 
 public class MapController : MonoBehaviour
 {
-    [System.Serializable]
+    
+    internal GameManager gameManager;
 
+    
+    [System.Serializable]
     public struct MouvementSettings
     {
         public float rotationSpeed;
@@ -20,54 +23,36 @@ public class MapController : MonoBehaviour
     }
     
     public MouvementSettings mouvementSettings;
-
-    // Move
-    //private GameObject table;
-
-    // private bool playerHasMoved = false;
-    // private bool tableFound = false;
+    
     
     private new Renderer renderer;
-    
-    public GameObject ovrPlayer;
-    public GameObject centerEyeAnchor;
-    
-    public UpdateTerrainRenderer updateTerrainRenderer;
-    
-    public GameManager gameManager;
-
-    public bool useKeyboard = true;
-    
-    
+    private UpdateTerrainRenderer updateTerrainRenderer;
     private float originalSize;
-    // private float originalScale;
     
-    // private float epsilon = 0.0001f;
+    // OVR
+    
+    internal GameObject ovrCameraRig;
+    internal GameObject centerEyeAnchor;
     
     
-    
-    
-    
-    void Start()
+    public void InitializeController()
     {
         renderer = GetComponent<Renderer>();
         originalSize = GetComponent<MeshFilter>().mesh.bounds.size.x;
+        
+        updateTerrainRenderer = GetComponent<UpdateTerrainRenderer>();
 
 
         Vector3 initialPosition = centerEyeAnchor.transform.position + new Vector3(0.0f, 0.0f, 0.0f);
         transform.position = initialPosition;
         updateTerrainRenderer.InitShaderCenter();
 
-
-
-
-
     }
     
     void Update()
     {
 
-        if (useKeyboard)
+        if (gameManager.controlMode == ControlMode.keyboard)
         {
             bool moved = KeyBoardMapInteraction.Controller(this.transform, Vector3.zero, renderer, mouvementSettings, originalSize);
 
@@ -78,25 +63,11 @@ public class MapController : MonoBehaviour
                 // updateTerrainRenderer.SetObjectsVisibility(gameManager);
             }
         }
-        else
+        else // OVR mode
         {
 
-            // if (table == null)
-            // {
-            //     table = GameObject.FindGameObjectWithTag("Table");
-
-            //     if (table != null)
-            //     {
-            //         Debug.Log("TableFound"); 
-            //         Vector3 initialPosition = table.transform.position;
-            //         transform.position = initialPosition;
-            //         updateTerrainRenderer.InitShaderCenter();
-            //     }
-            //     return;
-            // }
-
-
-            bool moved = OvrMapInteraction.Controller(this.transform, updateTerrainRenderer.GetMapCenter(), renderer, mouvementSettings, originalSize, ovrPlayer.transform);
+            bool moved = OvrMapInteraction.Controller(this.transform, updateTerrainRenderer.GetMapCenter(), 
+                renderer, mouvementSettings, originalSize, ovrCameraRig.transform);
 
             if (moved)
             {
@@ -111,7 +82,6 @@ public class MapController : MonoBehaviour
                 updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
                 updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
             }
-
         }
     }
     

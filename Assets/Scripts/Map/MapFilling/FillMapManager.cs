@@ -15,7 +15,7 @@ public class FillMapManager : MonoBehaviour
     }
     
     
-    public GameObject testCube;
+    // public GameObject testCube;
     
     public MapGenerator mapGenerator;
     
@@ -219,18 +219,17 @@ public class FillMapManager : MonoBehaviour
     {
         
         // Trace Roads
-        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, testCube, roadParent, roadData);
+        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, roadParent, roadData);
 
         List<FindPath.PathPoint> bigRoadPath = new List<FindPath.PathPoint>();
 
         if (extremityPoints.Length == 2)
         {
-            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData,
-                testCube, roadParent);
+            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData, roadParent);
             
             // Debug.Log(validExtremityPoints);
             
-            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData, testCube, roadParent);
+            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData,  roadParent);
         }
         
         List<List<FindPath.PathPoint>> listAreaRoads = new List<List<FindPath.PathPoint>>();
@@ -240,10 +239,10 @@ public class FillMapManager : MonoBehaviour
         {
             Vector3[] areaRoadExtremity = RoadGenerator.FindAreaClosestRoadCell(area, bigRoadCopy);
             
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Quaternion.identity, Vector3.one * roadData.roadScale);
-            FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Quaternion.identity, Vector3.one * roadData.roadScale);
+            // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[0], Quaternion.identity, Vector3.one * roadData.roadScale);
+            // FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, areaRoadExtremity[1], Quaternion.identity, Vector3.one * roadData.roadScale);
             
-            List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData, testCube, area.roadParent, false);
+            List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData,  area.roadParent, false);
             
             listAreaRoads.Add(areaRoadPoints);
             bigRoadCopy = bigRoadCopy.Concat(areaRoadPoints).ToList();

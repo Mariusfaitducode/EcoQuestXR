@@ -47,7 +47,7 @@ public static class RoadGenerator
     // private Random random = new Random();
 
     // Big road extremity
-    public static Vector3[] FindRoadExtremity(MeshData meshData, MapGenerator mapGenerator, GameObject meshTerrain, GameObject testCube, GameObject roadParent, RoadData roadData)
+    public static Vector3[] FindRoadExtremity(MeshData meshData, MapGenerator mapGenerator, GameObject meshTerrain, GameObject roadParent, RoadData roadData)
     {
         bool valid = false;
 
@@ -92,7 +92,7 @@ public static class RoadGenerator
         return listPoints;
     }
     
-    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject testCube, GameObject roadParent)
+    public static Vector3[] ExtremityOnTerrain(Vector3[] listPoints, List<Area> areas, RoadData roadData, GameObject roadParent)
     {
         List<FindPath.PathPoint> startList = new List<FindPath.PathPoint>();
         List<FindPath.PathPoint> endList = new List<FindPath.PathPoint>();

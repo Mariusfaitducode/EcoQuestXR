@@ -49,26 +49,50 @@ public class DisplayCanvas
             }
         }
     }
-    public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas, bool deck_mode = false) // par défault pour le draft, sinon en deck mode
+    
+    // Instantiate cards in canvas
+    public static void DrawCards(List<Card> cardsDeck, List<GameObject> cardLocationPanels, GameObject cardPrefab, CardManager cardManager, Canvas canvas, bool deck_mode = false) // par dï¿½fault pour le draft, sinon en deck mode
     {
         int idx = 0;
 
         foreach (Card card in cardsDeck)
         {
+            if( cardPrefab == null)
+            {
+                Debug.LogError("No card prefab found in draw pile : you need to set it up in the scene");
+            }
+            
             GameObject cardObject = GameObject.Instantiate(cardPrefab, cardLocationPanels[idx].transform);
             
             card.SetCardObject(cardObject);
             
             DisplayCard displayCard =  cardObject.GetComponentInChildren<DisplayCard>();
+            
+            
 
             displayCard.SetCard(card);
             displayCard.SetCanvas(canvas);
 
             if (deck_mode)
             {
-                cardObject.GetComponent<InteractionCardController>().initialPlaceTransform = cardLocationPanels[idx].transform;
-                cardObject.GetComponent<InteractionCardController>().CardManager = cardManager;
-                cardObject.GetComponent<InteractionCardController>().depot_zone = cardManager.depot_zone;
+                // TODO : set interaction card controller only on ovr Mode
+                
+                InteractionCardController interactionCardController = cardObject.GetComponent<InteractionCardController>();
+                
+                interactionCardController.initialPlaceTransform = cardLocationPanels[idx].transform;
+                interactionCardController.cardManager = cardManager;
+                interactionCardController.depotZone = cardManager.depot_zone;
+                
+                interactionCardController.controlMode = cardManager.gameManager.controlMode;
+                
+                interactionCardController.InitializeInteraction();
+
+
+                if (cardManager.gameManager.controlMode == ControlMode.keyboard)
+                {
+                    displayCard._buttonBackground.enabled = true;
+                    displayCard._buttonBackground.onClick.AddListener(delegate { cardManager.SelectUnselectEvent(displayCard); });
+                }
             }
             else
             {
