@@ -128,6 +128,13 @@ public static class GameInitialization
         gameManager.draftController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
         gameManager.draftController.InitializeDraftController();
         
+
+        // Settings controller
+        gameManager.settingsController = GameObject.FindObjectOfType<SettingsController>();
+
+        gameManager.settingsController.timer = gameManager.timer;
+
+
         // Cloud controller
         gameManager.cloudController = GameObject.FindObjectOfType<CloudController>();
 

@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     internal DraftController draftController;
     internal DashboardController dashboardController;
     internal CloudController cloudController;
+    internal SettingsController settingsController;
     
     
     
