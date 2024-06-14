@@ -67,9 +67,9 @@ public class BusGestion : MonoBehaviour
                 
                 GameObject bus = busPrefabs[Random.Range(0, busPrefabs.Count)];
                 
-                Debug.Log("INSTANTIATE BUSES ");
-                Debug.Log("PrefabScale : " + prefabScale);
-                Debug.Log("UniformScale : " + uniformScale);
+                // Debug.Log("INSTANTIATE BUSES ");
+                // Debug.Log("PrefabScale : " + prefabScale);
+                // Debug.Log("UniformScale : " + uniformScale);
                 
                 GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, this.transform.position, Quaternion.identity, Vector3.one * uniformScale);
                 
