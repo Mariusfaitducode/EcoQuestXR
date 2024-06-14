@@ -4,21 +4,93 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 
+
+public enum ControlMode
+{
+    ovr, keyboard
+}
+
+[Serializable]
+public struct OvrObjects
+{
+    public GameObject leftControllerAnchor;
+    public GameObject ovrCameraRig;
+    public GameObject centerEyeAnchor;
+}
+
+[Serializable]
+public struct KeyboardObjects
+{
+    public GameObject camera;
+    public GameObject play;
+}
+
+[Serializable]
+public struct CanvasObjects
+{
+    public Canvas deckCanvas;
+    public Canvas draftCanvas;
+    public Canvas dashboardCanvas;
+}
+
+[Serializable]
+public struct CardObjects
+{
+    public GameObject leftArmDeck;
+    public GameObject card;
+    public GameObject grabbableCard;
+}
+
+
 public class GameManager : MonoBehaviour
 {
     
-    public CardManager cardManager;
-    public ObjectManager objectManager;
-    public AgentManager agentManager;
-    public StatManager statManager;
-    public FillMapManager fillMapManager;
+    public ControlMode controlMode = ControlMode.ovr;
+
+    public GameObject oculusParent;
+    public GameObject keyboardParent;
     
     public Timer timer = new Timer();
     public EventsGestion eventsGestion = new EventsGestion();
     
+    // OVR
+    public OvrObjects ovrObjects;
+    
+    // Keyboard
+    public KeyboardObjects keyboardObjects;
+    
+    // Canvas
+    public CanvasObjects canvasObjects;
+    
+    // Card
+    public CardObjects cardObjects;
+    
+    // Map Generator
+
+    internal MapGenerator mapGenerator;
+    
+    
+    // Manager
+    internal CardManager cardManager;
+    internal ObjectManager objectManager;
+    internal AgentManager agentManager;
+    internal StatManager statManager;
+    internal FillMapManager fillMapManager;
+
+    // Controller
+    internal MapController mapController;
+
+    internal DeckController deckController;
+    
+    
+    
     
     void Start()
     {
+        GameInitialization.setupControlMode(this);
+        GameInitialization.InitManager(this);
+        GameInitialization.InitializeController(this);
+        GameInitialization.InitializeMapGenerator(this);
         GameInitialization.InitializeGame(
             timer,
             fillMapManager,
@@ -28,6 +100,9 @@ public class GameManager : MonoBehaviour
             agentManager,
             eventsGestion);
     }
+
+
+    
     
     void Update()
     {

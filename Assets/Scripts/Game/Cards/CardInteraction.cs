@@ -23,28 +23,28 @@ public static class CardInteraction
         return nbrSelectedCards;
     }
 
-    //public static Card SelectUnselectDeckCard(DisplayCard displayCard, List<Card> cards)
-    //{
-    //    Card selectedCard;
-    //    if (displayCard.IsSelected())
-    //    {
-    //        displayCard.Unselect();
-    //        selectedCard = null;
-    //    }
-    //    else
-    //    {
-    //        foreach (Card card in cards)
-    //        {
-    //            DisplayCard displayCardInDeck = card.GetCardObject().GetComponent<DisplayCard>();
-    //            if (displayCardInDeck.IsSelected())
-    //            {
-    //                displayCardInDeck.Unselect();
-    //            }
-    //        }
-    //        displayCard.Select();
-    //        selectedCard = displayCard.GetCard();
-    //    }
-
-    //    return selectedCard;
-    //}
+    // public static Card SelectUnselectDeckCard(DisplayCard displayCard, List<Card> cards)
+    // {
+    //     Card selectedCard;
+    //     if (displayCard.IsSelected())
+    //     {
+    //         displayCard.Unselect();
+    //         selectedCard = null;
+    //     }
+    //     else
+    //     {
+    //         foreach (Card card in cards)
+    //         {
+    //             DisplayCard displayCardInDeck = card.GetCardObject().GetComponent<DisplayCard>();
+    //             if (displayCardInDeck.IsSelected())
+    //             {
+    //                 displayCardInDeck.Unselect();
+    //             }
+    //         }
+    //         displayCard.Select();
+    //         selectedCard = displayCard.GetCard();
+    //     }
+    //
+    //     return selectedCard;
+    // }
 }

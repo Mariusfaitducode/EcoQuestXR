@@ -9,12 +9,11 @@ using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    public GameManager gameManager;
-    [FormerlySerializedAs("isCardsInitialized")] public bool areCardsInitialized = false;
+    internal GameManager gameManager;
     public string cardsCSVPath = "Csv/cards";
 
-    public GameObject cardPrefab;
-    public GameObject grabbableCard;
+    internal GameObject cardPrefab;
+    internal GameObject grabbableCardPrefab;
 
     public TextMeshProUGUI draftCounterSelectedCardsText;
 
@@ -23,10 +22,11 @@ public class CardManager : MonoBehaviour
     internal List<Card> deckCards = new List<Card>();
     internal List<Card> selectedPileCards = new List<Card>();
     internal Card selectedDeckCard;
+    internal GameObject selectedGrabbableCard;
     
-    public Canvas deckCanvas;
+    internal Canvas deckCanvas;
     public GameObject deck;
-    public Canvas draftCanvas;
+    internal Canvas draftCanvas;
     public GameObject depot_zone; 
     
     internal List<GameObject> cardsLocationDeckPanels;
@@ -50,7 +50,6 @@ public class CardManager : MonoBehaviour
     {
         // Cards Initialization
         cards = CardsInitialization.InitializeCards(cardsCSVPath);
-        areCardsInitialized = true;
         
         // Canvas Initialization
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
@@ -100,11 +99,11 @@ public class CardManager : MonoBehaviour
             nbrSelectedCards = CardInteraction.SelectUnselectDraftCard(displayCard, nbrSelectedCards, nbrMaxSelectedCards, selectedPileCards);
             DisplayCanvas.UpdateCounterText(draftCounterSelectedCardsText, nbrSelectedCards, nbrMaxSelectedCards);
         }
-        // else if (displayCard.GetParentCanvas() == deckCanvas && !draftTime)
-        //else if (displayCard.GetParentCanvas() == deckCanvas)
-        //{
-        //    selectedDeckCard = CardInteraction.SelectUnselectDeckCard(displayCard, deckCards);
-        //}
+        else if (displayCard.GetParentCanvas() == deckCanvas && gameManager.controlMode == ControlMode.keyboard)
+        {
+            selectedDeckCard = displayCard.GetCard();
+            Debug.Log("Keyboard : chosen card : " + selectedDeckCard.title);
+        }
         else
         {
             Debug.LogError("Parent Canvas not found");
@@ -119,7 +118,7 @@ public class CardManager : MonoBehaviour
         PileManager.TransferDraftedCards(selectedPileCards, deckCards);
         
         // Update Deck
-        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCard, this, deckCanvas);
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCardPrefab, this, deckCanvas);
         //deck.GetComponent<DeckController>().list_cards = cardsLocationDeckPanels;
 
 
@@ -137,22 +136,31 @@ public class CardManager : MonoBehaviour
         
     }
 
-    public void PlayEvent(GameObject GrabbableCard)
+    public void PlayEvent(GameObject selectedGrabbableCard = null)
     {
-
-        selectedDeckCard = GrabbableCard.GetComponentInChildren<DisplayCard>().GetCard();
+        if (selectedGrabbableCard != null)
+        {
+            selectedDeckCard = selectedGrabbableCard.GetComponentInChildren<DisplayCard>().GetCard();
+        }
+        
+        if (selectedDeckCard == null)
+        {
+            Debug.LogError("No card selected");
+            return;
+        }
+        
+        Debug.Log("Card played : " + selectedDeckCard.title);
 
         // Remove Selected Card
         PileManager.RemoveSelectedCard(deckCards, selectedDeckCard);
         
         // Update Deck
-        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCard, this, deckCanvas);
+        DisplayCanvas.UpdateCards(deckCards, cardsLocationDeckPanels, grabbableCardPrefab, this, deckCanvas);
         //deck.GetComponent<DeckController>().list_cards = cardsLocationDeckPanels;
 
 
         // TODO : Implement action on map
         gameManager.ExecuteCardEvent(selectedDeckCard);
-        Debug.LogError("Card play");
         
         
         // Update Counter

@@ -37,7 +37,7 @@ public static class MapMouvement
 
     public static void RotateObjectAroundPoint(Transform obj, Vector3 point, float angle)
     {
-        Debug.Log(point);
+        //Debug.Log(point);
         Vector3 direction = obj.position - point;
         
         Quaternion rotation = Quaternion.Euler(0, angle, 0);

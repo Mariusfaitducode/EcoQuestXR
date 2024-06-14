@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class TerrainData : UpdatableData
 {
-    public float uniformScale = 2.5f;
+    internal float uniformScale = 1f;
     
     public bool useFlatShading;
     public bool useFalloff;
