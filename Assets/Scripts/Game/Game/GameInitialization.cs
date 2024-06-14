@@ -62,7 +62,7 @@ public static class GameInitialization
         
         gameManager.cardManager = GameObject.FindObjectOfType<CardManager>();
         gameManager.cardManager.gameManager = gameManager;
-        gameManager.cardManager.deck = gameManager.cardObjects.leftArmDeck;
+        gameManager.cardManager.deck = gameManager.otherObjects.leftArmDeck;
         gameManager.cardManager.deckCanvas = gameManager.canvasObjects.deckCanvas;
         gameManager.cardManager.draftCanvas = gameManager.canvasObjects.draftCanvas;
         gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
@@ -94,7 +94,7 @@ public static class GameInitialization
         
         gameManager.mapController.InitializeController();
         
-        // Card controller
+        // Deck controller
         gameManager.deckController = GameObject.FindObjectOfType<DeckController>();
         
         gameManager.deckController.leftControllerAnchor = gameManager.ovrObjects.leftControllerAnchor.transform;
@@ -102,6 +102,24 @@ public static class GameInitialization
         
         gameManager.deckController.controlMode = gameManager.controlMode;
         gameManager.deckController.InitializeDeckController();
+        
+        // Dashboard controller
+        gameManager.dashboardController = GameObject.FindObjectOfType<DashboardController>();
+        
+        gameManager.dashboardController.meshTransform = gameManager.otherObjects.mesh.transform;
+        gameManager.dashboardController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+        
+        gameManager.dashboardController.controlMode = gameManager.controlMode;
+        gameManager.dashboardController.InitializeDashboardController();
+        
+        // Draft controller
+        gameManager.draftController = GameObject.FindObjectOfType<DraftController>();
+        
+        gameManager.draftController.meshTransform = gameManager.otherObjects.mesh.transform;
+        gameManager.draftController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+        
+        gameManager.draftController.controlMode = gameManager.controlMode;
+        gameManager.draftController.InitializeDraftController();
     }
 
 

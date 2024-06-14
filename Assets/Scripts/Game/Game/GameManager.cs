@@ -36,11 +36,16 @@ public struct CanvasObjects
 [Serializable]
 public struct CardObjects
 {
-    public GameObject leftArmDeck;
     public GameObject card;
     public GameObject grabbableCard;
 }
 
+[Serializable]
+public struct OtherObjects
+{
+    public GameObject leftArmDeck;
+    public GameObject mesh;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -65,6 +70,9 @@ public class GameManager : MonoBehaviour
     // Card
     public CardObjects cardObjects;
     
+    // Other
+    public OtherObjects otherObjects;
+    
     // Map Generator
 
     internal MapGenerator mapGenerator;
@@ -79,8 +87,9 @@ public class GameManager : MonoBehaviour
 
     // Controller
     internal MapController mapController;
-
     internal DeckController deckController;
+    internal DraftController draftController;
+    internal DashboardController dashboardController;
     
     
     
