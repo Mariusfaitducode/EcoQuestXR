@@ -26,8 +26,6 @@ public static class ObjectUtils
         }
         areaCells.Remove(firstCell);
         
-
-        
         GameObject placedObject = PlaceBuilding(areaPrefab, area, firstLocation, false, prefabScale, uniformScale);
         placedObjects.Add(placedObject);
         quantity--;
@@ -135,11 +133,6 @@ public static class ObjectUtils
         }
         
         position /= areaPrefab.size.x * areaPrefab.size.y;
-
-
-        // position *= scale;
-        
-        // Debug.Log("Final position"position);
         
         GameObject placedObject = FillMapUtils.InstantiateObjectWithScale(areaPrefab.prefabLow, area.hierarchyBuildingFolder.transform, position, rotation, 
             Vector3.one * (area.areaGrid[gridLocation.x, gridLocation.y].size * prefabSize * scale));
@@ -190,7 +183,7 @@ public static class ObjectUtils
     }
 
 
-    public static void RemoveNeighbourhood(List<GameObject> validObjectsToRemove, int quantity, Area area)
+    public static List<GameObject> RemoveNeighbourhood(List<GameObject> validObjectsToRemove, int quantity, Area area)
     {
         List<GameObject> objectsToRemove = new List<GameObject>();
         
@@ -234,7 +227,43 @@ public static class ObjectUtils
             }
             
             area.areaObjects.Remove(objectToRemove);
-            Object.Destroy(objectToRemove);
+            // Object.Destroy(objectToRemove);
+        }
+
+        return objectsToRemove;
+    }
+    
+    public static void DestroyObjects(List<GameObject> objects)
+    {
+        foreach (var obj in objects)
+        {
+            Object.Destroy(obj);
+        }
+    }
+    
+    public static Vector3 CalculateFocusPoint(List<GameObject> objectsOnMap)
+    {
+        Vector3 sum = Vector3.zero;
+        foreach (var obj in objectsOnMap)
+        {
+            sum += obj.transform.position;
+        }
+        return sum / objectsOnMap.Count;
+    }
+    
+    public static void HideObjects(List<GameObject> objectsOnMap)
+    {
+        foreach (var obj in objectsOnMap)
+        {
+            obj.SetActive(false);
+        }
+    }
+    
+    public static void ShowObjects(List<GameObject> objectsOnMap)
+    {
+        foreach (var obj in objectsOnMap)
+        {
+            obj.SetActive(true);
         }
     }
     

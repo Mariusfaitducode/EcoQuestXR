@@ -72,7 +72,7 @@ public static class GameInitialization
         
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
-        
+        gameManager.objectManager.mesh = gameManager.otherObjects.mesh;
         gameManager.agentManager = GameObject.FindObjectOfType<AgentManager>();
         // agentManager.gameManager = this;
         
@@ -196,7 +196,6 @@ public static class GameInitialization
         // CSV
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
-        
         statManager.StatsStartInitialization();
         
         // Transfer informations to other scripts

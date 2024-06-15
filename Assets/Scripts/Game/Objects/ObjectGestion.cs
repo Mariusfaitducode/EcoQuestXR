@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class ObjectGestion
 {
-    public static void PlaceObjectsOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas, float prefabScale, GameManager gameManager, float uniformScale)
+    public static List<GameObject> PlaceObjectsOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas, float prefabScale, GameManager gameManager, float uniformScale)
     {
         // Load Prefab
         
@@ -25,19 +25,13 @@ public static class ObjectGestion
         int size = area.areaGrid.GetLength(0);
         
         List<AreaCell> areaCells = ObjectUtils.FindEmptyAreaCellsInPeriphery(area, size, objectProperties);
+        List<GameObject> placedObjects = new List<GameObject>();;
         
-        if (areaCells.Count == 0)
+        if (areaCells.Count != 0)
         {
-            Debug.LogWarning("No cell found");
-        }
-        else
-        {
-            Debug.Log("Cell found : Place Object on the map");
-            
-            List<GameObject> placedObjects = ObjectUtils.PlaceNeighbourhood(areaCells, area, quantity, areaPrefab, prefabScale, uniformScale);
+            placedObjects = ObjectUtils.PlaceNeighbourhood(areaCells, area, quantity, areaPrefab, prefabScale, uniformScale);
             
             // Initialize object script with objectProperties gameManager and areaPrefab
-            
             foreach (GameObject placedObject in placedObjects)
             {
                 ObjectScript objectScript = placedObject.GetComponent<ObjectScript>();
@@ -45,9 +39,11 @@ public static class ObjectGestion
                 objectScript.InitObjectScript(objectProperties, gameManager);
             }
         }
+
+        return placedObjects;
     }
     
-    public static void RemoveObjectOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas)
+    public static List<GameObject> RemoveObjectOnMap(ObjectProperties objectProperties, int quantity, List<Area> areas)
     {
         // Find objects with prefabName
         
@@ -55,16 +51,14 @@ public static class ObjectGestion
         
         List<GameObject> objectsToRemove = ObjectUtils.FindAreaObjectsWithPrefabName(area, objectProperties.prefabName);
         
-        // Choose one object to remove
+        // Choose objects to remove
+        if (objectsToRemove.Count != 0)
+        {
+            objectsToRemove = ObjectUtils.RemoveNeighbourhood(objectsToRemove, quantity, area);
+        }
         
-        if (objectsToRemove.Count == 0)
-        {
-            Debug.LogWarning("No object found to remove");
-        }
-        else
-        {
-            ObjectUtils.RemoveNeighbourhood(objectsToRemove, quantity, area);
-        }
+        
+        return objectsToRemove;
     }
     
     
