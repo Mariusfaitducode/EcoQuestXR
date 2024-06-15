@@ -42,8 +42,8 @@ public class ModelGestion : MonoBehaviour
     public List<SubModel> subObjects = new List<SubModel>();
     // public List<Animation> animations = new List<Animation>();
     
-    public List<ParticleSystemModel> particleSystems = new List<ParticleSystemModel>();
-    // public List<AudioClip> audioClips = new List<AudioClip>();
+    // public List<ParticleSystemModel> particleSystems = new List<ParticleSystemModel>();
+    public List<AudioClip> audioClips = new List<AudioClip>();
 
 
     internal bool initialized = false;
@@ -62,13 +62,16 @@ public class ModelGestion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        SetAudioSource(gameManager.keyboardObjects.camera, gameManager.objectManager.meshTerrain.transform.localScale.x);
         
-        
-        if (particleSystems.Count > 0)
-        {
-            // InitialisationParticleSystems();
-            initialized = true;
-        }
+
+        // if (particleSystems.Count > 0)
+        // {
+        //     // InitialisationParticleSystems();
+        //     initialized = true;
+        // }
     }
 
 
@@ -115,16 +118,36 @@ public class ModelGestion : MonoBehaviour
     }
 
 
-    // public void InitialisationParticleSystems()
-    // {
-    //     foreach( ParticleSystemModel particle in particleSystems)
-    //     {
-    //         particle.initialScale = gameObject.transform.localScale.x * particle.initialScale;
-    //         
-    //         particle.transform.localScale *= gameManager.objectManager.prefabScale;
-    //         particle.transform.localScale *= gameManager.mapGenerator.terrainData.uniformScale;
-    //     }
-    // }
+    public void SetAudioSource(Camera camera, float uniformScale)
+    {
+        if (audioClips.Count > 0)
+        {
+            if (GetComponent<AudioSource>() == null)
+            {
+                gameObject.AddComponent<AudioSource>();
+            }
+            else
+            {
+                AudioSource audioSource = GetComponent<AudioSource>();
+                float distance = Vector3.Distance(camera.transform.position, transform.position);
+                
+                if (distance < 100 * uniformScale)
+                {
+                    if (!audioSource.isPlaying)
+                    {
+                        audioSource.clip = audioClips[Random.Range(0, audioClips.Count)];
+                        audioSource.Play();
+                    }
+                    float volume = 1 - distance / (100 * uniformScale);
+                    GetComponent<AudioSource>().volume = volume;
+                }
+                else
+                {
+                    GetComponent<AudioSource>().volume = 0;
+                }
+            }
+        }
+    }
     
     
     public SubModel FindSubModelWithName(string name)

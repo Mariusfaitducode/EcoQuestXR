@@ -21,7 +21,7 @@ public struct OvrObjects
 [Serializable]
 public struct KeyboardObjects
 {
-    public GameObject camera;
+    public Camera camera;
     public GameObject play;
 }
 
@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
     internal AgentManager agentManager;
     internal StatManager statManager;
     internal FillMapManager fillMapManager;
+    internal AudioManager audioManager;
 
     // Controller
     internal MapController mapController;
@@ -117,8 +118,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+        
+        objectManager.AreasSounds(keyboardObjects.camera, timer.isTimePaused);
+
         if (!timer.isTimePaused && timer.IsCheckTime())
         {
+            
             timer.TimeIncrement();
             
             // Check events
@@ -131,6 +136,6 @@ public class GameManager : MonoBehaviour
     
     public void ExecuteCardEvent(Card card)
     {
-        GameUtils.ExecuteCardAction(card, objectManager, statManager);
+        GameActions.ExecuteCardAction(card, objectManager, statManager, audioManager);
     }
 }

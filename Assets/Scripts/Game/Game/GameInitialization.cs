@@ -82,6 +82,7 @@ public static class GameInitialization
         gameManager.fillMapManager = GameObject.FindObjectOfType<FillMapManager>();
         // fillMapManager.gameManager = this;
         
+        gameManager.audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
 
@@ -191,6 +192,7 @@ public static class GameInitialization
         
         // Scripts
         
+        // Objects / Cards Manager
         // CSV
         objectManager.ObjectsStartInitialization();
         cardManager.CardsStartInitialization();
@@ -200,7 +202,13 @@ public static class GameInitialization
         // Transfer informations to other scripts
         objectManager.SetMapInformations(fillMapManager);
         cardManager.SetCardsProperties(objectManager.listObjectsProperties);
-
+        
+        // Audio Source Areas
+        
+        // objectManager
+        
+        
+        // Stats
         // Citizens and Dashboard
         statManager.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
         statManager.InitDashboard(objectManager);

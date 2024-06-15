@@ -16,6 +16,29 @@ public class ObjectManager : MonoBehaviour
     // public float mapScale = 1f;
 
     public GameObject meshTerrain;
+
+
+    public void AreasSounds(Camera camera, bool timePaused)
+    {
+        // bool allAudioOff = true;
+        
+        foreach (Area area in areas)
+        {
+            // MapSoundsGestion.PlayAreaSounds(areas);
+
+            if (area.sphere.GetComponent<AudioSource>())
+            {
+                MapSoundsGestion.AreaAudioSource(area, camera, meshTerrain.transform.localScale.x, timePaused);
+                // area.AreaAudioSource(camera, meshTerrain.transform.localScale.x);
+            }
+            else
+            {
+                Debug.LogError("No audio source on area sphere");
+            }
+            
+        }
+    }
+    
     
     public void ObjectsStartInitialization()
     {
@@ -51,7 +74,7 @@ public class ObjectManager : MonoBehaviour
         ObjectGestion.RemoveObjectOnMap(objectProperties, quantity, areas);
     }
     
-    public void UpgradeObjects(ObjectProperties objectProperties1, ObjectProperties objectProperties2, int quantity1 = 1, int quantity2 = 1)
+    public void ReplaceObjects(ObjectProperties objectProperties1, ObjectProperties objectProperties2, int quantity1 = 1, int quantity2 = 1)
     {
         RemoveObjects(objectProperties1, quantity1);
         PlaceObjects(objectProperties2, quantity2);
