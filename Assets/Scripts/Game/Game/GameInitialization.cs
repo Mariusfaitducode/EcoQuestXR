@@ -20,6 +20,8 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+            gameManager.canvasObjects.settingsCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+
             
             // Unable GraphicRaycaster for the keyboard
             gameManager.cardObjects.card.GetComponent<GraphicRaycaster>().enabled = false;
@@ -41,6 +43,8 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.canvasObjects.settingsCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<Canvas>().worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             
             // Unable OVR Raycaster for OVR
@@ -132,7 +136,7 @@ public static class GameInitialization
         // Settings controller
         gameManager.settingsController = GameObject.FindObjectOfType<SettingsController>();
 
-        gameManager.settingsController.timer = gameManager.timer;
+        gameManager.settingsController.gameManager = gameManager;
 
 
         // Cloud controller

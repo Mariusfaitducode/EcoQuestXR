@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class SettingsController : MonoBehaviour
 {
 
-    internal Timer timer; 
+    internal GameManager gameManager; 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        this.enabled = false;
-
+        this.GetComponentInChildren<Canvas>().enabled = false;
     }
 
     // Update is called once per frame
@@ -25,16 +26,23 @@ public class SettingsController : MonoBehaviour
 
     public void open_settings()
     {
-        timer.PauseTime(); 
-        this.enabled = true;    
+        gameManager.timer.PauseTime(); 
+        this.GetComponentInChildren<Canvas>().enabled = true;    
     }
 
 
     public void close_settings()
     {
-        timer.ResumeTime();
-        this.enabled = false;
+        if (!gameManager.eventsGestion.GetEventByName("DraftEvent").isEventActive) gameManager.timer.ResumeTime();
+        this.GetComponentInChildren<Canvas>().enabled = false;
     }
+
+    public void exit_game()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
+    }
+
+
 
 
 }

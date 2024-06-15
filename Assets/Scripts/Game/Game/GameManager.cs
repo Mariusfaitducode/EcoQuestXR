@@ -31,6 +31,7 @@ public struct CanvasObjects
     public Canvas deckCanvas;
     public Canvas draftCanvas;
     public Canvas dashboardCanvas;
+    public Canvas settingsCanvas; 
 }
 
 [Serializable]
