@@ -16,8 +16,7 @@ public static class GameUtils
         }
         else if (card.cardType == CardType.Upgrade)
         {
-            objectManager.RemoveObjects(card.objectProperties1, card.quantityObject1);
-            objectManager.PlaceObjects(card.objectProperties2, card.quantityObject2);
+            objectManager.UpgradeObjects(card.objectProperties1, card.objectProperties2, card.quantityObject1, card.quantityObject2);
         }
         
         // Update global stats

@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="8715c800-68e8-47d2-af7a-a06df9c0a70f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EcoQuestXR/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/AI/CitizensGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/AI/CitizensGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Cards/GrabbableCard.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Cards/GrabbableCard.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Agents/Specific/BusGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Agents/Specific/BusGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/MapControl/MapMouvement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/MapControl/MapMouvement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameInitialization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameInitialization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Game/GameUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectGestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectGestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/MapFilling/FillMapUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/MapFilling/FillMapUtils.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +30,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/KeyBoardMapInteraction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/MapControl/MapMouvement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/OvrMapInteraction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Game/AnimationUtils.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Objects/ObjectUtils.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@14.0.8/Editor/Data/Graphs/SerializableTexture.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@14.0.8/Editor/Data/Util/PooledList.cs" root0="SKIP_HIGHLIGHTING" />
@@ -142,6 +151,7 @@
       <workItem from="1716635405872" duration="16091000" />
       <workItem from="1716831845676" duration="16132000" />
       <workItem from="1717317544757" duration="10832000" />
+      <workItem from="1718438639180" duration="18959000" />
     </task>
     <servers />
   </component>

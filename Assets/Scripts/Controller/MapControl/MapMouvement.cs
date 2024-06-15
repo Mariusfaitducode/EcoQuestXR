@@ -34,6 +34,24 @@ public static class MapMouvement
         //mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
 
      }
+     
+     public static Vector3 GetPositionFromScaleObjectAroundPoint(Vector3 mapPosition, Vector3 pivot, float mapScale, float scale)
+     {
+         float newScale = scale;
+         
+         float newRatio = newScale / mapScale;
+
+         Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
+
+         // Calculer la nouvelle position relative du pivot
+         Vector3 pivotToPosition = mapPosition - pivot;
+         Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
+
+         // Mise à jour de la position pour compenser le scaling autour du pivot
+         return new Vector3(pivot.x + newPivotToPosition.x, mapPosition.y, pivot.z + newPivotToPosition.z);
+         //mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
+
+     }
 
     public static void RotateObjectAroundPoint(Transform obj, Vector3 point, float angle)
     {
@@ -102,5 +120,18 @@ public static class MapMouvement
         }
         
         return false;
+    }
+    
+    public static void FocusOnPoint(Transform mapTransform, Vector3 focusPoint, Vector3 shaderPoint)
+    {
+        if (mapTransform == null)
+        {
+            return;
+        }
+        // Vector3 direction = point - mapTransform.position;
+        // mapTransform.position += direction.normalized * Time.deltaTime * translationSpeed;
+        Vector3 translation = shaderPoint - focusPoint;
+        mapTransform.position += translation;
+        mapTransform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
     }
 }

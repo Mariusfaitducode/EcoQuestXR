@@ -64,7 +64,7 @@ public class FillMapUtils : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogWarning("Raycast cannot hit the terrain mesh.");
+        // Debug.LogWarning("Raycast cannot hit the terrain mesh.");
         return false;
     }
     

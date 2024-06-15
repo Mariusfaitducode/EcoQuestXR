@@ -15,7 +15,7 @@ public class ObjectManager : MonoBehaviour
     public float prefabScale = 1f;
     // public float mapScale = 1f;
 
-    public GameObject meshTerrain;
+    internal GameObject mesh;
     
     public void ObjectsStartInitialization()
     {
@@ -43,18 +43,61 @@ public class ObjectManager : MonoBehaviour
     
     public void PlaceObjects(ObjectProperties objectProperties, int quantity = 1)
     {
-        ObjectGestion.PlaceObjectsOnMap(objectProperties, quantity, areas, prefabScale, gameManager, meshTerrain.transform.localScale.x);
+        // Instantiate the object on the map
+        List<GameObject> placedObjects = ObjectGestion.PlaceObjectsOnMap(objectProperties, quantity, areas, prefabScale, gameManager, mesh.transform.localScale.x);
+        
+        if (placedObjects.Count == 0)
+        {
+            Debug.LogWarning("No object found to place");
+        }
+        else
+        {
+            Debug.Log("Object found : Place Object on the map");
+            // start animation
+            StartCoroutine(AnimationUtils.AnimationPlaceObjects(gameManager, placedObjects));
+        }
     }
     
     public void RemoveObjects(ObjectProperties objectProperties, int quantity = 1)
     {
-        ObjectGestion.RemoveObjectOnMap(objectProperties, quantity, areas);
+        // Get the objects to remove and delete in lists but not destroy
+        List<GameObject> removedObjects = ObjectGestion.RemoveObjectOnMap(objectProperties, quantity, areas);
+        
+        if (removedObjects.Count == 0)
+        {
+            Debug.LogWarning("No object found to remove");
+        }
+        else
+        {
+            Debug.Log("Object found : Remove Object on the map");
+            // start animation
+            StartCoroutine(AnimationUtils.AnimationRemoveObjects(gameManager, removedObjects));
+        }
     }
     
     public void UpgradeObjects(ObjectProperties objectProperties1, ObjectProperties objectProperties2, int quantity1 = 1, int quantity2 = 1)
     {
-        RemoveObjects(objectProperties1, quantity1);
-        PlaceObjects(objectProperties2, quantity2);
+        // Get the objects to remove and delete in lists but not destroy
+        List<GameObject> removedObjects = ObjectGestion.RemoveObjectOnMap(objectProperties1, quantity1, areas);
+        
+        // Instantiate the object on the map
+        List<GameObject> placedObjects = ObjectGestion.PlaceObjectsOnMap(objectProperties2, quantity2, areas, prefabScale, gameManager, mesh.transform.localScale.x);
+        
+        if (removedObjects.Count == 0)
+        {
+            Debug.LogWarning("No object found to remove");
+        }
+        else if (placedObjects.Count == 0)
+        {
+            Debug.LogWarning("No object found to place");
+        }
+        else
+        {
+            Debug.Log("Object found : Upgrade Object on the map");
+            // start animation
+            StartCoroutine(AnimationUtils.AnimationUpgradeObjects(gameManager, removedObjects, placedObjects));
+        }
+        
     }
     
     public List<ObjectScript> GetAllObjectScripts()
