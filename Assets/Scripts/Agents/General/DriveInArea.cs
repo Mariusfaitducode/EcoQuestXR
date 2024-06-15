@@ -88,6 +88,14 @@ public class DriveInArea : MonoBehaviour
 
         SearchNeighbour();
         
+        if (nextCell == null)
+        {
+            // nextCell = actualCell;
+            
+            Debug.Log("Error : No next cell found. Destroying object.");
+            DestroyImmediate(this.gameObject);
+        }
+        
         Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
         
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);

@@ -200,13 +200,19 @@ public static class GameInitialization
         // Transfer informations to other scripts
         objectManager.SetMapInformations(fillMapManager);
         cardManager.SetCardsProperties(objectManager.listObjectsProperties);
-        
-        agentManager.SetMapInformations(fillMapManager);
-        agentManager.SetTimerInformations(timer);
-        
+
         // Citizens and Dashboard
         statManager.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
         statManager.InitDashboard(objectManager);
+        
+        // Agents
+        agentManager.SetMapInformations(fillMapManager);
+        agentManager.SetTimerInformations(timer);
+        
+        agentManager.InitAgentManager(statManager, objectManager);
+        
+        
+        
         
         // Events
         InstantiatePeriodicEvents(eventsGestion, timer.currentTime, cardManager, statManager, objectManager);

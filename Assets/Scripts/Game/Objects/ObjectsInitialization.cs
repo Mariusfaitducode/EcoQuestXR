@@ -58,7 +58,7 @@ public class ObjectsInitialization
                         
                         int id = int.Parse(subObjectId);
                         
-                        if (id != null && id != -1)
+                        if (id != -1)
                         {
                             objProps.subObjectsIds.Add(id);
                         }
