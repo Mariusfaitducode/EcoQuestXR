@@ -36,16 +36,22 @@ public struct CanvasObjects
 [Serializable]
 public struct CardObjects
 {
-    public GameObject leftArmDeck;
     public GameObject card;
     public GameObject grabbableCard;
 }
 
+[Serializable]
+public struct OtherObjects
+{
+    public GameObject leftArmDeck;
+    public GameObject mesh;
+    public GameObject cloud;
+}
 
 public class GameManager : MonoBehaviour
 {
     
-    public ControlMode controlMode = ControlMode.ovr;
+    public ControlMode controlMode;
 
     public GameObject oculusParent;
     public GameObject keyboardParent;
@@ -65,6 +71,9 @@ public class GameManager : MonoBehaviour
     // Card
     public CardObjects cardObjects;
     
+    // Other
+    public OtherObjects otherObjects;
+    
     // Map Generator
 
     internal MapGenerator mapGenerator;
@@ -79,9 +88,10 @@ public class GameManager : MonoBehaviour
 
     // Controller
     internal MapController mapController;
-
     internal DeckController deckController;
-    
+    internal DraftController draftController;
+    internal DashboardController dashboardController;
+    internal CloudController cloudController;
     
     
     

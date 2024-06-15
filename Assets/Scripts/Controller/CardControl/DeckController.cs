@@ -17,6 +17,8 @@ public class DeckController : MonoBehaviour
 
     internal ControlMode controlMode;
     
+    public ObjectPose keyboardPose;
+    public ObjectPose ovrPose;
     
     public float distToHand = 0.3f;
 
@@ -26,6 +28,17 @@ public class DeckController : MonoBehaviour
     public void InitializeDeckController()
     {
         canva = GetComponentInChildren<Canvas>();
+        
+        if (controlMode == ControlMode.keyboard)
+        {
+            transform.position = keyboardPose.position;
+            transform.rotation = keyboardPose.rotation;
+            transform.localScale = new Vector3(keyboardPose.scale, keyboardPose.scale, keyboardPose.scale);
+            
+        } else if (controlMode == ControlMode.ovr)
+        {
+            transform.localScale = new Vector3(ovrPose.scale, ovrPose.scale, ovrPose.scale);
+        }
     }
 
     void Update()
