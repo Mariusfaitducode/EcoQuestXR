@@ -24,13 +24,13 @@ public static class MapSoundsGestion
             float volume = 1 - distance / (area.data.radius * 2 * uniformScale);
             area.sphere.GetComponent<AudioSource>().volume = volume;
             
-            Debug.Log("Audio on : Area " + area.data.type + " - Volume : " + volume + " - Distance : " + distance + " - Radius : " + area.data.radius + " - Camera : " + camPos + " - Sphere : " + area.sphere.transform.position);
+            // Debug.Log("Audio on : Area " + area.data.type + " - Volume : " + volume + " - Distance : " + distance + " - Radius : " + area.data.radius + " - Camera : " + camPos + " - Sphere : " + area.sphere.transform.position);
             return true;
         }
         
         area.sphere.GetComponent<AudioSource>().volume = 0;
         
-        Debug.Log("Audio off : Area " + area.data.type + " - Distance : " + distance + " - Radius : " + area.data.radius + " - Camera : " + camPos + " - Sphere : " + area.sphere.transform.position);
+        // Debug.Log("Audio off : Area " + area.data.type + " - Distance : " + distance + " - Radius : " + area.data.radius + " - Camera : " + camPos + " - Sphere : " + area.sphere.transform.position);
         return false;
         
     }

@@ -18,7 +18,7 @@ public class AgentManager : MonoBehaviour
     public List<GameObject> carPrefabs = new List<GameObject>();
     internal List<GameObject> cars = new List<GameObject>();
 
-    public GameObject roadParent;
+    internal GameObject roadParent;
     
     internal List<List<FindPath.PathPoint>> listRoads;
     
@@ -46,6 +46,8 @@ public class AgentManager : MonoBehaviour
         mapScale = fillMapManager.mapGenerator.terrainData.uniformScale;
         
         listRoads = fillMapManager.listRoads;
+        
+        roadParent = fillMapManager.roadRootParentFolder;
 
 
         // Road Informations

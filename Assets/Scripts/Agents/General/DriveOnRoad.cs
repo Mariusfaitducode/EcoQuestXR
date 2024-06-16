@@ -21,7 +21,8 @@ public class DriveOnRoad : MonoBehaviour
 
     public bool stopped;
     internal bool initialized = false;
-    
+
+    internal int direction; // 1 : right, -1 : left
     
     // List<FindPath.PathPoint> bigRoadPath;
     
@@ -29,8 +30,9 @@ public class DriveOnRoad : MonoBehaviour
     internal List<FindPath.PathPoint> choosedRoad;
     
     internal FindPath.PathPoint target;
+    internal bool targetEnd = false;
 
-    internal FindPath.PathPoint lastPoint;
+    // internal FindPath.PathPoint lastPoint;
     internal FindPath.PathPoint actualPoint;
     internal int actualRoadIndex;
 
@@ -58,16 +60,16 @@ public class DriveOnRoad : MonoBehaviour
 
         if (initialized && !agentManager.timer.isTimePaused)
         {
-            Vector3 direction = (nextPoint.position) - (actualPoint.position);
+            Vector3 direction = (nextPoint.pointPosition.transform.position) - (actualPoint.pointPosition.transform.position);
             
             speed = direction.magnitude * 2;
             treshold = direction.magnitude / 2;
-            roadStep = direction.magnitude / 4;
+            roadStep = direction.magnitude / 6;
             
             this.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
             
             
-            if (Vector3.Distance(this.transform.position, (nextPoint.position)) < treshold)
+            if (Vector3.Distance(this.transform.position, (nextPoint.pointPosition.transform.position)) < treshold)
             {
                 ChangeTarget();
             }
@@ -80,19 +82,41 @@ public class DriveOnRoad : MonoBehaviour
         // TODO
         
         // Find target
+
+        int totalPoints = 0;
         
+        foreach (List<FindPath.PathPoint> road in listRoads)
+        {
+            totalPoints += road.Count;
+        }
+        
+        int randomIndex = Random.Range(0, totalPoints);
+        
+        int index = 0;
+        
+        foreach (List<FindPath.PathPoint> road in listRoads)
+        {
+            if (index + road.Count > randomIndex)
+            {
+                choosedRoad = road;
+                break;
+            }
+            index += road.Count;
+        }
         
         // Random road en fonction de la longeur
-        choosedRoad = listRoads[Random.Range(0, listRoads.Count)];
+        // choosedRoad = listRoads[0];
         
-        if (Random.Range(0, 2) == 0)
-        {
-            target = choosedRoad[0];
-        }
-        else
-        {
-            target = choosedRoad[choosedRoad.Count - 1];
-        }
+        // if (Random.Range(0, 2) == 0)
+        // {
+        //     target = choosedRoad[0];
+        //     targetEnd = false;
+        // }
+        // else
+        // {
+        //     target = choosedRoad[choosedRoad.Count - 1];
+        //     targetEnd = true;
+        // }
 
         // Find firstPoint
         
@@ -100,29 +124,35 @@ public class DriveOnRoad : MonoBehaviour
         actualRoadIndex = Random.Range(0, choosedRoad.Count);
         
         actualPoint = choosedRoad[actualRoadIndex];
-        lastPoint = actualPoint;
+        // lastPoint = actualPoint;
         
         // Find nextPoint
         
         
+        this.direction = Random.Range(0, 2) == 0 ? 1 : -1;
         
-        SearchNeighbour();
+        Advance();
+        
+        
+        // SearchNeighbour();
         
         // Find good position
         
         // Take uniformScale into account
+        
+        // TODO : Get good position
 
-        this.transform.position = actualPoint.position;
+        this.transform.position = actualPoint.pointPosition.transform.position;
         
         // Determine nextPoint
         
         
         
-        Vector3 direction = (nextPoint.position) - (actualPoint.position);
+        Vector3 newDirection = (nextPoint.pointPosition.transform.position) - (actualPoint.pointPosition.transform.position);
         
-        Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
+        Vector3 directionRight = new Vector3(newDirection.z, 0f, -newDirection.x);
         
-        this.transform.LookAt(nextPoint.position + directionRight * roadStep);
+        this.transform.LookAt(nextPoint.pointPosition.transform.position + directionRight * roadStep);
 
         return true;
     }
@@ -135,32 +165,66 @@ public class DriveOnRoad : MonoBehaviour
         // Arrived at destination
         if (nextRoadIndex == 0 || nextRoadIndex == choosedRoad.Count - 1)
         {
-            if (Random.Range(0, 2) == 0)
-            {
-                target = choosedRoad[0];
-            }
-            else
-            {
-                target = choosedRoad[choosedRoad.Count - 1];
-            }
-            return;
+            Debug.Log("Arrived at destination !!!!!!!!!!!!!!!!!");
+
+            this.direction *= -1;
+            
+            // if (targetEnd)
+            // {
+            //     target = choosedRoad[0];
+            //     targetEnd = false;
+            // }
+            // else
+            // {
+            //     target = choosedRoad[choosedRoad.Count - 1];
+            //     targetEnd = true;
+            // }
         }
         
         // Not arrived at destination
-        lastPoint = actualPoint;
+        // lastPoint = actualPoint;
         actualPoint = nextPoint;
         
         actualRoadIndex = nextRoadIndex;
         
-        SearchNeighbour();
+        // SearchNeighbour();
+        Advance();
         
-        Vector3 direction = (nextPoint.position) - (actualPoint.position);
+        // Debug.Log("Next Road Index : " + nextRoadIndex + " Actual Road Index : " + actualRoadIndex + "TargetEnd : "+ targetEnd + " TargetIndexEnd : " + (choosedRoad.Count - 1) + " TargetIndexStart : " + 0 );
+        
+        // Debug.Log(0);
+
+        if (nextRoadIndex == actualRoadIndex)
+        {
+            Debug.LogError("Error : No next point found. car is blocked");
+        }
+        
+        Vector3 direction = (nextPoint.pointPosition.transform.position) - (actualPoint.pointPosition.transform.position);
         
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
         
-        this.transform.LookAt(nextPoint.position + directionRight.normalized * roadStep);
+        this.transform.LookAt(nextPoint.pointPosition.transform.position + directionRight.normalized * roadStep);
 
 
+    }
+    
+    
+    void Advance()
+    {
+        
+        if (actualRoadIndex + direction >= 0 && actualRoadIndex + direction < choosedRoad.Count)
+        {
+            nextPoint = choosedRoad[actualRoadIndex + this.direction];
+            nextRoadIndex = actualRoadIndex + this.direction;
+        }
+        else
+        {
+            direction *= -1;
+            nextPoint = choosedRoad[actualRoadIndex + this.direction];
+            nextRoadIndex = actualRoadIndex + this.direction;
+        }
+        
+        
     }
     
     void SearchNeighbour()
@@ -182,8 +246,8 @@ public class DriveOnRoad : MonoBehaviour
                 return;
             }
             
-            float distanceMinus = Vector3.Distance(nextPoint.position, target.position);
-            float distancePlus = Vector3.Distance(choosedRoad[actualRoadIndex + 1].position, target.position);
+            float distanceMinus = Vector3.Distance(nextPoint.pointPosition.transform.position, target.pointPosition.transform.position);
+            float distancePlus = Vector3.Distance(choosedRoad[actualRoadIndex + 1].pointPosition.transform.position, target.pointPosition.transform.position);
                 
             if (distancePlus < distanceMinus)
             {

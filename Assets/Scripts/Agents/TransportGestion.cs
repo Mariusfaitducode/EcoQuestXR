@@ -40,11 +40,14 @@ public static class TransportGestion
         
         int carQuantity = (int) (quantityPop * carPercent);
         
+        
+        GameObject roadsCarsFolder = new GameObject("RoadsCars");
+        roadsCarsFolder.transform.parent = agentManager.roadParent.transform;
+        
         // Drive on road
         
-        for (int i = 0; i < carQuantity * 0.3f; i++)
+        for (int i = 0; i < carQuantity; i++)
         {
-            Debug.Log("CAR QUANTITY : "+carQuantity);
             
             GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
                 
@@ -54,7 +57,7 @@ public static class TransportGestion
             // car.GetComponent<DriveOnRoad>().listRoads = agentManager.listRoads;
                 
             
-            Transform parent = agentManager.roadParent.transform;
+            Transform parent = roadsCarsFolder.transform;
             // Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
             //     Random.Range(0, area.areaGrid.GetLength(1))].cellPosition.transform.position;
             
