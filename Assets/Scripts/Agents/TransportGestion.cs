@@ -35,7 +35,7 @@ public static class TransportGestion
 
         float carPercent = (citizensStats.sensibilisation + citizensStats.health) / 2;
         
-        Debug.Log("CAR PERCENT : "+carPercent);
+        // Debug.Log("CAR PERCENT : "+carPercent);
         
         
         int carQuantity = (int) (quantityPop * carPercent);
@@ -44,7 +44,7 @@ public static class TransportGestion
         
         for (int i = 0; i < carQuantity * 0.3f; i++)
         {
-            Debug.Log("CAR QUANTITY : "+carQuantity);
+            // Debug.Log("CAR QUANTITY : "+carQuantity);
             
             GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
                 

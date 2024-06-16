@@ -39,7 +39,6 @@ public class ObjectManager : MonoBehaviour
         }
     }
     
-    
     public void ObjectsStartInitialization()
     {
         listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(objectsPath);
@@ -77,7 +76,7 @@ public class ObjectManager : MonoBehaviour
         {
             Debug.Log("Object found : Place Object on the map");
             // start animation
-            StartCoroutine(AnimationUtils.AnimationPlaceObjects(gameManager, placedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationPlaceObjects(placedObjects));
         }
     }
     
@@ -94,7 +93,7 @@ public class ObjectManager : MonoBehaviour
         {
             Debug.Log("Object found : Remove Object on the map");
             // start animation
-            StartCoroutine(AnimationUtils.AnimationRemoveObjects(gameManager, removedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationRemoveObjects(removedObjects));
         }
     }
     
@@ -118,7 +117,7 @@ public class ObjectManager : MonoBehaviour
         {
             Debug.Log("Object found : Upgrade Object on the map");
             // start animation
-            StartCoroutine(AnimationUtils.AnimationUpgradeObjects(gameManager, removedObjects, placedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationUpgradeObjects(removedObjects, placedObjects));
         }
         
     }
