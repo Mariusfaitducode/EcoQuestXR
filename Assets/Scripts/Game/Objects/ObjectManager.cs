@@ -156,4 +156,27 @@ public class ObjectManager : MonoBehaviour
         Debug.Log("Max population size : " + maxPopSize);
         return maxPopSize;
     }
+    
+    public int GetNumberOfObjectsById(int id)
+    {
+        int numberOfObjects = 0;
+            
+        foreach (ObjectScript objectScript in GetAllObjectScripts())
+        {
+            if (objectScript.objectProperties != null)
+            {
+                if (objectScript.objectProperties.id == id)
+                {
+                    numberOfObjects++;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Object without objectScript");
+            }
+            
+        }
+        Debug.Log("Number of objects with id " + id + " : " + numberOfObjects);
+        return numberOfObjects;
+    }
 }

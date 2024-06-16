@@ -75,7 +75,7 @@ public class CardManager : MonoBehaviour
         
         draftTime = true;
         // Draw Pile
-        pileCards = PileManager.DrawPile(cards, nbrDraftCards);
+        pileCards = PileManager.DrawPile(cards, nbrDraftCards, gameManager.objectManager);
         
         // Display Canvas
         DisplayCanvas.ShowCanvas(draftCanvas);
