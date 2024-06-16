@@ -41,6 +41,8 @@ public class FillMapManager : MonoBehaviour
     public List<Area> areas;
     
     public RoadGenerator.RoadData roadData;
+    
+    internal List<List<FindPath.PathPoint>> listRoads = new List<List<FindPath.PathPoint>>();
 
     public NatureGenerator.NatureData natureData;
     
@@ -286,20 +288,33 @@ public class FillMapManager : MonoBehaviour
         
         this.roadVertices = pathVertices.listVertices;
         
+        
+        listRoads.Clear();
+        
         // Create Road Mesh
         RoadGenerator.GenerateRoadMesh(bigRoadPath, roadParent, roadData.roadWidth);
+        
+        listRoads.Add(bigRoadPath);
         // PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth);
+        
+        
 
         int i = 0;
         foreach (List<FindPath.PathPoint> areaRoad in listAreaRoads)
         {
             RoadGenerator.GenerateRoadMesh(areaRoad, areas[i].roadParent, roadData.roadWidth);
+            
+            listRoads.Add(areaRoad);
+
             // PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth);
             i++;
         }
         
         Debug.Log("Roads Generated Successfully");
     }
+    
+    
+    
     
     public void GenerateNatureOnMap(MeshData meshData)
     {

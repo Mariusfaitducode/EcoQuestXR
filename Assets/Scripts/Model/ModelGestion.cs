@@ -64,7 +64,7 @@ public class ModelGestion : MonoBehaviour
     {
 
 
-        SetAudioSource(gameManager.keyboardObjects.camera, gameManager.objectManager.meshTerrain.transform.localScale.x);
+        SetAudioSource(gameManager.keyboardObjects.camera, gameManager.objectManager.mesh.transform.localScale.x);
         
 
         // if (particleSystems.Count > 0)

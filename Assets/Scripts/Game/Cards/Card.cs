@@ -5,7 +5,7 @@ using UnityEngine;
 public enum CardType {
     Construction,
     Destruction,
-    Replace,
+    Upgrade,
     Rules,
     Event
 }

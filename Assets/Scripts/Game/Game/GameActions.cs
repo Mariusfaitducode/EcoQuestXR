@@ -14,7 +14,7 @@ public static class GameActions
         {
             objectManager.RemoveObjects(card.objectProperties1, card.quantityObject1);
         }
-        else if (card.cardType == CardType.Replace)
+        else if (card.cardType == CardType.Upgrade)
         {
             objectManager.ReplaceObjects(card.objectProperties1, card.objectProperties2, card.quantityObject1, card.quantityObject2);
         }

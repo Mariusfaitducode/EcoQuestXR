@@ -17,18 +17,18 @@ public static class TransportGestion
         
         CitizensStats citizensStats = statManager.citizensGestion.citizensStats;
         
-        Debug.Log("Stat Manager Transport Generation");
-        
-        foreach (TransportMode transportMode in statManager.citizensGestion.transportModes)
-        {
-            transportMode.Display();
-        }
-
-        foreach (TransportMode transportMode in statManager.citizensGestion.availableTransportModes)
-        {
-            transportMode.Display();
-        }
-
+        // Debug.Log("Stat Manager Transport Generation");
+        //
+        // foreach (TransportMode transportMode in statManager.citizensGestion.transportModes)
+        // {
+        //     transportMode.Display();
+        // }
+        //
+        // foreach (TransportMode transportMode in statManager.citizensGestion.availableTransportModes)
+        // {
+        //     transportMode.Display();
+        // }
+        //
         int quantityPop = objectManager.GetMaxPopSize();
 
         // Transport
@@ -38,10 +38,39 @@ public static class TransportGestion
         Debug.Log("CAR PERCENT : "+carPercent);
         
         
+        int carQuantity = (int) (quantityPop * carPercent);
         
+        // Drive on road
+        
+        for (int i = 0; i < carQuantity * 0.3f; i++)
+        {
+            Debug.Log("CAR QUANTITY : "+carQuantity);
+            
+            GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
+                
+            car.GetComponent<DriveInArea>().enabled = false;
+            car.GetComponent<DriveOnRoad>().enabled = true;
+            
+            // car.GetComponent<DriveOnRoad>().listRoads = agentManager.listRoads;
+                
+            
+            Transform parent = agentManager.roadParent.transform;
+            // Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
+            //     Random.Range(0, area.areaGrid.GetLength(1))].cellPosition.transform.position;
+            
+            float uniformScale = objectManager.mesh.transform.localScale.x;
+            
+            GameObject newCar = FillMapUtils.InstantiateObjectWithScale(car, parent, Vector3.zero, Quaternion.identity, Vector3.one * uniformScale * objectManager.prefabScale);
+            
+                
+                
+            agentManager.cars.Add(newCar);
+        }
+        
+        // Drive In Area
         foreach (Area area in agentManager.areas)
         {
-            int carQuantity = (int) (quantityPop * carPercent);
+            
 
             switch (area.data.type)
             {
@@ -64,6 +93,9 @@ public static class TransportGestion
             {
                 GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
                 
+                car.GetComponent<DriveOnRoad>().enabled = false;
+                car.GetComponent<DriveInArea>().enabled = true;
+
                 car.GetComponent<DriveInArea>().areaType = area.data.type;
             
                 
@@ -72,7 +104,7 @@ public static class TransportGestion
                 Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
                     Random.Range(0, area.areaGrid.GetLength(1))].cellPosition.transform.position;
             
-                float uniformScale = objectManager.meshTerrain.transform.localScale.x;
+                float uniformScale = objectManager.mesh.transform.localScale.x;
             
                 GameObject newCar = FillMapUtils.InstantiateObjectWithScale(car, parent, position, Quaternion.identity, Vector3.one * uniformScale * objectManager.prefabScale);
             
