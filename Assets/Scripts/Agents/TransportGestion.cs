@@ -75,34 +75,36 @@ public static class TransportGestion
         for (int i = 0; i < carQuantity; i++)
         {
 
-
-
             VehiclePrefab listCars= agentManager.carPrefabs.Find(car => car.transportModeType == TransportModeType.Car);
             
             GameObject car = listCars.prefab[Random.Range(0, listCars.prefab.Count)];
 
-            if (car.GetComponent<DriveOnRoad>())
+            if (!car.GetComponent<DriveOnRoad>())
             {
-                car.GetComponent<DriveInArea>().enabled = false;
-                car.GetComponent<DriveOnRoad>().enabled = true;
-            
-                // car.GetComponent<DriveOnRoad>().listRoads = agentManager.listRoads;
-                
-            
-                Transform parent = roadsCarsFolder.transform;
-                // Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
-                //     Random.Range(0, area.areaGrid.GetLength(1))].cellPosition.transform.position;
-            
-                float uniformScale = objectManager.mesh.transform.localScale.x;
-            
-                GameObject newCar = FillMapUtils.InstantiateObjectWithScale(car, parent, Vector3.zero, Quaternion.identity, Vector3.one * uniformScale * objectManager.prefabScale);
-            
-                
-                
-                agentManager.cars.Add(newCar);
+                car.AddComponent<DriveOnRoad>();
             }
             
+            if (car.GetComponent<DriveInArea>())
+            {
+                car.GetComponent<DriveInArea>().enabled = false;
+            }
             
+            DriveOnRoad carDrive = car.GetComponent<DriveOnRoad>();
+            
+            carDrive.enabled = true;
+            carDrive.listRoads = agentManager.listRoads;
+
+            // Set car settings
+            carDrive.driveSettings.speedFactor = 1;
+            carDrive.driveSettings.roadStepFactor = 1;
+            
+            Transform parent = roadsCarsFolder.transform;
+            
+            float uniformScale = objectManager.mesh.transform.localScale.x;
+            
+            GameObject newCar = FillMapUtils.InstantiateObjectWithScale(car, parent, Vector3.zero, Quaternion.identity, Vector3.one * uniformScale * objectManager.prefabScale);
+            
+            agentManager.cars.Add(newCar);
         }
         
         // Drive In Area
@@ -131,20 +133,32 @@ public static class TransportGestion
             {
                 // GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
 
-                VehiclePrefab listCars= agentManager.carPrefabs.Find(car => car.transportModeType == TransportModeType.Car);
+                VehiclePrefab listCars= agentManager.carPrefabs.Find(car => car.transportModeType == TransportModeType.Bike);
             
                 GameObject car = listCars.prefab[Random.Range(0, listCars.prefab.Count)];
                 
+                
+                if (!car.GetComponent<DriveInArea>())
+                {
+                    car.AddComponent<DriveInArea>();
+                }
+            
                 if (car.GetComponent<DriveOnRoad>())
                 {
                     car.GetComponent<DriveOnRoad>().enabled = false;
                 }
-
-                car.GetComponent<DriveInArea>().enabled = true;
-
-                car.GetComponent<DriveInArea>().areaType = area.data.type;
-            
                 
+                
+                DriveInArea carDrive = car.GetComponent<DriveInArea>();
+
+                carDrive.enabled = true;
+                carDrive.areaType = area.data.type;
+            
+                // TODO : Set vehicle drive settings by vehicle type
+
+                // Bike settings
+                carDrive.driveSettings.speedFactor = 0.3f;
+                carDrive.driveSettings.roadStepFactor = 1.8f;
             
                 Transform parent = area.hierarchyBuildingFolder.transform;
                 Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
