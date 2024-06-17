@@ -171,7 +171,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 1.5493774, z: 152.00629, w: 33.857143}
+  m_margin: {x: -8.330963, y: 1.5493774, z: 152.00629, w: 33.857143}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ENERGIE
+  m_text: AGRICULTURE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0866f94b2eb6c974887cd97507194dca, type: 2}
   m_sharedMaterial: {fileID: 3916591334617839124, guid: 0866f94b2eb6c974887cd97507194dca,
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -617,7 +617,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 105.2}
-  m_SizeDelta: {x: 96.1, y: 26}
+  m_SizeDelta: {x: 100, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1365143529881340706
 CanvasRenderer:
@@ -759,6 +759,7 @@ MonoBehaviour:
   folderActionLogo: Images/ActionLogo/
   folderAreaBackground: Images/AreaBackground/
   folderAreaLogo: Images/AreaLogo/
+  _zone_title: {fileID: 5351150532607774105}
   _description: {fileID: 7865370344463835738}
   _price: {fileID: 254916662840567714}
   _image: {fileID: 7154770777665019149}
@@ -766,9 +767,9 @@ MonoBehaviour:
   _buttonBackground: {fileID: 1852057674224577936}
   _shadowBackground: {fileID: 893937643135702273}
   _background: {fileID: 893937643135702273}
-  _zone_background: {fileID: 0}
-  _price_background: {fileID: 0}
-  _text_background: {fileID: 0}
+  _zone_background: {fileID: 1503170970032869415}
+  _price_background: {fileID: 6878306737016949420}
+  _text_background: {fileID: 5669337589710986171}
   _logoAction: {fileID: 7871439484291531757}
 --- !u!114 &1815047922504344873
 MonoBehaviour:
@@ -1001,7 +1002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41294494, g: 0.6509434, b: 0.34082413, a: 1}
+  m_Color: {r: 0.28294393, g: 0.7924528, b: 0.20558919, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

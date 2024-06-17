@@ -18,6 +18,7 @@ public class DisplayCard : MonoBehaviour
     // private DisplayCanvas _displayCanvas;
 
     //public TextMeshProUGUI _title;
+    public TextMeshProUGUI _zone_title;
     public TextMeshProUGUI _description;
     public TextMeshProUGUI _price;
     public RawImage _image;
@@ -84,33 +85,43 @@ public class DisplayCard : MonoBehaviour
 
             switch (_card.areaType)
             {
+
                 case AreaType.City:
-                    _background.color = new Color(167, 231, 230); // Vert clair
-                    //_zone_background.color = new Color(60, 171, 167); // Vert foncé
-                    //_text_background.color = _background.color; // Couleur du texte identique au fond
-                    //_price_background.color = _zone_background.color; // Couleur du prix identique à la zone
+                    _background.color = new Color(0.3f, 0.3f, 1.0f); 
+                    _zone_background.color = new Color(0.5f, 0.5f, 0.8f); 
+                    _price_background.color = new Color(0.5f, 0.5f, 0.8f); 
+                    _text_background.color = new Color(0.25f, 0.25f, 0.4f);
+
+                    _zone_title.text = "VILLE";
                     break;
 
                 case AreaType.Industry:
-                    _background.color = new Color(242, 208, 171); // Orange clair
-                    //_zone_background.color = new Color(181, 126, 85); // Orange foncé
-                    //_text_background.color = _background.color;
-                    //_price_background.color = _zone_background.color;
+                    _background.color = new Color(1.0f, 0.3f, 0.3f);   
+                    _zone_background.color = new Color(0.8f, 0.5f, 0.5f); 
+                    _price_background.color = new Color(0.8f, 0.5f, 0.5f);  
+                    _text_background.color =  new Color(0.4f, 0.25f, 0.25f);
+
+                    _zone_title.text = "INDUSTRIE";
                     break;
 
                 case AreaType.Energy:
-                    _background.color = new Color(255, 242, 204); // Jaune clair
-                    //_zone_background.color = new Color(208, 171, 115); // Jaune foncé
-                    //_text_background.color = _background.color;
-                    //_price_background.color = _zone_background.color;
+                    _background.color = new Color(0.3f, 1.0f, 0.3f);  
+                    _zone_background.color = new Color(0.5f, 0.8f, 0.5f);  
+                    _price_background.color = new Color(0.5f, 0.8f, 0.5f);   
+                    _text_background.color =  new Color(0.25f, 0.4f, 0.25f);
+
+                    _zone_title.text = "ENERGIE";
                     break;
 
                 case AreaType.Agriculture:
-                    _background.color = new Color(249, 252, 238); // Vert très clair
-                    //_zone_background.color = new Color(177, 234, 160); // Vert forêt
-                    //_text_background.color = _background.color;
-                    //_price_background.color = _zone_background.color;
+                    _background.color = new Color(1.0f, 1.0f, 0.3f); 
+                    _zone_background.color = new Color(0.8f, 0.8f, 0.5f); 
+                    _price_background.color = new Color(0.8f, 0.8f, 0.5f); 
+                    _text_background.color =   new Color(0.4f, 0.4f, 0.25f);
+
+                    _zone_title.text = "AGRICULTURE";
                     break;
+
             }
 
             //TODO : Change card stats

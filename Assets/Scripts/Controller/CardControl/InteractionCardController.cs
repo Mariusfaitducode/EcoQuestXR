@@ -90,11 +90,21 @@ public class InteractionCardController : MonoBehaviour
     private void PlayCard()
     {
 
-        cardManager.PlayEvent(this.gameObject);
+        if (cardManager.gameManager.statManager.globalStats.currentMoneyInBank < float.Parse(this.GetComponentInChildren<DisplayCard>()._price.text)) {
 
-        // Add little animation here
-        Destroy(this);
+            isNearDepot = false;
+            System.Random random = new System.Random();
 
+            cardManager.gameManager.cloudController.ChangeText("notEnoughMoney" + random.Next(1, 3));
+
+        } 
+        else 
+        {
+            cardManager.PlayEvent(this.gameObject);
+
+            // Add little animation here
+            Destroy(this);
+        }
     }
 
     #region collider

@@ -60,6 +60,11 @@ public class CloudController : MonoBehaviour
         list_text.Add("lose2", "Oh non, j'ai l'impression que nous n'avons pas r�ussi � sauver la ville");
         list_text.Add("lose1", "Je compte sur toi pour r��ssayer tr�s bient�t");
 
+        list_text.Add("notEnoughMoney1", "Désolé mais tu n'as pas assez d'argent pour ça");
+        list_text.Add("notEnoughMoney2", "Tu devrais attendre de gagner un peu plus avant de jouer");
+
+        list_text.Add("help1", "Tu peux attraper la carte pour la déplacer avec le bouton de grip");
+        list_text.Add("help2", "Utilises les joysticks pour te déplacer sur la carte");
 
         text.text = "";
 
