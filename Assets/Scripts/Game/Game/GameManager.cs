@@ -31,6 +31,7 @@ public struct CanvasObjects
     public Canvas deckCanvas;
     public Canvas draftCanvas;
     public Canvas dashboardCanvas;
+    public Canvas settingsCanvas; 
 }
 
 [Serializable]
@@ -46,6 +47,7 @@ public struct OtherObjects
     public GameObject leftArmDeck;
     public GameObject mesh;
     public GameObject cloud;
+    public GameObject draftCounter;
 }
 
 public class GameManager : MonoBehaviour
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
     internal DraftController draftController;
     internal DashboardController dashboardController;
     internal CloudController cloudController;
+    internal SettingsController settingsController;
     
     
     

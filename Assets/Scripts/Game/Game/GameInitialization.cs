@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+            gameManager.canvasObjects.settingsCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+
             
             // Unable GraphicRaycaster for the keyboard
             gameManager.cardObjects.card.GetComponent<GraphicRaycaster>().enabled = false;
@@ -40,6 +43,8 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.canvasObjects.settingsCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<Canvas>().worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             
             // Unable OVR Raycaster for OVR
@@ -69,7 +74,9 @@ public static class GameInitialization
         gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
         gameManager.cardManager.grabbableCardPrefab = gameManager.cardObjects.grabbableCard;
         gameManager.cardManager.depot_zone = gameManager.otherObjects.cloud;
-        
+        gameManager.cardManager.draftCounterSelectedCardsText = gameManager.otherObjects.draftCounter.GetComponent<TextMeshProUGUI>(); 
+
+
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
         gameManager.objectManager.mesh = gameManager.otherObjects.mesh;
@@ -127,6 +134,13 @@ public static class GameInitialization
         gameManager.draftController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
         gameManager.draftController.InitializeDraftController();
         
+
+        // Settings controller
+        gameManager.settingsController = GameObject.FindObjectOfType<SettingsController>();
+
+        gameManager.settingsController.gameManager = gameManager;
+
+
         // Cloud controller
         gameManager.cloudController = GameObject.FindObjectOfType<CloudController>();
 
