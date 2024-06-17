@@ -39,7 +39,6 @@ public class ObjectManager : MonoBehaviour
         }
     }
     
-    
     public void ObjectsStartInitialization()
     {
         listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(objectsPath);
@@ -77,7 +76,7 @@ public class ObjectManager : MonoBehaviour
         {
             Debug.Log("Object found : Place Object on the map");
             // start animation
-            StartCoroutine(AnimationUtils.AnimationPlaceObjects(gameManager, placedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationPlaceObjects(placedObjects));
         }
     }
     
@@ -94,7 +93,7 @@ public class ObjectManager : MonoBehaviour
         {
             Debug.Log("Object found : Remove Object on the map");
             // start animation
-            StartCoroutine(AnimationUtils.AnimationRemoveObjects(gameManager, removedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationRemoveObjects(removedObjects));
         }
     }
     
@@ -118,7 +117,7 @@ public class ObjectManager : MonoBehaviour
         {
             Debug.Log("Object found : Upgrade Object on the map");
             // start animation
-            StartCoroutine(AnimationUtils.AnimationUpgradeObjects(gameManager, removedObjects, placedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationUpgradeObjects(removedObjects, placedObjects));
         }
         
     }
@@ -156,5 +155,28 @@ public class ObjectManager : MonoBehaviour
         }
         Debug.Log("Max population size : " + maxPopSize);
         return maxPopSize;
+    }
+    
+    public int GetNumberOfObjectsById(int id)
+    {
+        int numberOfObjects = 0;
+            
+        foreach (ObjectScript objectScript in GetAllObjectScripts())
+        {
+            if (objectScript.objectProperties != null)
+            {
+                if (objectScript.objectProperties.id == id)
+                {
+                    numberOfObjects++;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Object without objectScript");
+            }
+            
+        }
+        Debug.Log("Number of objects with id " + id + " : " + numberOfObjects);
+        return numberOfObjects;
     }
 }

@@ -31,6 +31,7 @@ public struct CanvasObjects
     public Canvas deckCanvas;
     public Canvas draftCanvas;
     public Canvas dashboardCanvas;
+    public Canvas settingsCanvas; 
 }
 
 [Serializable]
@@ -46,6 +47,7 @@ public struct OtherObjects
     public GameObject leftArmDeck;
     public GameObject mesh;
     public GameObject cloud;
+    public GameObject draftCounter;
 }
 
 public class GameManager : MonoBehaviour
@@ -85,7 +87,8 @@ public class GameManager : MonoBehaviour
     internal AgentManager agentManager;
     internal StatManager statManager;
     internal FillMapManager fillMapManager;
-    internal AudioManager audioManager;
+    // internal AudioManager audioManager;
+    internal AnimationManager animationManager;
 
     // Controller
     internal MapController mapController;
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
     internal DraftController draftController;
     internal DashboardController dashboardController;
     internal CloudController cloudController;
+    internal SettingsController settingsController;
     
     
     
@@ -102,14 +106,7 @@ public class GameManager : MonoBehaviour
         GameInitialization.InitManager(this);
         GameInitialization.InitializeController(this);
         GameInitialization.InitializeMapGenerator(this);
-        GameInitialization.InitializeGame(
-            timer,
-            fillMapManager,
-            objectManager,
-            cardManager,
-            statManager,
-            agentManager,
-            eventsGestion);
+        GameInitialization.InitializeGame(this);
     }
 
 
@@ -117,8 +114,6 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-
-        
         objectManager.AreasSounds(keyboardObjects.camera, timer.isTimePaused);
 
         if (!timer.isTimePaused && timer.IsCheckTime())
@@ -136,6 +131,7 @@ public class GameManager : MonoBehaviour
     
     public void ExecuteCardEvent(Card card)
     {
-        GameActions.ExecuteCardAction(card, objectManager, statManager, audioManager);
+        // GameActions.ExecuteCardAction(card, objectManager, statManager, audioManager);
+        GameActions.ExecuteCardAction(card, this);
     }
 }

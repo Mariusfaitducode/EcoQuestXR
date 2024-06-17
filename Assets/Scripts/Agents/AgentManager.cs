@@ -64,11 +64,4 @@ public class AgentManager : MonoBehaviour
 
         // Road Informations
     }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
