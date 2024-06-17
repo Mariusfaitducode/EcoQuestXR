@@ -231,6 +231,7 @@ public static class GameInitialization
         // Stats
         // Citizens and Dashboard
         gameManager.statManager.citizensGestion.GenerateInitialsCitizens(gameManager.objectManager.GetMaxPopSize());
+        gameManager.statManager.citizensGestion.UpdateDailyTransportsStats();
         gameManager.statManager.InitDashboard(gameManager.objectManager);
         
         // Agents

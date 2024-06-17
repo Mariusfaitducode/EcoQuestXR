@@ -154,4 +154,12 @@ public static class StatInitialization
             transportMode.stats = stats;
         }
     }
+
+    public static void GetTypeFromName(List<TransportMode> transportModes)
+    {
+        foreach (TransportMode transportMode in transportModes)
+        {
+            transportMode.SetTransportMode();
+        }
+    }
 }

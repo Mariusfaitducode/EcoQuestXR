@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Probability
 {
@@ -29,6 +31,7 @@ public class TransportMode
 {
     public int id { get; set; }
     public string name { get; set; }
+    public TransportModeType transportModeType;
     public bool isAvailable = false;
     public float qualityRate = 0.5f;
     public Ponderation ponderation = new Ponderation();
@@ -53,6 +56,20 @@ public class TransportMode
                          "health: " + stats.health + "\n";
 
         Debug.Log(message);
+    }
+    
+    public void SetTransportMode()
+    {
+        // Convertir la chaîne de caractères en enum
+        if (Enum.TryParse<TransportModeType>(name, true, out TransportModeType result))
+        {
+            transportModeType = result;
+            Debug.Log("Transport mode set to: " + transportModeType);
+        }
+        else
+        {
+            Debug.LogError("Invalid transport mode: " + transportModeType);
+        }
     }
 }
 
@@ -103,13 +120,18 @@ public class CitizensGestion
         
         StatInitialization.LoadTransportPonderationsFromCsv(pathCSVTransportPonderations, transportModes);
         StatInitialization.LoadTransportStatsFromCsv(pathCSVTransportStats, transportModes);
+        StatInitialization.GetTypeFromName(transportModes);
+        
         
         DisplayInitialProbs();
         
         foreach (TransportMode transportMode in transportModes)
         {
             // Active Initial Transport Modes
-            if (transportMode.name == "walk" || transportMode.name == "bike" || transportMode.name == "car" || transportMode.name == "electricScooter")
+            if (transportMode.transportModeType == TransportModeType.Bike ||
+                transportMode.transportModeType == TransportModeType.Car ||
+                transportMode.transportModeType == TransportModeType.Walk ||
+                transportMode.transportModeType == TransportModeType.Taxi)
             {
                 transportMode.isAvailable = true;
             }
