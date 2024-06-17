@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Art/3DAssets/Depot/Bikers.meta
+guid: 1776c91430c7df940baf80b00675f6bf
+folderAsset: yes
+========
 guid: cbd90c2ffc2f09741a04671b6fa420bd
+>>>>>>>> origin/Victrolles:Assets/Scenes/Gilles/main2_gilles.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

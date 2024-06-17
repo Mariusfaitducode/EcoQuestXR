@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1c2233908fb3943a01bb3afebeda6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaType: 1
+  areaType: 2
   speed: 3
   treshold: 1
   roadStep: 0.5
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6987692992989506730}
+  m_Enabled: 0
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa399b785649dde4cac489db6b7e652f, type: 3}
