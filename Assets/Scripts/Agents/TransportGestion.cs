@@ -9,6 +9,7 @@ public enum TransportModeType
     Taxi,
     Bus,
     Bike,
+    Walk
 }
 
 
@@ -21,50 +22,95 @@ public static class TransportGestion
         StatManager statManager = agentManager.statManager;
         ObjectManager objectManager = agentManager.objectManager;
         
-        // ? First initialisation
+        // Initialisation
 
-        // Citizens stats
+        // Get stats from Citizen Stats
+        CitizensGestion citizensGestion = statManager.citizensGestion;
         
-        CitizensStats citizensStats = statManager.citizensGestion.citizensStats;
+        List<TransportMode> availableTransportModes = citizensGestion.availableTransportModes;
+        int totalCitizens = citizensGestion.totalCitizens;
+        List<VehiclePrefab> carPrefabs = agentManager.carPrefabs;
+        AgentRepartition agentRepartition = agentManager.agentRepartition;
+        List<VehicleStat> vehicleStats = agentManager.vehicleStats;
         
-        // Debug.Log("Stat Manager Transport Generation");
-        //
-        // foreach (TransportMode transportMode in statManager.citizensGestion.transportModes)
-        // {
-        //     transportMode.Display();
-        // }
-        //
-        // foreach (TransportMode transportMode in statManager.citizensGestion.availableTransportModes)
-        // {
-        //     transportMode.Display();
-        // }
-        //
-        
-        
-        // TODO : good stats
-        
-        
-        // Percent car
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        int quantityPop = objectManager.GetMaxPopSize();
+        // Get percent of rendered entities
+        int dailyUsersForRenderedVehicle = 0;
+        foreach (VehicleStat vehicleStat in vehicleStats)
+        {
+            TransportMode transportMode = availableTransportModes.Find(transportMode =>
+                transportMode.transportModeType == vehicleStat.transportModeType);
+            if (transportMode == null)
+            {
+                Debug.LogError("Could not find transport mode " + vehicleStat.transportModeType +
+                               " in available transport modes.");
+            }
 
-        // Transport
+            dailyUsersForRenderedVehicle += transportMode.dailyUsers;
+        }
+        Debug.Log("dailyUsersForRenderedVehicle: " + dailyUsersForRenderedVehicle + " / " + totalCitizens);
+        
+        // Set ratio for each transport mode from stat
+        foreach (VehicleStat vehicleStat in vehicleStats)
+        {
+            TransportMode transportMode = availableTransportModes.Find(transportMode =>
+                transportMode.transportModeType == vehicleStat.transportModeType);
+            if (transportMode == null)
+            {
+                Debug.LogError("Could not find transport mode " + vehicleStat.transportModeType +
+                               " in available transport modes.");
+            }
 
-        float carPercent = (citizensStats.sensibilisation + citizensStats.health) / 2;
+            vehicleStat.percentPerType = (float)transportMode.dailyUsers / dailyUsersForRenderedVehicle;
+        }
+
+        // Loop over all values in the TransportModeType enum
+        List<RepartitionPerArea> repartitionPerAreas = agentRepartition.repartitionPerAreas;
+        foreach (RepartitionPerArea repartitionPerArea in repartitionPerAreas)
+        {
+            // Get objects and the total percent for the area
+            float totalPercent = 0;
+            foreach (VehiclePrefab carPrefab in carPrefabs)
+            {
+                if (carPrefab.canSpawnOnAreas.Contains(repartitionPerArea.areaType))
+                {
+                    totalPercent += vehicleStats.Find(vehicleStat => vehicleStat.transportModeType == carPrefab.transportModeType).percentPerType;
+                }
+            }
+
+            float coef = 1 / totalPercent;
+            
+            // Set the percent for each car prefab
+            foreach (VehicleStat vehicleStat2 in vehicleStats)
+            {
+                // if it can spawn on the area
+                if (carPrefabs.Find(carPrefab => carPrefab.transportModeType == vehicleStat2.transportModeType).canSpawnOnAreas.Contains(repartitionPerArea.areaType))
+                {
+                    float percentInAreaDepedantOnAvailableVehicle = coef * vehicleStat2.percentPerType;
+                    float ratio = agentRepartition.percentInAreas * repartitionPerArea.percentInArea *
+                                 percentInAreaDepedantOnAvailableVehicle;
+                    RepartitionPerArea repartitionPerArea2 = new RepartitionPerArea();
+                    repartitionPerArea2.areaType = repartitionPerArea.areaType;
+                    repartitionPerArea2.percentInArea = ratio;
+                    vehicleStat2.repartitionPerAreas.Add(repartitionPerArea2);
+                }
+            }
+        }
+
+        foreach (VehicleStat vehicleStat in vehicleStats)
+        {
+            vehicleStat.Display();
+        }
         
-        // Debug.Log("CAR PERCENT : "+carPercent);
         
         
-        int carQuantity = (int) (quantityPop * carPercent);
+        
+        
+        
+        
+    
+
+
+        int carQuantity = 0;
         
         
         GameObject roadsCarsFolder = new GameObject("RoadsCars");

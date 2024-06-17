@@ -7,6 +7,7 @@ public static class MapMouvement
     
      public static void ScaleObjectAroundPoint(Transform mapTransform, Vector3 pivot, float scalingSpeed, float scalingMin)
     {
+        float oldScale = mapTransform.localScale.x;
         float newScale = mapTransform.localScale.x + scalingSpeed * Time.deltaTime;
 
         if (newScale < scalingMin)
@@ -15,24 +16,28 @@ public static class MapMouvement
 
         }
 
-        //mapTransform.localScale = new Vector3(newScale, newScale, newScale);
-
-        float newRatio = newScale / mapTransform.localScale.x;
+        float newRatio = newScale / oldScale;
 
         Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
-
+        
+        float y1 = 0;
+        bool hit1 = FillMapUtils.IsHitFromRayCast(mapTransform.position);
+        if (hit1)
+        {
+            y1 = FillMapUtils.GetHeightFromRaycast(mapTransform.position);
+        }
+        float y2 = (y1 - mapTransform.position.y) / oldScale * newScale;
+        float delta = y2 - (y1 - mapTransform.position.y);
 
         // Mettre à jour la scale
         mapTransform.localScale = new Vector3(newScale, newScale, newScale);
+        
 
         // Calculer la nouvelle position relative du pivot
         Vector3 pivotToPosition = mapTransform.position - pivot;
         Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
-
-        // Mise à jour de la position pour compenser le scaling autour du pivot
-        mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.position.y, pivot.z + newPivotToPosition.z);
-        //mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
-
+        
+        mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.position.y - delta, pivot.z + newPivotToPosition.z);
      }
      
      public static Vector3 GetPositionFromScaleObjectAroundPoint(Vector3 mapPosition, Vector3 pivot, float mapScale, float scale)
@@ -42,13 +47,26 @@ public static class MapMouvement
          float newRatio = newScale / mapScale;
 
          Vector3 scaleRatio = new Vector3(newRatio, newRatio, newRatio);
+         
+         float y1 = 0;
+         bool hit1 = FillMapUtils.IsHitFromRayCast(mapPosition);
+         if (hit1)
+         {
+             y1 = FillMapUtils.GetHeightFromRaycast(mapPosition);
+         }
+         else
+         {
+             Debug.Log("did not hit");
+         }
+         float y2 = (y1 - mapPosition.y) / mapScale * newScale;
+         float delta = y2 - (y1 - mapPosition.y);
 
          // Calculer la nouvelle position relative du pivot
          Vector3 pivotToPosition = mapPosition - pivot;
          Vector3 newPivotToPosition = new Vector3(pivotToPosition.x * scaleRatio.x, pivotToPosition.y * scaleRatio.y, pivotToPosition.z * scaleRatio.z);
 
          // Mise à jour de la position pour compenser le scaling autour du pivot
-         return new Vector3(pivot.x + newPivotToPosition.x, mapPosition.y, pivot.z + newPivotToPosition.z);
+         return new Vector3(pivot.x + newPivotToPosition.x, mapPosition.y - delta, pivot.z + newPivotToPosition.z);
          //mapTransform.position = new Vector3(pivot.x + newPivotToPosition.x, mapTransform.hierarchyCapacity, pivot.y + newPivotToPosition.y);
 
      }
