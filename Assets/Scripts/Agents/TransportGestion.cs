@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum TransportModeType
+{
+    Car,
+    Taxi,
+    Bus,
+    Bike,
+}
+
+
 public static class TransportGestion
 {
     
@@ -29,6 +39,22 @@ public static class TransportGestion
         //     transportMode.Display();
         // }
         //
+        
+        
+        // TODO : good stats
+        
+        
+        // Percent car
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         int quantityPop = objectManager.GetMaxPopSize();
 
         // Transport
@@ -48,26 +74,35 @@ public static class TransportGestion
         
         for (int i = 0; i < carQuantity; i++)
         {
+
+
+
+            VehiclePrefab listCars= agentManager.carPrefabs.Find(car => car.transportModeType == TransportModeType.Car);
             
-            GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
+            GameObject car = listCars.prefab[Random.Range(0, listCars.prefab.Count)];
+
+            if (car.GetComponent<DriveOnRoad>())
+            {
+                car.GetComponent<DriveInArea>().enabled = false;
+                car.GetComponent<DriveOnRoad>().enabled = true;
+            
+                // car.GetComponent<DriveOnRoad>().listRoads = agentManager.listRoads;
                 
-            car.GetComponent<DriveInArea>().enabled = false;
-            car.GetComponent<DriveOnRoad>().enabled = true;
             
-            // car.GetComponent<DriveOnRoad>().listRoads = agentManager.listRoads;
-                
+                Transform parent = roadsCarsFolder.transform;
+                // Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
+                //     Random.Range(0, area.areaGrid.GetLength(1))].cellPosition.transform.position;
             
-            Transform parent = roadsCarsFolder.transform;
-            // Vector3 position = area.areaGrid[Random.Range(0, area.areaGrid.GetLength(0)), 
-            //     Random.Range(0, area.areaGrid.GetLength(1))].cellPosition.transform.position;
+                float uniformScale = objectManager.mesh.transform.localScale.x;
             
-            float uniformScale = objectManager.mesh.transform.localScale.x;
-            
-            GameObject newCar = FillMapUtils.InstantiateObjectWithScale(car, parent, Vector3.zero, Quaternion.identity, Vector3.one * uniformScale * objectManager.prefabScale);
+                GameObject newCar = FillMapUtils.InstantiateObjectWithScale(car, parent, Vector3.zero, Quaternion.identity, Vector3.one * uniformScale * objectManager.prefabScale);
             
                 
                 
-            agentManager.cars.Add(newCar);
+                agentManager.cars.Add(newCar);
+            }
+            
+            
         }
         
         // Drive In Area
@@ -94,9 +129,17 @@ public static class TransportGestion
             
             for (int i = 0; i < carQuantity; i++)
             {
-                GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
+                // GameObject car = agentManager.carPrefabs[Random.Range(0, agentManager.carPrefabs.Count)];
+
+                VehiclePrefab listCars= agentManager.carPrefabs.Find(car => car.transportModeType == TransportModeType.Car);
+            
+                GameObject car = listCars.prefab[Random.Range(0, listCars.prefab.Count)];
                 
-                car.GetComponent<DriveOnRoad>().enabled = false;
+                if (car.GetComponent<DriveOnRoad>())
+                {
+                    car.GetComponent<DriveOnRoad>().enabled = false;
+                }
+
                 car.GetComponent<DriveInArea>().enabled = true;
 
                 car.GetComponent<DriveInArea>().areaType = area.data.type;

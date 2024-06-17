@@ -1,6 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+[Serializable]
+public struct VehiclePrefab
+{
+    
+    public TransportModeType transportModeType;
+    
+    public List<GameObject> prefab;
+    
+}
 
 public class AgentManager : MonoBehaviour
 {
@@ -15,7 +27,7 @@ public class AgentManager : MonoBehaviour
     
     // Transport objects
     
-    public List<GameObject> carPrefabs = new List<GameObject>();
+    public List<VehiclePrefab> carPrefabs = new List<VehiclePrefab>();
     internal List<GameObject> cars = new List<GameObject>();
 
     internal GameObject roadParent;

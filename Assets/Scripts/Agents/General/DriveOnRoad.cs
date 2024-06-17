@@ -165,7 +165,7 @@ public class DriveOnRoad : MonoBehaviour
         // Arrived at destination
         if (nextRoadIndex == 0 || nextRoadIndex == choosedRoad.Count - 1)
         {
-            Debug.Log("Arrived at destination !!!!!!!!!!!!!!!!!");
+            // Debug.Log("Arrived at destination !!!!!!!!!!!!!!!!!");
 
             this.direction *= -1;
             
