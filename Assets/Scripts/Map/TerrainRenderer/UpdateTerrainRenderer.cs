@@ -178,7 +178,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
         
         // Roads
         
-        GameObject roadParent = fillMapManager.roadParent;
+        GameObject roadParent = fillMapManager.bigRoad;
         
         Material roadMaterial = roadParent.GetComponent<Renderer>().sharedMaterial;
         

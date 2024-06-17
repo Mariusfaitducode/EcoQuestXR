@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaType: 2
-  speed: 3
-  treshold: 1
-  roadStep: 0.5
+  speedFactor: 1
+  tresholdFactor: 1
+  roadStepFactor: 1
   stopped: 0
 --- !u!114 &-7511754877015025315
 MonoBehaviour:

@@ -1,6 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+[Serializable]
+public struct VehiclePrefab
+{
+    
+    public TransportModeType transportModeType;
+    
+    public List<GameObject> prefab;
+    
+}
 
 public class AgentManager : MonoBehaviour
 {
@@ -15,10 +27,10 @@ public class AgentManager : MonoBehaviour
     
     // Transport objects
     
-    public List<GameObject> carPrefabs = new List<GameObject>();
+    public List<VehiclePrefab> carPrefabs = new List<VehiclePrefab>();
     internal List<GameObject> cars = new List<GameObject>();
 
-    public GameObject roadParent;
+    internal GameObject roadParent;
     
     internal List<List<FindPath.PathPoint>> listRoads;
     
@@ -46,6 +58,8 @@ public class AgentManager : MonoBehaviour
         mapScale = fillMapManager.mapGenerator.terrainData.uniformScale;
         
         listRoads = fillMapManager.listRoads;
+        
+        roadParent = fillMapManager.roadRootParentFolder;
 
 
         // Road Informations

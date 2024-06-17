@@ -24,7 +24,9 @@ public class FillMapManager : MonoBehaviour
     public GameObject meshTerrain;
     public MeshCollider meshCollider;
     
-    public GameObject roadParent;
+    public GameObject bigRoad;
+    public GameObject roadRootParentFolder;
+    
     
     public bool autoUpdate;
     
@@ -219,20 +221,24 @@ public class FillMapManager : MonoBehaviour
     
     public void GenerateRoadOnMap(MeshData meshData)
     {
+        listRoads.Clear();
         
         // Trace Roads
-        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, roadParent, roadData);
+        Vector3[] extremityPoints = RoadGenerator.FindRoadExtremity(meshData, mapGenerator, meshTerrain, bigRoad, roadData);
 
         List<FindPath.PathPoint> bigRoadPath = new List<FindPath.PathPoint>();
 
         if (extremityPoints.Length == 2)
         {
-            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData, roadParent);
+            Vector3[] validExtremityPoints = RoadGenerator.ExtremityOnTerrain(extremityPoints, areas, roadData, bigRoad);
             
             // Debug.Log(validExtremityPoints);
             
-            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData,  roadParent);
+            bigRoadPath = FindPath.FindPathWithAStar(areas,validExtremityPoints[0] , validExtremityPoints[1] , roadData,  bigRoad);
         }
+        
+        
+        
         
         List<List<FindPath.PathPoint>> listAreaRoads = new List<List<FindPath.PathPoint>>();
         List<FindPath.PathPoint> bigRoadCopy = new List<FindPath.PathPoint>(bigRoadPath);
@@ -246,9 +252,15 @@ public class FillMapManager : MonoBehaviour
             
             List<FindPath.PathPoint> areaRoadPoints = FindPath.FindPathWithAStar(areas,areaRoadExtremity[0] , areaRoadExtremity[1] , roadData,  area.roadParent, false);
             
+            listRoads.Add(areaRoadPoints);
             listAreaRoads.Add(areaRoadPoints);
             bigRoadCopy = bigRoadCopy.Concat(areaRoadPoints).ToList();
         }
+        
+        listRoads.Add(bigRoadPath);
+        
+        
+        
         
         // Get Path Vertices
         
@@ -266,7 +278,7 @@ public class FillMapManager : MonoBehaviour
         
         // Set Path Height and vertices height
 
-        float testMean = FillMapUtils.CalculateMean(pathVertices.listVertices);
+        // float testMean = FillMapUtils.CalculateMean(pathVertices.listVertices);
         float mean = PathUtils.MeanWithoutTooLowVertices(pathVertices.listVertices, minHeight);
         
         // Debug.Log("Mean diff : " + testMean+ " vs " + mean);
@@ -276,6 +288,32 @@ public class FillMapManager : MonoBehaviour
             // Debug.DrawLine(meshData.vertices[index] *uniformScale, new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z) * uniformScale, Color.blue, 60);
             meshData.vertices[index] = new Vector3(meshData.vertices[index].x, mean, meshData.vertices[index].z);
         }
+        
+        
+        // Set position object
+        
+        GameObject roadsPositionsFolder = new GameObject("RoadsPositions");
+        roadsPositionsFolder.transform.parent = this.roadRootParentFolder.transform;
+        
+        foreach (List<FindPath.PathPoint> road in listRoads)
+        {
+            foreach (FindPath.PathPoint point in road)
+            {
+             
+                GameObject pointPosition = new GameObject();
+                pointPosition.transform.parent = roadsPositionsFolder.transform;
+
+                pointPosition.transform.position = new Vector3(point.position.x, mean, point.position.z);
+
+                point.pointPosition = pointPosition;
+                
+                
+                // FillMapUtils.InstantiateObjectWithScale(, roadParent.transform, point.position, Quaternion.identity, Vector3.one * roadData.roadScale);
+            }
+        }
+        
+        
+        
 
         mapDisplay.DrawMesh(meshData);
         
@@ -287,15 +325,20 @@ public class FillMapManager : MonoBehaviour
         }
         
         this.roadVertices = pathVertices.listVertices;
+
+        listRoads.Clear();
         
+        // Road Mesh
+
+        // Create Road Mesh
+        RoadGenerator.GenerateRoadMesh(bigRoadPath, bigRoad, roadData.roadWidth);
+        
+        
+        // PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth);
         
         listRoads.Clear();
         
-        // Create Road Mesh
-        RoadGenerator.GenerateRoadMesh(bigRoadPath, roadParent, roadData.roadWidth);
-        
         listRoads.Add(bigRoadPath);
-        // PathUtils.GetPathVertices(bigRoadPath, meshData, roadData.roadWidth);
         
         
 
@@ -304,11 +347,31 @@ public class FillMapManager : MonoBehaviour
         {
             RoadGenerator.GenerateRoadMesh(areaRoad, areas[i].roadParent, roadData.roadWidth);
             
+            
+            
             listRoads.Add(areaRoad);
 
             // PathUtils.GetPathVertices(areaRoad, meshData, roadData.roadWidth);
             i++;
         }
+
+        
+        
+        // foreach (List<FindPath.PathPoint> road in listRoads)
+        // {
+        //     foreach (FindPath.PathPoint point in road)
+        //     {
+        //      
+        //         Debug.DrawLine(point.pointPosition.transform.position, new Vector3(point.pointPosition.transform.position.x, 500, point.pointPosition.transform.position.z), Color.blue, 30);
+        //
+        //         // point.pointPosition 
+        //         
+        //         
+        //         // FillMapUtils.InstantiateObjectWithScale(, roadParent.transform, point.position, Quaternion.identity, Vector3.one * roadData.roadScale);
+        //     }
+        // }
+        
+        
         
         Debug.Log("Roads Generated Successfully");
     }
