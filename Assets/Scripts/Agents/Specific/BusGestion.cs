@@ -52,7 +52,7 @@ public class BusGestion : MonoBehaviour
         {
             currentTime = gameManager.timer.currentTime;
             prefabScale = gameManager.objectManager.prefabScale;
-            uniformScale = gameManager.objectManager.meshTerrain.transform.localScale.x;
+            uniformScale = gameManager.objectManager.mesh.transform.localScale.x;
         }
         if ((currentTime.Hour >= busStartHour && currentTime.Hour < busEndHour) && !busOut)
         {

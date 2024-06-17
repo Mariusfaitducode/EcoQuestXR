@@ -9,6 +9,31 @@ public class AgentManager : MonoBehaviour
     
     internal Timer timer;
 
+    // Stat Manager
+    internal StatManager statManager;
+    internal ObjectManager objectManager;
+    
+    // Transport objects
+    
+    public List<GameObject> carPrefabs = new List<GameObject>();
+    internal List<GameObject> cars = new List<GameObject>();
+
+    public GameObject roadParent;
+    
+    internal List<List<FindPath.PathPoint>> listRoads;
+    
+    
+    
+    
+    public void InitAgentManager(StatManager statManager, ObjectManager objectManager)
+    {
+        this.statManager = statManager;
+        this.objectManager = objectManager;
+        
+        // transportGestion = new TransportGestion();
+        TransportGestion.InitTransport(this);
+    }
+    
 
     public void SetTimerInformations(Timer timer)
     {
@@ -19,15 +44,10 @@ public class AgentManager : MonoBehaviour
     {
         areas = fillMapManager.areas;
         mapScale = fillMapManager.mapGenerator.terrainData.uniformScale;
+        
+        listRoads = fillMapManager.listRoads;
 
 
         // Road Informations
-    }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

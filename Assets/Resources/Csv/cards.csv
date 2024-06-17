@@ -1,29 +1,92 @@
 id,title,description,cardType,idObject1,quantityObject1,idObject2,quantityObject2
-0,Création d'un quartier moderne,Construction de 4 maisons modernes et isolées,Construction,0,4,-1,-1
-1,Destruction d'un HLM,Destruction de 1 HLM de 34 logements,Destruction,6,3,-1,-1
-2,Construction d'éoliennes,Construction d'un parc de 5 éoliennes,Construction,11,5,-1,-1
-3,Destruction d'un parc de panneaux solaires,Destruction de 2 panneaux solaires,Destruction,12,2,-1,-1
-4,Rénovation d'une zone résidentielle,Remplacement de 2 immeubles par 3 maisons,Upgrade,7,2,0,3
-5,Création de logement low-cost,Remplacement de 2 maisons par 1 immeuble,Upgrade,2,2,6,1
-6,Aménagement de maisons écologiques,Construction de 3 nouvelles maisons écologiques,Construction,4,3,-1,-1
-8,Installation de nouvelles fermes solaires,Construction de 4 fermes solaires,Construction,12,4,-1,-1
-9,Démolition de champs de blé,Destruction de 5 champs de blé,Destruction,13,5,-1,-1
-11,Aménagement d'un quartier résidentiel,Construction de 6 maisons modernes,Construction,3,6,-1,-1
-12,Suppression d'une centrale nucléaire,Destruction de 1 centrale nucléaire,Destruction,9,1,-1,-1
-13,Développement de logements durables,Construction de 5 maisons écologiques,Construction,6,5,-1,-1
-14,Démolition d'un bâtiment ancien,Destruction de 2 bâtiments anciens,Destruction,7,2,-1,-1
-15,Rénovation énergétique,Remplacement de 3 maisons par 2 bâtiments modernes,Upgrade,5,3,7,2
-16,Construction d'un complexe de biogaz,Construction de 2 centrales de biogaz,Construction,10,2,-1,-1
-17,Démolition d'un parc éolien,Destruction de 3 éoliennes,Destruction,11,3,-1,-1
-18,Transformation agricole,Remplacement de 4 champs de blé par 1 ferme solaire,Upgrade,13,4,12,1
-19,Création de logements haut standing,Construction de 2 nouvelles maisons de luxe,Construction,2,2,-1,-1
-20,Amélioration de l'infrastructure de transport,Remplacement de 1 centre de bus par 3 maisons,Upgrade,8,1,0,3
-21,Suppression de vieilles maisons,Destruction de 4 vieilles maisons,Destruction,1,4,-1,-1
-22,Élargissement du parc énergétique,Construction de 1 centrale nucléaire,Construction,9,1,-1,-1
-23,Démolition d'immeubles vétustes,Destruction de 2 vieux immeubles,Destruction,6,2,-1,-1
-24,Développement d'un espace agricole,Construction de 3 champs de blé,Construction,13,3,-1,-1
-25,Éco-rénovation urbaine,Remplacement de 3 maisons par 1 parc éolien,Upgrade,0,3,11,1
-26,Expansion industrielle,Construction de 2 nouveaux bâtiments,Construction,6,2,-1,-1
-27,Démolition de centrales de biogaz,Destruction de 1 centrale de biogaz,Destruction,10,1,-1,-1
-28,Transformation résidentielle,Remplacement de 2 immeubles par 4 maisons,Upgrade,7,2,3,4
-29,Construction de centres de transport,Construction de 2 centres de bus,Construction,8,2,-1,-1
+0,Construction de cabanes,Creation de 4 petites cabanes,Construction,0,4,-1,-1
+1,Construction d'un quatier de maisons modestes,Creation de 3 vieilles maisons,Construction,1,3,-1,-1
+2,Construction d'un quatier eco-responsible,Creation de 5 maisons modernes,Construction,2,5,-1,-1
+3,Construction d'une villa,Creation d'une villa,Construction,3,1,-1,-1
+4,Construction de logements low-cost,Construction  de 2 barres de HLM ,Construction,4,2,-1,-1
+5,Construction de logements low-cost,Construction  de 2  HLMs,Construction,5,2,-1,-1
+6,Construction de logements low-cost,Construction  de 2  HLMs 4 etages,Construction,6,2,-1,-1
+7,Construction de logements low-cost,Construction  de 2  HLMs 6 etages,Construction,7,2,-1,-1
+8,Construction de logements low-cost,Construction  de 2  HLMs 12 etages,Construction,8,2,-1,-1
+9,Construction d'un parking,Creation d'un parking de 250 m2,Construction,9,1,-1,-1
+10,Construction d'une zone verte,Construction d'un jardin partage de 150 m2,Construction,10,1,-1,-1
+11,Construction d'un park,Creation d'un park,Construction,11,1,-1,-1
+12,Construction d'un champ d'eoliennes,Creation de 6 eoliennes,Construction,15,6,-1,-1
+13,Construction d'un champ de panneaux solaires,Creation de 2 fermes solaires,Construction,16,2,-1,-1
+14,Construction d'une centrale au biogas,Creation d'une centrale au biogas,Construction,17,1,-1,-1
+15,Construction d'une centrale nucleaire,Creation d'une centrale nucleaire,Construction,18,1,-1,-1
+16,Construction d'une centrale a charbon,Creation d'une centrale a charbon,Construction,19,1,-1,-1
+17,Construction d'un centre d'incineration de dechets,Creation d'un centre d'incineration de dechets,Construction,20,1,-1,-1
+18,Construction d'un centre de recyclage des dechets,Creation d'un centre de recyclage des dechets,Construction,21,1,-1,-1
+19,Construction d'une industrie petro-chimique,Creation d'une industrie polluant,Construction,22,1,-1,-1
+20,Construction d'une industrie de textile,Creation d'une industrie,Construction,23,1,-1,-1
+21,Construction d'une industrie durable,Creation d'une industrie durable,Construction,24,1,-1,-1
+22,Construction d'un champ de bles,Creation d'un champ de bles,Construction,25,6,-1,-1
+23,Construction d'un champ de concombres,Creation d'un champ de concombres,Construction,26,6,-1,-1
+24,Construction d'un champ de tomates,Creation d'un champ de tomates,Construction,27,6,-1,-1
+25,Construction d'un champ de salades,Creation d'un champ de salades,Construction,28,6,-1,-1
+26,Construction d'un champ de citrouilles,Creation d'un champ de citrouilles,Construction,29,6,-1,-1
+27,Construction d'une ferme industrielle,Creation d'une ferme industrielle,Construction,30,1,-1,-1
+28,Construction d'une ferme eco-responsible,Creation d'une ferme eco-responsible,Construction,31,1,-1,-1
+29,Destruction de cabanes,Destruction de 4 petites cabanes,Destruction,0,4,-1,-1
+30,Destruction d'un quatier de maisons modestes,Destruction de 3 vieilles maisons,Destruction,1,3,-1,-1
+31,Destruction d'un quatier eco-responsible,Destruction de 5 maisons modernes,Destruction,2,5,-1,-1
+32,Destruction d'une villa,Destruction d'une villa,Destruction,3,1,-1,-1
+33,Destruction de logements low-cost,Destruction  de 2 barres de HLM ,Destruction,4,2,-1,-1
+34,Destruction de logements low-cost,Destruction  de 2  HLMs,Destruction,5,2,-1,-1
+35,Destruction de logements low-cost,Destruction  de 2  HLMs 4 etages,Destruction,6,2,-1,-1
+36,Destruction de logements low-cost,Destruction  de 2  HLMs 6 etages,Destruction,7,2,-1,-1
+37,Destruction de logements low-cost,Destruction  de 2  HLMs 12 etages,Destruction,8,2,-1,-1
+38,Destruction d'un parking,Destruction d'un parking de 250 m2,Destruction,9,1,-1,-1
+39,Destruction d'une zone verte,Destruction d'un jardin partage de 150 m2,Destruction,10,1,-1,-1
+40,Destruction d'un park,Destruction d'un park,Destruction,11,1,-1,-1
+41,Destruction d'un champ d'eoliennes,Destruction de 6 eoliennes,Destruction,15,6,-1,-1
+42,Destruction d'un champ de panneaux solaires,Destruction de 2 fermes solaires,Destruction,16,2,-1,-1
+43,Destruction d'une centrale au biogas,Destruction d'une centrale au biogas,Destruction,17,1,-1,-1
+44,Destruction d'une centrale nucleaire,Destruction d'une centrale nucleaire,Destruction,18,1,-1,-1
+45,Destruction d'une centrale à charbon,Destruction d'une centrale à charbon,Destruction,19,1,-1,-1
+46,Destruction d'un centre d'incineration de dechets,Destruction d'un centre d'incineration de dechets,Destruction,20,1,-1,-1
+47,Destruction d'un centre de recyclage des dechets,Destruction d'un centre de recyclage des dechets,Destruction,21,1,-1,-1
+48,Destruction d'une industrie petro-chimique,Destruction d'une industrie polluant,Destruction,22,1,-1,-1
+49,Destruction d'une industrie de textile,Destruction d'une industrie,Destruction,23,1,-1,-1
+50,Destruction d'une industrie durable,Destruction d'une industrie durable,Destruction,24,1,-1,-1
+51,Destruction d'un champ de bles,Destruction d'un champ de bles,Destruction,25,1,-1,-1
+52,Destruction d'un champ de concombres,Destruction d'un champ de concombres,Destruction,26,1,-1,-1
+53,Destruction d'un champ de tomates,Destruction d'un champ de tomates,Destruction,27,1,-1,-1
+54,Destruction d'un champ de salades,Destruction d'un champ de salades,Destruction,28,1,-1,-1
+55,Destruction d'un champ de citrouilles,Destruction d'un champ de citrouilles,Destruction,29,1,-1,-1
+56,Destruction d'une ferme industrielle,Destruction d'une ferme industrielle,Destruction,30,1,-1,-1
+57,Destruction d'une ferme eco-responsible,Destruction d'une ferme eco-responsible,Destruction,31,1,-1,-1
+58,Renovation d'un ancien quartier,Remplacement de 4 petites cabanes par 3 vieilles maisons,Replacement,0,4,1,3
+59,Transformation urbaine,Remplacement de 2 HLMs 6 etages par 5 maisons modernes,Replacement,7,2,2,5
+60,Requalification des logements,Remplacement de 2 barres de HLM par 4 petites cabanes,Replacement,4,2,0,4
+61,Renovation de logements low-cost,Remplacement de 2 HLMs 4 etages par 3 vieilles maisons,Replacement,6,2,1,3
+62,Renovation d'un quartier eco-responsible,Remplacement de 3 vieilles maisons par 2 HLMs 12 etages,Replacement,1,3,8,2
+63,Renovation urbaine,Remplacement de 2 HLMs par 1 villa,Replacement,5,2,3,1
+64,Requalification des bâtiments,Remplacement de 2 HLMs 12 etages par 4 petites cabanes,Replacement,8,2,0,4
+65,Transformation de quartier,Remplacement de 4 petites cabanes par 2 HLMs,Replacement,0,4,5,2
+66,Reconversion des logements,Remplacement de 5 maisons modernes par 2 HLMs 4 etages,Replacement,2,5,6,2
+67,Renovation des habitations,Remplacement de 2 HLMs par 2 HLMs 12 etages,Replacement,5,2,8,2
+68,Transformation des habitations,Remplacement de 2 barres de HLM par 2 HLMs 6 etages,Replacement,4,2,7,2
+69,Renovation d'un quartier,Remplacement de 2 HLMs 4 etages par 2 HLMs 6 etages,Replacement,6,2,7,2
+70,Renovation d'un champ energetique,Remplacement de 6 eoliennes par 2 fermes solaires,Replacement,15,6,16,2
+71,Transformation d'une centrale,Remplacement d'une centrale nucleaire par une centrale au biogas,Replacement,18,1,17,1
+72,Requalification d'une centrale energetique,Remplacement d'une centrale a charbon par une centrale nucleaire,Replacement,19,1,18,1
+73,Renovation d'un champ solaire,Remplacement de 2 fermes solaires par 6 eoliennes,Replacement,16,2,15,6
+74,Reconversion d'une centrale,Remplacement d'une centrale au biogas par une centrale a charbon,Replacement,17,1,19,1
+75,Modernisation industrielle,Remplacement d'une industrie polluant par une industrie de textile,Replacement,22,1,23,1
+76,Transition vers une industrie durable,Remplacement d'une industrie de textile par une industrie durable,Replacement,23,1,24,1
+77,Reconversion écologique,Remplacement d'une industrie polluant par une industrie durable,Replacement,22,1,24,1
+78,Changement de secteur industriel,Remplacement d'une industrie durable par une industrie polluant,Replacement,24,1,22,1
+79,Requalification des activités industrielles,Remplacement d'une industrie de textile par une industrie polluant,Replacement,23,1,22,1
+80,Reconversion de champ,Remplacement d'un champ de bles par un champ de concombres,Replacement,25,1,26,1
+81,Transformation agricole,Remplacement d'un champ de concombres par un champ de tomates,Replacement,26,1,27,1
+82,Renovation de champ,Remplacement d'un champ de tomates par un champ de salades,Replacement,27,1,28,1
+83,Requalification agricole,Remplacement d'un champ de salades par un champ de citrouilles,Replacement,28,1,29,1
+84,Reconversion de champ,Remplacement d'un champ de citrouilles par un champ de bles,Replacement,29,1,25,1
+85,Transformation de champ,Remplacement d'un champ de bles par un champ de tomates,Replacement,25,1,27,1
+86,Renovation de terrain,Remplacement d'un champ de salades par un champ de concombres,Replacement,28,1,26,1
+87,Requalification de terrain,Remplacement d'un champ de citrouilles par un champ de salades,Replacement,29,1,28,1
+88,Reconversion agricole,Remplacement d'un champ de concombres par un champ de bles,Replacement,26,1,25,1
+89,Renovation d'une ferme,Remplacement d'une ferme industrielle par une ferme eco-responsible,Replacement,30,1,31,1
+90,Renovation d'une ferme,Remplacement d'une ferme eco-responsible par une ferme industrielle,Replacement,31,1,30,1

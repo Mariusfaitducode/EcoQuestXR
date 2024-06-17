@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+            gameManager.canvasObjects.settingsCanvas.worldCamera = gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>();
+
             
             // Unable GraphicRaycaster for the keyboard
             gameManager.cardObjects.card.GetComponent<GraphicRaycaster>().enabled = false;
@@ -40,6 +43,8 @@ public static class GameInitialization
             gameManager.canvasObjects.deckCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.draftCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             gameManager.canvasObjects.dashboardCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+            gameManager.canvasObjects.settingsCanvas.worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
+
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<Canvas>().worldCamera = gameManager.keyboardObjects.camera.GetComponent<Camera>();
             
             // Unable OVR Raycaster for OVR
@@ -69,19 +74,23 @@ public static class GameInitialization
         gameManager.cardManager.cardPrefab = gameManager.cardObjects.card;
         gameManager.cardManager.grabbableCardPrefab = gameManager.cardObjects.grabbableCard;
         gameManager.cardManager.depot_zone = gameManager.otherObjects.cloud;
-        
+        gameManager.cardManager.draftCounterSelectedCardsText = gameManager.otherObjects.draftCounter.GetComponent<TextMeshProUGUI>(); 
+
+
         gameManager.objectManager = GameObject.FindObjectOfType<ObjectManager>();
         gameManager.objectManager.gameManager = gameManager;
-        
+        gameManager.objectManager.mesh = gameManager.otherObjects.mesh;
         gameManager.agentManager = GameObject.FindObjectOfType<AgentManager>();
-        // agentManager.gameManager = this;
         
         gameManager.statManager = GameObject.FindObjectOfType<StatManager>();
         gameManager.statManager.gameManager = gameManager;
         
         gameManager.fillMapManager = GameObject.FindObjectOfType<FillMapManager>();
-        // fillMapManager.gameManager = this;
         
+        // gameManager.audioManager = GameObject.FindObjectOfType<AudioManager>();
+        
+        gameManager.animationManager = GameObject.FindObjectOfType<AnimationManager>();
+        gameManager.animationManager.gameManager = gameManager;
     }
 
 
@@ -125,6 +134,13 @@ public static class GameInitialization
         gameManager.draftController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
         gameManager.draftController.InitializeDraftController();
         
+
+        // Settings controller
+        gameManager.settingsController = GameObject.FindObjectOfType<SettingsController>();
+
+        gameManager.settingsController.gameManager = gameManager;
+
+
         // Cloud controller
         gameManager.cloudController = GameObject.FindObjectOfType<CloudController>();
 
@@ -173,78 +189,77 @@ public static class GameInitialization
     
     
     
-    public static void InitializeGame(
-        Timer timer,
-        FillMapManager fillMapManager,
-        ObjectManager objectManager,
-        CardManager cardManager,
-        StatManager statManager,
-        AgentManager agentManager,
-        EventsGestion eventsGestion)
+    public static void InitializeGame(GameManager gameManager)
     {
         // ----------------- Game Initialization -----------------
         // Game time
-        timer.TimeInitialization();
+        gameManager.timer.TimeInitialization();
         
         // Map
-        fillMapManager.GenerateMap();
+        gameManager.fillMapManager.GenerateMap();
         
         // Scripts
         
+        // Objects / Cards Manager
         // CSV
-        objectManager.ObjectsStartInitialization();
-        cardManager.CardsStartInitialization();
-        
-        statManager.StatsStartInitialization();
+        gameManager.objectManager.ObjectsStartInitialization();
+        gameManager.cardManager.CardsStartInitialization();
+        gameManager.statManager.StatsStartInitialization();
+        gameManager.animationManager.AnimationsStartInitialization();
         
         // Transfer informations to other scripts
-        objectManager.SetMapInformations(fillMapManager);
-        cardManager.SetCardsProperties(objectManager.listObjectsProperties);
+        gameManager.objectManager.SetMapInformations(gameManager.fillMapManager);
+        gameManager.cardManager.SetCardsProperties(gameManager.objectManager.listObjectsProperties);
         
-        agentManager.SetMapInformations(fillMapManager);
-        agentManager.SetTimerInformations(timer);
+        // Audio Source Areas
         
+        // objectManager
+        
+        
+        // Stats
         // Citizens and Dashboard
-        statManager.citizensGestion.GenerateInitialsCitizens(objectManager.GetMaxPopSize());
-        statManager.InitDashboard(objectManager);
+        gameManager.statManager.citizensGestion.GenerateInitialsCitizens(gameManager.objectManager.GetMaxPopSize());
+        gameManager.statManager.InitDashboard(gameManager.objectManager);
+        
+        // Agents
+        gameManager.agentManager.SetMapInformations(gameManager.fillMapManager);
+        gameManager.agentManager.SetTimerInformations(gameManager.timer);
+        
+        gameManager.agentManager.InitAgentManager(gameManager.statManager, gameManager.objectManager);
+        
         
         // Events
-        InstantiatePeriodicEvents(eventsGestion, timer.currentTime, cardManager, statManager, objectManager);
+        InstantiatePeriodicEvents(gameManager);
     }
     
-    public static void InstantiatePeriodicEvents(
-        EventsGestion eventsGestion,
-        DateTime currentTime,
-        CardManager cardManager,
-        StatManager statManager,
-        ObjectManager objectManager)
+    public static void InstantiatePeriodicEvents(GameManager gameManager)
     {
        PeriodicEvent draftEvent = new PeriodicEvent(
             "DraftEvent",
-            currentTime,
+            gameManager.timer.currentTime,
 
             // new Interval { days = 50, months = 0, years = 0 }, 
 
             new Interval { days = 5, months = 0, years = 0 }, 
 
-            () => cardManager.DraftEvent(),
+            () => gameManager.cardManager.DraftEvent(),
             false);
 
         //PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
         //    "UpdateGlobalStatsFromObjectsEvent",
-        //    currentTime,
+        //    gameManager.timer.currentTime,
         //    new Interval { days = 5, months = 0, years = 0 },
-        //    () => statManager.UpdateGlobalStatsFromObjectsEvent(objectManager.GetAllObjectScripts()));
+        //    () => gameManager.statManager.UpdateGlobalStatsFromObjectsEvent(gameManager.objectManager.GetAllObjectScripts()));
 
         //PeriodicEvent updateObjectStatsFromObjectsAndCitizensEvent = new PeriodicEvent(
         //    "UpdateObjectStatsFromObjectsAndCitizensEvent",
-        //    currentTime,
+        //    gameManager.timer.currentTime,
         //    new Interval { days = 1, months = 0, years = 0 }, 
-        //    () => statManager.DailyUpdateDashboardEvent());
+        //    () => gameManager.statManager.DailyUpdateDashboardEvent());
         
-        eventsGestion.periodicEvents.Add(draftEvent);
-        //eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);
-        //eventsGestion.periodicEvents.Add(updateObjectStatsFromObjectsAndCitizensEvent);
+        gameManager.eventsGestion.periodicEvents.Add(draftEvent);
+        //gameManager.eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);
+        //gameManager.eventsGestion.periodicEvents.Add(updateObjectStatsFromObjectsAndCitizensEvent);
     }
     
     

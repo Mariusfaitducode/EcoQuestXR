@@ -42,8 +42,7 @@ public class DriveInArea : MonoBehaviour
             // treshold = agentManager.mapScale * treshold;
             // roadStep = agentManager.mapScale * roadStep;
             
-            Initialize();
-            initialized = true; 
+            initialized = Initialize();
         }
 
 
@@ -66,7 +65,7 @@ public class DriveInArea : MonoBehaviour
     }
 
     
-    void Initialize()
+    bool Initialize()
     {
         areaGrid = agentManager.areas.Find(a => a.data.type == areaType).areaGrid;
 
@@ -88,13 +87,22 @@ public class DriveInArea : MonoBehaviour
 
         SearchNeighbour();
         
+        if (nextCell == null || nextCell.cellPosition == null)
+        {
+            // nextCell = actualCell;
+            
+            Debug.LogError("Error : No next cell found. Destroying object.");
+            DestroyImmediate(this.gameObject);
+            return false;
+        }
+        
         Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
         
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
         
         this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight * roadStep);
 
-        
+        return true;
     }
 
     void ChangeTarget()

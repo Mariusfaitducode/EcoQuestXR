@@ -15,7 +15,7 @@ public class CardManager : MonoBehaviour
     internal GameObject cardPrefab;
     internal GameObject grabbableCardPrefab;
 
-    public TextMeshProUGUI draftCounterSelectedCardsText;
+    internal TextMeshProUGUI draftCounterSelectedCardsText;
 
     internal List<Card> cards;
     internal List<Card> pileCards = new List<Card>();
@@ -75,7 +75,7 @@ public class CardManager : MonoBehaviour
         
         draftTime = true;
         // Draw Pile
-        pileCards = PileManager.DrawPile(cards, nbrDraftCards);
+        pileCards = PileManager.DrawPile(cards, nbrDraftCards, gameManager.objectManager);
         
         // Display Canvas
         DisplayCanvas.ShowCanvas(draftCanvas);
