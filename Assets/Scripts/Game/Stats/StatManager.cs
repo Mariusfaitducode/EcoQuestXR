@@ -53,11 +53,6 @@ public class StatManager : MonoBehaviour
         globalStats.currentEnergyInStock = initialEnergyInStock;
         globalStats.currentEmittedCo2 = initialEmittedCo2;
         globalStats.currentWasteProduced = initialWasteProduced;
-        
-        // citizens
-        // done
-        
-        
     }
     
     // Called every second to update the time on the dashboard
