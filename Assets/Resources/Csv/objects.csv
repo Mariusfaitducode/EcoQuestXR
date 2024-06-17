@@ -30,4 +30,4 @@ id,name,prefabName,prefabPath,areaType,sizeX,sizeY,weight,constructionCost,destr
 28,salad,salad,Agriculture/Fields,Agriculture,2,2,10,100000,40000,0,0,2000,800,20,10,2,2,0.2,0,50,0,0.5,0.5,0,2000,800,0,100,
 29,pumpkin,pumpkin,Agriculture/Fields,Agriculture,2,2,10,100000,40000,0,0,2000,800,20,10,2,2,0.2,0,50,0,0.5,0.5,0,2000,800,0,100,
 30,industrialFarm,industrialFarm,Agriculture/Farms,Agriculture,4,4,10,1000000,400000,10000,2000,8000,3000,500,0,6,6,0.7,0,0,0,0.1,0.5,0,8000,3000,0,2000,
-31,sustainableFarm,sustainableFarm,Agriculture/Farms,Agriculture,4,4,10,1500000,600000,8000,1000,12000,4500,200,0,9,9,0.4,0,0,0,0.6,0.5,0,12000,4500,0,1000,
+31,sustainableFarm,sustainableFarm,Agriculture/Farms,Agriculture,6,6,10,1500000,600000,8000,1000,12000,4500,200,0,9,9,0.4,0,0,0,0.6,0.5,0,12000,4500,0,1000,

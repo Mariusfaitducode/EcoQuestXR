@@ -12,6 +12,8 @@ public struct VehiclePrefab
     
     public List<GameObject> prefab;
     public List<AreaType> canSpawnOnAreas;
+
+    public bool onBigRoad;
 }
 
 public class VehicleStat

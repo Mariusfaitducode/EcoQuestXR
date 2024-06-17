@@ -32,3 +32,13 @@ MonoBehaviour:
     size: {x: 4, y: 4}
     weight: 20
     rotation: 0
+  - prefabLow: {fileID: 5641835970300618039, guid: f45417578b81452428b1e0ea8fc59d9c,
+      type: 3}
+    size: {x: 3, y: 3}
+    weight: 20
+    rotation: 0
+  - prefabLow: {fileID: 3718435559060334825, guid: 0c43bdccef7a5be46b62a7677ac64123,
+      type: 3}
+    size: {x: 3, y: 3}
+    weight: 20
+    rotation: 0
