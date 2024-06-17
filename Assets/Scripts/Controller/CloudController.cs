@@ -6,7 +6,7 @@ using TMPro;
 public class CloudController : MonoBehaviour
 {
     public ObjectPose ovrPose;
-    
+
     internal Transform meshTransform;
     internal UpdateTerrainRenderer updateTerrainRenderer;
     internal Transform centerEyeAnchorTransform;
@@ -18,21 +18,33 @@ public class CloudController : MonoBehaviour
     private Color maxValColor = Color.white;
     private Color minValColor = new Color(0.3f, 0.3f, 0.3f);
 
+
+    // variables pour le texte
     private Dictionary<string, string> list_text = new Dictionary<string, string>();
 
     private TextMeshProUGUI text; 
     private Canvas canva; 
 
-    private AudioSource audioSource;
 
+    // variables pour le son
+    private AudioSource audioSource;
     public List<AudioClip> clipList = new List<AudioClip>();
+
+
+    // variables pour l'animation 
+    private float moveSpeed = 1.0f;  // La vitesse de déplacement
+    private float stopDistance = 0.05f;  // La distance minimale à laquelle la zone de dépôt doit s'arrêter
+
+    private Vector3 movementOffset = Vector3.zero;  // Le vecteur de déplacement
+    internal bool is_moving = false;
+
 
     public void InitializeCloudController()
     {
         transform.rotation = ovrPose.rotation;
         transform.localScale = new Vector3(ovrPose.scale, ovrPose.scale, ovrPose.scale);
-    
-    
+
+
         character_mat = this.GetComponentInChildren<SkinnedMeshRenderer>().material;
         text = this.GetComponentInChildren<TextMeshProUGUI>();
         canva = this.GetComponentInChildren<Canvas>();
@@ -50,28 +62,38 @@ public class CloudController : MonoBehaviour
 
 
         text.text = "";
-    
+
     }
 
 
     
     void Update()
     {
-        Vector3 shaderCenterMapPosition = updateTerrainRenderer.GetMapCenter();
-        Vector3 centerMapPosition = new Vector3(shaderCenterMapPosition.x, meshTransform.position.y, shaderCenterMapPosition.z);
-        transform.position = centerMapPosition + ovrPose.position;
-
 
         canva.enabled = audioSource.isPlaying;
 
+        Vector3 shaderCenterMapPosition = updateTerrainRenderer.GetMapCenter();
+        Vector3 centerMapPosition = new Vector3(shaderCenterMapPosition.x, meshTransform.position.y, shaderCenterMapPosition.z);
+        transform.position = centerMapPosition + ovrPose.position + movementOffset;
+
+
+        if (is_moving)
+        {
+            MoveToDestination();
+        } 
+        else
+        {
+            ReturnToPosition();
+        }
+
     
         // TODO : use lookat
-        // transform.rotation = meshTransform.rotation;
+        this.transform.LookAt(centerEyeAnchorTransform);
     }
 
 
 
-        public void ChangeValue(float new_val)
+    public void ChangeValue(float new_val)
     {
 
         if (new_val < 100 && new_val > 0)
@@ -115,4 +137,33 @@ public class CloudController : MonoBehaviour
 
         }
     }
+
+    public void MoveToDestination()
+    {
+        // Calculer la distance entre la zone de dépôt et la position cible
+        float distance = Vector3.Distance(this.transform.position + movementOffset, centerEyeAnchorTransform.position);
+
+        // Si la distance est supérieure à la distance d'arrêt, calculer le vecteur de déplacement
+        if (distance > stopDistance)
+        {
+            Vector3 direction = (centerEyeAnchorTransform.position - (this.transform.position + movementOffset)).normalized;
+            movementOffset += direction * moveSpeed * Time.deltaTime;
+        }
+    }
+
+    public void ReturnToPosition()
+    {
+        // Vérifier si la magnitude du vecteur de déplacement est supérieure à une petite valeur
+        if (movementOffset.magnitude > 0.01f)
+        {
+            Vector3 direction = (-movementOffset).normalized;
+            movementOffset += direction * moveSpeed * Time.deltaTime;
+        } 
+        else
+        {
+            movementOffset = Vector3.zero;
+        }
+    }
+
+
 }

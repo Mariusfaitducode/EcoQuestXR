@@ -70,6 +70,10 @@ public class InteractionCardController : MonoBehaviour
                 transform.position = initialPosition;
                 transform.rotation = initialRotation;
             }
+
+
+            cardManager.gameManager.cloudController.is_moving = false;
+
         }
         else
         {
@@ -77,6 +81,8 @@ public class InteractionCardController : MonoBehaviour
             {
                 canva.enabled = true;
             }
+
+            cardManager.gameManager.cloudController.is_moving = true;
         }
 
     }
