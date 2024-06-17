@@ -30,6 +30,12 @@ public static class GameInitialization
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = false;
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = true;
             
+            gameManager.canvasObjects.settingsCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            gameManager.canvasObjects.settingsCanvas.GetComponent<OVRRaycaster>().enabled = true;
+            
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = true;
+            
             // Remove play button
             gameManager.keyboardObjects.play.SetActive(false);
         }
@@ -53,6 +59,12 @@ public static class GameInitialization
             
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<GraphicRaycaster>().enabled = true;
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<OVRRaycaster>().enabled = false;
+            
+            gameManager.canvasObjects.settingsCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+            gameManager.canvasObjects.settingsCanvas.GetComponent<OVRRaycaster>().enabled = false;
+            
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = false;
             
             // Set listener for the grabbable card
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<Button>().onClick.AddListener(() => gameManager.cardManager.SelectUnselectEvent(gameManager.cardManager.grabbableCardPrefab.GetComponentInChildren<DisplayCard>()));

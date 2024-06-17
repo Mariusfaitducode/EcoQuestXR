@@ -121,17 +121,4 @@ public static class MapMouvement
         
         return false;
     }
-    
-    public static void FocusOnPoint(Transform mapTransform, Vector3 focusPoint, Vector3 shaderPoint)
-    {
-        if (mapTransform == null)
-        {
-            return;
-        }
-        // Vector3 direction = point - mapTransform.position;
-        // mapTransform.position += direction.normalized * Time.deltaTime * translationSpeed;
-        Vector3 translation = shaderPoint - focusPoint;
-        mapTransform.position += translation;
-        mapTransform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
-    }
 }
