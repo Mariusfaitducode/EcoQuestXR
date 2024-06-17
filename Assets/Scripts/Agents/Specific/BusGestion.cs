@@ -16,15 +16,21 @@ public class BusGestion : MonoBehaviour
     internal List<GameObject> buses = new List<GameObject>();
     
     
-    public GameManager gameManager;
-    internal DateTime currentTime;
+    internal float prefabScale = 1f;
+    internal float uniformScale = 1f;
     
     public bool busOut = false;
     
     
+    internal GameManager gameManager;
+    internal DateTime currentTime;
+
+    
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        
+        
 
         // if (gameManager != null)
         // {
@@ -45,9 +51,9 @@ public class BusGestion : MonoBehaviour
         if (gameManager != null)
         {
             currentTime = gameManager.timer.currentTime;
+            prefabScale = gameManager.objectManager.prefabScale;
+            uniformScale = gameManager.objectManager.meshTerrain.transform.localScale.x;
         }
-
-
         if ((currentTime.Hour >= busStartHour && currentTime.Hour < busEndHour) && !busOut)
         {
             busOut = true;
@@ -59,12 +65,16 @@ public class BusGestion : MonoBehaviour
             {
                 // Instantiate bus
                 
-                // GameObject bus = busPrefabs[Random.Range(0, busPrefabs.Count)];
-                //
-                // GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, this.transform.position, Quaternion.identity, Vector3.one);
-                //
-                // // Init bus script
-                // buses.Add(newBus);
+                GameObject bus = busPrefabs[Random.Range(0, busPrefabs.Count)];
+                
+                // Debug.Log("INSTANTIATE BUSES ");
+                // Debug.Log("PrefabScale : " + prefabScale);
+                // Debug.Log("UniformScale : " + uniformScale);
+                
+                GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, this.transform.position, Quaternion.identity, Vector3.one * uniformScale);
+                
+                // Init bus script
+                buses.Add(newBus);
             }
         }
         // else if ((currentTime.Hour < busStartHour || currentTime.Hour >= busEndHour) && busOut)

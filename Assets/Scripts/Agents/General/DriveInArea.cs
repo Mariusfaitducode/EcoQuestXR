@@ -7,8 +7,8 @@ public class DriveInArea : MonoBehaviour
     internal AgentManager agentManager;
     public AreaType areaType;
 
-    public float speed = 5f;
-    public float treshold = 0.05f;
+    public float speed = 3f;
+    public float treshold = 1f;
     
     public float roadStep = 0.5f;
     
@@ -38,6 +38,10 @@ public class DriveInArea : MonoBehaviour
 
         if (agentManager != null && agentManager.areas != null && agentManager.areas.Count > 0 && !initialized)
         {
+            // speed = agentManager.mapScale * speed;
+            // treshold = agentManager.mapScale * treshold;
+            // roadStep = agentManager.mapScale * roadStep;
+            
             Initialize();
             initialized = true; 
         }
@@ -45,8 +49,12 @@ public class DriveInArea : MonoBehaviour
 
         if (initialized && !agentManager.timer.isTimePaused)
         {
-            
+            Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
         
+            speed = direction.magnitude * 2;
+            treshold = direction.magnitude / 2;
+            roadStep = direction.magnitude / 4;
+            
             this.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
             
 
@@ -103,8 +111,7 @@ public class DriveInArea : MonoBehaviour
         
         this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight.normalized * roadStep);
 
-        // this.transform.position = actualCell.cellPosition.transform.position ;
-        
+
     }
 
     void SearchNeighbour()
@@ -152,6 +159,7 @@ public class DriveInArea : MonoBehaviour
         {
             nextCell = validCells[Random.Range(0, validCells.Count)];
         }
+        
         
         
     }

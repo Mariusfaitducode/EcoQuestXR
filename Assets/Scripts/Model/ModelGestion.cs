@@ -21,11 +21,19 @@ public struct SubModel
 
 }
 
+[Serializable]
+public struct ParticleSystemModel
+{
+    public GameObject gameObject;
+    internal float initialScale;
+}
+
 
 public class ModelGestion : MonoBehaviour
 {
     // TODO : set at initialization
-    public ObjectScript objectScript;
+    internal ObjectScript objectScript;
+    internal GameManager gameManager;
     
     
     // Apparence
@@ -33,21 +41,34 @@ public class ModelGestion : MonoBehaviour
     public List<RendererMaterials> rendererSettings = new List<RendererMaterials>();
     public List<SubModel> subObjects = new List<SubModel>();
     // public List<Animation> animations = new List<Animation>();
-    // public List<ParticleSystem> particleSystems = new List<ParticleSystem>();
+    
+    public List<ParticleSystemModel> particleSystems = new List<ParticleSystemModel>();
     // public List<AudioClip> audioClips = new List<AudioClip>();
 
 
+    internal bool initialized = false;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         InitialisationMaterials();
+        
+        gameManager = FindObjectOfType<GameManager>();
+        
+        // InitialisationParticleSystems();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+        
+        if (particleSystems.Count > 0)
+        {
+            // InitialisationParticleSystems();
+            initialized = true;
+        }
     }
 
 
@@ -92,6 +113,18 @@ public class ModelGestion : MonoBehaviour
             }
         }
     }
+
+
+    // public void InitialisationParticleSystems()
+    // {
+    //     foreach( ParticleSystemModel particle in particleSystems)
+    //     {
+    //         particle.initialScale = gameObject.transform.localScale.x * particle.initialScale;
+    //         
+    //         particle.transform.localScale *= gameManager.objectManager.prefabScale;
+    //         particle.transform.localScale *= gameManager.mapGenerator.terrainData.uniformScale;
+    //     }
+    // }
     
     
     public SubModel FindSubModelWithName(string name)

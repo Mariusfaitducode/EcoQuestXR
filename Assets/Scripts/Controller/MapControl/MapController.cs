@@ -60,7 +60,8 @@ public class MapController : MonoBehaviour
             if (moved)
             {
                 updateTerrainRenderer.UpdateMapInformations(false);
-                // updateTerrainRenderer.SetObjectsVisibility(gameManager);
+                updateTerrainRenderer.SetObjectsVisibility(gameManager.fillMapManager);
+                updateTerrainRenderer.SetRoadsVisibility(gameManager.fillMapManager);
             }
         }
         else // OVR mode

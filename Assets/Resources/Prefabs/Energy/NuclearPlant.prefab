@@ -8,6 +8,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1237578954361927006}
     m_Modifications:
+    - target: {fileID: 932555664220803418, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 932555664220803418, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 932555664220803418, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139590277614445750, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678942003808192018, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_Name
+      value: Smoke1
+      objectReference: {fileID: 0}
     - target: {fileID: 7311781976230797174, guid: 70c14af19f42be445af2891b9992a390,
         type: 3}
       propertyPath: m_Name
@@ -84,6 +109,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a9e2abe78af04b541a9c6c699f63293f,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9e2abe78af04b541a9c6c699f63293f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9e2abe78af04b541a9c6c699f63293f,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9e2abe78af04b541a9c6c699f63293f,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -132,10 +172,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9e2abe78af04b541a9c6c699f63293f,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a9e2abe78af04b541a9c6c699f63293f,
         type: 3}
       propertyPath: m_Name
-      value: NuclearPlant1
+      value: NuclearPlant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -148,7 +193,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3524202483836367574}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a9e2abe78af04b541a9c6c699f63293f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656345327422063611}
   m_SourcePrefab: {fileID: 100100000, guid: a9e2abe78af04b541a9c6c699f63293f, type: 3}
 --- !u!4 &1237578954361927006 stripped
 Transform:
@@ -156,6 +205,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1632127146216428213}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1902510447799414756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a9e2abe78af04b541a9c6c699f63293f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1632127146216428213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &656345327422063611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902510447799414756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab284b5fc3cc074b98e5379f343670a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rendererSettings: []
+  subObjects: []
+  particleSystems: []
 --- !u!1001 &6517042881497325289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -164,6 +234,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1237578954361927006}
     m_Modifications:
+    - target: {fileID: 932555664220803418, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 932555664220803418, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 932555664220803418, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139590277614445750, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678942003808192018, guid: 70c14af19f42be445af2891b9992a390,
+        type: 3}
+      propertyPath: m_Name
+      value: Smoke2
+      objectReference: {fileID: 0}
     - target: {fileID: 7311781976230797174, guid: 70c14af19f42be445af2891b9992a390,
         type: 3}
       propertyPath: m_Name
