@@ -7,10 +7,14 @@ public class DriveInArea : MonoBehaviour
     internal AgentManager agentManager;
     public AreaType areaType;
 
-    public float speed = 3f;
-    public float treshold = 1f;
+    internal float speed = 3f;
+    internal float treshold = 1f;
     
-    public float roadStep = 0.5f;
+    internal float roadStep = 0.5f;
+    
+    public float speedFactor = 1f;
+    public float tresholdFactor = 1f;
+    public float roadStepFactor = 1f;
     
     internal AreaCell[,] areaGrid;
     // internal float mapScale;

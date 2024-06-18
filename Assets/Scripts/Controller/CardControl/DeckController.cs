@@ -10,7 +10,9 @@ using UnityEngine;
 
 public class DeckController : MonoBehaviour
 {
-    
+
+    internal GameObject mesh; 
+
     // attribut depuis le prefab 
     internal Transform leftControllerAnchor;
     internal Transform centerEyeAnchor;
@@ -46,8 +48,12 @@ public class DeckController : MonoBehaviour
         
         if (controlMode == ControlMode.keyboard) return;
         
-        if (leftControllerAnchor.rotation.z < -0.5 || leftControllerAnchor.rotation.z > 0.5)
+        if (leftControllerAnchor.rotation.z < -0.4 || leftControllerAnchor.rotation.z > 0.4)
         {
+
+            // pour éviter les conflits de grab, on enlève le grab de la map
+            mesh.GetComponent<GrabInteractable>().enabled = false; 
+
 
             canva.enabled = true;
 
@@ -79,6 +85,8 @@ public class DeckController : MonoBehaviour
         }
         else
         {
+
+            mesh.GetComponent<GrabInteractable>().enabled = true;
 
             canva.enabled = false;
             foreach (Transform child in GetComponentsInChildren<Transform>())

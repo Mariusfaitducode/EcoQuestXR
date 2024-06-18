@@ -13,7 +13,7 @@ public class FindPath
 
         public PathPoint parent;
         
-        public GameObject cube;
+        public GameObject pointPosition;
         
         public PathPoint(Vector3 position, int count, PathPoint parent)
         {
@@ -83,6 +83,7 @@ public class FindPath
             {
                 // lastPoint.cube = FillMapUtils.InstantiateObjectWithScale(testCube, roadParent.transform, lastPoint.position, Quaternion.identity, Vector3.one * roadScale);
                 // lastPoint.cube.GetComponent<Renderer>().material = roadData.roadMaterial;
+                
                 validPath.Add(lastPoint);
             }
 

@@ -69,8 +69,10 @@ public class AnimationManager : MonoBehaviour
         float startScale = mapTransform.localScale.x;
         float targetScale = 0.03f;
         // Positions
+        Debug.Log(mapTransform.position);
         Vector3 startPosition = mapTransform.position;
         Vector3 targetPosition = mapTransform.position + shaderPoint - focusPoint;
+        targetPosition = new Vector3(targetPosition.x, mapTransform.position.y, targetPosition.z);
         Vector3 targetPositionAfterZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetPosition, shaderPoint, startScale, targetScale);
         // Durations
         float durationFocus = 2f;
@@ -124,6 +126,7 @@ public class AnimationManager : MonoBehaviour
         // Positions
         Vector3 startPosition = mapTransform.position;
         Vector3 targetPosition = mapTransform.position + shaderPoint - focusPoint;
+        targetPosition = new Vector3(targetPosition.x, mapTransform.position.y, targetPosition.z);
         Vector3 targetPositionAfterZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetPosition, shaderPoint, startScale, targetScale);
         // Durations
         float durationFocus = 2f;
@@ -183,8 +186,10 @@ public class AnimationManager : MonoBehaviour
         // Positions
         Vector3 startPosition = mapTransform.position;
         Vector3 targetRemovePosition = mapTransform.position + shaderPoint - focusRemovePoint;
+        targetRemovePosition = new Vector3(targetRemovePosition.x, mapTransform.position.y, targetRemovePosition.z);
         Vector3 targetRemovePositionAfterZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetRemovePosition, shaderPoint, startScale, targetScale);
         Vector3 targetPlacePosition = targetRemovePosition + focusRemovePoint - focusPlacePoint;
+        targetPlacePosition = new Vector3(targetPlacePosition.x, targetRemovePosition.y, targetPlacePosition.z);
         Vector3 targetPlacePositionAfterZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetPlacePosition, shaderPoint, startScale, targetScale);
         // Durations
         float durationFocus = 2f;
