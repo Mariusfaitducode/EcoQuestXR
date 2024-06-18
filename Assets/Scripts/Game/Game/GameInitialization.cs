@@ -258,21 +258,21 @@ public static class GameInitialization
             () => gameManager.cardManager.DraftEvent(),
             false);
 
-        //PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
-        //    "UpdateGlobalStatsFromObjectsEvent",
-        //    gameManager.timer.currentTime,
-        //    new Interval { days = 5, months = 0, years = 0 },
-        //    () => gameManager.statManager.UpdateGlobalStatsFromObjectsEvent(gameManager.objectManager.GetAllObjectScripts()));
+        PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
+            "UpdateGlobalStatsFromObjectsEvent",
+            gameManager.timer.currentTime,
+            new Interval { days = 5, months = 0, years = 0 },
+            () => gameManager.statManager.UpdateGlobalStatsFromObjectsEvent(gameManager.objectManager.GetAllObjectScripts()));
 
-        //PeriodicEvent updateObjectStatsFromObjectsAndCitizensEvent = new PeriodicEvent(
-        //    "UpdateObjectStatsFromObjectsAndCitizensEvent",
-        //    gameManager.timer.currentTime,
-        //    new Interval { days = 1, months = 0, years = 0 }, 
-        //    () => gameManager.statManager.DailyUpdateDashboardEvent());
+        PeriodicEvent updateObjectStatsFromObjectsAndCitizensEvent = new PeriodicEvent(
+            "UpdateObjectStatsFromObjectsAndCitizensEvent",
+            gameManager.timer.currentTime,
+            new Interval { days = 1, months = 0, years = 0 }, 
+            () => gameManager.statManager.DailyUpdateDashboardEvent());
         
         gameManager.eventsGestion.periodicEvents.Add(draftEvent);
-        //gameManager.eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);
-        //gameManager.eventsGestion.periodicEvents.Add(updateObjectStatsFromObjectsAndCitizensEvent);
+        gameManager.eventsGestion.periodicEvents.Add(updateGlobalStatsFromObjectsEvent);
+        gameManager.eventsGestion.periodicEvents.Add(updateObjectStatsFromObjectsAndCitizensEvent);
     }
     
     

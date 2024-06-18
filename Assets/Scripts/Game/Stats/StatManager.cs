@@ -107,6 +107,9 @@ public class StatManager : MonoBehaviour
         // Update global stats
         StatUtils.UpdateGlobalStatsFromObjects(globalStats, objects);
         
+        
+        // Todo : check cloud event
+        
         // Update dashboard
         UpdateDashboard();
     }

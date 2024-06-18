@@ -31,6 +31,7 @@ public class EventsGestion
         return null;
     }
     
+    // Periodic events check in game manager
     public void CheckEvents(DateTime currentTime)
     {
         foreach (PeriodicEvent periodicEvent in periodicEvents)
