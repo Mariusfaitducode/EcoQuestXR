@@ -26,14 +26,6 @@ public class SettingsController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-
     public void open_settings()
     {
         gameManager.timer.PauseTime(); 
@@ -54,6 +46,7 @@ public class SettingsController : MonoBehaviour
 
     public void end_game()
     {
+        Debug.Log("end_game");
         is_gameOver = true; 
         panel_settings.SetActive(false);
         panel_gameOver.SetActive(true); 

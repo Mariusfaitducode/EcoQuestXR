@@ -106,7 +106,7 @@ public static class TransportGestion
         
         foreach (VehicleStat vehicleStat in vehicleStats)
         {
-            vehicleStat.Display();
+            // vehicleStat.Display();
 
             foreach (RepartitionPerArea repartitionPerArea in vehicleStat.repartitionPerAreas)
             {

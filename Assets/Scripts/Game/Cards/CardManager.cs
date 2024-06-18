@@ -144,6 +144,7 @@ public class CardManager : MonoBehaviour
 
     public bool CanPlayCard(float money, float price)
     {
+        Debug.Log("Money : " + money + " Price : " + price);
         return money >= price;
     }
 

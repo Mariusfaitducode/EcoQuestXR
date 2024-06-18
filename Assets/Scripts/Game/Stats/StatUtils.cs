@@ -63,10 +63,10 @@ public static class StatUtils
                 if (stats.currentEcologyStats.waste < 0)
                     stats.currentEcologyStats.waste = 0;
             }
-            else
-            {
-                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
-            }
+            // else
+            // {
+            //     Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            // }
         }
     }
     
@@ -109,10 +109,10 @@ public static class StatUtils
                     }
                 }
             }
-            else
-            {
-                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
-            }
+            // else
+            // {
+            //     Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            // }
             
         }
         
@@ -131,7 +131,7 @@ public static class StatUtils
         stats.overallSocietyRate /= 3;
         
         // Overall ecology rate
-        float ratio1 = (float)stats.currentEcologyStats.greenSpaces / maxStats.monthlyEcologyStats.greenSpaces;
+        float ratio1 = (float)stats.currentEcologyStats.greenSpaces / maxStats.globalEcologyStats.greenSpaces;
         float ratio2 = (float)stats.currentEcologyStats.co2 / maxStats.globalEcologyStats.co2;
         float ratio3 = (float)stats.currentEcologyStats.waste / maxStats.globalEcologyStats.waste;
         float ratio4 = (float)stats.monthlyEcologyStats.co2 / maxStats.monthlyEcologyStats.co2;
@@ -208,6 +208,4 @@ public static class StatUtils
         Debug.LogError("Transport mode " + name + " not found");
         return new TransportMode();
     }
-    
-    
 }

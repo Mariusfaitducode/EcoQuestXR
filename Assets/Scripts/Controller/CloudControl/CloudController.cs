@@ -39,6 +39,12 @@ public struct CloudText
     public List<TextAudio> textsAudios;
 }
 
+public class CloudDone
+{
+    public CloudEvent cloudEvent;
+    public bool done;
+}
+
 
 public class CloudController : MonoBehaviour
 {
@@ -61,7 +67,8 @@ public class CloudController : MonoBehaviour
 
     private TextMeshProUGUI text; 
     private Canvas canva; 
-
+    internal List<CloudDone> cloudDones = new List<CloudDone>();
+    private bool isDisplayingText = false;
 
     // variables pour le son
     private AudioSource audioSource;
@@ -83,14 +90,18 @@ public class CloudController : MonoBehaviour
         transform.rotation = ovrPose.rotation;
         transform.localScale = new Vector3(ovrPose.scale, ovrPose.scale, ovrPose.scale);
 
-
         character_mat = this.GetComponentInChildren<SkinnedMeshRenderer>().material;
         text = this.GetComponentInChildren<TextMeshProUGUI>();
         canva = this.GetComponentInChildren<Canvas>();
         audioSource = this.GetComponent<AudioSource>();
 
         text.text = "";
-
+        
+        // Set cloud dones to false for all events
+        foreach (CloudEvent cloudEvent in Enum.GetValues(typeof(CloudEvent)))
+        {
+            cloudDones.Add(new CloudDone { cloudEvent = cloudEvent, done = false });
+        }
     }
 
 
@@ -124,22 +135,24 @@ public class CloudController : MonoBehaviour
     public void ChangeValue(float new_val)
     {
 
-        if (new_val < 100 && new_val > 0)
+        if (new_val < 1 && new_val > 0)
         {
             intensity_color = new_val;
-            character_mat.SetColor("_BaseColor", Color.Lerp(minValColor, maxValColor, intensity_color / 100f));
+            character_mat.SetColor("_BaseColor", Color.Lerp(minValColor, maxValColor, intensity_color));
         }
 
     }
 
 
     // Display new text 
-    public void DisplayNewText(CloudEvent cloudEvent)
+    public float DisplayNewText(CloudEvent cloudEvent)
     {
         
         CloudText cloudText = cloudDatas.cloudTexts.Find(x => x.cloudEvent == cloudEvent);
         
         TextAudio textAudio = cloudText.textsAudios[UnityEngine.Random.Range(0, cloudText.textsAudios.Count)];
+        
+        cloudDones.Find(x => x.cloudEvent == cloudEvent).done = true;
         
         if (true)
         {
@@ -147,11 +160,16 @@ public class CloudController : MonoBehaviour
             
             text.text = textAudio.text;
 
-            // Si un audio clip correspondant est trouv�, le jouer
-            if (textAudio.audioClip != null)
+            // Si un audio clip correspondant est trouvé, le jouer
+            // et attendre la fin de la lecture avant de lire un autre texte
+            if (textAudio.audioClip != null && !isDisplayingText)
             {
                 audioSource.clip = textAudio.audioClip;
                 audioSource.Play();
+                isDisplayingText = true;
+                float duration = textAudio.audioClip.length;
+                StartCoroutine(WaitForAudio(duration));
+                return duration;
             }
             else
             {
@@ -159,6 +177,13 @@ public class CloudController : MonoBehaviour
             }
 
         }
+
+        return 0;
+    }
+    public IEnumerator WaitForAudio(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isDisplayingText = false;
     }
 
     public void MoveToDestination()

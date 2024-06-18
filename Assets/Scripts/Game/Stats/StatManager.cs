@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,17 +44,6 @@ public struct CompensationStats
 {
     public float co2AbsorptionPerMonth;
 }
-
-// public class GlobalStats
-// {
-//     internal float currentMoneyInBank = 0;
-//     internal float currentEnergyInStock = 0;
-//     internal float currentEmittedCo2 = 0;
-//     internal float currentWasteProduced = 0;
-//     
-//     internal float overallEcologyRate = 0;
-//     internal float overallSocietyRate = 0;
-// }
 
 public class ClassEcologyStats
 {
@@ -104,33 +94,18 @@ public class ClassStats
 
 public class StatManager : MonoBehaviour
 {
+    // GameObjects
     internal GameManager gameManager;
+    internal CloudController cloudController;
     public DisplayDashboard displayDashboard;
     
-    // public float initialMoneyInBank = 0;
-    // public float initialEnergyInStock = 0;
-    // public float initialEmittedCo2 = 0;
-    // public float initialWasteProduced = 0;
+    // Stats
     public InitialStats initialStats;
     public MaxStats maxStats;
-    
     public ClassStats stats = new ClassStats();
+    
+    // Citizens
     internal CitizensGestion citizensGestion = new CitizensGestion();
-    
-    // public int maxPopSize = 1000;
-    //
-    // public float maxGreenSpaces = 5000f;
-    // public float maxEmittedCo2 = 5000000f;
-    // public float maxWasteProduced = 100000f;
-    // public float maxCo2EmissionPerMonth = 1000000f;
-    // public float maxWasteProductionPerMonth = 10000f;
-    
-    // internal Stat objectsStats = new Stat();
-    // internal GlobalStats globalStats = new GlobalStats();
-    
-    // internal Stat dashboardStats = new Stat();
-    
-    
     
     public void StatsStartInitialization()
     {
@@ -150,14 +125,6 @@ public class StatManager : MonoBehaviour
             ecologyStats.areaType = areaType;
             stats.ecologyStatsByArea.Add(ecologyStats);
         }
-        // // objects
-        // objectsStats.Reset();
-        //
-        // // global
-        // globalStats.currentMoneyInBank = initialStats.globalStats.money;
-        // globalStats.currentEnergyInStock = initialStats.globalStats.energy;
-        // globalStats.currentEmittedCo2 = initialStats.ecologyStats.co2;
-        // globalStats.currentWasteProduced = initialStats.ecologyStats.waste;
     }
     
     // Called every second to update the time on the dashboard
@@ -237,7 +204,112 @@ public class StatManager : MonoBehaviour
         // Compute rates
         StatUtils.ComputeRates(stats, citizensGestion, maxStats);
         
+        // Change cloud color
+        cloudController.ChangeValue(stats.overallEcologyRate);
+        
+        // check animation cloud
+        CheckCloudAndGameoverEvents();
+        
         // Update the dashboard
         displayDashboard.UpdateDashboardStats(stats, citizensGestion, maxStats);
+    }
+    
+    public void CheckCloudAndGameoverEvents()
+    {
+        if (gameManager.controlMode == ControlMode.keyboard) return;
+        float duration;
+        if (stats.currentGlobalStats.money == 0 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.loseMoney).done)
+        {
+            //lose money
+            duration = cloudController.DisplayNewText(CloudEvent.loseMoney);
+            StartCoroutine(DelayEndGame(duration));
+            DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+            demonstrationGestion.StartDemonstration(30);
+            Debug.Log("Animation cloud lose money");
+        }
+        else if (stats.currentGlobalStats.energy == 0 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.loseEnergy).done)
+        {
+            //lose energy
+            duration = cloudController.DisplayNewText(CloudEvent.loseEnergy);
+            StartCoroutine(DelayEndGame(duration));
+            DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+            demonstrationGestion.StartDemonstration(30);
+            Debug.Log("Animation cloud lose energy");
+        }
+        else if (stats.overallSocietyRate < 0.2 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.loseSociety).done)
+        {
+            //lose society
+            duration = cloudController.DisplayNewText(CloudEvent.loseSociety);
+            StartCoroutine(DelayEndGame(duration));
+            DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+            demonstrationGestion.StartDemonstration(30);
+            Debug.Log("Animation cloud lose society");
+        }
+        else if (stats.overallEcologyRate > 0.9 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.winEcology).done)
+        {
+            //win ecology
+            duration = cloudController.DisplayNewText(CloudEvent.winEcology);
+            StartCoroutine(DelayEndGame(duration));
+            Debug.Log("Animation cloud win ecology");
+        }
+        else if (stats.currentGlobalStats.money < maxStats.globalStats.money * 0.1 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.warningMoney).done)
+        {
+            //warning money
+            cloudController.DisplayNewText(CloudEvent.warningMoney);
+            Debug.Log("Animation cloud warning money");
+        }
+        else if (stats.currentGlobalStats.energy < maxStats.globalStats.energy * 0.1 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.warningEnergy).done)
+        {
+            //warning energy
+            cloudController.DisplayNewText(CloudEvent.warningEnergy);
+            Debug.Log("Animation cloud warning energy");
+        }
+        else if (stats.overallSocietyRate < 0.3 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.warningSociety).done)
+        {
+            //warning society
+            cloudController.DisplayNewText(CloudEvent.warningSociety);
+        }
+        else if (stats.overallEcologyRate < 0.2 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.warningEcology).done)
+        {
+            //warning ecology
+            cloudController.DisplayNewText(CloudEvent.warningEcology);
+            Debug.Log("Animation cloud warning ecology");
+        }
+        else if (stats.overallEcologyRate > 0.8 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.encouragementEcology).done)
+        {
+            //encouragement ecologie
+            cloudController.DisplayNewText(CloudEvent.encouragementEcology);
+            Debug.Log("Animation cloud encouragement ecology");
+        }
+        
+    }
+    
+    public IEnumerator DelayEndGame(float duration)
+    {
+        duration += 1;
+        Debug.Log("Wait for " + duration + " seconds before end animation.");
+        yield return new WaitForSeconds(duration);
+        duration = cloudController.DisplayNewText(CloudEvent.lose);
+        duration += 10;
+        Debug.Log("Wait for " + duration + " seconds before end game.");
+        yield return new WaitForSeconds(duration);
+        gameManager.settingsController.end_game();
+    }
+    
+    public IEnumerator SayDelayEndGame(float duration)
+    {
+        duration += 1;
+        Debug.Log("Wait for " + duration + " seconds before end animation.");
+        yield return new WaitForSeconds(duration);
+        cloudController.DisplayNewText(CloudEvent.lose);
+    }
+    
+    public void LoseGame()
+    {
+        //lose money
+        float duration = cloudController.DisplayNewText(CloudEvent.loseMoney);
+        StartCoroutine(SayDelayEndGame(duration));
+        StartCoroutine(gameManager.animationManager.AnimationDemonstrationObjects());
+        Debug.Log("Animation cloud lose money");
     }
 }

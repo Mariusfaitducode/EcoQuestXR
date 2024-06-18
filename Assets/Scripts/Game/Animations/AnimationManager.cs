@@ -307,4 +307,72 @@ public class AnimationManager : MonoBehaviour
                 targetScale,
                 startScale));
     }
+   
+   public IEnumerator AnimationDemonstrationObjects()
+    {
+        // Find the center of the all objects
+        
+        
+        // Get recurent variables from gameManager
+        Vector3 shaderPoint = mapUpdateTerrainRenderer.GetMapCenter();
+        
+        // ==== Informations for the animation ====
+        
+        // Scales
+        float startScale = mapTransform.localScale.x;
+        float targetScale = 0.03f;
+        float targetdezoomScale = 0.002f;
+        // Positions
+        Debug.Log(mapTransform.position);
+        Vector3 startPosition = mapTransform.position;
+        Vector3 targetPosition = mapTransform.position;
+        targetPosition = new Vector3(targetPosition.x, mapTransform.position.y, targetPosition.z);
+        Vector3 targetPositionAfterDeZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetPosition, shaderPoint, startScale, targetdezoomScale);
+        // Durations
+        float durationDezoom = 1.5f;
+        float durationFocus = 2f;
+        float durationTransition = 10f;
+        
+        
+        // ==== Animation ====
+        
+        // Animation de transition dezoom
+        yield return StartCoroutine(
+            AnimationUtils.AnimationMapTransition(
+                mapTransform,
+                mapUpdateTerrainRenderer,
+                gameManager.fillMapManager,
+                durationDezoom,
+                startPosition,
+                targetPositionAfterDeZoom,
+                startScale,
+                targetdezoomScale,
+                true));
+
+        DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+        GameObject place = demonstrationGestion.gameObject;
+        demonstrationGestion.StartDemonstration(30);
+        
+        Vector3 targetPositionPlace = mapTransform.position + shaderPoint - place.transform.position;
+        targetPositionPlace = new Vector3(targetPositionPlace.x, targetPosition.y, targetPositionPlace.z);
+        Vector3 targetPositionPlaceAfterZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetPositionPlace, shaderPoint, targetdezoomScale, targetScale);
+        
+        // Animation de transition focus and zoom
+        yield return StartCoroutine(
+            AnimationUtils.AnimationMapTransition(
+                mapTransform,
+                mapUpdateTerrainRenderer,
+                gameManager.fillMapManager,
+                durationFocus,
+                targetPositionAfterDeZoom,
+                targetPositionPlaceAfterZoom,
+                targetdezoomScale,
+                targetScale,
+                true));
+        
+        yield return new WaitForSeconds(durationTransition);
+        gameManager.settingsController.end_game();
+
+
+    }
 }
