@@ -6,7 +6,7 @@ public static class MapSoundsGestion
 {
     
     
-    public static bool AreaAudioSource(Area area, Camera camera, float uniformScale, bool timePaused)
+    public static bool AreaAudioSource(Area area, GameObject camera, float uniformScale, bool timePaused)
     {
         
         if (timePaused)
@@ -32,8 +32,7 @@ public static class MapSoundsGestion
         
         // Debug.Log("Audio off : Area " + area.data.type + " - Distance : " + distance + " - Radius : " + area.data.radius + " - Camera : " + camPos + " - Sphere : " + area.sphere.transform.position);
         return false;
-        
     }
-    
+
     
 }

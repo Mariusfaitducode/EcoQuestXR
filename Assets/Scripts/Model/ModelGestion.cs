@@ -63,8 +63,19 @@ public class ModelGestion : MonoBehaviour
     void Update()
     {
 
+        if (audioClips.Count > 0)
+        {
+            if (gameManager.controlMode == ControlMode.keyboard)
+            {
+                SetAudioSource(gameManager.keyboardObjects.camera.GetComponent<Camera>(), gameManager.objectManager.mesh.transform.localScale.x);
+            }
+            else
+            {
+                SetAudioSource(gameManager.ovrObjects.centerEyeAnchor.GetComponent<Camera>(), gameManager.objectManager.mesh.transform.localScale.x);
+            }
+        }
 
-        SetAudioSource(gameManager.keyboardObjects.camera, gameManager.objectManager.mesh.transform.localScale.x);
+        
         
 
         // if (particleSystems.Count > 0)

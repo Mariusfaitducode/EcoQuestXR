@@ -162,6 +162,7 @@ public class UpdateTerrainRenderer : MonoBehaviour
         }
         
         SetChildrenVisibility(fillMapManager.natureData.natureParent, mapCenter, limitTerrain);
+        SetChildrenVisibility(fillMapManager.roadCarsFolder, mapCenter, limitTerrain);
         
         
         

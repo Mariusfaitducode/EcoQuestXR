@@ -19,7 +19,7 @@ public class ObjectManager : MonoBehaviour
     internal GameObject mesh;
 
 
-    public void AreasSounds(Camera camera, bool timePaused)
+    public void AreasSounds(GameObject camera, bool timePaused)
     {
         // bool allAudioOff = true;
         
@@ -39,6 +39,7 @@ public class ObjectManager : MonoBehaviour
             
         }
     }
+    
     
     public void ObjectsStartInitialization()
     {

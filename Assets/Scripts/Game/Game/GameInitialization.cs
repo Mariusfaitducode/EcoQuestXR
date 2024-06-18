@@ -251,11 +251,15 @@ public static class GameInitialization
         gameManager.agentManager.SetMapInformations(gameManager.fillMapManager);
         gameManager.agentManager.SetTimerInformations(gameManager.timer);
         
-        gameManager.agentManager.InitAgentManager(gameManager.statManager, gameManager.objectManager);
+        gameManager.agentManager.InitAgentManager(gameManager.statManager, gameManager.objectManager, gameManager.fillMapManager);
         
         
         // Events
         InstantiatePeriodicEvents(gameManager);
+        
+        
+        
+        
     }
     
     public static void InstantiatePeriodicEvents(GameManager gameManager)

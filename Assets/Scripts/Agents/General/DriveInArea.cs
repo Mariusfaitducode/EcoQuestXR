@@ -111,7 +111,7 @@ public class DriveInArea : MonoBehaviour
         {
             // nextCell = actualCell;
             
-            Debug.LogError("Error : No next cell found. Destroying object.");
+            Debug.LogWarning("Error : No next cell found. Destroying vehicle.");
             DestroyImmediate(this.gameObject);
             return false;
         }

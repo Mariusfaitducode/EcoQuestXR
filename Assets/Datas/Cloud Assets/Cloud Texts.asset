@@ -26,7 +26,7 @@ MonoBehaviour:
     textsAudios:
     - text: "C'est le moment d'intervenir, choisit les cartes qui t'int\xE9resse,
         tu pourras les jouer plus tard"
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 7f1063ffc1e421e48bd77cff6da4efa8, type: 3}
   - cloudEvent: 2
     textsAudios:
     - text: N'hesite pas a aller voir le tutoriel

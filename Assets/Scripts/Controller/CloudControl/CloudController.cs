@@ -137,17 +137,12 @@ public class CloudController : MonoBehaviour
         {
             canva.enabled = true;
             
-            
-            
             text.text = textAudio.text;
 
-            // Rechercher l'audio clip correspondant
-            AudioClip matchingClip = textAudio.audioClip;
-
             // Si un audio clip correspondant est trouv�, le jouer
-            if (matchingClip != null)
+            if (textAudio.audioClip != null)
             {
-                audioSource.clip = matchingClip;
+                audioSource.clip = textAudio.audioClip;
                 audioSource.Play();
             }
             else
