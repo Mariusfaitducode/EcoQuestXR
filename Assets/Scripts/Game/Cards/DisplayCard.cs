@@ -17,7 +17,8 @@ public class DisplayCard : MonoBehaviour
     // private PileManager _pileManager;
     // private DisplayCanvas _displayCanvas;
 
-    public TextMeshProUGUI _title;
+    //public TextMeshProUGUI _title;
+    public TextMeshProUGUI _zone_title;
     public TextMeshProUGUI _description;
     public TextMeshProUGUI _price;
     public RawImage _image;
@@ -26,13 +27,16 @@ public class DisplayCard : MonoBehaviour
     public Button _buttonBackground;
     public RawImage _shadowBackground;
     public RawImage _background;
-    public RawImage _logoArea;
+    public RawImage _zone_background;
+    public RawImage _price_background;
+    public RawImage _text_background;
+    //public RawImage _logoArea;
     public RawImage _logoAction;
 
-    public TextMeshProUGUI _energy;
-    public TextMeshProUGUI _ecology;
-    public TextMeshProUGUI _population;
-    public TextMeshProUGUI _pollution;
+    //public TextMeshProUGUI _energy;
+    //public TextMeshProUGUI _ecology;
+    //public TextMeshProUGUI _population;
+    //public TextMeshProUGUI _pollution;
     
     // Start is called before the first frame update
     
@@ -71,16 +75,57 @@ public class DisplayCard : MonoBehaviour
     {
         if (_card != null)
         {
-            _title.text = _card.title;
+            //_title.text = _card.title;
             _description.text = _card.description;
             
             _image.texture = GetTexture(folderActionImage, _card.cardType.ToString());
-            _background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
-            _logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
+            //_background.texture = GetTexture(folderAreaBackground, _card.areaType.ToString());
+            //_logoArea.texture = GetTexture(folderAreaLogo, _card.areaType.ToString());
             _logoAction.texture = GetTexture(folderActionLogo, _card.cardType.ToString());
 
+            switch (_card.areaType)
+            {
+
+                case AreaType.City:
+                    _background.color = new Color(0.3f, 0.3f, 1.0f); 
+                    _zone_background.color = new Color(0.5f, 0.5f, 0.8f); 
+                    _price_background.color = new Color(0.5f, 0.5f, 0.8f); 
+                    _text_background.color = new Color(0.25f, 0.25f, 0.4f);
+
+                    _zone_title.text = "VILLE";
+                    break;
+
+                case AreaType.Industry:
+                    _background.color = new Color(1.0f, 0.3f, 0.3f);   
+                    _zone_background.color = new Color(0.8f, 0.5f, 0.5f); 
+                    _price_background.color = new Color(0.8f, 0.5f, 0.5f);  
+                    _text_background.color =  new Color(0.4f, 0.25f, 0.25f);
+
+                    _zone_title.text = "INDUSTRIE";
+                    break;
+
+                case AreaType.Energy:
+                    _background.color = new Color(0.3f, 1.0f, 0.3f);  
+                    _zone_background.color = new Color(0.5f, 0.8f, 0.5f);  
+                    _price_background.color = new Color(0.5f, 0.8f, 0.5f);   
+                    _text_background.color =  new Color(0.25f, 0.4f, 0.25f);
+
+                    _zone_title.text = "ENERGIE";
+                    break;
+
+                case AreaType.Agriculture:
+                    _background.color = new Color(1.0f, 1.0f, 0.3f); 
+                    _zone_background.color = new Color(0.8f, 0.8f, 0.5f); 
+                    _price_background.color = new Color(0.8f, 0.8f, 0.5f); 
+                    _text_background.color =   new Color(0.4f, 0.4f, 0.25f);
+
+                    _zone_title.text = "AGRICULTURE";
+                    break;
+
+            }
+
             //TODO : Change card stats
-            // _price.text = StatUtils.ConvertNumberToText(_card.cardStats.actionCost);
+            _price.text = _card.cardStats.actionCost.ToString();
             // _energy.text = StatUtils.ConvertNumberToText(_card.cardStats.actionEnergyCost);
             // _ecology.text = StatUtils.ConvertNumberToText(_card.cardStats.ecologyRate);
             // _population.text = StatUtils.ConvertNumberToText(_card.stats.populationSize);

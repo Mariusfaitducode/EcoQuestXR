@@ -99,7 +99,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Limit_Terrain: 0.0038455203
+    - _Limit_Terrain: 0.3859292
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -118,7 +118,7 @@ Material:
     - _BaseColor: {r: 0.48235297, g: 0.49803925, b: 0.5411765, a: 1}
     - _Color: {r: 0.4823529, g: 0.49803925, b: 0.5411765, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Map_Center: {r: -0.089539364, g: 1.1224105, b: 0, a: 0}
+    - _Map_Center: {r: -0.46455765, g: -0.14855045, b: 0, a: 0}
     - _Road_Color: {r: 0.39622638, g: 0.3906194, b: 0.3906194, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

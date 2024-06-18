@@ -89,17 +89,18 @@ public class GameManager : MonoBehaviour
     internal FillMapManager fillMapManager;
     // internal AudioManager audioManager;
     internal AnimationManager animationManager;
+    
 
     // Controller
     internal MapController mapController;
     internal DeckController deckController;
-    internal DraftController draftController;
-    internal DashboardController dashboardController;
+    //internal DraftController draftController;
+    //internal DashboardController dashboardController;
     internal CloudController cloudController;
     internal SettingsController settingsController;
-    
-    
-    
+    internal CanvasController canvasController;
+
+
     void Start()
     {
         GameInitialization.setupControlMode(this);

@@ -70,6 +70,10 @@ public class InteractionCardController : MonoBehaviour
                 transform.position = initialPosition;
                 transform.rotation = initialRotation;
             }
+
+
+            cardManager.gameManager.cloudController.is_moving = false;
+
         }
         else
         {
@@ -77,6 +81,8 @@ public class InteractionCardController : MonoBehaviour
             {
                 canva.enabled = true;
             }
+
+            cardManager.gameManager.cloudController.is_moving = true;
         }
 
     }
@@ -84,11 +90,23 @@ public class InteractionCardController : MonoBehaviour
     private void PlayCard()
     {
 
-        cardManager.PlayEvent(this.gameObject);
+        
 
-        // Add little animation here
-        Destroy(this);
+        if (cardManager.CanPlayCard(cardManager.gameManager.statManager.globalStats.currentMoneyInBank, float.Parse(this.GetComponentInChildren<DisplayCard>()._price.text))) {
 
+            isNearDepot = false;
+            System.Random random = new System.Random();
+
+            cardManager.gameManager.cloudController.ChangeText("notEnoughMoney" + random.Next(1, 3));
+
+        } 
+        else 
+        {
+            cardManager.PlayEvent(this.gameObject);
+
+            // Add little animation here
+            Destroy(this);
+        }
     }
 
     #region collider
