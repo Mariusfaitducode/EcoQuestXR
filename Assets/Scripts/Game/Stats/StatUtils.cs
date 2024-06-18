@@ -63,10 +63,10 @@ public static class StatUtils
                 if (stats.currentEcologyStats.waste < 0)
                     stats.currentEcologyStats.waste = 0;
             }
-            else
-            {
-                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
-            }
+            // else
+            // {
+            //     Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            // }
         }
     }
     
@@ -109,10 +109,10 @@ public static class StatUtils
                     }
                 }
             }
-            else
-            {
-                Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
-            }
+            // else
+            // {
+            //     Debug.LogWarning("Object " + objScript.gameObject.name + " doesn't have properties");
+            // }
             
         }
         

@@ -26,14 +26,6 @@ public class SettingsController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-
     public void open_settings()
     {
         gameManager.timer.PauseTime(); 

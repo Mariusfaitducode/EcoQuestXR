@@ -204,6 +204,9 @@ public class StatManager : MonoBehaviour
         // Compute rates
         StatUtils.ComputeRates(stats, citizensGestion, maxStats);
         
+        // Change cloud color
+        cloudController.ChangeValue(stats.overallEcologyRate);
+        
         // check animation cloud
         CheckCloudAndGameoverEvents();
         
@@ -220,6 +223,8 @@ public class StatManager : MonoBehaviour
             //lose money
             duration = cloudController.DisplayNewText(CloudEvent.loseMoney);
             StartCoroutine(DelayEndGame(duration));
+            DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+            demonstrationGestion.StartDemonstration(30);
             Debug.Log("Animation cloud lose money");
         }
         else if (stats.currentGlobalStats.energy == 0 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.loseEnergy).done)
@@ -227,6 +232,8 @@ public class StatManager : MonoBehaviour
             //lose energy
             duration = cloudController.DisplayNewText(CloudEvent.loseEnergy);
             StartCoroutine(DelayEndGame(duration));
+            DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+            demonstrationGestion.StartDemonstration(30);
             Debug.Log("Animation cloud lose energy");
         }
         else if (stats.overallSocietyRate < 0.2 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.loseSociety).done)
@@ -234,8 +241,10 @@ public class StatManager : MonoBehaviour
             //lose society
             duration = cloudController.DisplayNewText(CloudEvent.loseSociety);
             StartCoroutine(DelayEndGame(duration));
+            DemonstrationGestion demonstrationGestion = GameObject.FindObjectOfType<DemonstrationGestion>();
+            demonstrationGestion.StartDemonstration(30);
             Debug.Log("Animation cloud lose society");
-        } 
+        }
         else if (stats.overallEcologyRate > 0.9 && !cloudController.cloudDones.Find(x => x.cloudEvent == CloudEvent.winEcology).done)
         {
             //win ecology
@@ -281,9 +290,26 @@ public class StatManager : MonoBehaviour
         Debug.Log("Wait for " + duration + " seconds before end animation.");
         yield return new WaitForSeconds(duration);
         duration = cloudController.DisplayNewText(CloudEvent.lose);
-        duration += 1;
+        duration += 10;
         Debug.Log("Wait for " + duration + " seconds before end game.");
         yield return new WaitForSeconds(duration);
         gameManager.settingsController.end_game();
+    }
+    
+    public IEnumerator SayDelayEndGame(float duration)
+    {
+        duration += 1;
+        Debug.Log("Wait for " + duration + " seconds before end animation.");
+        yield return new WaitForSeconds(duration);
+        cloudController.DisplayNewText(CloudEvent.lose);
+    }
+    
+    public void LoseGame()
+    {
+        //lose money
+        float duration = cloudController.DisplayNewText(CloudEvent.loseMoney);
+        StartCoroutine(SayDelayEndGame(duration));
+        StartCoroutine(gameManager.animationManager.AnimationDemonstrationObjects());
+        Debug.Log("Animation cloud lose money");
     }
 }

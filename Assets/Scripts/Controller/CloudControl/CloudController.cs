@@ -135,10 +135,10 @@ public class CloudController : MonoBehaviour
     public void ChangeValue(float new_val)
     {
 
-        if (new_val < 100 && new_val > 0)
+        if (new_val < 1 && new_val > 0)
         {
             intensity_color = new_val;
-            character_mat.SetColor("_BaseColor", Color.Lerp(minValColor, maxValColor, intensity_color / 100f));
+            character_mat.SetColor("_BaseColor", Color.Lerp(minValColor, maxValColor, intensity_color));
         }
 
     }

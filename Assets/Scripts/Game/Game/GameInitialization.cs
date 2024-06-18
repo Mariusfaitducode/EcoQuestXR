@@ -39,6 +39,9 @@ public static class GameInitialization
             gameManager.canvasObjects.draftCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             gameManager.canvasObjects.draftCanvas.GetComponent<OVRRaycaster>().enabled = true;
             
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = false;
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = true;
+            
             // Remove play button
             gameManager.keyboardObjects.play.SetActive(false);
         }
@@ -71,6 +74,9 @@ public static class GameInitialization
             
             gameManager.canvasObjects.draftCanvas.GetComponent<GraphicRaycaster>().enabled = true;
             gameManager.canvasObjects.draftCanvas.GetComponent<OVRRaycaster>().enabled = false;
+            
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = true;
+            gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = false;
             
             // Set listener for the grabbable card
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<Button>().onClick.AddListener(() => gameManager.cardManager.SelectUnselectEvent(gameManager.cardManager.grabbableCardPrefab.GetComponentInChildren<DisplayCard>()));
@@ -271,19 +277,29 @@ public static class GameInitialization
     
     public static void InstantiatePeriodicEvents(GameManager gameManager)
     {
-       PeriodicEvent draftEvent = new PeriodicEvent(
-            "DraftEvent",
-            gameManager.timer.currentTime,
-
-            new Interval { days = 5, months = 0, years = 0 }, 
-
-            () => gameManager.cardManager.DraftEvent(),
-            false);
+        PeriodicEvent draftEvent;
+        if (gameManager.controlMode == ControlMode.keyboard)
+        {
+            draftEvent = new PeriodicEvent(
+                "DraftEvent",
+                gameManager.timer.currentTime,
+                new Interval { days = 5, months = 0, years = 0 }, 
+                () => gameManager.cardManager.DraftEvent(), false);
+        }
+        else
+        {
+            draftEvent = new PeriodicEvent(
+                "DraftEvent",
+                gameManager.timer.currentTime,
+                new Interval { days = 0, months = 1, years = 0 }, 
+                () => gameManager.cardManager.DraftEvent());
+        }
+        
 
         PeriodicEvent updateGlobalStatsFromObjectsEvent = new PeriodicEvent(
             "UpdateGlobalStatsFromObjectsEvent",
             gameManager.timer.currentTime,
-            new Interval { days = 5, months = 0, years = 0 },
+            new Interval { days = 0, months = 1, years = 0 },
             () => gameManager.statManager.UpdateGlobalStatsFromObjectsEvent(gameManager.objectManager.GetAllObjectScripts()));
 
         PeriodicEvent updateObjectStatsFromObjectsAndCitizensEvent = new PeriodicEvent(

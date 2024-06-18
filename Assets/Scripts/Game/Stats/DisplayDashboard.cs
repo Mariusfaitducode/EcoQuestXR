@@ -163,13 +163,13 @@ public class DisplayDashboard : MonoBehaviour
         co2.currentValue = stats.currentEcologyStats.co2;
         co2.maxValue = maxStats.globalEcologyStats.co2;
         co2.monthlyValue = stats.monthlyEcologyStats.co2;
-        co2.ratio = co2.currentValue / co2.maxValue;
+        co2.ratio = 1 - (co2.currentValue / co2.maxValue);
         
         // waste
         waste.currentValue = stats.currentEcologyStats.waste;
         waste.maxValue = maxStats.globalEcologyStats.waste;
         waste.monthlyValue = stats.monthlyEcologyStats.waste;
-        waste.ratio = waste.currentValue / waste.maxValue;
+        waste.ratio = 1 - (waste.currentValue / waste.maxValue);
         
         // greenSpaces
         greenSpaces.currentValue = stats.currentEcologyStats.greenSpaces;
