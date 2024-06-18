@@ -134,6 +134,12 @@ public class CardManager : MonoBehaviour
         
     }
 
+
+    public bool CanPlayCard(float money, float price)
+    {
+        return money >= price;
+    }
+
     public void PlayEvent(GameObject selectedGrabbableCard = null)
     {
         if (selectedGrabbableCard != null)
