@@ -92,7 +92,7 @@ public class InteractionCardController : MonoBehaviour
 
         
 
-        if (cardManager.CanPlayCard(cardManager.gameManager.statManager.globalStats.currentMoneyInBank, float.Parse(this.GetComponentInChildren<DisplayCard>()._price.text))) {
+        if (cardManager.CanPlayCard(cardManager.gameManager.statManager.stats.currentGlobalStats.money, float.Parse(this.GetComponentInChildren<DisplayCard>()._price.text))) {
 
             isNearDepot = false;
             System.Random random = new System.Random();

@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -13,7 +10,7 @@ public struct StructGlobalStats
 }
 
 [Serializable]
-public struct StructEcoloyStats
+public struct StructEcologyStats
 {
     public float co2;
     public float waste;
@@ -30,15 +27,15 @@ public struct Population
 public struct MaxStats
 {
     public StructGlobalStats globalStats;
-    public StructEcoloyStats globalEcologyStats;
-    public StructEcoloyStats monthlyEcologyStats;
+    public StructEcologyStats globalEcologyStats;
+    public StructEcologyStats monthlyEcologyStats;
 }
 
 [Serializable]
 public struct InitialStats
 {
     public StructGlobalStats globalStats;
-    public StructEcoloyStats ecologyStats;
+    public StructEcologyStats ecologyStats;
 }
 
 [Serializable]
@@ -47,15 +44,62 @@ public struct CompensationStats
     public float co2AbsorptionPerMonth;
 }
 
-public class GlobalStats
+// public class GlobalStats
+// {
+//     internal float currentMoneyInBank = 0;
+//     internal float currentEnergyInStock = 0;
+//     internal float currentEmittedCo2 = 0;
+//     internal float currentWasteProduced = 0;
+//     
+//     internal float overallEcologyRate = 0;
+//     internal float overallSocietyRate = 0;
+// }
+
+public class ClassEcologyStats
 {
-    internal float currentMoneyInBank = 0;
-    internal float currentEnergyInStock = 0;
-    internal float currentEmittedCo2 = 0;
-    internal float currentWasteProduced = 0;
+    public AreaType areaType;
+    public float co2 = 0;
+    public float waste = 0;
+    public int greenSpaces = 0;
     
-    internal float overallEcologyRate = 0;
-    internal float overallSocietyRate = 0;
+    public void Reset()
+    {
+        co2 = 0;
+        waste = 0;
+        greenSpaces = 0;
+    }
+}
+
+public class ClassGlobalStats
+{
+    public float money = 0;
+    public float energy = 0;
+    
+    public void Reset()
+    {
+        money = 0;
+        energy = 0;
+    }
+}
+
+public class ClassStats
+{
+    // Global Rates
+    public float overallEcologyRate = 0;
+    public float overallSocietyRate = 0;
+    
+    // Current Global Stats
+    public ClassGlobalStats currentGlobalStats = new ClassGlobalStats();
+    // Monthly Global Stats
+    public ClassGlobalStats monthlyGlobalStats = new ClassGlobalStats();
+    
+    // Current Ecology Stats
+    public ClassEcologyStats currentEcologyStats = new ClassEcologyStats();
+    // Monthly Ecology Stats
+    public ClassEcologyStats monthlyEcologyStats = new ClassEcologyStats();
+    
+    // stats by area
+    public List<ClassEcologyStats> ecologyStatsByArea = new List<ClassEcologyStats>();
 }
 
 public class StatManager : MonoBehaviour
@@ -70,6 +114,9 @@ public class StatManager : MonoBehaviour
     public InitialStats initialStats;
     public MaxStats maxStats;
     
+    public ClassStats stats = new ClassStats();
+    internal CitizensGestion citizensGestion = new CitizensGestion();
+    
     // public int maxPopSize = 1000;
     //
     // public float maxGreenSpaces = 5000f;
@@ -78,28 +125,39 @@ public class StatManager : MonoBehaviour
     // public float maxCo2EmissionPerMonth = 1000000f;
     // public float maxWasteProductionPerMonth = 10000f;
     
-    internal Stat objectsStats = new Stat();
-    internal GlobalStats globalStats = new GlobalStats();
+    // internal Stat objectsStats = new Stat();
+    // internal GlobalStats globalStats = new GlobalStats();
     
-    internal Stat dashboardStats = new Stat();
+    // internal Stat dashboardStats = new Stat();
     
-    internal CitizensGestion citizensGestion = new CitizensGestion();
+    
     
     public void StatsStartInitialization()
     {
-        // citizensGestion.maxPopSize = maxPopSize;
         // Initialize the class citizensGestion
         citizensGestion.CitizensGestionStartInitialization();
         
         // Initialize of all the stats
-        // objects
-        objectsStats.Reset();
+        stats.currentGlobalStats.money = initialStats.globalStats.money;
+        stats.currentGlobalStats.energy = initialStats.globalStats.energy;
+        stats.currentEcologyStats.co2 = initialStats.ecologyStats.co2;
+        stats.currentEcologyStats.waste = initialStats.ecologyStats.waste;
         
-        // global
-        globalStats.currentMoneyInBank = initialStats.globalStats.money;
-        globalStats.currentEnergyInStock = initialStats.globalStats.energy;
-        globalStats.currentEmittedCo2 = initialStats.ecologyStats.co2;
-        globalStats.currentWasteProduced = initialStats.ecologyStats.waste;
+        // Create the stats by area
+        foreach (AreaType areaType in Enum.GetValues(typeof(AreaType)))
+        {
+            ClassEcologyStats ecologyStats = new ClassEcologyStats();
+            ecologyStats.areaType = areaType;
+            stats.ecologyStatsByArea.Add(ecologyStats);
+        }
+        // // objects
+        // objectsStats.Reset();
+        //
+        // // global
+        // globalStats.currentMoneyInBank = initialStats.globalStats.money;
+        // globalStats.currentEnergyInStock = initialStats.globalStats.energy;
+        // globalStats.currentEmittedCo2 = initialStats.ecologyStats.co2;
+        // globalStats.currentWasteProduced = initialStats.ecologyStats.waste;
     }
     
     // Called every second to update the time on the dashboard
@@ -112,10 +170,10 @@ public class StatManager : MonoBehaviour
     public void UpdateStatsFromCardEvent(Card card)
     {
         // Update global stats : money, energy, co2, waste
-        StatUtils.UpdateGlobalStatsFromCard(globalStats, card);
+        StatUtils.UpdateGlobalStatsFromCard(stats, card);
         
         // Update object stats depending on objects placed or removed
-        StatUtils.UpdateObjectStatsFromObjects(this, gameManager.objectManager.GetAllObjectScripts());
+        StatUtils.UpdateObjectStatsFromObjects(stats, citizensGestion, gameManager.objectManager.GetAllObjectScripts());
         citizensGestion.totalHouseholds = gameManager.objectManager.GetMaxPopSize();
         
         // Update population stats depending on the card
@@ -139,7 +197,7 @@ public class StatManager : MonoBehaviour
         citizensGestion.UpdateCitizensStats();
         
         // Update global stats due to pullution, energy consumption, etc.
-        StatUtils.DailyUpdateGlobalStatsFromCitizens(globalStats, citizensGestion);
+        StatUtils.DailyUpdateGlobalStatsFromCitizens(stats, citizensGestion);
         
         // Don't update objects stats here no buildings are placed or removed
         
@@ -152,7 +210,7 @@ public class StatManager : MonoBehaviour
     public void UpdateGlobalStatsFromObjectsEvent(List<ObjectScript> objects)
     {
         // Update global stats
-        StatUtils.UpdateGlobalStatsFromObjects(globalStats, objects);
+        StatUtils.UpdateGlobalStatsFromObjects(stats, objects);
         
         // Update dashboard
         UpdateDashboard();
@@ -161,22 +219,22 @@ public class StatManager : MonoBehaviour
     public void InitDashboard(ObjectManager objectManager)
     {
         
-        StatUtils.UpdateObjectStatsFromObjects(this, gameManager.objectManager.GetAllObjectScripts());
-        StatUtils.UpdateGlobalStatsFromObjects(globalStats, objectManager.GetAllObjectScripts());
+        StatUtils.UpdateObjectStatsFromObjects(stats, citizensGestion, gameManager.objectManager.GetAllObjectScripts());
+        StatUtils.UpdateGlobalStatsFromObjects(stats, objectManager.GetAllObjectScripts());
         citizensGestion.UpdateCitizensStats();
-        
+        // Debug.Log();
         UpdateDashboard();
     }
     
     private void UpdateDashboard()
     {
-        // Compute dashboard objects stats which is the combination of objects stats and citizens transports stats
-        StatUtils.UpdateDashboardObjectStats(dashboardStats, objectsStats, citizensGestion.dailyTransportsStats);
+        // // Compute dashboard objects stats which is the combination of objects stats and citizens transports stats
+        // StatUtils.UpdateDashboardObjectStats(dashboardStats, stats, citizensGestion.dailyTransportsStats);
         
         // Compute rates
-        StatUtils.ComputeRates(this);
+        StatUtils.ComputeRates(stats, citizensGestion, maxStats);
         
         // Update the dashboard
-        displayDashboard.UpdateFromStats(this);
+        displayDashboard.UpdateDashboardStats(stats, citizensGestion, maxStats);
     }
 }
