@@ -11,7 +11,7 @@ public class DisplayCard : MonoBehaviour
     public string folderAreaBackground = "Images/AreaBackground/";
     public string folderAreaLogo = "Images/AreaLogo/";
     
-    private Card _card;
+    internal Card _card;
     private bool isSelected = false;
     private Canvas _parentCanvas;
     // private PileManager _pileManager;

@@ -174,6 +174,7 @@ public static class GameInitialization
 
         // Cloud controller
         gameManager.cloudController = GameObject.FindObjectOfType<CloudController>();
+        gameManager.statManager.cloudController = gameManager.cloudController;
 
         if (gameManager.controlMode == ControlMode.keyboard)
         {

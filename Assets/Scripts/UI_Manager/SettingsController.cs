@@ -54,6 +54,7 @@ public class SettingsController : MonoBehaviour
 
     public void end_game()
     {
+        Debug.Log("end_game");
         is_gameOver = true; 
         panel_settings.SetActive(false);
         panel_gameOver.SetActive(true); 

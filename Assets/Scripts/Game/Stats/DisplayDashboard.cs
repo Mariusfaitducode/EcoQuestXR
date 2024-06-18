@@ -144,7 +144,6 @@ public class DisplayDashboard : MonoBehaviour
     {
         // Top panel
         // money
-        Debug.Log("stats.currentGlobalStats.money: " + stats.currentGlobalStats.money);
         money.currentValue = stats.currentGlobalStats.money;
         money.maxValue = maxStats.globalStats.money;
         money.monthlyValue = stats.monthlyGlobalStats.money;

@@ -26,7 +26,7 @@ public class MainMenuController : MonoBehaviour
 
     public void run_game()
     {
-        SceneManager.LoadScene("mainScene_copy");
+        SceneManager.LoadScene("mainVictor");
     }
 
 
@@ -36,7 +36,7 @@ public class MainMenuController : MonoBehaviour
         // Quitter l'application
         Application.Quit();
 
-        // Si tu es dans l'éditeur Unity, il est utile d'arrêter aussi l'éditeur
+        // Si tu es dans l'ï¿½diteur Unity, il est utile d'arrï¿½ter aussi l'ï¿½diteur
         #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
         #endif
