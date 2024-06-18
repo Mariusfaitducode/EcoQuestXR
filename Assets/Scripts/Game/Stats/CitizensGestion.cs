@@ -111,7 +111,7 @@ public class CitizensGestion
     internal Probability salaryProbs = new Probability();
     
     internal List<TransportMode> transportModes = new List<TransportMode>();
-    internal List<TransportMode> availableTransportModes = new List<TransportMode>();
+    // internal List<TransportMode> availableTransportModes = new List<TransportMode>();
     
     
     public void CitizensGestionStartInitialization()
@@ -138,7 +138,7 @@ public class CitizensGestion
             
             transportMode.Display();
         }
-        UpdateAvailableTransportModes();
+        // UpdateAvailableTransportModes();
     }
     
     private Citizen GenerateCitizen()
@@ -173,18 +173,18 @@ public class CitizensGestion
         Debug.Log(message);
     }
     
-    public void UpdateAvailableTransportModes()
-    {
-        availableTransportModes.Clear();
-        
-        foreach (TransportMode transportMode in transportModes)
-        {
-            if (transportMode.isAvailable)
-            {
-                availableTransportModes.Add(transportMode);
-            }
-        }
-    }
+    // public void UpdateAvailableTransportModes()
+    // {
+    //     availableTransportModes.Clear();
+    //     
+    //     foreach (TransportMode transportMode in transportModes)
+    //     {
+    //         if (transportMode.isAvailable)
+    //         {
+    //             availableTransportModes.Add(transportMode);
+    //         }
+    //     }
+    // }
     
     private CitizenStats GenerateCitizenStats()
     {
@@ -278,9 +278,14 @@ public class CitizensGestion
     private void UpdateDailyTransportModeUsers()
     {
         dailyTransportsUsers = "";
-        foreach (TransportMode transportMode in availableTransportModes)
+        foreach (TransportMode transportMode in transportModes)
         {
-            dailyTransportsUsers += transportMode.name + ": " + transportMode.dailyUsers + "\n";
+
+            if (transportMode.isAvailable)
+            {
+                dailyTransportsUsers += transportMode.name + ": " + transportMode.dailyUsers + "\n";
+                
+            }
         }
     }
     
@@ -291,7 +296,7 @@ public class CitizensGestion
         
         foreach (Citizen citizen in citizens)
         {
-            TransportMode transportMode = citizen.GetTransportMode(availableTransportModes);
+            TransportMode transportMode = citizen.GetTransportMode(transportModes);
             transportMode.dailyUsers++;
             dailyTransportsStats.Add(transportMode.stats);
         }

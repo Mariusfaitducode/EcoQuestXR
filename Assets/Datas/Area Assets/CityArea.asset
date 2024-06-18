@@ -17,24 +17,30 @@ MonoBehaviour:
   areaId: 2
   radius: 40
   startRadius: 28
-  pavilionWidth: 2
-  pavilionHeightMean: 5
+  pavilionWidth: 4
+  pavilionHeightMean: 7
   fillPercent: 0.485
   aloneNecessaryPrefabs:
   - prefabLow: {fileID: 7262053376970419587, guid: 5a32d2d4431c232429cb83101fe7093e,
       type: 3}
-    size: {x: 2, y: 2}
+    size: {x: 3, y: 3}
+    weight: 0
+    rotation: 0
+  - prefabLow: {fileID: 8035573887822954426, guid: ee232dbe9c0206a4ba8d9cb60d211f5d,
+      type: 3}
+    size: {x: 3, y: 3}
+    weight: 0
+    rotation: 0
+  - prefabLow: {fileID: 4472103498244257211, guid: b53991e193a121a4485c45ef2310cb9f,
+      type: 3}
+    size: {x: 4, y: 4}
     weight: 0
     rotation: 0
   randomPrefabs:
-  - prefabLow: {fileID: 0}
-    size: {x: 2, y: 1}
-    weight: 50
-    rotation: 0
   - prefabLow: {fileID: 4612296548124279640, guid: cbf99d19c6ba6974fa4cf5d705b1f78a,
       type: 3}
     size: {x: 1, y: 1}
-    weight: 10
+    weight: 30
     rotation: 0
   - prefabLow: {fileID: 3860872942591694430, guid: f18580293fde27d4580b9f2f77d6118a,
       type: 3}
@@ -44,12 +50,22 @@ MonoBehaviour:
   - prefabLow: {fileID: 8034318272881383517, guid: d0a04bf70d63402488e4d6e7403daa7e,
       type: 3}
     size: {x: 2, y: 2}
-    weight: 10
+    weight: 5
     rotation: 0
   - prefabLow: {fileID: 4131531963342976478, guid: 51ab39ca52d80804e9fdaa55194d20af,
       type: 3}
     size: {x: 2, y: 2}
-    weight: 20
+    weight: 15
+    rotation: 0
+  - prefabLow: {fileID: 276612842769955861, guid: 73527427543cac340ba7093a50fc0857,
+      type: 3}
+    size: {x: 3, y: 3}
+    weight: 3
+    rotation: 0
+  - prefabLow: {fileID: 3128277805528042123, guid: ee6bf4f6c7fdcef44a3ee10413437e65,
+      type: 3}
+    size: {x: 2, y: 2}
+    weight: 5
     rotation: 0
   - prefabLow: {fileID: 5378830747987659341, guid: 9622728ce307cb94e824e88c1de3ee38,
       type: 3}
@@ -69,10 +85,10 @@ MonoBehaviour:
   - prefabLow: {fileID: 3579080388034519101, guid: bb89afd56fd25af4c9f5c524f0f6e717,
       type: 3}
     size: {x: 2, y: 2}
-    weight: 10
+    weight: 7
     rotation: 0
   - prefabLow: {fileID: 7251580807725887293, guid: 5c2484bc1f97287469544f8bff4a44e4,
       type: 3}
     size: {x: 2, y: 2}
-    weight: 5
+    weight: 9
     rotation: 0

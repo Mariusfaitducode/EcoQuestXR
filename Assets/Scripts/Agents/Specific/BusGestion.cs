@@ -19,6 +19,8 @@ public class BusGestion : MonoBehaviour
     internal float prefabScale = 1f;
     internal float uniformScale = 1f;
     
+    // public float floorHeight = 0.05f;
+    
     public bool busOut = false;
     
     
@@ -30,16 +32,11 @@ public class BusGestion : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         
+        if (gameManager != null)
+        {
+            gameManager.statManager.citizensGestion.transportModes.Find(tr => tr.transportModeType == TransportModeType.Bus).isAvailable = true;
+        }
         
-
-        // if (gameManager != null)
-        // {
-        //     currentTime = gameManager.timer.currentTime;
-        // }
-        // else
-        // {
-        //     Debug.LogError("GameManager n'a pas été trouvé dans la scène !");
-        // }
     }
 
     void Update()
@@ -53,6 +50,8 @@ public class BusGestion : MonoBehaviour
             currentTime = gameManager.timer.currentTime;
             prefabScale = gameManager.objectManager.prefabScale;
             uniformScale = gameManager.objectManager.mesh.transform.localScale.x;
+            
+            
         }
         if ((currentTime.Hour >= busStartHour && currentTime.Hour < busEndHour) && !busOut)
         {
@@ -71,7 +70,22 @@ public class BusGestion : MonoBehaviour
                 // Debug.Log("PrefabScale : " + prefabScale);
                 // Debug.Log("UniformScale : " + uniformScale);
                 
-                GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, this.transform.position, Quaternion.identity, Vector3.one * uniformScale);
+                Vector3 busPlace = this.transform.position;
+                
+                // busPlace.y = busPlace.y + floorHeight * uniformScale;
+                
+                GameObject newBus = FillMapUtils.InstantiateObjectWithScale(bus, this.transform, busPlace, Quaternion.identity, Vector3.one * uniformScale);
+                
+                DriveInArea carDrive = newBus.GetComponent<DriveInArea>();
+                
+                carDrive.enabled = true;
+                carDrive.areaType = AreaType.City;
+            
+                // TODO : Set vehicle drive settings by vehicle type
+
+                // Bike settings
+                carDrive.driveSettings.speedFactor = 1f;
+                carDrive.driveSettings.roadStepFactor = 1f;
                 
                 // Init bus script
                 buses.Add(newBus);

@@ -19,25 +19,32 @@ public class Citizen
     public Citizen(CitizenStats citizenStats){
         this.citizenStats = citizenStats;
     }
+    
+    
+    // Return transport of one citizen
     public TransportMode GetTransportMode(List<TransportMode> transportModes) {
 
         List<float> scores = new List<float>();
         List<float> probabilities = new List<float>();
         float totalScore = 0;
         
-        foreach (TransportMode transportMode in transportModes)
+        List<TransportMode> availableTransports = transportModes.FindAll(transportMode => transportMode.isAvailable);
+        
+        foreach (TransportMode transportMode in availableTransports)
         {
+
             
             // Sum of the ponderation of each stat * the stat value (max 1 * number of parameters)
             float score = transportMode.ponderation.health * citizenStats.health +
-                        transportMode.ponderation.happiness * citizenStats.happiness +
-                        transportMode.ponderation.sensibilisation * citizenStats.sensibilisation +
-                        StatUtils.GetFloatWeight(citizenStats.distance_to_workplace, transportMode.ponderation.meanDistance, transportMode.ponderation.stddevDistance) * citizenStats.distance_to_workplace +
-                        StatUtils.GetFloatWeight(citizenStats.salary, transportMode.ponderation.meanSalary, transportMode.ponderation.stddevSalary) * citizenStats.salary+
-                        2 * transportMode.qualityRate;
-            
+                          transportMode.ponderation.happiness * citizenStats.happiness +
+                          transportMode.ponderation.sensibilisation * citizenStats.sensibilisation +
+                          StatUtils.GetFloatWeight(citizenStats.distance_to_workplace, transportMode.ponderation.meanDistance, transportMode.ponderation.stddevDistance) * citizenStats.distance_to_workplace +
+                          StatUtils.GetFloatWeight(citizenStats.salary, transportMode.ponderation.meanSalary, transportMode.ponderation.stddevSalary) * citizenStats.salary+
+                          2 * transportMode.qualityRate;
+        
             scores.Add(score);
             totalScore += score;
+            
         }
         
         foreach (float score in scores)
@@ -53,13 +60,13 @@ public class Citizen
             sum += probabilities[i];
             if (randomValue < sum)
             {
-                UpdateCitizenStatsFromTransportMode(transportModes[i]);
-                return transportModes[i];
+                UpdateCitizenStatsFromTransportMode(availableTransports[i]);
+                return availableTransports[i];
             }
         }
         
         Debug.LogError("No transport mode found");
-        return transportModes[0];
+        return availableTransports[0];
     }
     
     private void UpdateCitizenStatsFromTransportMode(TransportMode transportMode)

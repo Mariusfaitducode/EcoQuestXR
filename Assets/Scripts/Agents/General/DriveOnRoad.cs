@@ -7,10 +7,13 @@ public class DriveOnRoad : MonoBehaviour
     internal AgentManager agentManager;
     // public AreaType areaType;
 
-    public float speed = 3f;
-    public float treshold = 1f;
+    // public float speed = 3f;
+    // public float treshold = 1f;
+    //
+    // public float roadStep = 0.5f;
     
-    public float roadStep = 0.5f;
+    public DriveSettings driveSettings;
+
     
     // internal AreaCell[,] areaGrid;
     // internal float mapScale;
@@ -62,14 +65,14 @@ public class DriveOnRoad : MonoBehaviour
         {
             Vector3 direction = (nextPoint.pointPosition.transform.position) - (actualPoint.pointPosition.transform.position);
             
-            speed = direction.magnitude * 2;
-            treshold = direction.magnitude / 2;
-            roadStep = direction.magnitude / 6;
+            driveSettings.speed = direction.magnitude * 2;
+            driveSettings.treshold = direction.magnitude / 2;
+            driveSettings.roadStep = direction.magnitude / 6;
             
-            this.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+            this.transform.Translate(Vector3.forward * (driveSettings.speed * Time.deltaTime));
             
             
-            if (Vector3.Distance(this.transform.position, (nextPoint.pointPosition.transform.position)) < treshold)
+            if (Vector3.Distance(this.transform.position, (nextPoint.pointPosition.transform.position)) < driveSettings.treshold)
             {
                 ChangeTarget();
             }
@@ -152,7 +155,7 @@ public class DriveOnRoad : MonoBehaviour
         
         Vector3 directionRight = new Vector3(newDirection.z, 0f, -newDirection.x);
         
-        this.transform.LookAt(nextPoint.pointPosition.transform.position + directionRight * roadStep);
+        this.transform.LookAt(nextPoint.pointPosition.transform.position + directionRight * driveSettings.roadStep);
 
         return true;
     }
@@ -203,7 +206,7 @@ public class DriveOnRoad : MonoBehaviour
         
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
         
-        this.transform.LookAt(nextPoint.pointPosition.transform.position + directionRight.normalized * roadStep);
+        this.transform.LookAt(nextPoint.pointPosition.transform.position + directionRight.normalized * driveSettings.roadStep);
 
 
     }

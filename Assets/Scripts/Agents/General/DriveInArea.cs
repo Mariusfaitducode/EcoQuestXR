@@ -1,20 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public struct DriveSettings
+{
+    internal float speed ;
+    internal float treshold ;
+    
+    internal float roadStep ;
+    
+    public float speedFactor;
+    // public float tresholdFactor ;
+    public float roadStepFactor ;
+}
+
 
 public class DriveInArea : MonoBehaviour
 {
     internal AgentManager agentManager;
     public AreaType areaType;
 
-    internal float speed = 3f;
-    internal float treshold = 1f;
-    
-    internal float roadStep = 0.5f;
-    
-    public float speedFactor = 1f;
-    public float tresholdFactor = 1f;
-    public float roadStepFactor = 1f;
+    public DriveSettings driveSettings;
     
     internal AreaCell[,] areaGrid;
     // internal float mapScale;
@@ -23,6 +32,9 @@ public class DriveInArea : MonoBehaviour
 
     internal AreaCell nextCell;
     internal AreaCell lastCell;
+    
+    
+    internal float floorHeight = 0.04f; 
 
     public bool stopped;
 
@@ -54,14 +66,18 @@ public class DriveInArea : MonoBehaviour
         {
             Vector3 direction = (nextCell.cellPosition.transform.position) - (actualCell.cellPosition.transform.position);
         
-            speed = direction.magnitude * 2;
-            treshold = direction.magnitude / 2;
-            roadStep = direction.magnitude / 4;
+            driveSettings.speed = direction.magnitude * 2 * driveSettings.speedFactor;
+            driveSettings.treshold = direction.magnitude / 2;
+            driveSettings.roadStep = direction.magnitude / 4 * driveSettings.roadStepFactor;
             
-            this.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+            this.transform.Translate(Vector3.forward * (driveSettings.speed * Time.deltaTime));
+            
+            float height = floorHeight * agentManager.objectManager.mesh.transform.localScale.y;
+            
+            this.transform.position = new Vector3(this.transform.position.x, actualCell.cellPosition.transform.position.y + height, this.transform.position.z);
             
 
-            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position)) < treshold)
+            if (Vector3.Distance(this.transform.position, (nextCell.cellPosition.transform.position)) < driveSettings.treshold)
             {
                 ChangeTarget();
             }
@@ -86,7 +102,7 @@ public class DriveInArea : MonoBehaviour
             }
         }
 
-        this.transform.position = actualCell.cellPosition.transform.position;
+        this.transform.position = actualCell.cellPosition.transform.position ;
 
 
         SearchNeighbour();
@@ -104,7 +120,7 @@ public class DriveInArea : MonoBehaviour
         
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
         
-        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight * roadStep);
+        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight * driveSettings.roadStep);
 
         return true;
     }
@@ -121,7 +137,7 @@ public class DriveInArea : MonoBehaviour
         
         Vector3 directionRight = new Vector3(direction.z, 0f, -direction.x);
         
-        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight.normalized * roadStep);
+        this.transform.LookAt(nextCell.cellPosition.transform.position + directionRight.normalized * driveSettings.roadStep);
 
 
     }
