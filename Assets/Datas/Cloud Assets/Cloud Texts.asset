@@ -33,19 +33,11 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: 503ee32ae98b06b45b435e71527e9d40, type: 3}
     - text: Ca va ? Tu t'en sors ?
       audioClip: {fileID: 8300000, guid: cdd33b46412e7fd47a1695b5a98614f3, type: 3}
-  - cloudEvent: 10
+  - cloudEvent: 3
     textsAudios:
-    - text: Bravo ! Grace a toi la ville est sauvee !
-      audioClip: {fileID: 8300000, guid: 6e048cb76f89c5c4c8b968052a1b4542, type: 3}
-    - text: Je compte sur toi pour sauver ta vraie planete maintenant !
-      audioClip: {fileID: 8300000, guid: a861f97d60ae1a042bc9ded2fe349c5a, type: 3}
-  - cloudEvent: 4
-    textsAudios:
-    - text: Oh non, j'ai l'impression que nous n'avons pas reussi a sauver la ville
-      audioClip: {fileID: 8300000, guid: aaafa7fdc2e16124a97e9d42396e53d2, type: 3}
     - text: Je compte sur toi pour reessayer tres bientot
       audioClip: {fileID: 8300000, guid: 6b4d040eef75b9945812ade6f0c48bec, type: 3}
-  - cloudEvent: 5
+  - cloudEvent: 4
     textsAudios:
     - text: "Desole mais tu n'as pas assez d'argent pour \xE7a"
       audioClip: {fileID: 8300000, guid: 47d1a1d4699ab6848ba3bae0ce1f7098, type: 3}
@@ -53,9 +45,48 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: 2a31bb8feab2821479c88b05b3b446a5, type: 3}
     - text: Tu devrais attendre de gagner un peu plus avant de jouer
       audioClip: {fileID: 8300000, guid: 2a31bb8feab2821479c88b05b3b446a5, type: 3}
-  - cloudEvent: 6
+  - cloudEvent: 5
     textsAudios:
     - text: Tu peux attraper la carte pour la deplacer avec le bouton de grip
       audioClip: {fileID: 8300000, guid: 852c506968d0c3342bc4b1257a5036a6, type: 3}
     - text: Utilises les joysticks pour te deplacer sur la carte
       audioClip: {fileID: 8300000, guid: 310cd1471edff6d418260047c3483a1e, type: 3}
+  - cloudEvent: 6
+    textsAudios:
+    - text: "Oh non, j'ai l'impression que nous n'avons pas r\xE9ussi \xE0 sauver
+        la ville. Tu n'as plus assez d'argent pour continuer."
+      audioClip: {fileID: 8300000, guid: a0dd0dfa0408bad4f8b3db969fe44db1, type: 3}
+  - cloudEvent: 7
+    textsAudios:
+    - text: "Oh non, j'ai l'impression que nous n'avons pas r\xE9ussi \xE0 sauver
+        la ville. Tu n'as plus d'\xE9nergie pour l'alimenter. "
+      audioClip: {fileID: 8300000, guid: e7672a7a7311a02458ffc611737e0fa1, type: 3}
+  - cloudEvent: 8
+    textsAudios:
+    - text: "Oh non, j'ai l'impression que nous n'avons pas r\xE9ussi \xE0 sauver
+        la ville. Tu n'as pas assez veill\xE9 sur les habitants."
+      audioClip: {fileID: 8300000, guid: 5c22c0af16b1ee044930bb5908f19ff9, type: 3}
+  - cloudEvent: 9
+    textsAudios:
+    - text: Bravo ! Grace a toi la ville est sauvee !
+      audioClip: {fileID: 8300000, guid: 6e048cb76f89c5c4c8b968052a1b4542, type: 3}
+  - cloudEvent: 10
+    textsAudios:
+    - text: 'Attention ! Tu n''as presque plus d''argent ! '
+      audioClip: {fileID: 8300000, guid: 710a67bf708980a499afcc684cb97056, type: 3}
+  - cloudEvent: 11
+    textsAudios:
+    - text: "Attention ! Tu n'as plus beaucoup d'\xE9nergie ! "
+      audioClip: {fileID: 8300000, guid: ea97ee5550cc009449a23bca365df475, type: 3}
+  - cloudEvent: 12
+    textsAudios:
+    - text: "Il faut faire plus attention \xE0 ta population ! "
+      audioClip: {fileID: 8300000, guid: eb1adeaf28af5a5489354bf766ad4219, type: 3}
+  - cloudEvent: 13
+    textsAudios:
+    - text: "Prends garde aux indicateurs \xE9cologiques"
+      audioClip: {fileID: 8300000, guid: 532301a875a41e6478694b39454816b3, type: 3}
+  - cloudEvent: 14
+    textsAudios:
+    - text: Accroche toi, tu y est presque !
+      audioClip: {fileID: 8300000, guid: 157568dc58321eb4ab06d6f8015b3a19, type: 3}
