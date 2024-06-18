@@ -124,6 +124,9 @@ public static class GameInitialization
         gameManager.deckController.centerEyeAnchor = gameManager.ovrObjects.centerEyeAnchor.transform;
         
         gameManager.deckController.controlMode = gameManager.controlMode;
+        gameManager.deckController.mesh = gameManager.otherObjects.mesh;
+
+
         gameManager.deckController.InitializeDeckController();
         
         //// Dashboard controller

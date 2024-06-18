@@ -7,13 +7,23 @@ using UnityEngine.SceneManagement;
 public class SettingsController : MonoBehaviour
 {
 
-    internal GameManager gameManager; 
+    internal GameManager gameManager;
+
+    private GameObject panel_settings;
+    private GameObject panel_gameOver;
+
+    private bool is_gameOver = false; 
 
 
     // Start is called before the first frame update
     void Start()
     {
         this.GetComponentInChildren<Canvas>().enabled = false;
+        panel_settings = this.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        panel_gameOver = this.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
+
+        panel_gameOver.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -33,7 +43,7 @@ public class SettingsController : MonoBehaviour
 
     public void close_settings()
     {
-        if (!gameManager.eventsGestion.GetEventByName("DraftEvent").isEventActive) gameManager.timer.ResumeTime();
+        if (!gameManager.eventsGestion.GetEventByName("DraftEvent").isEventActive && !is_gameOver) gameManager.timer.ResumeTime();
         this.GetComponentInChildren<Canvas>().enabled = false;
     }
 
@@ -41,6 +51,18 @@ public class SettingsController : MonoBehaviour
     {
         SceneManager.LoadScene("MenuPrincipal");
     }
+
+    public void end_game()
+    {
+        is_gameOver = true; 
+        panel_settings.SetActive(false);
+        panel_gameOver.SetActive(true); 
+
+        open_settings();
+    }
+
+
+
 
 
 

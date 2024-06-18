@@ -82,7 +82,7 @@ public class CloudController : MonoBehaviour
 
         Vector3 shaderCenterMapPosition = updateTerrainRenderer.GetMapCenter();
         Vector3 centerMapPosition = new Vector3(shaderCenterMapPosition.x, meshTransform.position.y, shaderCenterMapPosition.z);
-        transform.position = centerMapPosition + ovrPose.position + (movementOffset * 2f);
+        transform.position = centerMapPosition + ovrPose.position + (movementOffset * 2.5f);
 
 
         if (is_moving)
