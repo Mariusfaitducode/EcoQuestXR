@@ -114,10 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1c2233908fb3943a01bb3afebeda6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaType: 3
-  driveSettings:
-    speedFactor: 1
-    roadStepFactor: 1
+  areaType: 1
+  speedFactor: 1
+  tresholdFactor: 1
+  roadStepFactor: 1
   stopped: 0
 --- !u!114 &6233583661853940651
 MonoBehaviour:
