@@ -264,8 +264,6 @@ public static class GameInitialization
             "DraftEvent",
             gameManager.timer.currentTime,
 
-            // new Interval { days = 50, months = 0, years = 0 }, 
-
             new Interval { days = 5, months = 0, years = 0 }, 
 
             () => gameManager.cardManager.DraftEvent(),

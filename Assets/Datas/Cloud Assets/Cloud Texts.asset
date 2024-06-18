@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f5cdad6cd914d47af33608f97dc121, type: 3}
+  m_Name: Cloud Texts
+  m_EditorClassIdentifier: 
+  autoUpdate: 0
+  cloudTexts:
+  - cloudEvent: 0
+    textsAudios:
+    - text: Tres bien je m'en occupe
+      audioClip: {fileID: 8300000, guid: 5f142a2335fb665489a5923d61c89931, type: 3}
+    - text: Tres bon choix !
+      audioClip: {fileID: 8300000, guid: 784bf70121b15f644bdae0d2a3f282d1, type: 3}
+    - text: Un pas de plus vers le bonheur !
+      audioClip: {fileID: 8300000, guid: 7f1063ffc1e421e48bd77cff6da4efa8, type: 3}
+  - cloudEvent: 1
+    textsAudios:
+    - text: "C'est le moment d'intervenir, choisit les cartes qui t'int\xE9resse,
+        tu pourras les jouer plus tard"
+      audioClip: {fileID: 0}
+  - cloudEvent: 2
+    textsAudios:
+    - text: N'hesite pas a aller voir le tutoriel
+      audioClip: {fileID: 8300000, guid: 503ee32ae98b06b45b435e71527e9d40, type: 3}
+    - text: Ca va ? Tu t'en sors ?
+      audioClip: {fileID: 8300000, guid: cdd33b46412e7fd47a1695b5a98614f3, type: 3}
+  - cloudEvent: 3
+    textsAudios:
+    - text: Bravo ! Grace a toi la ville est sauvee !
+      audioClip: {fileID: 8300000, guid: 6e048cb76f89c5c4c8b968052a1b4542, type: 3}
+    - text: Je compte sur toi pour sauver ta vraie planete maintenant !
+      audioClip: {fileID: 8300000, guid: a861f97d60ae1a042bc9ded2fe349c5a, type: 3}
+  - cloudEvent: 4
+    textsAudios:
+    - text: Oh non, j'ai l'impression que nous n'avons pas reussi a sauver la ville
+      audioClip: {fileID: 8300000, guid: aaafa7fdc2e16124a97e9d42396e53d2, type: 3}
+    - text: Je compte sur toi pour reessayer tres bientot
+      audioClip: {fileID: 8300000, guid: 6b4d040eef75b9945812ade6f0c48bec, type: 3}
+  - cloudEvent: 5
+    textsAudios:
+    - text: "Desole mais tu n'as pas assez d'argent pour \xE7a"
+      audioClip: {fileID: 8300000, guid: 47d1a1d4699ab6848ba3bae0ce1f7098, type: 3}
+    - text: Tu devrais attendre de gagner un peu plus avant de jouer
+      audioClip: {fileID: 8300000, guid: 2a31bb8feab2821479c88b05b3b446a5, type: 3}
+    - text: Tu devrais attendre de gagner un peu plus avant de jouer
+      audioClip: {fileID: 8300000, guid: 2a31bb8feab2821479c88b05b3b446a5, type: 3}
+  - cloudEvent: 6
+    textsAudios:
+    - text: Tu peux attraper la carte pour la deplacer avec le bouton de grip
+      audioClip: {fileID: 8300000, guid: 852c506968d0c3342bc4b1257a5036a6, type: 3}
+    - text: Utilises les joysticks pour te deplacer sur la carte
+      audioClip: {fileID: 8300000, guid: 310cd1471edff6d418260047c3483a1e, type: 3}

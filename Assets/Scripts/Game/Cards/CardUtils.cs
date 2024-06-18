@@ -42,6 +42,10 @@ public class CardUtils
             card.cardStats.ecologyRate = -1;
             card.cardStats.acceptationRate = -1;
         }
+        else if (card.cardType == CardType.Upgrade)
+        {
+            // TODO : upgrade stats
+        }
         else
         {
             Debug.LogError("Card type not implemented : " + card.cardType);

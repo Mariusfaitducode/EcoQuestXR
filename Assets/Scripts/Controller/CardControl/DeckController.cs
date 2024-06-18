@@ -53,6 +53,7 @@ public class DeckController : MonoBehaviour
 
             // pour éviter les conflits de grab, on enlève le grab de la map
             mesh.GetComponent<GrabInteractable>().enabled = false; 
+            mesh.GetComponent<Grabbable>().enabled = false; 
 
 
             canva.enabled = true;
@@ -87,6 +88,8 @@ public class DeckController : MonoBehaviour
         {
 
             mesh.GetComponent<GrabInteractable>().enabled = true;
+            mesh.GetComponent<Grabbable>().enabled = true; 
+
 
             canva.enabled = false;
             foreach (Transform child in GetComponentsInChildren<Transform>())

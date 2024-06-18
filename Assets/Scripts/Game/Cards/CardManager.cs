@@ -40,6 +40,8 @@ public class CardManager : MonoBehaviour
     
     internal bool draftTime = false;
     
+    internal bool firstDraft = true;
+    
     // public GameObject cardPrefab;
     
     // Start is called before the first frame update
@@ -72,6 +74,11 @@ public class CardManager : MonoBehaviour
     public void DraftEvent()
     {
         // TODO : Pile manager give only valid cards
+
+        if (firstDraft)
+        {
+            gameManager.cloudController.DisplayNewText(CloudEvent.firstPlay);
+        }
         
         draftTime = true;
         // Draw Pile
