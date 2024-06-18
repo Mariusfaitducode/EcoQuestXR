@@ -221,7 +221,7 @@ public static class GameInitialization
         
         // Transfer informations to other scripts
         gameManager.objectManager.SetMapInformations(gameManager.fillMapManager);
-        gameManager.cardManager.SetCardsProperties(gameManager.objectManager.listObjectsProperties);
+        gameManager.cardManager.SetCardsProperties(gameManager.objectManager.listObjectsProperties, gameManager.objectManager.subObjectsProperties);
         
         // Audio Source Areas
         

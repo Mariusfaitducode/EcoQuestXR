@@ -139,13 +139,13 @@ public class ObjectsInitialization
     }
     
     
-    public static List<SubObjects> ObjectsPropertiesToSubObjects(List<ObjectProperties> objectsProperties)
+    public static List<SubObject> ObjectsPropertiesToSubObjects(List<ObjectProperties> objectsProperties)
     {
-        List<SubObjects> subObjectsProperties = new List<SubObjects>();
+        List<SubObject> subObjectsProperties = new List<SubObject>();
         
         foreach (ObjectProperties objProps in objectsProperties)
         {
-            SubObjects subObject = new SubObjects();
+            SubObject subObject = new SubObject();
             
             subObject.id = objProps.id;
             subObject.name = objProps.name;
@@ -159,13 +159,13 @@ public class ObjectsInitialization
     }
     
     
-    public static void LinkSubObjectsToObjects(List<ObjectProperties> objectsProperties, List<SubObjects> subObjectsProperties)
+    public static void LinkSubObjectsToObjects(List<ObjectProperties> objectsProperties, List<SubObject> subObjectsProperties)
     {
         foreach (ObjectProperties objProps in objectsProperties)
         {
             foreach (int subObjectId in objProps.subObjectsIds)
             {
-                SubObjects subObject = subObjectsProperties.Find(s => s.id == subObjectId);
+                SubObject subObject = subObjectsProperties.Find(s => s.id == subObjectId);
                 
                 if (subObject == null)
                 {

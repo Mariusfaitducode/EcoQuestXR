@@ -48,6 +48,8 @@ public class CardUtils
         }
     }
     
+    
+    
     public static void GetObjectStat(Card card)
     {
         card.stats.Reset();
@@ -71,6 +73,26 @@ public class CardUtils
             Stat stat1 = card.objectProperties1.stats.Multiply(-card.quantityObject1);
             Stat stat2 = card.objectProperties2.stats.Multiply(card.quantityObject2);
             card.stats.Add(stat1);
+            card.stats.Add(stat2);
+            card.stats.ResetConstructionDestructionStats();
+        }
+        else if (card.cardType == CardType.Upgrade)
+        {
+            // Object stat 
+            // Stat stat1 = card.objectProperties1.stats.Multiply(card.quantityObject1);
+            // SubObject stat
+            Stat stat2 = card.objectProperties2.stats.Multiply(card.quantityObject1);
+            // card.stats.Add(stat1);
+            card.stats.Add(stat2);
+            card.stats.ResetConstructionDestructionStats();
+        }
+        else if (card.cardType == CardType.Downgrade)
+        {
+            // Object stat 
+            // Stat stat1 = card.objectProperties1.stats.Multiply(card.quantityObject1);
+            // SubObject stat
+            Stat stat2 = card.objectProperties2.stats.Multiply(-card.quantityObject1);
+            // card.stats.Add(stat1);
             card.stats.Add(stat2);
             card.stats.ResetConstructionDestructionStats();
         }

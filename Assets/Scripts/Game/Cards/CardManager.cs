@@ -53,7 +53,7 @@ public class CardManager : MonoBehaviour
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deck);
         DisplayCanvas.HideCanvas(draftCanvas);
-
+        
         nbrDraftCards = cardsLocationDraftPanels.Count;
         nbrMaxDeckCards = cardsLocationDeckPanels.Count;
     
@@ -62,9 +62,9 @@ public class CardManager : MonoBehaviour
 
     }
 
-    public void SetCardsProperties(List<ObjectProperties> objectsProperties)
+    public void SetCardsProperties(List<ObjectProperties> objectsProperties, List<ObjectProperties> subObjectsProperties)
     {
-        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties);
+        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties, subObjectsProperties);
     }
     
     
