@@ -10,10 +10,18 @@ public enum CloudEvent
     playCard,
     firstPlay,
     random,
-    win,
     lose,
     notEnoughMoney,
-    help
+    help,
+    loseMoney, 
+    loseEnergy, 
+    loseSociety,
+    winEcology, 
+    warningMoney,
+    warningEnergy,
+    warningSociety,
+    warningEcology,
+    encouragementEcology
 }
 
 [Serializable]

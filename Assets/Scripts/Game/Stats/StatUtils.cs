@@ -53,15 +53,15 @@ public static class StatUtils
                 stats.currentEcologyStats.co2 += (objScript.objectProperties.stats.co2EmissionPerMonth - objScript.objectProperties.stats.co2AbsorptionPerMonth);
                 stats.currentEcologyStats.waste += (objScript.objectProperties.stats.wasteProductionPerMonth - objScript.objectProperties.stats.wasteDestructionPerMonth);
                 
-                // globalStats.currentMoneyInBank += objScript.objectProperties.stats.profitsPerMonth;
-                // globalStats.currentEnergyInStock += objScript.objectProperties.stats.energyProductionPerMonth;
-                // globalStats.currentEmittedCo2 += objScript.objectProperties.stats.co2EmissionPerMonth;
-                // globalStats.currentWasteProduced += objScript.objectProperties.stats.wasteProductionPerMonth;
-                //
-                // globalStats.currentMoneyInBank -= objScript.objectProperties.stats.lossesPerMonth;
-                // globalStats.currentEnergyInStock -= objScript.objectProperties.stats.energyConsumptionPerMonth;
-                // globalStats.currentEmittedCo2 -= objScript.objectProperties.stats.co2AbsorptionPerMonth;
-                // globalStats.currentWasteProduced -= objScript.objectProperties.stats.wasteDestructionPerMonth;
+                // Set to 0 if negative
+                if (stats.currentGlobalStats.money < 0)
+                    stats.currentGlobalStats.money = 0;
+                if (stats.currentGlobalStats.energy < 0)
+                    stats.currentGlobalStats.energy = 0;
+                if (stats.currentEcologyStats.co2 < 0)
+                    stats.currentEcologyStats.co2 = 0;
+                if (stats.currentEcologyStats.waste < 0)
+                    stats.currentEcologyStats.waste = 0;
             }
             else
             {
@@ -69,15 +69,6 @@ public static class StatUtils
             }
         }
     }
-    
-    // public static void UpdateDashboardObjectStats(Stat dashboardStats, Stat objectsStats, Stat dailyTransportsStats)
-    // {
-    //     dashboardStats.Reset();
-    //     dashboardStats.Add(objectsStats);
-    //     dashboardStats.Add(dailyTransportsStats);
-    // }
-    
-    
     
     public static void UpdateObjectStatsFromObjects(ClassStats stats, CitizensGestion citizensGestion, List<ObjectScript> objects)
     {
@@ -105,7 +96,7 @@ public static class StatUtils
                 // Add global ecology stats
                 stats.monthlyEcologyStats.co2 += (objScript.objectProperties.stats.co2EmissionPerMonth - objScript.objectProperties.stats.co2AbsorptionPerMonth);
                 stats.monthlyEcologyStats.waste += (objScript.objectProperties.stats.wasteProductionPerMonth - objScript.objectProperties.stats.wasteDestructionPerMonth);
-                stats.monthlyEcologyStats.greenSpaces += objScript.objectProperties.stats.greenSpaces;
+                stats.currentEcologyStats.greenSpaces += objScript.objectProperties.stats.greenSpaces;
                 
                 // Add stats by area
                 foreach (ClassEcologyStats ecologyStats in stats.ecologyStatsByArea)
@@ -176,10 +167,15 @@ public static class StatUtils
         stats.currentEcologyStats.co2 += card.cardStats.actionCo2Emission;
         stats.currentEcologyStats.waste += card.cardStats.actionWasteProduction;
         
-        // globalStats.currentMoneyInBank -= card.cardStats.actionCost;
-        // globalStats.currentEnergyInStock -= card.cardStats.actionEnergyCost;
-        // globalStats.currentEmittedCo2 += card.cardStats.actionCo2Emission;
-        // globalStats.currentWasteProduced += card.cardStats.actionWasteProduction;
+        // Set to 0 if negative
+        if (stats.currentGlobalStats.money < 0)
+            stats.currentGlobalStats.money = 0;
+        if (stats.currentGlobalStats.energy < 0)
+            stats.currentGlobalStats.energy = 0;
+        if (stats.currentEcologyStats.co2 < 0)
+            stats.currentEcologyStats.co2 = 0;
+        if (stats.currentEcologyStats.waste < 0)
+            stats.currentEcologyStats.waste = 0;
     }
     
     public static void DailyUpdateGlobalStatsFromCitizens(ClassStats stats, CitizensGestion citizensGestion)
@@ -189,11 +185,15 @@ public static class StatUtils
         stats.currentEcologyStats.co2 += (citizensGestion.dailyTransportsStats.co2EmissionPerMonth / 30);
         stats.currentEcologyStats.waste += (citizensGestion.dailyTransportsStats.wasteProductionPerMonth / 30);
         
-        
-        // globalStats.currentMoneyInBank -= (citizensGestion.dailyTransportsStats.lossesPerMonth / 30);
-        // globalStats.currentEnergyInStock -= (citizensGestion.dailyTransportsStats.energyConsumptionPerMonth / 30);
-        // globalStats.currentEmittedCo2 += (citizensGestion.dailyTransportsStats.co2EmissionPerMonth / 30);
-        // globalStats.currentWasteProduced += (citizensGestion.dailyTransportsStats.wasteProductionPerMonth / 30);
+        // Set to 0 if negative
+        if (stats.currentGlobalStats.money < 0)
+            stats.currentGlobalStats.money = 0;
+        if (stats.currentGlobalStats.energy < 0)
+            stats.currentGlobalStats.energy = 0;
+        if (stats.currentEcologyStats.co2 < 0)
+            stats.currentEcologyStats.co2 = 0;
+        if (stats.currentEcologyStats.waste < 0)
+            stats.currentEcologyStats.waste = 0;
     }
     
     public static TransportMode GetTransportModeByName(List<TransportMode> transportModes, string name)
