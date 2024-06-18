@@ -67,9 +67,9 @@ public class DisplayDashboard : MonoBehaviour
         healthText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.health) + percentUnit;
         happinessText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.happiness) + percentUnit;
         sensibilisationText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.sensibilisation) + percentUnit;
-        acceptationText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.acceptation) + percentUnit;
+        // acceptationText.text = StatUtils.ConvertPercentToText(statManager.citizensGestion.citizensStats.acceptation) + percentUnit;
         
-        dailyTransportsUsersText.text = statManager.citizensGestion.dailyTransportsUsers;
+        // dailyTransportsUsersText.text = statManager.citizensGestion.dailyTransportsUsers;
         
         // Objects stats
         currentGreenSpacesText.text = statManager.objectsStats.greenSpaces.ToString() + greenSpacesUnit;

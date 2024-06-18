@@ -124,32 +124,45 @@ public static class GameInitialization
         gameManager.deckController.centerEyeAnchor = gameManager.ovrObjects.centerEyeAnchor.transform;
         
         gameManager.deckController.controlMode = gameManager.controlMode;
+        gameManager.deckController.mesh = gameManager.otherObjects.mesh;
+
+
         gameManager.deckController.InitializeDeckController();
         
-        // Dashboard controller
-        gameManager.dashboardController = GameObject.FindObjectOfType<DashboardController>();
+        //// Dashboard controller
+        //gameManager.dashboardController = GameObject.FindObjectOfType<DashboardController>();
         
-        gameManager.dashboardController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
-        gameManager.dashboardController.meshTransform = gameManager.otherObjects.mesh.transform;
+        //gameManager.dashboardController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+        //gameManager.dashboardController.meshTransform = gameManager.otherObjects.mesh.transform;
         
-        gameManager.dashboardController.controlMode = gameManager.controlMode;
-        gameManager.dashboardController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
-        gameManager.dashboardController.InitializeDashboardController();
+        //gameManager.dashboardController.controlMode = gameManager.controlMode;
+        //gameManager.dashboardController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
+        //gameManager.dashboardController.InitializeDashboardController();
         
-        // Draft controller
-        gameManager.draftController = GameObject.FindObjectOfType<DraftController>();
+        //// Draft controller
+        //gameManager.draftController = GameObject.FindObjectOfType<DraftController>();
         
-        gameManager.draftController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
-        gameManager.draftController.meshTransform = gameManager.otherObjects.mesh.transform;
+        //gameManager.draftController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;
+        //gameManager.draftController.meshTransform = gameManager.otherObjects.mesh.transform;
         
-        gameManager.draftController.controlMode = gameManager.controlMode;
-        gameManager.draftController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
-        gameManager.draftController.InitializeDraftController();
+        //gameManager.draftController.controlMode = gameManager.controlMode;
+        //gameManager.draftController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
+        //gameManager.draftController.InitializeDraftController();
         
+
+        // Canvas Controller 
+        gameManager.canvasController = GameObject.FindObjectOfType<CanvasController>();
+
+        gameManager.canvasController.centerEyeAnchorTransform = gameManager.ovrObjects.centerEyeAnchor.transform;        
+        gameManager.canvasController.meshTransform = gameManager.otherObjects.mesh.transform;
+        gameManager.canvasController.controlMode = gameManager.controlMode;
+        gameManager.canvasController.updateTerrainRenderer = gameManager.otherObjects.mesh.GetComponent<UpdateTerrainRenderer>();
+
+        gameManager.canvasController.InitializeCanvasController();
+
 
         // Settings controller
         gameManager.settingsController = GameObject.FindObjectOfType<SettingsController>();
-
         gameManager.settingsController.gameManager = gameManager;
 
 
