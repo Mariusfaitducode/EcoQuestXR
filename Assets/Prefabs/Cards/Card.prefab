@@ -1078,7 +1078,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4821870814718452588}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -1104,7 +1104,7 @@ MonoBehaviour:
   folderActionLogo: Images/ActionLogo/
   folderAreaBackground: Images/AreaBackground/
   folderAreaLogo: Images/AreaLogo/
-  _title: {fileID: 9205576495628457912}
+  _zone_title: {fileID: 0}
   _description: {fileID: 3898671850718968603}
   _price: {fileID: 254916662840567714}
   _image: {fileID: 7614776827343839160}
@@ -1112,12 +1112,10 @@ MonoBehaviour:
   _buttonBackground: {fileID: 1852057674224577936}
   _shadowBackground: {fileID: 893937643135702273}
   _background: {fileID: 893937643135702273}
-  _logoArea: {fileID: 1347519173301274022}
+  _zone_background: {fileID: 0}
+  _price_background: {fileID: 0}
+  _text_background: {fileID: 0}
   _logoAction: {fileID: 9066834520123283041}
-  _energy: {fileID: 3514489679778458802}
-  _ecology: {fileID: 2610560435902977176}
-  _population: {fileID: 2306648678830135073}
-  _pollution: {fileID: 9082657313148549773}
 --- !u!114 &1815047922504344873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,7 +1123,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4821870814718452588}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7aaf960227867044282d921171d2d7ac, type: 3}
   m_Name: 

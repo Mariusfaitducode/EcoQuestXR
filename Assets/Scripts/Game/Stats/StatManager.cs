@@ -5,6 +5,48 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
+public struct StructGlobalStats
+{
+    public float money;
+    public float energy;
+}
+
+[Serializable]
+public struct StructEcoloyStats
+{
+    public float co2;
+    public float waste;
+    public int greenSpaces;
+}
+
+[Serializable]
+public struct Population
+{
+    int populationSize;
+}
+
+[Serializable]
+public struct MaxStats
+{
+    public StructGlobalStats globalStats;
+    public StructEcoloyStats globalEcologyStats;
+    public StructEcoloyStats monthlyEcologyStats;
+}
+
+[Serializable]
+public struct InitialStats
+{
+    public StructGlobalStats globalStats;
+    public StructEcoloyStats ecologyStats;
+}
+
+[Serializable]
+public struct CompensationStats
+{
+    public float co2AbsorptionPerMonth;
+}
+
 public class GlobalStats
 {
     internal float currentMoneyInBank = 0;
@@ -21,16 +63,20 @@ public class StatManager : MonoBehaviour
     internal GameManager gameManager;
     public DisplayDashboard displayDashboard;
     
-    public float initialMoneyInBank = 0;
-    public float initialEnergyInStock = 0;
-    public float initialEmittedCo2 = 0;
-    public float initialWasteProduced = 0;
+    // public float initialMoneyInBank = 0;
+    // public float initialEnergyInStock = 0;
+    // public float initialEmittedCo2 = 0;
+    // public float initialWasteProduced = 0;
+    public InitialStats initialStats;
+    public MaxStats maxStats;
     
-    public float maxGreenSpaces = 5000f;
-    public float maxEmittedCo2 = 5000000f;
-    public float maxWasteProduced = 100000f;
-    public float maxCo2EmissionPerMonth = 1000000f;
-    public float maxWasteProductionPerMonth = 10000f;
+    // public int maxPopSize = 1000;
+    //
+    // public float maxGreenSpaces = 5000f;
+    // public float maxEmittedCo2 = 5000000f;
+    // public float maxWasteProduced = 100000f;
+    // public float maxCo2EmissionPerMonth = 1000000f;
+    // public float maxWasteProductionPerMonth = 10000f;
     
     internal Stat objectsStats = new Stat();
     internal GlobalStats globalStats = new GlobalStats();
@@ -41,6 +87,7 @@ public class StatManager : MonoBehaviour
     
     public void StatsStartInitialization()
     {
+        // citizensGestion.maxPopSize = maxPopSize;
         // Initialize the class citizensGestion
         citizensGestion.CitizensGestionStartInitialization();
         
@@ -49,10 +96,10 @@ public class StatManager : MonoBehaviour
         objectsStats.Reset();
         
         // global
-        globalStats.currentMoneyInBank = initialMoneyInBank;
-        globalStats.currentEnergyInStock = initialEnergyInStock;
-        globalStats.currentEmittedCo2 = initialEmittedCo2;
-        globalStats.currentWasteProduced = initialWasteProduced;
+        globalStats.currentMoneyInBank = initialStats.globalStats.money;
+        globalStats.currentEnergyInStock = initialStats.globalStats.energy;
+        globalStats.currentEmittedCo2 = initialStats.ecologyStats.co2;
+        globalStats.currentWasteProduced = initialStats.ecologyStats.waste;
     }
     
     // Called every second to update the time on the dashboard

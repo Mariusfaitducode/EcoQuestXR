@@ -88,25 +88,23 @@ public static class StatUtils
         
         // Overall ecology rate
         // positive scores
-        float populationSensitiveScore = statManager.objectsStats.sensibilisation;
-        float netGreenSpacesScore = statManager.objectsStats.greenSpaces / statManager.maxGreenSpaces;
+        float netGreenSpacesScore = (float)statManager.objectsStats.greenSpaces / statManager.maxStats.monthlyEcologyStats.greenSpaces;
         
         // global pollutions scores
-        float netCo2EmittedScore = 1 - (statManager.globalStats.currentEmittedCo2 / statManager.maxEmittedCo2);
-        float netWasteProducedScore = 1 - (statManager.globalStats.currentWasteProduced / statManager.maxWasteProduced);
+        float netCo2EmittedScore = 1 - (statManager.globalStats.currentEmittedCo2 / statManager.maxStats.globalEcologyStats.co2);
+        float netWasteProducedScore = 1 - (statManager.globalStats.currentWasteProduced / statManager.maxStats.globalEcologyStats.waste);
         
         // monthly pollutions scores
-        float co2EmissionPerMonthScore = 1 - ((statManager.objectsStats.co2EmissionPerMonth - statManager.objectsStats.co2AbsorptionPerMonth) / statManager.maxCo2EmissionPerMonth);
-        float wasteProductionPerMonthScore = 1 - ((statManager.objectsStats.wasteProductionPerMonth - statManager.objectsStats.wasteDestructionPerMonth) / statManager.maxWasteProductionPerMonth);
-        
-        
+        float co2EmissionPerMonthScore = 1 - ((statManager.objectsStats.co2EmissionPerMonth - statManager.objectsStats.co2AbsorptionPerMonth) / statManager.maxStats.monthlyEcologyStats.co2);
+        float wasteProductionPerMonthScore = 1 - ((statManager.objectsStats.wasteProductionPerMonth - statManager.objectsStats.wasteDestructionPerMonth) / statManager.maxStats.monthlyEcologyStats.waste);
+
+
         statManager.globalStats.overallEcologyRate = netCo2EmittedScore +
-                                                     netWasteProducedScore + 
-                                                     netGreenSpacesScore + 
-                                                     co2EmissionPerMonthScore + 
-                                                     wasteProductionPerMonthScore + 
-                                                     populationSensitiveScore;
-        statManager.globalStats.overallEcologyRate /= 6;
+                                                     netWasteProducedScore +
+                                                     netGreenSpacesScore +
+                                                     co2EmissionPerMonthScore +
+                                                     wasteProductionPerMonthScore;
+        statManager.globalStats.overallEcologyRate /= 5;
         
     }
     
