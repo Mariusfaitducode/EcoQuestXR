@@ -6,8 +6,8 @@ public class DraftController : MonoBehaviour
 {
     internal ControlMode controlMode;
     
-    public ObjectPose ovrPose;
-    public ObjectPose keyboardPose;
+    //public ObjectPose ovrPose;
+    //public ObjectPose keyboardPose;
     
     internal Transform meshTransform;
     internal UpdateTerrainRenderer updateTerrainRenderer;
@@ -30,7 +30,7 @@ public class DraftController : MonoBehaviour
     
     void Update()
     {
-        if (controlMode == ControlMode.keyboard) return;
+        //if (controlMode == ControlMode.keyboard) return;
         
         //Vector3 shaderCenterMapPosition = updateTerrainRenderer.GetMapCenter();
         //Vector3 centerMapPosition = new Vector3(shaderCenterMapPosition.x, meshTransform.position.y, shaderCenterMapPosition.z);

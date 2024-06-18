@@ -74,9 +74,12 @@ public class AgentManager : MonoBehaviour
     internal List<List<FindPath.PathPoint>> listRoads;
     
     
+    internal GameObject roadsCarsFolder;
     
     
-    public void InitAgentManager(StatManager statManager, ObjectManager objectManager)
+    
+    
+    public void InitAgentManager(StatManager statManager, ObjectManager objectManager, FillMapManager fillMapManager)
     {
         this.statManager = statManager;
         this.objectManager = objectManager;
@@ -90,7 +93,7 @@ public class AgentManager : MonoBehaviour
         }
         
         // transportGestion = new TransportGestion();
-        TransportGestion.InitTransport(this);
+        TransportGestion.InitTransport(this, fillMapManager);
     }
     
 

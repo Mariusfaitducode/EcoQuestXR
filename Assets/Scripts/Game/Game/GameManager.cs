@@ -21,7 +21,7 @@ public struct OvrObjects
 [Serializable]
 public struct KeyboardObjects
 {
-    public Camera camera;
+    public GameObject camera;
     public GameObject play;
 }
 
@@ -108,6 +108,12 @@ public class GameManager : MonoBehaviour
         GameInitialization.InitializeController(this);
         GameInitialization.InitializeMapGenerator(this);
         GameInitialization.InitializeGame(this);
+
+        UpdateTerrainRenderer updateTerrainRenderer = FindObjectOfType<UpdateTerrainRenderer>();
+        updateTerrainRenderer.SetObjectsVisibility(fillMapManager);
+        updateTerrainRenderer.SetRoadsVisibility(fillMapManager);
+
+
     }
 
 
@@ -115,7 +121,14 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        objectManager.AreasSounds(keyboardObjects.camera, timer.isTimePaused);
+        if (controlMode == ControlMode.keyboard)
+        {
+            objectManager.AreasSounds(keyboardObjects.camera, timer.isTimePaused);
+        }
+        else
+        {
+            objectManager.AreasSounds(ovrObjects.centerEyeAnchor, timer.isTimePaused);
+        }
 
         if (!timer.isTimePaused && timer.IsCheckTime())
         {

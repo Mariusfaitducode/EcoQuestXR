@@ -7,6 +7,7 @@ public enum CardType {
     Destruction,
     Replacement,
     Upgrade,
+    Downgrade,
     Event
 }
 

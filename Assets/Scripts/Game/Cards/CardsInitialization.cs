@@ -50,7 +50,7 @@ public class CardsInitialization
     }
 
 
-    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties)
+    public static void MatchCardWithObjectProperties(List<Card> cards, List<ObjectProperties> objectsProperties, List<ObjectProperties> subObjectsProperties)
     {
         
         // Set objectProperties to cards
@@ -59,9 +59,25 @@ public class CardsInitialization
             foreach (ObjectProperties objectProperties in objectsProperties)
             {
                 if (card.idObject1 == objectProperties.id) card.objectProperties1 = objectProperties; 
-
-                if (card.idObject2 == objectProperties.id) card.objectProperties2 = objectProperties; 
             }
+
+            // Set objectProperties2 to cards            
+            if (card.cardType == CardType.Upgrade || card.cardType == CardType.Downgrade)
+            {
+                foreach (ObjectProperties objectProperties in subObjectsProperties)
+                {
+                    if (card.idObject2 == objectProperties.id) card.objectProperties2 = objectProperties; 
+                }
+            }
+            else
+            {
+                foreach (ObjectProperties objectProperties in objectsProperties)
+                {
+                    if (card.idObject2 == objectProperties.id) card.objectProperties2 = objectProperties; 
+                }
+            }
+            
+            
         }
         
         // Set areaType to cards

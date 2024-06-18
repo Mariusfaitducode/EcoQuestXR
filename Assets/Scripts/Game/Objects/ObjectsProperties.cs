@@ -20,5 +20,5 @@ public class ObjectProperties
     public Stat stats;
     
     public List<int> subObjectsIds = new List<int>();
-    public List<SubObjects> subObjects = new List<SubObjects>();
+    public List<SubObject> subObjects = new List<SubObject>();
 }

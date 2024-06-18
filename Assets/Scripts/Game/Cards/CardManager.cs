@@ -40,6 +40,8 @@ public class CardManager : MonoBehaviour
     
     internal bool draftTime = false;
     
+    internal bool firstDraft = true;
+    
     // public GameObject cardPrefab;
     
     // Start is called before the first frame update
@@ -53,7 +55,7 @@ public class CardManager : MonoBehaviour
         cardsLocationDraftPanels = DisplayCanvas.GetPanels(draftCanvas);
         cardsLocationDeckPanels = DisplayCanvas.GetPanels(deck);
         DisplayCanvas.HideCanvas(draftCanvas);
-
+        
         nbrDraftCards = cardsLocationDraftPanels.Count;
         nbrMaxDeckCards = cardsLocationDeckPanels.Count;
     
@@ -62,9 +64,9 @@ public class CardManager : MonoBehaviour
 
     }
 
-    public void SetCardsProperties(List<ObjectProperties> objectsProperties)
+    public void SetCardsProperties(List<ObjectProperties> objectsProperties, List<ObjectProperties> subObjectsProperties)
     {
-        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties);
+        CardsInitialization.MatchCardWithObjectProperties(cards, objectsProperties, subObjectsProperties);
     }
     
     
@@ -72,6 +74,11 @@ public class CardManager : MonoBehaviour
     public void DraftEvent()
     {
         // TODO : Pile manager give only valid cards
+
+        if (firstDraft)
+        {
+            gameManager.cloudController.DisplayNewText(CloudEvent.firstPlay);
+        }
         
         draftTime = true;
         // Draw Pile

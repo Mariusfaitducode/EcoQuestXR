@@ -8,6 +8,7 @@ public class ObjectManager : MonoBehaviour
     internal GameManager gameManager;
     internal List<Area> areas;
     internal List<ObjectProperties> listObjectsProperties;
+    internal List<ObjectProperties> subObjectsProperties;
     
     public string objectsPath = "Csv/objects";
     public string subObjectsPath = "Csv/subObjects";
@@ -18,7 +19,7 @@ public class ObjectManager : MonoBehaviour
     internal GameObject mesh;
 
 
-    public void AreasSounds(Camera camera, bool timePaused)
+    public void AreasSounds(GameObject camera, bool timePaused)
     {
         // bool allAudioOff = true;
         
@@ -39,13 +40,14 @@ public class ObjectManager : MonoBehaviour
         }
     }
     
+    
     public void ObjectsStartInitialization()
     {
         listObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(objectsPath);
         
-        List<ObjectProperties> subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(subObjectsPath);
+        subObjectsProperties = ObjectsInitialization.InitializeObjectsProperties(subObjectsPath);
         
-        List<SubObjects> subObjects = ObjectsInitialization.ObjectsPropertiesToSubObjects(subObjectsProperties);
+        List<SubObject> subObjects = ObjectsInitialization.ObjectsPropertiesToSubObjects(subObjectsProperties);
         
         ObjectsInitialization.LinkSubObjectsToObjects(listObjectsProperties, subObjects);
 
@@ -115,12 +117,42 @@ public class ObjectManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Object found : Upgrade Object on the map");
+            Debug.Log("Object found : Replace Object on the map");
             // start animation
-            StartCoroutine(gameManager.animationManager.AnimationUpgradeObjects(removedObjects, placedObjects));
+            StartCoroutine(gameManager.animationManager.AnimationReplacementObjects(removedObjects, placedObjects));
         }
-        
     }
+    
+    
+    
+    
+    public void UpgradeObjects(ObjectProperties objectProperties1, int quantity1, ObjectProperties objectProperties2, bool upgrade)
+    {
+        // Get the objects to upgrade
+        List<GameObject> upgradedObjects = ObjectGestion.UpgradeObjectOnMap(objectProperties1,  quantity1, objectProperties2, areas, upgrade);
+        
+        if (upgradedObjects.Count == 0)
+        {
+            Debug.LogWarning("No object found to upgrade");
+        }
+        else
+        {
+            Debug.Log("Object found : Upgrade Object on the map");
+
+            if (upgrade)
+            {
+                StartCoroutine(gameManager.animationManager.AnimationPlaceObjects(upgradedObjects));
+            }
+            else
+            {
+                StartCoroutine(gameManager.animationManager.AnimationRemoveObjects(upgradedObjects));
+            }
+            // start animation
+        }
+    }
+    
+    
+    
     
     public List<ObjectScript> GetAllObjectScripts()
     {

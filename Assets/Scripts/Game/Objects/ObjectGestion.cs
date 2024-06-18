@@ -60,8 +60,33 @@ public static class ObjectGestion
         
         return objectsToRemove;
     }
-    
-    
+
+
+    public static List<GameObject> UpgradeObjectOnMap(ObjectProperties objectProperties, int quantity1, ObjectProperties objectProperties2, List<Area> areas, bool upgrade)
+    {
+        
+        List<GameObject> upgradedModels = new List<GameObject>();
+        
+        Area area = areas.Find(a => a.data.type == objectProperties.areaType);
+        
+        List<GameObject> objectsToUpgrade = ObjectUtils.FindAreaObjectsWithPrefabName(area, objectProperties.prefabName);
+
+        int i = 0;
+
+        foreach (GameObject objectToUpgrade in objectsToUpgrade)
+        {
+            ObjectScript objectScript = objectToUpgrade.GetComponent<ObjectScript>();
+            
+            if (i < quantity1 && objectScript.canUpgrade(upgrade, objectProperties2))
+            {
+                GameObject obj = objectScript.UpgradeObject(objectProperties2, upgrade);
+                upgradedModels.Add(obj);
+                
+                i++;
+            }
+        }
+        return upgradedModels;
+    }
     
     
 }

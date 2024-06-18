@@ -32,8 +32,7 @@ public static class AnimationUtils
             mapUpdateTerrainRenderer.SetObjectsVisibility(fillMapManager);
             mapUpdateTerrainRenderer.SetRoadsVisibility(fillMapManager);
             
-            if (objectsToHide != null)
-                ObjectUtils.HideObjects(objectsToHide);
+            
 
             yield return null;
         }

@@ -37,9 +37,9 @@ public class ObjectScript : MonoBehaviour
         
         // Init subModels
         
-        if (modelGestion != null && objectProperties.subObjects.Count > 0)
+        if (modelGestion!= null && objectProperties.subObjects.Count > 0)
         {
-            foreach (SubObjects subObject in objectProperties.subObjects)
+            foreach (SubObject subObject in objectProperties.subObjects)
             {
                 SubModel subModel = modelGestion.FindSubModelWithName(subObject.prefabName);
                 
@@ -59,6 +59,38 @@ public class ObjectScript : MonoBehaviour
             }
         }
     }
+
+    public bool canUpgrade(bool upgrade, ObjectProperties subObjectProperties2)
+    {
+        
+        SubModel subModel = modelGestion.FindSubModelWithName(subObjectProperties2.prefabName);
+        
+        if (upgrade)
+        {
+            return !subModel.gameObject.activeSelf;
+        }
+        else
+        {
+            return subModel.gameObject.activeSelf;
+        }
+    }
+
+    public GameObject UpgradeObject(ObjectProperties subObjectProperties2, bool upgrade)
+    {
+        Debug.Log(subObjectProperties2.prefabName);
+        
+        SubModel subModel = modelGestion.FindSubModelWithName(subObjectProperties2.prefabName);
+        
+        if (upgrade)
+        {
+            subModel.gameObject.SetActive(true);
+        }
+        else
+        {
+            subModel.gameObject.SetActive(false);
+        }
+        return subModel.gameObject;
+    }
     
     public int GetMonthsSinceConstruction()
     {
@@ -68,7 +100,7 @@ public class ObjectScript : MonoBehaviour
 
     public void upgradeStats(int idSubObject)
     {
-        foreach (SubObjects subObject in objectProperties.subObjects)
+        foreach (SubObject subObject in objectProperties.subObjects)
         {
              if (subObject.id == idSubObject)
              {
@@ -81,7 +113,7 @@ public class ObjectScript : MonoBehaviour
     
     public void downgradeStats(int idSubObject)
     {
-        foreach (SubObjects subObject in objectProperties.subObjects)
+        foreach (SubObject subObject in objectProperties.subObjects)
         {
              if (subObject.id == idSubObject)
              {

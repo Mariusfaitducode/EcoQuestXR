@@ -166,7 +166,7 @@ public class AnimationManager : MonoBehaviour
                 startScale,
                 true));
     }
-    public IEnumerator AnimationUpgradeObjects(List<GameObject> removedObjects, List<GameObject> placedObjects)
+    public IEnumerator AnimationReplacementObjects(List<GameObject> removedObjects, List<GameObject> placedObjects)
     {
         // Hide new objects
         ObjectUtils.HideObjects(placedObjects);
@@ -209,8 +209,7 @@ public class AnimationManager : MonoBehaviour
                 targetRemovePositionAfterZoom,
                 startScale,
                 targetScale,
-                true,
-                placedObjects));
+                true));
         
         // Cacher les GameObjects un par un avec un intervalle de 1 seconde
         float durationHide = PlayAudioClipByName(AudioName.Destruction);
@@ -230,8 +229,7 @@ public class AnimationManager : MonoBehaviour
                 targetPlacePositionAfterZoom,
                 targetScale,
                 targetScale,
-                false,
-                placedObjects));
+                false));
         
         // Show les GameObjects un par un avec un intervalle de 1 seconde
         float durationShow = PlayAudioClipByName(AudioName.Construction);
@@ -246,6 +244,66 @@ public class AnimationManager : MonoBehaviour
                 durationDezoom,
                 targetPlacePositionAfterZoom,
                 targetPlacePosition,
+                targetScale,
+                startScale));
+    }
+    
+    
+   public IEnumerator AnimationUpgradeObjects(List<GameObject> placedObjects)
+    {
+        // Hide new objects
+        ObjectUtils.ShowObjects(placedObjects);
+
+        // Find the center of the all objects
+        Vector3 focusPoint = ObjectUtils.CalculateFocusPoint(placedObjects);
+        
+        // Get recurent variables from gameManager
+        Vector3 shaderPoint = mapUpdateTerrainRenderer.GetMapCenter();
+        
+        // ==== Informations for the animation ====
+        
+        // Scales
+        float startScale = mapTransform.localScale.x;
+        float targetScale = 0.03f;
+        // Positions
+        Debug.Log(mapTransform.position);
+        Vector3 startPosition = mapTransform.position;
+        Vector3 targetPosition = mapTransform.position + shaderPoint - focusPoint;
+        targetPosition = new Vector3(targetPosition.x, mapTransform.position.y, targetPosition.z);
+        Vector3 targetPositionAfterZoom = MapMouvement.GetPositionFromScaleObjectAroundPoint(targetPosition, shaderPoint, startScale, targetScale);
+        // Durations
+        float durationFocus = 2f;
+        float durationDezoom = 1.5f;
+        
+        // ==== Animation ====
+        
+        // Animation de transition focus and zoom
+        yield return StartCoroutine(
+            AnimationUtils.AnimationMapTransition(
+                mapTransform,
+                mapUpdateTerrainRenderer,
+                gameManager.fillMapManager,
+                durationFocus,
+                startPosition,
+                targetPositionAfterZoom,
+                startScale,
+                targetScale,
+                true,
+                placedObjects));
+        
+        // Show les GameObjects un par un avec un intervalle de 1 seconde
+        float durationShow = PlayAudioClipByName(AudioName.Construction);
+        yield return StartCoroutine(AnimationUtils.AnimationShowObjects(placedObjects, durationShow));
+        
+        // Animation de transition dezoom
+        yield return StartCoroutine(
+            AnimationUtils.AnimationMapTransition(
+                mapTransform,
+                mapUpdateTerrainRenderer,
+                gameManager.fillMapManager,
+                durationDezoom,
+                targetPositionAfterZoom,
+                targetPosition,
                 targetScale,
                 startScale));
     }

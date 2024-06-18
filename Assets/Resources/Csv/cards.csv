@@ -90,3 +90,4 @@ id,title,description,cardType,idObject1,quantityObject1,idObject2,quantityObject
 88,Reconversion agricole,Remplacement d'un champ de concombres par un champ de bles,Replacement,26,1,25,1
 89,Renovation d'une ferme,Remplacement d'une ferme industrielle par une ferme eco-responsible,Replacement,30,1,31,1
 90,Renovation d'une ferme,Remplacement d'une ferme eco-responsible par une ferme industrielle,Replacement,31,1,30,1
+91,Panneau solaires sur les toits,Installation de panneau solaires sur les toits de 5 maison modernes,Upgrade,2,3,1,-1

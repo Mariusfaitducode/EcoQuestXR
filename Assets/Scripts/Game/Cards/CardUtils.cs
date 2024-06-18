@@ -42,11 +42,17 @@ public class CardUtils
             card.cardStats.ecologyRate = -1;
             card.cardStats.acceptationRate = -1;
         }
+        else if (card.cardType == CardType.Upgrade)
+        {
+            // TODO : upgrade stats
+        }
         else
         {
             Debug.LogError("Card type not implemented : " + card.cardType);
         }
     }
+    
+    
     
     public static void GetObjectStat(Card card)
     {
@@ -71,6 +77,26 @@ public class CardUtils
             Stat stat1 = card.objectProperties1.stats.Multiply(-card.quantityObject1);
             Stat stat2 = card.objectProperties2.stats.Multiply(card.quantityObject2);
             card.stats.Add(stat1);
+            card.stats.Add(stat2);
+            card.stats.ResetConstructionDestructionStats();
+        }
+        else if (card.cardType == CardType.Upgrade)
+        {
+            // Object stat 
+            // Stat stat1 = card.objectProperties1.stats.Multiply(card.quantityObject1);
+            // SubObject stat
+            Stat stat2 = card.objectProperties2.stats.Multiply(card.quantityObject1);
+            // card.stats.Add(stat1);
+            card.stats.Add(stat2);
+            card.stats.ResetConstructionDestructionStats();
+        }
+        else if (card.cardType == CardType.Downgrade)
+        {
+            // Object stat 
+            // Stat stat1 = card.objectProperties1.stats.Multiply(card.quantityObject1);
+            // SubObject stat
+            Stat stat2 = card.objectProperties2.stats.Multiply(-card.quantityObject1);
+            // card.stats.Add(stat1);
             card.stats.Add(stat2);
             card.stats.ResetConstructionDestructionStats();
         }

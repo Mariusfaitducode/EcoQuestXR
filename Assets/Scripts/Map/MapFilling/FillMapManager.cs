@@ -26,6 +26,7 @@ public class FillMapManager : MonoBehaviour
     
     public GameObject bigRoad;
     public GameObject roadRootParentFolder;
+    internal GameObject roadCarsFolder;
     
     
     public bool autoUpdate;

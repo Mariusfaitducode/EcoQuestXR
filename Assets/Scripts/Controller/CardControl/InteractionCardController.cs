@@ -97,7 +97,7 @@ public class InteractionCardController : MonoBehaviour
             isNearDepot = false;
             System.Random random = new System.Random();
 
-            cardManager.gameManager.cloudController.ChangeText("notEnoughMoney" + random.Next(1, 3));
+            cardManager.gameManager.cloudController.DisplayNewText(CloudEvent.notEnoughMoney);
 
         } 
         else 

@@ -17,7 +17,7 @@ public static class TransportGestion
 {
     
     
-    public static void InitTransport(AgentManager agentManager)
+    public static void InitTransport(AgentManager agentManager, FillMapManager fillMapManager)
     {
         StatManager statManager = agentManager.statManager;
         ObjectManager objectManager = agentManager.objectManager;
@@ -165,14 +165,14 @@ public static class TransportGestion
                 
                 
                     agentManager.cars.Add(newCar);
-                }
+                } 
             }
         }
         
         // Generation in big road
         
-        GameObject roadsCarsFolder = new GameObject("RoadsCars");
-        roadsCarsFolder.transform.parent = agentManager.roadParent.transform;
+        fillMapManager.roadCarsFolder = new GameObject("RoadsCars");
+        fillMapManager.roadCarsFolder.transform.parent = agentManager.roadParent.transform;
         
         int generatedCars = (int)(agentRepartition.maxEntities * (1 - agentRepartition.percentInAreas));
         
@@ -201,7 +201,7 @@ public static class TransportGestion
             carDrive.driveSettings.speedFactor = 1;
             carDrive.driveSettings.roadStepFactor = 1;
             
-            Transform parent = roadsCarsFolder.transform;
+            Transform parent = fillMapManager.roadCarsFolder.transform;
             
             float uniformScale = objectManager.mesh.transform.localScale.x;
             

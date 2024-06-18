@@ -22,9 +22,6 @@ public class DemonstrationGestion : MonoBehaviour
     internal float uniformScale = 1f;
     
     
-    
-    
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -44,52 +41,58 @@ public class DemonstrationGestion : MonoBehaviour
             uniformScale = gameManager.objectManager.mesh.transform.localScale.x;
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        // if (Input.GetKey(KeyCode.Space))
+        // {
+        //     // Init demonstration place
+        //     
+        //     StartDemonstration(10);
+        //
+        // }
+    }
+
+
+    public void StartDemonstration(int quantity)
+    {
+        // int quantity = 10;
+
+
+        for (int i = 0; i < quantity; i++)
         {
-            // Init demonstration place
-            
-            int quantity = 10;
+                
+                
+            Vector3 centerPlace = this.transform.position;
+                
+            centerPlace.y = centerPlace.y + floorHeight * uniformScale;
+                
+            float radius = sizePlace * uniformScale;
+                
+                
+                
+                
+            GameObject character = characterPrefabs[Random.Range(0, characterPrefabs.Count)];
+                
+                
+            GameObject newCharacter = FillMapUtils.InstantiateObjectWithScale(character, this.transform, centerPlace, this.transform.rotation, Vector3.one * uniformScale);
+                
+            Vector3 randomPos = new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius));
+                
+            newCharacter.transform.Translate( randomPos, Space.Self);
+                
+            // newCharacter.transform.position = randomPos;
 
-
-            for (int i = 0; i < quantity; i++)
-            {
+            Animator charAnim = newCharacter.GetComponent<Animator>();
                 
-                
-                Vector3 centerPlace = this.transform.position;
-                
-                centerPlace.y = centerPlace.y + floorHeight * uniformScale;
-                
-                float radius = sizePlace * uniformScale;
-                
-                
-                
-                
-                GameObject character = characterPrefabs[Random.Range(0, characterPrefabs.Count)];
-                
-                
-                GameObject newCharacter = FillMapUtils.InstantiateObjectWithScale(character, this.transform, centerPlace, this.transform.rotation, Vector3.one * uniformScale);
-                
-                Vector3 randomPos = new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius));
-                
-                newCharacter.transform.Translate( randomPos, Space.Self);
-                
-                // newCharacter.transform.position = randomPos;
-
-                Animator charAnim = newCharacter.GetComponent<Animator>();
-                
-                // charAnim.runtimeAnimatorController = animator;
+            // charAnim.runtimeAnimatorController = animator;
                     
-                charAnim.Play("Protest");
+            charAnim.Play("Protest");
                 
                 
-                newCharacter.GetComponent<WalkOnZone>().sizePlace = sizePlace;
-                newCharacter.GetComponent<WalkOnZone>().place = this.gameObject;
+            newCharacter.GetComponent<WalkOnZone>().sizePlace = sizePlace;
+            newCharacter.GetComponent<WalkOnZone>().place = this.gameObject;
                 
-                // Init character animation
+            // Init character animation
                 
-                characters.Add(newCharacter);
-            }
-
+            characters.Add(newCharacter);
         }
     }
 }

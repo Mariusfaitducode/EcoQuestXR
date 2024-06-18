@@ -27,15 +27,11 @@ public class BusGestion : MonoBehaviour
     internal GameManager gameManager;
     internal DateTime currentTime;
 
+    internal bool initialized = false;
     
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        
-        if (gameManager != null)
-        {
-            gameManager.statManager.citizensGestion.transportModes.Find(tr => tr.transportModeType == TransportModeType.Bus).isAvailable = true;
-        }
         
     }
 
@@ -50,7 +46,12 @@ public class BusGestion : MonoBehaviour
             currentTime = gameManager.timer.currentTime;
             prefabScale = gameManager.objectManager.prefabScale;
             uniformScale = gameManager.objectManager.mesh.transform.localScale.x;
-            
+
+            if (gameManager.statManager != null && !initialized)
+            {
+                gameManager.statManager.citizensGestion.transportModes.Find(tr => tr.transportModeType == TransportModeType.Bus).isAvailable = true;
+
+            }
             
         }
         if ((currentTime.Hour >= busStartHour && currentTime.Hour < busEndHour) && !busOut)
