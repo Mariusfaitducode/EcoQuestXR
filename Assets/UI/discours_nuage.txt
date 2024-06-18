@@ -1,0 +1,52 @@
+
+
+dicours nuage : 
+
+
+	- play card :   "Très bien je m'en occupe"
+			"Très bon choix !"
+			"Un pas de plus vers le bonheur !" 
+			
+
+
+	- aléatoire :   "N'hésite pas à aller voir le tutoriel" 
+			"Ca va ? Tu t'en sors ?"
+
+
+	- fin du jeu :  "Bravo ! Grâce à toi la ville est sauvée !"
+			"Je compte sur toi pour sauver ta vraie planète maintenant !"
+
+			"Oh non, j'ai l'impression que nous n'avons pas réussi à sauver la ville" 
+			"Je compte sur toi pour réessayer très bientôt"
+
+
+
+
+	argent : Attention ! Tu n'as presque plus d'argent !
+		
+		Oh non, j'ai l'impression que nous n'avons pas réussi à sauver la ville. Tu n'as plus assez d'argent pour continuer.
+
+	énergie : Attention ! Tu n'as plus beaucoup d'énergie !
+
+		Oh non, j'ai l'impression que nous n'avons pas réussi à sauver la ville. Tu n'as plus d'énergie pour l'alimenter.
+
+	société : Il faut faire plus attention à ta population ! 
+
+		Oh non, j'ai l'impression que nous n'avons pas réussi à sauver la ville. Tu n'as pas assez veillé sur les habitants.
+
+	écologie : Accroche toi, tu y est presque ! 
+		Bravo ! Grâce à toi la ville est sauvée !
+		Prends garde aux indicateurs écologiques 
+
+
+
+
+
+
+
+
+
+
+
+
+			 
