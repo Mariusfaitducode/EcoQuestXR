@@ -36,6 +36,9 @@ public static class GameInitialization
             gameManager.canvasObjects.dashboardCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = true;
             
+            gameManager.canvasObjects.draftCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            gameManager.canvasObjects.draftCanvas.GetComponent<OVRRaycaster>().enabled = true;
+            
             // Remove play button
             gameManager.keyboardObjects.play.SetActive(false);
         }
@@ -65,6 +68,9 @@ public static class GameInitialization
             
             gameManager.canvasObjects.dashboardCanvas.GetComponent<GraphicRaycaster>().enabled = true;
             gameManager.canvasObjects.dashboardCanvas.GetComponent<OVRRaycaster>().enabled = false;
+            
+            gameManager.canvasObjects.draftCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+            gameManager.canvasObjects.draftCanvas.GetComponent<OVRRaycaster>().enabled = false;
             
             // Set listener for the grabbable card
             gameManager.cardObjects.grabbableCard.GetComponentInChildren<Button>().onClick.AddListener(() => gameManager.cardManager.SelectUnselectEvent(gameManager.cardManager.grabbableCardPrefab.GetComponentInChildren<DisplayCard>()));

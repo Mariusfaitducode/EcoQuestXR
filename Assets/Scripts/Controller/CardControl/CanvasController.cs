@@ -38,6 +38,11 @@ public class CanvasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        TerrainCanvaParent.position = keyboardPose.position;
+        TerrainCanvaParent.rotation = keyboardPose.rotation;
+        TerrainCanvaParent.localScale = new Vector3(keyboardPose.scale, keyboardPose.scale, keyboardPose.scale);
+        
         if (controlMode == ControlMode.keyboard) return;
 
         Vector3 shaderCenterMapPosition = updateTerrainRenderer.GetMapCenter();

@@ -75,7 +75,7 @@ public class CardManager : MonoBehaviour
     {
         // TODO : Pile manager give only valid cards
 
-        if (firstDraft)
+        if (firstDraft && gameManager.controlMode != ControlMode.keyboard)
         {
             gameManager.cloudController.DisplayNewText(CloudEvent.firstPlay);
         }
