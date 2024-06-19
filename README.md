@@ -7,4 +7,4 @@ Vous pouvez retrouver ici tout les codes sources de l'application. Dans le dossi
 
 La vidéo de présentation peut être visionnée sur youtube au lien suivant : https://youtu.be/2JAxSYWuL90
 
-Les builds de l'application sont également retrouvables dans le dossier "Fichiers supplémentaire MV50"
+Le build de l'application est également retrouvables dans le dossier "Fichiers supplémentaire MV50" dans un dossier zip.  
