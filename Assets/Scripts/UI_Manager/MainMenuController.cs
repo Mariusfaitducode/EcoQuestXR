@@ -26,7 +26,7 @@ public class MainMenuController : MonoBehaviour
 
     public void run_game()
     {
-        SceneManager.LoadScene("mainVictor");
+        SceneManager.LoadScene("Main");
     }
 
 

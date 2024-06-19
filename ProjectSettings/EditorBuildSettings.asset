@@ -5,24 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/main.unity
-    guid: 057f0d0b876b86f44bd3aa456d344350
-  - enabled: 0
-    path: Assets/Scenes/Marius/OVR_Marius.unity
-    guid: 6e4375ec2eaddd14d9dd657f83265b05
   - enabled: 1
     path: Assets/Scenes/MenuPrincipal.unity
     guid: f544e48922c5b5045b2c002fe3feed31
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: c46355226e8bb5243b99af7d6c9b39e2
-  - enabled: 0
-    path: Assets/Scenes/Gilles/old/mainScene_copy.unity
-    guid: e2ed1b2b80f872b48beee28488a8a895
   - enabled: 1
-    path: Assets/Scenes/Victor/mainVictor.unity
-    guid: a1d024add831f6545bafcba421ece89f
+    path: Assets/Scenes/Main.unity
+    guid: 3e49c0e6918f40e4193950ed23b91631
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d032ad1e55f905c4aa0ef87cb9a90a18,
       type: 2}
