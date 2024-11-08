@@ -93,7 +93,7 @@ Material:
     - _Industry_Start_Radius: 18
     - _Industry_Tint_Strength: 0
     - _Inustry_Tile: 0
-    - _Limit_Terrain: 158.66
+    - _Limit_Terrain: 320.34
     - _Map_Scale: 12.82
     - _QueueControl: 0
     - _QueueOffset: 0
