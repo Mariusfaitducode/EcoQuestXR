@@ -17,5 +17,9 @@ public class MapGeneratorEditor : Editor {
         if (GUILayout.Button ("Generate")) {
             mapGen.DrawMapInEditor ();
         }
+        
+        if (GUILayout.Button ("Generate Multi Terrain")) {
+            mapGen.DrawMultiMapInEditor ();
+        }
     }
 }

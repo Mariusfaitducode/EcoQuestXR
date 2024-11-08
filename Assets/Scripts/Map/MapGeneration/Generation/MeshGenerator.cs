@@ -3,6 +3,7 @@ using System.Collections;
 
 public static class MeshGenerator {
 
+	// Fonction qui va générer un mesh à partir d'une heightMap
 	public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMultiplier, AnimationCurve _heightCurve, int levelOfDetail, bool useFlatShading) {
 		AnimationCurve heightCurve = new AnimationCurve (_heightCurve.keys);
 
@@ -18,12 +19,14 @@ public static class MeshGenerator {
 
 		int verticesPerLine = (meshSize - 1) / meshSimplificationIncrement + 1;
 
-		MeshData meshData = new MeshData (verticesPerLine,useFlatShading);
+		// Initialisation meshData
+		MeshData meshData = new MeshData (verticesPerLine, useFlatShading);
 
 		int[,] vertexIndicesMap = new int[borderedSize,borderedSize];
 		int meshVertexIndex = 0;
 		int borderVertexIndex = -1;
 
+		// Assignation des indices aux vertices de la map, en différenciant ceux aux bords et ceux à l'intérieur
 		for (int y = 0; y < borderedSize; y += meshSimplificationIncrement) {
 			for (int x = 0; x < borderedSize; x += meshSimplificationIncrement) {
 				bool isBorderVertex = y == 0 || y == borderedSize - 1 || x == 0 || x == borderedSize - 1;
@@ -38,16 +41,21 @@ public static class MeshGenerator {
 			}
 		}
 
+		// Création du mesh
 		for (int y = 0; y < borderedSize; y += meshSimplificationIncrement) {
 			for (int x = 0; x < borderedSize; x += meshSimplificationIncrement) {
 				
 				int vertexIndex = vertexIndicesMap [x, y];
+				
+				// Détermination de la position x, y, z du vertex
 				Vector2 percent = new Vector2 ((x-meshSimplificationIncrement) / (float)meshSize, (y-meshSimplificationIncrement) / (float)meshSize);
 				float height = heightCurve.Evaluate (heightMap [x, y]) * heightMultiplier;
 				Vector3 vertexPosition = new Vector3 (topLeftX + percent.x * meshSizeUnsimplified, height, topLeftZ - percent.y * meshSizeUnsimplified);
 
+				// Ajout du vertex au meshData
 				meshData.AddVertex (vertexPosition, percent, vertexIndex);
 
+				// Ajout des triangles au meshData
 				if (x < borderedSize - 1 && y < borderedSize - 1) {
 					int a = vertexIndicesMap [x, y];
 					int b = vertexIndicesMap [x + meshSimplificationIncrement, y];
@@ -56,8 +64,6 @@ public static class MeshGenerator {
 					meshData.AddTriangle (a,d,c);
 					meshData.AddTriangle (d,a,b);
 				}
-
-				vertexIndex++;
 			}
 		}
 		
@@ -99,13 +105,13 @@ public class MeshData {
 	public void AddVertex(Vector3 vertexPosition, Vector2 uv, int vertexIndex) {
 		if (vertexIndex < 0) {
 			borderVertices [-vertexIndex - 1] = vertexPosition;
-		} else {
+		} 
+		else {
 			vertices [vertexIndex] = vertexPosition;
+			
 			// "You can put whatever data you want into uv"
 			// uvs [vertexIndex] = new Vector2(0, vertexPosition.y);
-
 			uvs[vertexIndex] = uv;
-
 		}
 	}
 
@@ -192,7 +198,10 @@ public class MeshData {
 	void FlatShading() {
 		Vector3[] flatShadedVertices = new Vector3[triangles.Length];
 		Vector2[] flatShadedUvs = new Vector2[triangles.Length];
-
+		
+		// Duplique les sommets du maillage pour que chaque triangle ait ses propres sommets indépendants
+		// Duplique les UVs pour conserver les coordonnées de texture associées
+		// Réassigne les triangles pour qu'ils pointent vers les nouveaux sommets dupliqués
 		for (int i = 0; i < triangles.Length; i++) {
 			flatShadedVertices [i] = vertices [triangles [i]];
 			flatShadedUvs [i] = uvs [triangles [i]];
