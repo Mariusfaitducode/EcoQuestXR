@@ -68,7 +68,7 @@ public static class MeshGenerator {
 		}
 		
 		meshData.vertexIndicesMap = vertexIndicesMap;
-		meshData.ProcessMesh ();
+		// meshData.ProcessMesh ();
 
 		return meshData;
 
@@ -130,98 +130,191 @@ public class MeshData {
 	}
 
 	Vector3[] CalculateNormals() {
+		// Créer un tableau de normales pour tous les vertices (normaux + bordure)
+		Vector3[] vertexNormals = new Vector3[vertices.Length + borderVertices.Length];
 
-		Vector3[] vertexNormals = new Vector3[vertices.Length];
+		// 1. Calcul des normales pour les triangles normaux
 		int triangleCount = triangles.Length / 3;
 		for (int i = 0; i < triangleCount; i++) {
 			int normalTriangleIndex = i * 3;
-			int vertexIndexA = triangles [normalTriangleIndex];
-			int vertexIndexB = triangles [normalTriangleIndex + 1];
-			int vertexIndexC = triangles [normalTriangleIndex + 2];
+			int vertexIndexA = triangles[normalTriangleIndex];
+			int vertexIndexB = triangles[normalTriangleIndex + 1];
+			int vertexIndexC = triangles[normalTriangleIndex + 2];
 
-			Vector3 triangleNormal = SurfaceNormalFromIndices (vertexIndexA, vertexIndexB, vertexIndexC);
-			vertexNormals [vertexIndexA] += triangleNormal;
-			vertexNormals [vertexIndexB] += triangleNormal;
-			vertexNormals [vertexIndexC] += triangleNormal;
+			Vector3 triangleNormal = SurfaceNormalFromIndices(vertexIndexA, vertexIndexB, vertexIndexC);
+			vertexNormals[vertexIndexA] += triangleNormal;
+			vertexNormals[vertexIndexB] += triangleNormal;
+			vertexNormals[vertexIndexC] += triangleNormal;
 		}
 
+		// 2. Calcul des normales pour les triangles de bordure
 		int borderTriangleCount = borderTriangles.Length / 3;
 		for (int i = 0; i < borderTriangleCount; i++) {
 			int normalTriangleIndex = i * 3;
-			int vertexIndexA = borderTriangles [normalTriangleIndex];
-			int vertexIndexB = borderTriangles [normalTriangleIndex + 1];
-			int vertexIndexC = borderTriangles [normalTriangleIndex + 2];
+			int vertexIndexA = borderTriangles[normalTriangleIndex];
+			int vertexIndexB = borderTriangles[normalTriangleIndex + 1];
+			int vertexIndexC = borderTriangles[normalTriangleIndex + 2];
 
-			Vector3 triangleNormal = SurfaceNormalFromIndices (vertexIndexA, vertexIndexB, vertexIndexC);
-			if (vertexIndexA >= 0) {
-				vertexNormals [vertexIndexA] += triangleNormal;
-			}
-			if (vertexIndexB >= 0) {
-				vertexNormals [vertexIndexB] += triangleNormal;
-			}
-			if (vertexIndexC >= 0) {
-				vertexNormals [vertexIndexC] += triangleNormal;
-			}
+			Vector3 triangleNormal = SurfaceNormalFromIndices(vertexIndexA, vertexIndexB, vertexIndexC);
+			
+			// Ajouter la normale aux vertices appropriés (en gérant les indices négatifs)
+			AddNormalToVertex(vertexNormals, vertexIndexA, triangleNormal);
+			AddNormalToVertex(vertexNormals, vertexIndexB, triangleNormal);
+			AddNormalToVertex(vertexNormals, vertexIndexC, triangleNormal);
 		}
 
-
+		// 3. Normalisation de toutes les normales
 		for (int i = 0; i < vertexNormals.Length; i++) {
-			vertexNormals [i].Normalize ();
+			vertexNormals[i].Normalize();
 		}
 
 		return vertexNormals;
+	}
 
+	// Nouvelle méthode helper pour ajouter une normale à un vertex
+	private void AddNormalToVertex(Vector3[] vertexNormals, int vertexIndex, Vector3 normal) {
+		if (vertexIndex >= 0) {
+			// Vertex normal
+			vertexNormals[vertexIndex] += normal;
+		} else {
+			// Border vertex (convertir l'index négatif en positif et ajouter l'offset)
+			int borderIndex = vertices.Length + (-vertexIndex - 1);
+			vertexNormals[borderIndex] += normal;
+		}
 	}
 
 	Vector3 SurfaceNormalFromIndices(int indexA, int indexB, int indexC) {
-		Vector3 pointA = (indexA < 0)?borderVertices[-indexA-1] : vertices [indexA];
-		Vector3 pointB = (indexB < 0)?borderVertices[-indexB-1] : vertices [indexB];
-		Vector3 pointC = (indexC < 0)?borderVertices[-indexC-1] : vertices [indexC];
+		// Obtenir les positions des vertices en tenant compte des indices négatifs
+		Vector3 pointA = GetVertexPosition(indexA);
+		Vector3 pointB = GetVertexPosition(indexB);
+		Vector3 pointC = GetVertexPosition(indexC);
 
 		Vector3 sideAB = pointB - pointA;
 		Vector3 sideAC = pointC - pointA;
-		return Vector3.Cross (sideAB, sideAC).normalized;
+		return Vector3.Cross(sideAB, sideAC).normalized;
 	}
 
-	public void ProcessMesh() {
-		if (useFlatShading) {
-			FlatShading ();
+	// Nouvelle méthode helper pour obtenir la position d'un vertex
+	private Vector3 GetVertexPosition(int index) {
+		if (index >= 0) {
+			return vertices[index];
 		} else {
-			BakeNormals ();
+			return borderVertices[-index - 1];
 		}
 	}
+
+	// public void ProcessMesh() {
+	// 	if (useFlatShading) {
+	// 		FlatShading ();
+	// 	} else {
+	// 		BakeNormals ();
+	// 	}
+	// }
 
 	void BakeNormals() {
 		bakedNormals = CalculateNormals ();
 	}
 
 	void FlatShading() {
-		Vector3[] flatShadedVertices = new Vector3[triangles.Length];
-		Vector2[] flatShadedUvs = new Vector2[triangles.Length];
-		
-		// Duplique les sommets du maillage pour que chaque triangle ait ses propres sommets indépendants
-		// Duplique les UVs pour conserver les coordonnées de texture associées
-		// Réassigne les triangles pour qu'ils pointent vers les nouveaux sommets dupliqués
-		for (int i = 0; i < triangles.Length; i++) {
-			flatShadedVertices [i] = vertices [triangles [i]];
-			flatShadedUvs [i] = uvs [triangles [i]];
-			triangles [i] = i;
-		}
-
-		vertices = flatShadedVertices;
-		uvs = flatShadedUvs;
-	}
+        // En flat shading, chaque triangle utilise ses propres vertices
+        // pour avoir des arêtes nettes entre les triangles
+        Vector3[] flatShadedVertices = new Vector3[triangles.Length + borderTriangles.Length];
+        Vector2[] flatShadedUvs = new Vector2[triangles.Length + borderTriangles.Length];
+        
+        // 1. Traitement des triangles normaux
+        for (int i = 0; i < triangles.Length; i++) {
+            // Pour chaque index dans triangles, on crée un nouveau vertex
+            flatShadedVertices[i] = vertices[triangles[i]];
+            flatShadedUvs[i] = uvs[triangles[i]];
+            // L'index devient séquentiel puisque chaque vertex est unique
+            triangles[i] = i;
+        }
+        
+        // 2. Traitement des triangles de bordure
+        for (int i = 0; i < borderTriangles.Length; i++) {
+            int vertexIndex = borderTriangles[i];
+            if (vertexIndex >= 0) {
+                // Vertex normal
+                flatShadedVertices[triangles.Length + i] = vertices[vertexIndex];
+                flatShadedUvs[triangles.Length + i] = uvs[vertexIndex];
+            } else {
+                // Border vertex (index négatif)
+                flatShadedVertices[triangles.Length + i] = borderVertices[-vertexIndex - 1];
+                Vector3 vertex = borderVertices[-vertexIndex - 1];
+                flatShadedUvs[triangles.Length + i] = new Vector2(vertex.x, vertex.z);
+            }
+            // Mise à jour de l'index pour pointer vers le nouveau vertex
+            borderTriangles[i] = triangles.Length + i;
+        }
+        
+        // 3. Remplacement des anciens tableaux par les nouveaux
+        vertices = flatShadedVertices;
+        uvs = flatShadedUvs;
+    }
 
 	public Mesh CreateMesh() {
-		Mesh mesh = new Mesh ();
-		mesh.vertices = vertices;
-		mesh.triangles = triangles;
-		mesh.uv = uvs;
-		if (useFlatShading) {
-			mesh.RecalculateNormals ();
-		} else {
-			mesh.normals = bakedNormals;
+		Mesh mesh = new Mesh();
+		
+		// 1. Préparation des tableaux combinés
+		// On crée des nouveaux tableaux qui vont contenir à la fois les données normales et les données de bordure
+		Vector3[] allVertices = new Vector3[vertices.Length + borderVertices.Length];
+		Vector2[] allUvs = new Vector2[vertices.Length + borderVertices.Length];
+		
+		// 2. Copie des données normales (intérieures)
+		// On copie d'abord tous les vertices normaux au début des tableaux
+		System.Array.Copy(vertices, 0, allVertices, 0, vertices.Length);
+		System.Array.Copy(uvs, 0, allUvs, 0, vertices.Length);
+		
+		// 3. Ajout des vertices de bordure
+		// On copie les border vertices à la suite des vertices normaux
+		System.Array.Copy(borderVertices, 0, allVertices, vertices.Length, borderVertices.Length);
+		
+		// 4. Création des UVs pour les border vertices
+		// Pour chaque border vertex, on crée une coordonnée UV basée sur sa position x,z
+		// Cela permet d'avoir une texture correctement mappée sur les bordures
+		for (int i = 0; i < borderVertices.Length; i++) {
+			Vector3 vertex = borderVertices[i];
+			allUvs[vertices.Length + i] = new Vector2(vertex.x, vertex.z);
 		}
+		
+		// 5. Combinaison des triangles
+		// On crée un tableau qui va contenir tous les triangles (normaux + bordure)
+		int[] allTriangles = new int[triangles.Length + borderTriangles.Length];
+		// On copie d'abord les triangles normaux
+		System.Array.Copy(triangles, 0, allTriangles, 0, triangles.Length);
+		
+		// 6. Traitement des triangles de bordure
+		// Les border triangles utilisent des indices négatifs pour référencer les border vertices
+		// On doit les convertir en indices positifs qui pointent vers la bonne position dans allVertices
+		for (int i = 0; i < borderTriangles.Length; i++) {
+			if (borderTriangles[i] >= 0) {
+				// Si l'index est positif, il référence un vertex normal
+				allTriangles[triangles.Length + i] = borderTriangles[i];
+			} else {
+				// Si l'index est négatif, il référence un border vertex
+				// On le convertit en index positif en:
+				// 1. Le rendant positif (-index - 1)
+				// 2. Ajoutant un offset de vertices.Length pour pointer dans la section border vertices
+				allTriangles[triangles.Length + i] = vertices.Length + (-borderTriangles[i] - 1);
+			}
+		}
+		
+		// 7. Application des données au mesh
+		mesh.vertices = allVertices;
+		mesh.triangles = allTriangles;
+		mesh.uv = allUvs;
+		
+		// 8. Traitement final selon le mode de shading
+		if (useFlatShading) {
+			FlatShading();
+			mesh.RecalculateNormals();
+		} else {
+			// Calculer les normales pour tous les vertices
+			Vector3[] normals = CalculateNormals();
+			mesh.vertices = allVertices;  // Assurez-vous que ceci est fait avant
+			mesh.normals = normals;       // d'assigner les normales
+		}
+		
 		return mesh;
 	}
 	
