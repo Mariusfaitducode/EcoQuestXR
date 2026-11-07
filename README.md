@@ -1,49 +1,29 @@
+# EcoQuest XR
 
-# 🌍 EcoQuest – Transformez le monde avec la réalité mixte  
+A mixed-reality city-management game for Meta Quest: you steer a procedurally generated city toward a sustainable future by playing action cards, and watch the effects play out on a miniature city in your room.
 
-Imaginez un monde où votre environnement se mêle à une ville en pleine évolution. **EcoQuest** est une **expérience en réalité mixte** qui vous permet d’observer une simulation dynamique et d’y interagir directement. Votre mission est simple mais cruciale : **guider la ville vers un avenir plus durable**.  
+[Watch the presentation video](https://youtu.be/2JAxSYWuL90)
 
-Dans ce jeu, vous incarnez un acteur du changement. À l’aide d’un **système stratégique de cartes**, vous influencez l’urbanisation, l’énergie, l’agriculture et l’industrie. Chaque décision a un impact visible sur l’environnement. Plus vous améliorez les indicateurs écologiques, plus **Finn, le nuage**, retrouve sa pureté, symbole de l’équilibre retrouvé.  
+## Gameplay
 
-Mais attention : **chaque partie est unique**. La ville est **entièrement générée de manière procédurale**, ce qui signifie que les défis que vous rencontrerez seront toujours différents. **Serez-vous capable de trouver le bon équilibre entre développement et durabilité ?**  
+- **A new city every game.** The terrain is generated from Perlin noise with a falloff map, split into chunks, then filled with four zones (city, industry, agriculture, energy), a river, a road network and nature.
+- **Card-based decisions.** At regular intervals you draft new cards into a deck attached to your left arm. Each card builds, destroys, replaces, upgrades or downgrades buildings in one zone (eco-friendly housing, parks, wind and solar farms, nuclear, coal and biogas plants, recycling centres, industrial or eco-friendly farms, and more). Cards are defined in CSV files.
+- **A simulated city.** Every action costs money and energy and changes CO2 emissions, waste and green spaces. A citizen model tracks happiness, health, awareness and acceptance, and the population chooses between transport modes.
+- **A living map.** Cars and buses drive on the generated roads, pedestrians walk in the zones, and each zone has its own ambient sound.
+- **Finn the cloud.** A guide character floats above the city, reacts to your choices with voiced lines, warns you when money, energy or public support run low, and gets cleaner as the ecology score improves.
+- **Two control modes.** Meta Quest controllers in mixed reality, or keyboard and mouse for testing in the editor.
 
----
+## Tech stack
 
-## 🎮 Une expérience immersive et stratégique  
+Unity 2022.3, C#, Meta XR SDK (Oculus Integration, `com.unity.xr.oculus`), Unity AI Navigation, TextMesh Pro.
 
-**EcoQuest** ne se contente pas d’être un jeu de gestion classique. Il **mélange simulation et interactivité** dans un monde qui se superpose au vôtre. Vous verrez la ville grandir autour de vous et devrez prendre des décisions stratégiques pour limiter la pollution, améliorer les énergies renouvelables et optimiser les infrastructures.  
+## Run it locally
 
-Les cartes que vous jouez modifient directement l’évolution de la ville. Allez-vous privilégier une croissance rapide quitte à sacrifier l’environnement, ou prendrez-vous le temps d’instaurer un modèle plus équilibré ? Chaque choix a ses conséquences, et la ville réagira en temps réel à vos actions.  
+1. Install Unity **2022.3.7f1** (see `ProjectSettings/ProjectVersion.txt`).
+2. Clone the repo and open the folder with Unity Hub.
+3. Open `Assets/Scenes/MenuPrincipal.unity` and press Play. The build order is `MenuPrincipal`, `Tutorial`, `Main`.
+4. To test without a headset, set **Control Mode** to `keyboard` on the `GameManager` object in the main scene. To play on a Quest, keep `ovr` and build for Android.
 
----
+## Context
 
-## 🚀 Un projet en évolution  
-
-**EcoQuest** est encore en développement, et nous avons plein d’idées pour l’améliorer. Nous voulons enrichir l’expérience avec un **mode collaboratif**, de nouvelles mécaniques de jeu et une **intégration encore plus fluide en réalité mixte**.  
-
-Ce projet a été réalisé dans le cadre de l’UV **MV50** par :  
-- **Victor Goudal**  
-- **Marius Diguat**  
-- **Souleymane Zoungrana**  
-- **Gilles Maurer**  
-
-Nous avons déjà posé les bases d’un concept prometteur, mais nous sommes **ouverts à poursuivre son développement** dès que nous aurons du temps.  
-
----
-
-## 📥 Essayez EcoQuest  
-
-Vous pouvez **découvrir EcoQuest dès maintenant** en téléchargeant le build du jeu dans le dossier *"Fichiers supplémentaires MV50"*.  
-
-🔗 **[Regarder la vidéo de présentation](https://youtu.be/2JAxSYWuL90)**  
-
-Si vous souhaitez explorer le code source, proposer des améliorations ou simplement en savoir plus sur le projet, vous êtes les bienvenus !  
-
----
-
-## 📬 Contact et contributions  
-
-Nous sommes toujours à l’écoute des retours et idées pour améliorer **EcoQuest**.  
-N’hésitez pas à nous contacter si vous souhaitez discuter du projet ou y contribuer !  
-
-🌱 **Merci d’avoir testé EcoQuest, et amusez-vous à façonner un monde plus vert !** 🎮  
+Team project for the MV50 course at UTBM, spring 2024, by Victor Goudal, Marius Diguat--Mateus, Souleymane Zoungrana and Gilles Maurer. Marius worked mainly on the procedural map (terrain, zones, roads, chunks), the vehicle and pedestrian agents, the building and model system, and Finn's event lines.
